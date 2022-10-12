@@ -1,0 +1,327 @@
+---
+title: Proxy Requests to Figment APIs
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import CodeBlock from "@theme/CodeBlock";
+
+import img1 from "@site/static/img/guides/proxy-requests/cloudflare_dashboard.png";
+import img2 from "@site/static/img/guides/proxy-requests/create_service.png";
+import img3 from "@site/static/img/guides/proxy-requests/environment_variables.png";
+import img4 from "@site/static/img/guides/proxy-requests/api_key_encrypt.png";
+import img5 from "@site/static/img/guides/proxy-requests/env_vars.png";
+import img6 from "@site/static/img/guides/proxy-requests/quick_edit.png";
+import img7 from "@site/static/img/guides/proxy-requests/code_editor.png";
+import img8 from "@site/static/img/guides/proxy-requests/save_and_deploy.png";
+
+<!-- <Tabs><TabItem value="cloudflare" label="Cloudflare Workers Example"> -->
+
+Learn how to protect your Figment API keys by setting up a proxy using Cloudflare workers.
+
+## Cloudflare Setup
+
+1. Create a [Cloudflare](https://cloudflare.com) account and log into the Cloudflare Dashboard.
+2. From the Workers tab, click the "Create a Service" button.
+
+<img
+  src={img1}
+  width="400"
+  alt="Cloudflare Dashboard"
+  className="shadow--tl inline-image"
+/>
+
+3. Give the service a name, then click the "Create service" button.
+
+<img
+  src={img2}
+  width="400"
+  alt="Create a Service"
+  className="shadow--tl inline-image"
+/>
+
+<br />
+
+4. From the Settings tab of that worker, add the necessary environment variables.
+
+<img
+  src={img3}
+  width="400"
+  alt="Environment Variables"
+  className="shadow--tl inline-image"
+/>
+
+- Add an environment variable named `API_KEY`. Click "Encrypt" when you've set the value of `API_KEY`. It is hidden from the frontend, but still accessible from the context of the worker.
+- Add an environment variable named `ALLOWED_ORIGINS`. The values must be in an array, and it must include `null` if you need to proxy from outside of a web browser. i.e., `["docs.figment.io", null]`
+- Add an environment variable named `PROXY_ORIGIN`. The value must be the URL where the worker is deployed. i.e., `https://proxy.username.workers.dev`.
+
+<img
+  src={img4}
+  width="400"
+  alt="Encrypt the API key"
+  className="shadow--tl inline-image"
+/>
+
+<img
+  src={img5}
+  width="400"
+  alt="Add Other Environment Variables"
+  className="shadow--tl inline-image"
+/>
+
+5. Click on the "Quick edit" button, then copy and paste the code below into the code editor on the left side of the page.
+
+<img
+  src={img6}
+  width="400"
+  alt="Quick Edit"
+  className="shadow--tl inline-image"
+/>
+
+<details><summary>Click to view example JavaScript code</summary>
+
+```js
+const env = {
+  API_KEY: API_KEY,
+  ALLOWED_ORIGINS: JSON.parse(ALLOWED_ORIGINS),
+  PROXY_ORIGIN: PROXY_ORIGIN,
+  ALLOWED_METHODS: ["POST", "GET", "OPTIONS"],
+  HOSTS: {
+    wss: {
+      "node-api": {
+        arbitrum: "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
+        bnb: "bsc--mainnet--rpc-archive-dbgtxn.datahub.figment.io",
+        celo: "celo-mainnet--rpc.datahub.figment.io",
+        "cosmos-lcd": "cosmoshub-4--lcd--archive.datahub.figment.io",
+        "cosmos-tendermint-rpc": "cosmoshub-4--rpc--archive.datahub.figment.io",
+        ethereum: "erigon-mainnet--rpc-dbgtxn.datahub.figment.io",
+        fantom: "ftm--mainnet--rpc-archive-dbgtxn.datahub.figment.io",
+        optimism: "optimism-mainnet-rpc-archive.datahub.figment.io",
+        polygon: "matic-mainnet--jsonrpc-archive-dbgtxn.datahub.figment.io",
+        solana: "solana--mainnet.datahub.figment.io",
+      },
+    },
+    https: {
+      "node-api": {
+        arbitrum: "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
+        "avalanche-c-chain":
+          "avalanche--mainnet--rpc.datahub.figment.io/ext/bc/C/rpc",
+        "avalanche-p-chain":
+          "avalanche--mainnet--rpc.datahub.figment.io/ext/bc/P",
+        "avalanche-x-chain":
+          "avalanche--mainnet--rpc.datahub.figment.io/ext/vm/avm",
+        bnb: "bsc--mainnet--rpc-archive-dbgtxn.datahub.figment.io",
+        celo: "celo-mainnet--rpc.datahub.figment.io",
+        "cosmos-lcd": "cosmoshub-4--lcd--archive.datahub.figment.io",
+        "cosmos-tendermint-rpc": "cosmoshub-4--rpc--archive.datahub.figment.io",
+        ethereum: "erigon-mainnet--rpc-dbgtxn.datahub.figment.io",
+        fantom: "ftm--mainnet--rpc-archive-dbgtxn.datahub.figment.io",
+        "mina-graphql": "mina-mainnet--graphql.datahub.figment.io/graphql",
+        near: "near-mainnet--rpc--archive.datahub.figment.io",
+        optimism: "optimism-mainnet-rpc-archive.datahub.figment.io",
+        "osmosis-lcd": "osmosis-1--lcd--archive.datahub.figment.io",
+        "osmosis-tendermint-rpc": "osmosis-1--rpc--archive.datahub.figment.io",
+        "polkadot-sidecar": "polkadot--sidecar.datahub.figment.io",
+        polygon: "matic-mainnet--jsonrpc-archive-dbgtxn.datahub.figment.io",
+        solana: "solana--mainnet.datahub.figment.io",
+      },
+      "rewards-api": {
+        ethereum: "eth-rewards.datahub.figment.io/rewards",
+        polkadot: "polkadot-rewards.datahub.figment.io/rewards",
+        solana: "solana-rewards.datahub.figment.io/rewards",
+      },
+      "transaction-search-api": {
+        avalanche: "avalanche--mainnet--indexer.datahub.figment.io",
+        near: "near--indexer.datahub.figment.io",
+      },
+      "staking-api": {
+        avalanche: "avalanche-slate.datahub.figment.io/api/v1/flows",
+        ethereum: "eth-slate.datahub.figment.io/api/v1/flows",
+        near: "near-slate.datahub.figment.io/api/v1/flows",
+        polkadot: "polkadot-slate.datahub.figment.io/api/v1/flows",
+        solana: "solana-slate.datahub.figment.io/api/v1/flows",
+      },
+      "staking-api-webhooks": {
+        avalanche:
+          "avalanche-slate.datahub.figment.io/api/v1/webhook_endpoints",
+        ethereum: "eth-slate.datahub.figment.io/api/v1/webhook_endpoints",
+        near: "near-slate.datahub.figment.io/api/v1/webhook_endpoints",
+        polkadot: "polkadot-slate.datahub.figment.io/api/v1/webhook_endpoints",
+        solana: "solana-slate.datahub.figment.io/api/v1/webhook_endpoints",
+      },
+    },
+  },
+};
+
+/**
+ * Builds and returns the URL for the node request
+ * @param {Request} request - inbount request
+ * @throws {Response} 500 error if network isn't found
+ * @returns {URL} of the node endpoint
+ */
+function buildURL(request) {
+  const [base, network, service, ...routes] =
+    request.url.split(/(?<!\/)\/(?!\/)/g);
+  const protocol =
+    request.headers.get("Upgrade") === "websocket" ? "wss" : "https";
+  const services = env.HOSTS[protocol][service];
+  const url = services ? services[network] : null;
+  if (!url) {
+    throw new Response(
+      `service '${service}' for network '${network}' could not be found`,
+      {
+        status: 500,
+        statusText: `Invalid network`,
+      }
+    );
+  }
+  return new URL(`${protocol}://${url}/${routes.join("/")}`);
+}
+
+/**
+ * Ensures the request is authorized to proceed
+ * @param {Request} request - inbound request
+ * @throws {Response} 403 or 405 if unauthorized
+ */
+function ensureAuthorized(request) {
+  let error;
+
+  if (!env.ALLOWED_ORIGINS.includes(request.headers.get("Origin"))) {
+    error = {
+      message: `Origin ${request.headers.get("Origin")} not allowed`,
+      status: 405,
+      statusText: "Not Allowed",
+    };
+  } else if (!env.ALLOWED_METHODS.includes(request.method)) {
+    error = {
+      message: `Method ${request.method} not allowed`,
+      status: 405,
+      statusText: "Not Allowed",
+    };
+  }
+
+  if (error) {
+    throw new Response(error.message, {
+      status: 403,
+      statusText: `Not allowed`,
+    });
+  }
+}
+
+/**
+ * Builds and returns preflight response based on request
+ * @param {Request} request - inbound request
+ * @returns {Response} with required CORS params
+ */
+function getPreflightResponse(request) {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Headers":
+        request.headers.get("Access-Control-Request-Headers") || "",
+      "Access-Control-Allow-Origin": request.headers.get("Origin") || "",
+      "Access-Control-Allow-Methods": env.ALLOWED_METHODS.join(","),
+      "Access-Control-Max-Age": "86400",
+    },
+  });
+}
+
+/**
+ * Establishes a websocket connection and returns response containing ws client
+ * @param {string} url - the figment api url
+ * @throws {Response} relays status and statusText if connection fails
+ * @returns {Response} with required websocket client
+ */
+async function getWebsocketConnection(url) {
+  const result = await fetch(url, {
+    headers: {
+      Upgrade: "websocket",
+      Authorization: env.API_KEY,
+    },
+  });
+
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101
+  if (result.status !== 101) {
+    throw new Response(null, {
+      status: result.status,
+      statusText: result.statusText,
+    });
+  }
+
+  // Accept the WebSocket connection
+  const websocket = result.webSocket;
+  websocket.accept();
+
+  // Create a client/server to act as the proxy layer
+  const clientServerPair = new WebSocketPair();
+  const [client, server] = Object.values(clientServerPair);
+
+  // Tell the Workers runtime to listen for WebSocket data & keep the connection open
+  server.accept();
+
+  // Any messages from the client are forwarded to the DataHub socket
+  server.addEventListener("message", (event) => {
+    websocket.send(event.data);
+  });
+
+  // Any messages coming from DataHub are forwarded back to the client
+  websocket.addEventListener("message", (event) => {
+    server.send(event.data);
+  });
+
+  return new Response(null, {
+    status: 101,
+    webSocket: client,
+  });
+}
+
+/**
+ * Fetches results from Figment APIs and returns result
+ * @param {string} url - the figment api url
+ * @param {Request} request - inbound request
+ * @returns {Response} relays Figment API node response
+ */
+async function getRpcResponse(url, request) {
+  const apiRequest = new Request(url, request);
+  apiRequest.headers.set("Authorization", env.API_KEY);
+  apiRequest.headers.set("Origin", `https://${env.PROXY_ORIGIN}`);
+  return await fetch(apiRequest);
+}
+
+// Process the incoming fetch request
+addEventListener("fetch", function handleFetch(event) {
+  try {
+    const { request } = event;
+    const url = buildURL(request);
+    ensureAuthorized(request);
+    if (request.method === "OPTIONS") {
+      event.respondWith(getPreflightResponse(request));
+    } else if (request.headers.get("Upgrade") === "websocket") {
+      event.respondWith(getWebsocketConnection(url));
+    } else {
+      event.respondWith(getRpcResponse(url, request));
+    }
+  } catch (error) {
+    event.respondWith(error);
+  }
+});
+```
+
+</details>
+
+6. Save and Deploy the code to the worker.
+
+<img
+  src={img8}
+  width="400"
+  alt="Save and Deploy"
+  className="shadow--tl inline-image"
+/>
+
+7. You can now send requests to Figment APIs and pass responses back to the client without exposing your API keys!
+
+<!-- </TabItem></Tabs> -->
+
+## Testing and Troubleshooting
+
+...
