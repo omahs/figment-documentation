@@ -19,15 +19,22 @@ interface Props {
   req: RequestObject;
   res: ResponseObject;
   interactive: boolean;
+  endpoint: string;
 }
 
-export default function CodeExample({ req, res, interactive }: Props) {
+export default function CodeExample({
+  req,
+  res,
+  interactive,
+  endpoint,
+}: Props) {
   const [reqBody, setReqBody] = useState<string>(formatRequest(req.body));
   const [queryString, setQueryString] = useState<string>(req.query);
   const [resBody, setResBody] = useState<string>(formatResult(res.body));
   const graphql =
     typeof req.body === "string" && req.body.indexOf("query") == 0;
-  const { data, error, loading, fetchData } = useFetch<ResponseBody>(req.url, {
+
+  const { data, error, loading, fetchData } = useFetch<ResponseBody>(endpoint, {
     method: req.method,
     headers: {
       "Content-Type": graphql ? "application/graphql" : "application/json",

@@ -1,9 +1,9 @@
 ---
-title: Submit Withdraw Data
+title: Submit Withdrawal Data
 slug: /guides/staking-api/near/undelegate/submit-withdraw-data
 ---
 
-After collecting the required inputs, we `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.
 
 ### Parameters
 
@@ -11,7 +11,7 @@ After collecting the required inputs, we `PUT /api/v1/flows/[:flow_id]/next` to 
 - `inputs` &mdash; `array`
   - `delegator_address` &mdash; `string` The delegator address (required).
   - `delegator_pubkey` &mdash; `string` The pubkey of the signing account (required).
-  - `validator_address` &mdash; `string` Validator address from which NEAR will be un-delegated (required).
+  - `validator_address` &mdash; `string` Validator address from which NEAR will be undelegated (required).
   - `withdraw_amount` &mdash; `number` The amount of NEAR to be withdrawn (required).
   - `withdraw_maximum` &mdash; `boolean` Set to `true` if you wish to withdraw the full available balance without needing to know the exact available balance. (optional).
   - `max_gas` &mdash; `number` Adjust if you wish to limit the possible transaction fee (optional).

@@ -3,7 +3,7 @@ title: Submit Add Proxy Data
 slug: /guides/staking-api/polkadot/add-staking-proxy/submit-proxy-data
 ---
 
-After collecting the required inputs, send a PUT request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
@@ -31,12 +31,12 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/0bfcc570-57d
 
 The response indicates two possible `actions` :
 
-- `refresh_add_proxy_tx` &mdash; If you need to get a fresh version of the transaction Payload (i.e., the nonce has increased).
-- `sign_add_proxy_tx` &mdash; Submit a signed transaction Payload ready to be broadcast to the network.
+- `refresh_add_proxy_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
+- `sign_add_proxy_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
 
 We will choose `sign_add_proxy_tx`, which indicates one Input to collect:
 
-- `transaction_payload` &mdash; The signed transaction Payload ready to be broadcast to the network.
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
 
 #### Sample Response
 

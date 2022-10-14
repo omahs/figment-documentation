@@ -3,13 +3,13 @@ title: Create New Undelegation Flow
 slug: /guides/staking-api/polygon/undelegate/create-new-flow
 ---
 
-To initiate the undelegation process, create a new flow with a POST request to `/api/v1/flows`.
+To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.
 
 ### Parameters
 
 - `flow` &mdash; `object`
-  - `network_code` &mdash; `string` Network this flow operates on (ex. `polygon`) (required).
-  - `chain_code` &mdash; `string` Chain this flow operates on (ex. `testnet`) (required).
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `polygon`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`) (required).
   - `operation` `string` The operation to perform (ex. `unstaking`) (required).
   - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
 

@@ -5,8 +5,7 @@ slug: /guides/staking-api/solana/delegate/create-new-stake-account
 
 import Link from "@docusaurus/Link";
 
-After creating the new staking flow, we need to submit the staking account data to create a new staking account and move forward. After collecting the required inputs as mentioned below, send a PUT request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
-If you already have a staking account, proceed to the step <Link to="/guides/staking-api/Solana/delegate/submit-staking-account-data">Submit Staking Account Data</Link>
+After collecting the required inputs as mentioned below, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
@@ -60,11 +59,11 @@ curl -X PUT 'https://solana-slate.datahub.figment.io/api/v1/flows/3512562a-6384-
 }'
 ```
 
-- `sign_stake_account_tx` &mdash; Submit a signed transaction Payload ready to be broadcast to the network.
+- `sign_stake_account_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
 
-We will choose `sign_stake_account_tx`, which indicates one Input to collect:
+We will choose `sign_stake_account_tx`, which indicates one input to collect:
 
-- `transaction_payload` &mdash; The signed transaction Payload ready to be broadcast to the network.
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
 
 #### Sample Response
 
@@ -132,4 +131,8 @@ We will choose `sign_stake_account_tx`, which indicates one Input to collect:
 }
 ```
 
-The `transaction_payload` you've received in the response make sure to copy/save it because you'll require it in the next step to sign the transaction.
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

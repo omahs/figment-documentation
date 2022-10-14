@@ -4,7 +4,7 @@ slug: /guides/staking-api/polkadot/delegate/submit-nomination-addresses
 ---
 
 Now that the bond is created, submit a nomination transaction to activate the stake. The previous response indicates one required input: `validator_addresses`.
-After collecting the required inputs, send a PUT request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 :::info note
 
@@ -16,7 +16,7 @@ You may nominate anywhere from 1 to 16 validators on the Polkadot network. Your 
 
 - `name` &mdash; `string` Name of the action to execute (required).
 - `inputs` &mdash; `object`
-  - `validator_addresses` &mdash; `array` An array containing the address(es) of the validator(s) to which the DOT will be delegated (required).
+  - `validator_addresses` &mdash; `array` An array containing the addresses of the validators to which the DOT will be delegated (required).
 
 You may nominate anywhere from 1 to 16 validators on the Polkadot network. Your DOT will be distributed automatically by the network in the most efficient way at each epoch.
 

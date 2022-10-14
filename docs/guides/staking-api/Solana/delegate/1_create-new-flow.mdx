@@ -3,7 +3,7 @@ title: Create New Delegation Flow
 slug: /guides/staking-api/solana/delegate/create-new-flow
 ---
 
-To initiate the staking process, create a new flow with a POST request to `/api/v1/flows`.
+To initiate the staking process, create a new flow with a `POST` request to `/api/v1/flows`.
 
 ### Parameters
 
@@ -39,12 +39,12 @@ The response indicates two possible `actions`:
 - `assign_stake_account` &mdash; Use this action if you already have an inactive stake account you want to activate.
 - `create_new_stake_account` &mdash; Use this action if you do not have an inactive stake account and want to create a new one.
 
-Since we want to create a new Stake Account, we will use the second action. The `create_new_stake_account` action indicates 4 fields for data collection:
+Since we want to create a new stake account, we will use the second action. The `create_new_stake_account` action indicates four fields for data collection:
 
 - `funding_account_pubkey` &mdash; The main wallet your SOL will be originating from.
 - `stake_authority_pubkey` &mdash; Grants authority to sign certain staking relation transactions to the provided address. Defaults to `funding_account_pubkey`.
 - `withdraw_authority_pubkey` &mdash; Grants authority to sign certain withdrawal related transactions to the provided address. Defaults to `funding_account_pubkey`.
-- `amount` &mdash; The amount of SOL to be sent to the Stake Account. This field should be in full SOL, not in lamports (i.e. if you want to stake 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor.
+- `amount` &mdash; The amount of SOL to be sent to the stake account. This field should be in full SOL, not in lamports (i.e. if you want to stake 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs.
 
 #### Sample Response
 
@@ -164,6 +164,6 @@ Since we want to create a new Stake Account, we will use the second action. The 
 
 Learn more about account authorities: https://docs.solana.com/staking/stake-accounts#understanding-account-authorities
 
-Learn more about Lamports: https://docs.solana.com/terminology#lamport
+Learn more about lamports: https://docs.solana.com/terminology#lamport
 
 :::info

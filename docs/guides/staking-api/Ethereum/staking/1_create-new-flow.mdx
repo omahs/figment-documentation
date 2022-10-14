@@ -3,7 +3,7 @@ title: Create New Staking Flow
 slug: /guides/staking-api/ethereum/staking/create-new-flow
 ---
 
-To initiate the staking process, create a new flow with a POST request to `/api/v1/flows`.
+To initiate the staking process, create a new flow with a `POST` request to `/api/v1/flows`.
 
 ### Parameters
 
@@ -38,7 +38,7 @@ The response indicates one possible action:
 
 - `create_deposit_transaction` &mdash; use this action to generate a deposit transaction to stake your ETH.
 
-The `create_deposit_transaction` action indicates 7 fields for data collection:
+The `create_deposit_transaction` action indicates seven fields for data collection:
 
 - `funding_account_address` &mdash; The wallet ETH will be originating from.
 - `validator_pub_key` -The public key of the validator that the ETH is to be deposited to.

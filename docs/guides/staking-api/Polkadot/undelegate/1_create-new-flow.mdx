@@ -3,7 +3,7 @@ title: Create New Undelegation Flow
 slug: /guides/staking-api/polkadot/undelegate/create-new-flow
 ---
 
-To initiate the undelegation process, create a new flow with a POST request to `/api/v1/flows`.
+To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.
 
 :::info
 
@@ -11,7 +11,7 @@ To initiate the undelegation process, create a new flow with a POST request to `
 
 **If no chilling is required**, you will be presented with an action to create the unbond transaction. Proceed to [Create Unbond Transaction](/guides/staking-api/polkadot/undelegate/create-unbond-transaction).
 
-If you want to skip the unbonding process as well, proceed to [Create Withdraw Transaction](/guides/staking-api/polkadot/undelegate/create-withdraw-transaction).
+If you want to skip the unbonding process as well, proceed to [Create Withdrawal Transaction](/guides/staking-api/polkadot/undelegate/create-withdraw-transaction).
 
 From a newly initialized flow you can either jump right to `create_withdraw_tx` or perform `assign_unstaking_data`.
 

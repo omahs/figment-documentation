@@ -3,7 +3,7 @@ title: Submit a Signed Allowance Transaction for Broadcast
 slug: /guides/staking-api/polygon/delegate/submit-signed-allowance-transaction
 ---
 
-After signing the transaction, send a PUT request to `/api/v1/flows/[:flow_id]/next` and the Staking API will manage broadcasting the transaction to the network.
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` and the Staking API will broadcast the transaction to the network.
 
 ### Parameters
 
@@ -28,12 +28,12 @@ curl -X PUT 'https://eth-slate.datahub.figment.io/api/v1/flows/e6dc662e-f77c-423
 ### Response
 
 With the signed transaction provided, the Staking API will broadcast it to the network.
-As the transaction progresses towards confirmation, the returned `state`` will be either:
+As the transaction progresses towards confirmation, the returned `state` will be either:
 
 - `allowance_tx_broadcasting` &mdash; the transaction has been broadcast but not confirmed.
 - `create_delegate_tx` &mdash; the transaction has been confirmed, ready for next step in flow.
 
-Upon finalization of the transaction, the account will be ready for the next step to submit the the delegation transaction!
+Upon finalization of the transaction, the account will be ready for the next step to submit the the delegation transaction.
 
 #### Sample Response
 

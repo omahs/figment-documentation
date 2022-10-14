@@ -9,7 +9,7 @@ on:
 
 env:
   ## Environment variable for step 1
-  API_KEY: 9513550c6ba06b65633a2b6ce8c5bb01
+  PROXY_HOST: "https://api-service-proxy.paulpomerleau.workers.dev"
 
 jobs:
   deploy:

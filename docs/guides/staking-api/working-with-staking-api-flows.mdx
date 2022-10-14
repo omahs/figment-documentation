@@ -3,15 +3,17 @@ title: Working With Staking API Flows
 sidebar_position: 1
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 import Link from "@docusaurus/Link";
 
 ## Authentication
 
-The Staking API requires you to pass your API key as an `Authorization` header to authenticate requests.
+The Staking API requires you to pass your API key as an `Authorization` header when making requests.
+Read more about it in the quick start for <Link to="/quickstart/api-authentication">API Authentication</Link>.
 
-```text title="Example curl request to the Staking API to start a Transfer flow on Solana Devnet"
+```bash {2} title="Sample cURL Request"
 curl -X POST https://near-slate.datahub.figment.io/api/v1/flows \
-// highlight-next-line
 -H Authorization: API-KEY' \
 -H "Content-Type: application/json" \
 -d '{
@@ -28,36 +30,92 @@ curl -X POST https://near-slate.datahub.figment.io/api/v1/flows \
 
 ## Flows: Create a New Flow
 
-The Staking API has two endpoints for starting and working through a Flow:
+The Staking API has two endpoints for starting and working through a flow:
 
 - `POST /api/v1/flows` to create a new flow, or
 - `PUT /api/v1/flows/[:flow_id]/next` to proceed to the next step in the flow.
 
-For each individual operation you want to complete, hit the first endpoint once to create the flow and the second endpoint multiple times until the Flow is completed.
+For each individual operation you want to complete, hit the first endpoint once to create the flow and the second endpoint multiple times until the flow is completed.
 
-| Network codes | Chain codes                | Operations                                                      |
-| :------------ | :------------------------- | :-------------------------------------------------------------- |
-| `avalanche`   | `mainnet`, `testnet`       | `staking`, **\*\***                                             |
-| `ethereum`    | `mainnet`, `goerli-prater` | `staking`                                                       |
-| `near`        | `mainnet`, `testnet`       | `staking`, `unstaking`, `transfer`                              |
-| `polkadot`    | `mainnet`, `westend`       | `add_proxy`, `remove_proxy`, `staking`, `unstaking`, `transfer` |
-| `solana`      | `mainnet`, `devnet`        | `staking`, `unstaking`, `transfer`                              |
+<Tabs><TabItem value="avax" label="Avalanche" default>
 
-<!-- TODO: Add tabs component -->
+Network codes:
+
+- `mainnet`
+- `testnet`
+
+Operations:
+
+- `staking`
 
 :::info note
 
-**\*\*** There is no undelegate option on Avalanche.
+There is no undelegate option on Avalanche.
 
 Tokens unlock automatically at the end time specified during the delegation process.
 
 :::
 
+</TabItem><TabItem value="eth" label="Ethereum">
+
+Network codes:
+
+- `mainnet`
+- `goerli-prater`
+
+Operations:
+
+- `staking`
+
+</TabItem><TabItem value="near" label="NEAR">
+
+Network codes:
+
+- `mainnet`
+- `testnet`
+
+Operations:
+
+- `staking`
+- `unstaking`
+- `transfer`
+
+</TabItem><TabItem value="dot" label="Polkadot">
+
+Network codes:
+
+- `mainnet`
+- `westend`
+
+Operations:
+
+- `staking`
+- `unstaking`
+- `add_proxy`
+- `remove_proxy`
+- `transfer`
+
+</TabItem><TabItem value="sol" label="Solana">
+
+Network codes:
+
+- `mainnet`
+- `devnet`
+- `testnet`
+
+Operations:
+
+- `staking`
+- `unstaking`
+- `transfer`
+
+</TabItem></Tabs>
+
 ### Requests
 
 This example request would begin a new flow for the `unstaking` operation on Solana devnet:
 
-```text title="Example curl request"
+```bash title="Example cURL Request"
 curl -X POST https://solana-slate.datahub.figment.io/api/v1/flows \
 -H "Authorization: API-KEY" \
 -H "Content-Type: application/json" \
@@ -72,9 +130,10 @@ curl -X POST https://solana-slate.datahub.figment.io/api/v1/flows \
 
 ---
 
-To continue an existing flow, you must supply the Flow ID in the request URL before the `/next` route. The request body must contain the `inputs` object, populated with the correct parameters depending on the protocol and flow you are using.
+To continue an existing flow, you must supply the Flow ID in the request URL before the `/next` route.
+The request body must contain the `inputs` object, populated with the correct parameters depending on the protocol and flow you are using.
 
-```text
+```bash title="Example cURL Request"
 curl -X PUT https://eth-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next \
 -H "Authorization: API-KEY" \
 -H "Content-Type: application/json" \
@@ -91,7 +150,7 @@ curl -X PUT https://eth-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next \
 
 ### Response
 
-```json title="Example JSON response format"
+```json title="Example JSON Response Format"
 {
   "id": [:id],
   "state": [:state],
@@ -109,16 +168,16 @@ curl -X PUT https://eth-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next \
 
 ## Actions: Response Structures and Flow Paths
 
-Let's look at the response returned when we submit a call to `POST /api/v1/flows` to create a new staking flow on Solana's DevNet.
+Let's look at the response returned when we submit a `POST` request to `/api/v1/flows`, to create a new staking flow on Solana's Devnet.
 
-Specifically, notice there are two actions listed: `assign_stake_account` and `create_new_stake_account`, each with a few inputs defined.
+Specifically, notice there are two actions listed: `assign_stake_account` and `create_new_stake_account`, each with a few `inputs` defined.
 
-These two actions can be presented to the end user as a possible step in the Flow:
+These two `actions` can be presented to the end user as a possible step in the flow:
 
-- The user has an inactive stake account they wish to activate, in which case the `assign_stake_account` Action would be followed.
-- The user does not have an account and needs to create a new one. In this case the `create_new_stake_account` Action would be utilized.
+- The user has an inactive stake account they wish to activate, in which case the `assign_stake_account` action would be followed.
+- The user does not have an account and needs to create a new one. In this case the `create_new_stake_account` action would be utilized.
 
-```json title="Example JSON response"
+```json title="Example JSON Response"
 {
   "id": "268c2885-7bfa-42b9-8e4d-756d2852f62e",
   "state": "initialized",
@@ -218,19 +277,19 @@ These two actions can be presented to the end user as a possible step in the Flo
 
 ## Inputs: Building Forms and Data Collection
 
-Building a dynamic form is possible regardless of the Action.
+Building a dynamic form is possible regardless of the action.
 
 - The title of the form will be the humanized version of the action name.
 - The Input fields would correspond to the inputs defined for that action.
-- Each field can be validated based on the Input's defined validations.
-- Each field can be labelled with the input's provided display value or a human readable version of the Input's name.
-- Each field can have a tooltip or other descriptive aid populated with the Input's provided description value.
+- Each field can be validated based on the input's defined validations.
+- Each field can be labelled with the input's provided display value or a human readable version of the input's name.
+- Each field can have a tooltip or other descriptive aid populated with the input's provided description value.
 
 Let's see what that looks like in practice for the `assign_stake_account` action type from the previous response.
 
-This Action contains the following:
+This action contains the following:
 
-```json title="Example JSON response"
+```json title="Example JSON Response"
 {
   "name": "assign_stake_account",
   "inputs": [
@@ -268,7 +327,7 @@ Applying the approach for form building presented above, we would achieve the fo
 
 ## Payloads: Transactions and Signatures
 
-All Flows will contain one or more transactions that need to be signed in order to complete the Flow.
+All flows will contain one or more transactions that need to be signed in order to complete the Flow.
 
 These transaction steps will always have two possible actions:
 
@@ -281,9 +340,9 @@ But what happens when you are ready to sign the transaction?
 
 ### Transaction Payloads and Signing Payloads
 
-After you submit data during a data collection step, the response returned by the Staking API will look similar to this (NEAR token transfer Flow used for this example):
+After you submit data during a data collection step, the response returned by the Staking API will look similar to this (NEAR token transfer flow used for this example):
 
-```json title="Example JSON response"
+```json title="Example JSON Response"
 {
   "id": "[:flow_id]",
   "state": "transfer_tx_signature",
@@ -343,7 +402,9 @@ After you submit data during a data collection step, the response returned by th
 }
 ```
 
-Staking API will expect to receive EITHER a signed transaction payload OR an array of signatures obtained from signing the `signing_payload`.
+The Staking API will expect to receive EITHER a signed transaction payload OR an array of signatures obtained from signing the `signing_payload`.
+
+Read more about signing in the guides <Link to="/guides/staking-api/figment-signing-transactions">Signing Transactions with Figment's npm Package</Link> and <Link to="/guides/staking-api/fireblocks-signing-transactions">Signing Transactions With the Fireblocks API</Link>
 
 If you provide signatures, then the Staking API will construct the signed transaction payload for you.
 
@@ -367,8 +428,10 @@ Similarly, the NPM package will return a signing payload - this should exactly m
 
 ### Signing the Transaction
 
-If you are using Fireblocks as a custodial solution, check the following page for instructions on using the raw signing capabilities of Fireblocks: <Link to="/guides/staking-api/fireblocks-signing-transactions">Signing Transactions with Fireblocks</Link>
+If you are using Fireblocks as a custodial solution, check the following page for instructions on using the raw signing capabilities of Fireblocks: <Link to="/guides/staking-api/fireblocks-signing-transactions">Signing Transactions with the Fireblocks API</Link>
 
 Otherwise, it will be up to you to understand signing with your unique custody arrangement.
+
 As a frame of reference you can follow our guide to using the slate NPM package: <Link to="/guides/staking-api/figment-signing-transactions">Signing Transactions with Figment's NPM Package</Link>. It contains signing capabilities for every network supported by the Staking API - if you have access to the private key of the delegating address, then you can sign with the NPM package.
+
 You may review the code to understand how signing is performed for a given network.

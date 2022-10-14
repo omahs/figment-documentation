@@ -3,7 +3,7 @@ title: Submit a Signed Stake Account Transaction for Broadcast
 slug: /guides/staking-api/solana/delegate/submit-signed-stake-account-transaction
 ---
 
-After signing the transaction, send a PUT request to `/api/v1/flows/[:flow_id]/next` and the Staking API will manage broadcasting the transaction to the Solana network.
+After creating a new staking flow, submit the staking account data. Collect the required inputs. Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
@@ -40,7 +40,7 @@ With the signed transaction provided, Staking API will broadcast it to the netwo
 - `stake_account_tx_broadcasting` &mdash; Transaction has been broadcast but not confirmed.
 - `stake_account` &mdash; Transaction broadcasted and confirmed.
 
-Upon transaction finalization, the stake account will be ready for the next step — the delegation transaction!
+Upon transaction finalization, the stake account will be ready for the next step — the delegation transaction.
 
 #### Sample Response
 

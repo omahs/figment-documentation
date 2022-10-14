@@ -3,7 +3,7 @@ title: Submit Signed Transfer Transaction for Broadcast
 slug: /guides/staking-api/near/transfer/submit-signed-transaction
 ---
 
-After signing the transaction, send a PUT request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the network.
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the network.
 
 ### Parameters
 
@@ -27,7 +27,7 @@ curl -X PUT 'https://near-slate.datahub.figment.io/api/v1/flows/5f0962d5-fba0-45
 
 ### Response
 
-With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be one of:
+With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
 
 - `transfer_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting confirmation.
 - `transfered` &mdash; Transaction has been confirmed and the transfer is complete.

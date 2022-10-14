@@ -3,7 +3,7 @@ title: Submit a Signed Chill Transaction for Broadcast
 slug: /guides/staking-api/polkadot/undelegate/submit-signed-chill-transaction
 ---
 
-After signing the transaction, send a PUT request to `/api/v1/flows/[:flow_id]/next` and the Staking API will manage broadcasting the transaction to the Polkadot network.
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` and the Staking API will broadcast the transaction to the Polkadot network.
 
 ### Parameters
 
@@ -78,5 +78,3 @@ Upon transaction finalization, the chill will be complete and you can move on to
   "updated_at": "2022-10-06T16:19:07.199Z"
 }
 ```
-
-The `transaction_payload` you've received in the response make sure to copy/save it because you'll require it in the next step to sign the transaction.

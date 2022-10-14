@@ -5,7 +5,7 @@ slug: /guides/staking-api/polkadot/delegate/create-new-flow
 
 import Link from "@docusaurus/Link";
 
-To initiate the staking process, create a new flow with a POST request to `/api/v1/flows`.
+To initiate the staking process, create a new flow with a `POST` request to `/api/v1/flows`.
 
 ### Parameters
 
@@ -49,7 +49,7 @@ The response indicates two possible actions:
 
 To create a new controller relationship, use the `create_bonding_tx` action which indicates six fields for data collection:
 
-- `controller_account_address` &mdash; The wallet DOT will be bonded to.
+- `controller_account_address` &mdash; The wallet to which the DOT will be bonded.
 - `controller_proxy_account_address` &mdash; A proxy account that will sign on behalf of the controller account.
 - `stash_account_address` &mdash; Primary wallet from which DOT will be bonded.
 - `stash_proxy_account_address` &mdash; A proxy account that will sign on behalf of the controller account.

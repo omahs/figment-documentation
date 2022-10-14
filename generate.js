@@ -1,7 +1,6 @@
 require("dotenv").config();
 const fs = require("fs-extra");
 const SCHEMAS_DIR = "schemas";
-const API_KEY = process.env.API_KEY;
 
 function toDashCase(str) {
   return str?.toLowerCase().replace(/\s+/g, "-");
@@ -50,18 +49,16 @@ function processMethod(method, vars) {
   request = exampleRequest || request;
 
   let url = request.url.raw !== undefined ? request.url.raw : request.url;
-  url = url.replace("{{API_KEY}}", API_KEY);
 
   let query;
-  if (request.method === "GET") {
-    query = url.split(API_KEY)[1];
-    url = url.split(API_KEY)[0] + API_KEY + "/";
+  query = url.split("{{API_KEY}}")[1];
+  query = query ? query.replace(/^\/+/, "") : query;
+  url = url.split("{{API_KEY}}")[0] + "{{API_KEY}}" + "/";
+  url = url.replace(/apikey\/{{API_KEY}}\/{0,1}/, "");
+  for (let key in vars) {
+    url = url.replace(`{{${key}}}`, vars[key]);
   }
-
-  const match = url.match(/\{\{(.+)\}\}/);
-  if (match && !!vars[match[1]]) {
-    url = url.replace(match[0], vars[match[1]]);
-  }
+  url = url.replace(/\/+$/, "");
 
   return {
     name: name,
@@ -386,7 +383,9 @@ function createMarkdown(services, variables) {
               methods
             )}} service="${toDashCase(service)}" networks={${JSON.stringify(
               networksList
-            )}} network="${toDashCase(network)}" />`,
+            )}} network="${toDashCase(network)}" proxy="${
+              process.env.PROXY_HOST
+            }" />`,
         }),
         "utf-8"
       );
@@ -409,10 +408,69 @@ function getEnvironmentVariables(schemas) {
   return vars;
 }
 
+function generateCORSTests(services) {
+  const apiCalls = services.flatMap((service) => {
+    if (service.service.includes("staking")) return [];
+    return service.networks.flatMap((network) => {
+      return network.methods.flatMap((method) => {
+        return {
+          url: `${process.env.PROXY_HOST}/${toDashCase(
+            service.service
+          )}/${toDashCase(network.network)}/${method.request.query || ""}`,
+          method: method.request.method,
+          body:
+            method.request.method === "GET" ? undefined : method.request.body,
+          headers:
+            method.request.method === "GET"
+              ? {}
+              : {
+                  "content-type": "application/json",
+                },
+        };
+      });
+    });
+  });
+
+  const testScript = `
+    async function testEndpoint(apiCall) {
+      try {
+        const result = await fetch(apiCall.url, { 
+          method: apiCall.method,
+          headers: apiCall.headers,
+          body: JSON.stringify(apiCall.body),
+        })
+  
+        return result.ok;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    async function process() {
+      const apiCalls = ${JSON.stringify(apiCalls)};
+      const failedCalls = [];
+      for(let index = 0; index < apiCalls.length; index += 1) {
+        const apiCall = apiCalls[index];
+        console.clear();
+        const progress = index + 1;
+        console.log(((progress/apiCalls.length)*100).toFixed(2) + "%")
+        const passed = await testEndpoint(apiCall);
+        if (!passed) failedCalls.push(apiCall);
+      }
+      console.log(failedCalls);
+    }
+
+    process()
+  `;
+
+  fs.writeFileSync("tests.js", testScript, "utf-8");
+}
+
 (function process() {
   const schemas = loadSchemas();
   const variables = getEnvironmentVariables(schemas);
   const services = processServices(schemas, variables);
   createMarkdown(services, variables);
+  //generateCORSTests(services);
   process.exit?.();
 })();

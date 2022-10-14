@@ -3,7 +3,7 @@ title: Submit Transfer Data
 slug: /guides/staking-api/polkadot/transfer/submit-transfer-data
 ---
 
-After collecting the required inputs, send a PUT request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
@@ -33,12 +33,12 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/643cb99a-7bd
 
 We see two possible `actions`:
 
-- `refresh_transfer_tx` &mdash; If you need to get a fresh version of the transaction Payload (i.e., the nonce has increased).
-- `sign_transfer_tx` &mdash; Submit a signed transaction Payload ready to be broadcast to the network.
+- `refresh_transfer_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
+- `sign_transfer_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
 
 We will choose `sign_transfert_tx`, which indicates one Input to collect:
 
-- `transaction_payload` &mdash; The signed transaction Payload ready to be broadcast to the network.
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
 
 #### Sample Response
 
@@ -99,4 +99,8 @@ We will choose `sign_transfert_tx`, which indicates one Input to collect:
 }
 ```
 
-The `transaction_payload` you've received in the response make sure to copy/save it because you'll require it in the next step to sign the transaction.
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

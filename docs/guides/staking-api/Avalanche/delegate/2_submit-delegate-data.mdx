@@ -3,16 +3,16 @@ title: Submit Delegate Data
 slug: /guides/staking-api/avalanche/delegate/submit-delegate-data
 ---
 
-After creating a new staking flow, we need to submit the staking account data to move forward. After collecting the required inputs as mentioned below, send a PUT request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+After creating a new staking flow, submit the staking account data. Collect the required inputs. Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
 - `name` &mdash; `string` Name of the action to execute (required).
 - `inputs` &mdash; `array`
-  - `delegator_addresss` &mdash; `string` The delegating address (P-chain) (required).
+  - `delegator_address` &mdash; `string` The delegating address (P-chain) (required).
   - `validator_address` &mdash; `string` Address of the validator (required).
   - `amount` &mdash; `number` The amount of AVAX to be delegated (required).
-  - `start_time` &mdash; `number` Adjust if you wish to set a specific delegation start time. [Unix Epoch Timestamp](https://www.unixtimestamp.com/), defaults to 5 minutes from when the transaction is generated (optional).
+  - `start_time` &mdash; `number` Adjust if you wish to set a specific delegation start time. [Unix Epoch Timestamp](https://www.unixtimestamp.com/), defaults to five minutes from when the transaction is generated (optional).
   - `end_time` &mdash; `number` Adjust if you wish to set a specific delegation end time. [Unix Epoch Timestamp](https://www.unixtimestamp.com/), defaults to the end time of the validator (optional).
   - `memo` &mdash; `string` Include a memo with the transaction (optional).
 

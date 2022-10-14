@@ -49,7 +49,7 @@ function useFetch<T = unknown>(
     dispatch({ type: "loading" });
 
     try {
-      const response = await fetch(url + (query || ""), {
+      const response = await fetch(url + (query ? `/${query}` : ""), {
         ...options,
         ...partOptions,
       });

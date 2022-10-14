@@ -3,13 +3,13 @@ title: Create New Delegation Flow
 slug: /guides/staking-api/polygon/delegate/create-new-flow
 ---
 
-To initiate the delegation process, create a new flow with a POST request to `/api/v1/flows`.
+To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.
 
 ### Parameters
 
 - `flow` &mdash; `object`
-  - `network_code` &mdash; `string` Network this flow operates on (ex. `polygon`) (required).
-  - `chain_code` &mdash; `string` Chain this flow operates on (ex. `mainnet` , `testnet`) (required).
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `polygon`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `mainnet` , `testnet`) (required).
   - `operation` `string` The operation to perform (ex. `staking`) (required).
   - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
 
@@ -40,8 +40,8 @@ The response indicates one possible action:
 
 The `assign_staking_data` action indicates five fields for data collection:
 
-- `delegator_address` &mdash; The main wallet MATIC will be originating from.
-- `validator_address` &mdash; The validator smart contract address you wish to delegate to.
+- `delegator_address` &mdash; The main wallet from which MATIC will originate.
+- `validator_address` &mdash; The validator smart contract address for delegation.
 - `amount` &mdash; The number of MATIC tokens to be delegated.
 - `minimum_shares_to_mint` &mdash; The minimum number of shares of the delegation pool to be minted. If the exchange rate results in fewer shares being minted, the transaction will fail.
 - `max_slippage_percentage` &mdash; The maximum slippage you are willing to accept.

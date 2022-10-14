@@ -3,13 +3,13 @@ title: Create New Transfer Flow
 slug: /guides/staking-api/solana/transfer/create-new-flow
 ---
 
-To initiate the transfer process with Staking API firstly we need to create a new Flow with `POST /api/v1/flows`.
+To initiate the transfer process with Staking API, create a new flow with `POST /api/v1/flows`.
 
 ### Parameters
 
 - `flow` &mdash; `object`
-  - `network_code` &mdash; `string` Network this flow operates on (ex. `solana`) (required).
-  - `chain_code` &mdash; `string` Chain this flow operates on (ex. `mainnet` , `testnet`) (required).
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `solana`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `mainnet` , `testnet`) (required).
   - `operation` `string` The operation to perform (ex. `transfer`) (required).
   - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
 
@@ -43,7 +43,7 @@ The `create_transfer_tx` action indicates four fields for data collection:
 - `funding_account_pubkey` &mdash; The public key of the wallet which will pay the transaction fee.
 - `from_account_pubkey` &mdash; The wallet that SOL will be originating from.
 - `to_account_pubkey` &mdash; The withdrawal address for the given validator.
-- `amount` &mdash; The amount of SOL to be transferred to the account. This field should be in full SOL, not in lamports (ie. if you want to transfer 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor.
+- `amount` &mdash; The amount of SOL to be transferred to the account. This field should be in full SOL, not in lamports (ie. if you want to transfer 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs.
 
 #### Sample Response
 

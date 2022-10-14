@@ -1,909 +1,1036 @@
 {
-  "info": {
-    "_postman_id": "06743fe3-0dcb-4fd5-8548-b27c8656ef07",
-    "name": "rewards-api",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Ethereum",
-      "item": [
-        {
-          "name": "Rewards by epoch",
-          "id": "0fac7278-6e28-4af9-9af2-f7ca29b4abf0",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\"\n    ], \n    \"start\": 151759,\n    \"end\": 151760\n}\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
-            "description": "Returns gross validator rewards grouped by epoch\n\n## Request\n\n\\* `network`: `ethereum` _(Required)_  \n\\* `chain_id`: `mainnet` _(Required)_  \n\\* `accounts` takes an array of validator's public addresses. 50 max. _(Required)_  \n\\* `start` and `end` are epoch numbers (as integers). _(Required)_\n\n## Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data` : `epoch` here\n\n##### `data`\n\nis an array of objects - one for each period - containing:\n\n\\* `validator` returns the validator that distributed the rewards  \n\\* `period` is the epoch number (only present when no aggregation)  \n\\* `timestamp` is the timestamp of the end of the period  \n\\* `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this). `type` is either `staking` (for consensus layer rewards) or `tips` (for execution layer rewards). `recipient` is the address of the rewards recipient\n\n## Limitations\n\n\\* This API serves data for the last 7 days for epoch and 60 days for daily aggregation  \n\\* This API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n\n## FAQ\n\n\\* **Reward Types:** `staking` type rewards are the net aggregation of all consensus layer rewards: block proposal, attestation, sync committee and slashing.  \n\\* **Negative Rewards:** In theory, there could be a negative rewards amount for a day. But slashing events are rare. Current negative amounts would more likely be caused by repeatedly missing attestations and/or sync committee votes."
-          },
-          "response": [
-            {
-              "id": "ae29ee95-f7c7-4258-895d-26b490a841e8",
-              "name": "by epoch",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\"\n    ], \n    \"start\": 151759,\n    \"end\": 151760\n}\n",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Date",
-                  "value": "Tue, 11 Oct 2022 14:03:11 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "746"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "RateLimit-Limit",
-                  "value": "2000"
-                },
-                {
-                  "key": "RateLimit-Remaining",
-                  "value": "1998"
-                },
-                {
-                  "key": "X-RateLimit-Remaining-Minute",
-                  "value": "1998"
-                },
-                {
-                  "key": "RateLimit-Reset",
-                  "value": "49"
-                },
-                {
-                  "key": "X-RateLimit-Limit-Minute",
-                  "value": "2000"
-                },
-                {
-                  "key": "X-Quota-Remaining-Second",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Limit-Second",
-                  "value": "8000"
-                },
-                {
-                  "key": "Quota-Limit",
-                  "value": "8000"
-                },
-                {
-                  "key": "Quota-Remaining",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Remaining-Month",
-                  "value": "649999454"
-                },
-                {
-                  "key": "X-Quota-Limit-Month",
-                  "value": "650000000"
-                },
-                {
-                  "key": "Quota-Reset",
-                  "value": "1"
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.029536246 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 29536246000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"address\": \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\"\n                },\n                {\n                    \"text\": \"0.093912121905014256 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 93912121905014256,\n                    \"exp\": 18,\n                    \"type\": \"tips\",\n                    \"address\": \"0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5\"\n                }\n            ],\n            \"period\": \"151759\",\n            \"validator\": \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\",\n            \"timestamp\": \"2022-10-06T23:38:48Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\",\n        \"period_unit\": \"epoch\"\n    }\n}"
-            }
-          ]
-        },
-        {
-          "name": "Rewards  by day",
-          "id": "bd90e4a8-c6be-4020-b25b-d6314eedac20",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\"\n    ], \n    \"start\": \"2022-09-20\",\n    \"end\": \"2022-09-21\",\n    \"aggregation\": \"daily\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
-            "description": "Returns gross validator rewards grouped by day (from midnight UTC to midnight UTC)\n\n#### Request\n\n\\* `network`: `ethereum` _(Required)_  \n\\* `chain_id`: `mainnet` _(Required)_  \n\\* `accounts` takes in an array of validator's public addresses. 50 max. _(Required)_  \n\\* `aggregation`: `daily` _(Required)_  \n\\* `start` and `end` are timestamps in the format \"YYYY-MM-DD\" _(Required)_\n\n#### Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data`: `daily` here\n\n##### `data`\n\nis an array of objects - one for each period - containing:  \n\\* `validator` returns the validator that distributed the rewards  \n\\* `timestamp` is the timestamp of the beginning of the day  \n\\* `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this). `type` is either `staking` (for consensus layer rewards) or `tips` (for execution layer rewards). `recipient` is the address of the rewards recipient\n\n#### Limitations\n\n\\* This API serves data for the last 7 days for epoch and 60 days for daily aggregation  \n\\* This API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n\n#### FAQ\n\n**Reward Types:** `staking` type rewards are the net aggregation of all consensus layer rewards: block proposal, attestation, sync committee and slashing.\n\n**Negative Rewards:** In theory, there could be a negative rewards amount for a day. But slashing events are rare. Current negative amounts would more likely be caused by repeatedly missing attestations and/or sync committee votes."
-          },
-          "response": [
-            {
-              "id": "48c45da5-2692-4c9a-aa2b-0cb043a57027",
-              "name": "by day",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0x93257a7d4f1e6998f019483f149a4dbe3bfc8b89358411be769aeedd943de907f178da1773aea9016d1ac2bdfe3794ba\"\n    ], \n    \"start\": \"2022-10-01\",\n    \"end\": \"2022-10-02\",\n    \"aggregation\": \"daily\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Date",
-                  "value": "Tue, 11 Oct 2022 14:03:39 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "568"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "RateLimit-Limit",
-                  "value": "2000"
-                },
-                {
-                  "key": "RateLimit-Remaining",
-                  "value": "1997"
-                },
-                {
-                  "key": "X-RateLimit-Remaining-Minute",
-                  "value": "1997"
-                },
-                {
-                  "key": "X-RateLimit-Limit-Minute",
-                  "value": "2000"
-                },
-                {
-                  "key": "RateLimit-Reset",
-                  "value": "21"
-                },
-                {
-                  "key": "X-Quota-Remaining-Second",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Limit-Second",
-                  "value": "8000"
-                },
-                {
-                  "key": "Quota-Reset",
-                  "value": "1"
-                },
-                {
-                  "key": "X-Quota-Remaining-Month",
-                  "value": "649999453"
-                },
-                {
-                  "key": "X-Quota-Limit-Month",
-                  "value": "650000000"
-                },
-                {
-                  "key": "Quota-Limit",
-                  "value": "8000"
-                },
-                {
-                  "key": "Quota-Remaining",
-                  "value": "7999"
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"0x93257a7d4f1e6998f019483f149a4dbe3bfc8b89358411be769aeedd943de907f178da1773aea9016d1ac2bdfe3794ba\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.003111407 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 3111407000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"address\": \"0x93257a7d4f1e6998f019483f149a4dbe3bfc8b89358411be769aeedd943de907f178da1773aea9016d1ac2bdfe3794ba\"\n                }\n            ],\n            \"validator\": \"0x93257a7d4f1e6998f019483f149a4dbe3bfc8b89358411be769aeedd943de907f178da1773aea9016d1ac2bdfe3794ba\",\n            \"timestamp\": \"2022-10-01T00:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\",\n        \"period_unit\": \"daily\"\n    }\n}"
-            },
-            {
-              "id": "e37b5359-0ef6-4239-a019-56437650e088",
-              "name": "by day (with block proposal)",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\"\n    ], \n    \"start\": \"2022-09-20\",\n    \"end\": \"2022-09-21\",\n    \"aggregation\": \"daily\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Date",
-                  "value": "Tue, 11 Oct 2022 14:04:27 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "726"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "RateLimit-Limit",
-                  "value": "2000"
-                },
-                {
-                  "key": "RateLimit-Remaining",
-                  "value": "1999"
-                },
-                {
-                  "key": "X-RateLimit-Remaining-Minute",
-                  "value": "1999"
-                },
-                {
-                  "key": "X-RateLimit-Limit-Minute",
-                  "value": "2000"
-                },
-                {
-                  "key": "RateLimit-Reset",
-                  "value": "34"
-                },
-                {
-                  "key": "X-Quota-Remaining-Second",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Limit-Second",
-                  "value": "8000"
-                },
-                {
-                  "key": "Quota-Reset",
-                  "value": "1"
-                },
-                {
-                  "key": "Quota-Remaining",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Remaining-Month",
-                  "value": "649999452"
-                },
-                {
-                  "key": "X-Quota-Limit-Month",
-                  "value": "650000000"
-                },
-                {
-                  "key": "Quota-Limit",
-                  "value": "8000"
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.0393619508575944 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 39361950857594400,\n                    \"exp\": 18,\n                    \"type\": \"tips\",\n                    \"address\": \"0xb646D87963Da1FB9D192Ddba775f24f33e857128\"\n                },\n                {\n                    \"text\": \"0.032147875 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 32147875000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"address\": \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\"\n                }\n            ],\n            \"validator\": \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\",\n            \"timestamp\": \"2022-09-20T00:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\",\n        \"period_unit\": \"daily\"\n    }\n}"
-            }
-          ]
-        }
-      ],
-      "id": "c8594856-7151-4247-b205-e696c9ad12c8"
-    },
-    {
-      "name": "Solana",
-      "item": [
-        {
-          "name": "Rewards by epoch",
-          "id": "8c0f2da9-05df-4d16-bb5e-a2b6da83fff1",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"network\": \"solana\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"2yoofMr4N78WPxVK8MU8Yy26dfRZbPw5WDzTRCA9uv95\"\n    ], \n    \"start\": 342,\n    \"end\": 343\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://solana-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
-            "description": "Returns net delegator rewards (post on-chain validator commission) by epoch\n\n## Request\n\n\\* `network` is `solana` _(Required)_  \n\\* `chain_id` is `mainnet` _(Required)_  \n\\* `accounts` is an array of stake accounts addresses _(Required)_  \n\\* `start` and `end` are epoch numbers, both inclusive. _(Required)_\n\n## Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data`: here it will be `epoch`\n\n##### `data`\n\nis an array of objects - one for each epoch - containing:\n\n\\* `validator` returns the validator that distributed the rewards  \n\\* `period` is the epoch number  \n\\* `timestamp` is the timestamp at the end of the epoch  \n\\* `rewards` is an array of objects containing `numeric` , `exp`, `currency` and `text`. The formula to compute the rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n## Limitations\n\n\\* The API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
-          },
-          "response": [
-            {
-              "id": "98eb195c-380a-45ef-8a42-eff70f54f32b",
-              "name": "by epoch",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"network\": \"solana\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"2yoofMr4N78WPxVK8MU8Yy26dfRZbPw5WDzTRCA9uv95\"\n    ], \n    \"start\": 342,\n    \"end\": 343\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "https://solana-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Date",
-                  "value": "Tue, 11 Oct 2022 14:06:17 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "335"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "RateLimit-Limit",
-                  "value": "2000"
-                },
-                {
-                  "key": "RateLimit-Remaining",
-                  "value": "1999"
-                },
-                {
-                  "key": "X-RateLimit-Remaining-Minute",
-                  "value": "1999"
-                },
-                {
-                  "key": "RateLimit-Reset",
-                  "value": "43"
-                },
-                {
-                  "key": "X-RateLimit-Limit-Minute",
-                  "value": "2000"
-                },
-                {
-                  "key": "Quota-Remaining",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Remaining-Month",
-                  "value": "649999577"
-                },
-                {
-                  "key": "X-Quota-Limit-Month",
-                  "value": "650000000"
-                },
-                {
-                  "key": "Quota-Reset",
-                  "value": "1"
-                },
-                {
-                  "key": "X-Quota-Remaining-Second",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Limit-Second",
-                  "value": "8000"
-                },
-                {
-                  "key": "Quota-Limit",
-                  "value": "8000"
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"2yoofMr4N78WPxVK8MU8Yy26dfRZbPw5WDzTRCA9uv95\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.001348938 SOL\",\n                    \"currency\": \"SOL\",\n                    \"numeric\": 1348938,\n                    \"exp\": 9\n                }\n            ],\n            \"period\": \"342\",\n            \"validator\": \"CcaHc2L43ZWjwCHART3oZoJvHLAe9hzT2DJNUpBzoTN1\",\n            \"timestamp\": \"2022-08-29T09:13:09Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"solana\",\n        \"period_unit\": \"epoch\"\n    }\n}"
-            }
-          ]
-        }
-      ],
-      "id": "45d9bd01-3412-4a81-823f-e7b96995696e"
-    },
-    {
-      "name": "NEAR",
-      "item": [
-        {
-          "name": "Rewards by epoch",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "bbf9b82d-b33e-46fc-b3dc-17779b157626",
-                "exec": [
-                  "const schema = {",
-                  "    \"type\": \"array\",",
-                  "    \"items\": {",
-                  "        \"type\": \"object\",",
-                  "        \"properties\": {",
-                  "            \"accounts\": {",
-                  "                \"type\": \"array\",",
-                  "                \"items\": {",
-                  "                    \"type\": \"string\"",
-                  "                }",
-                  "            },",
-                  "            \"chain_id\": {",
-                  "                \"type\": \"string\"",
-                  "            },",
-                  "            \"epoch\": {",
-                  "                \"type\": \"string\"",
-                  "            },",
-                  "            \"network\": {",
-                  "                \"type\": \"string\"",
-                  "            },",
-                  "            \"rewards\": {",
-                  "                \"type\": \"array\",",
-                  "                \"items\": {",
-                  "                    \"type\": \"object\",",
-                  "                    \"properties\": {",
-                  "                        \"currency\": {",
-                  "                            \"type\": \"string\"",
-                  "                        },",
-                  "                        \"exp\": {",
-                  "                            \"type\": \"number\"",
-                  "                        },",
-                  "                        \"numeric\": {",
-                  "                            \"type\": \"number\"",
-                  "                        },",
-                  "                        \"text\": {",
-                  "                            \"type\": \"string\"",
-                  "                        }",
-                  "                    },",
-                  "                    \"required\": [",
-                  "                        \"currency\",",
-                  "                        \"numeric\",",
-                  "                        \"exp\",",
-                  "                        \"text\"",
-                  "                    ]",
-                  "                }",
-                  "            },",
-                  "            \"time\": {",
-                  "                \"type\": \"string\"",
-                  "            },",
-                  "            \"validator\": {",
-                  "                \"type\": \"string\"",
-                  "            }",
-                  "        },",
-                  "        \"required\": [",
-                  "            \"rewards\",",
-                  "            \"epoch\",",
-                  "            \"network\",",
-                  "            \"validator\",",
-                  "            \"time\",",
-                  "            \"accounts\",",
-                  "            \"chain_id\"",
-                  "        ]",
-                  "    }",
-                  "};",
-                  "",
-                  "pm.test(\"status code 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"validating schema\", function() {",
-                  "    pm.response.to.have.jsonSchema(schema);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "id": "39a63b9d-567c-4943-b098-a0906cc50196",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"network\": \"near\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"figment.near\"\n    ], \n    \"start\": 75743490,\n    \"end\": 75743491\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://near-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
-            "description": "Returns net delegator rewards (post on-chain validator commission) by epoch\n\n## Request\n\n\\* `network` is `near` _(Required)_  \n\\* `chain_id` is `mainnet` _(Required)_  \n\\* `accounts` takes in an array of delegator accounts addresses _(Required)_  \n\\* `start` and `end` are epoch numbers, both inclusive. _(Required)_\n\n## Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data`\n\n##### `data`\n\nis an array of objects - one for each epoch - containing:\n\n\\* `validator` returns the validator that distributed the rewards  \n\\* `period` is the epoch number  \n\\* `timestamp` is the timestamp of the end of the epoch  \n\\* `rewards` is an array of objects with four components: `numeric` , `exp` and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n## Limitations\n\n\\* The API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
-          },
-          "response": [
-            {
-              "id": "76c8a855-b24b-449f-b24e-af2485d8ae48",
-              "name": "by epoch",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"network\": \"near\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"figment.near\"\n    ], \n    \"start\": 75743490,\n    \"end\": 75743491\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "https://near-rewards.datahub.figment.io/v2/rewards"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Date",
-                  "value": "Tue, 11 Oct 2022 14:10:38 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "558"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "X-RateLimit-Limit-Minute",
-                  "value": "2000"
-                },
-                {
-                  "key": "RateLimit-Reset",
-                  "value": "23"
-                },
-                {
-                  "key": "RateLimit-Limit",
-                  "value": "2000"
-                },
-                {
-                  "key": "RateLimit-Remaining",
-                  "value": "1998"
-                },
-                {
-                  "key": "X-RateLimit-Remaining-Minute",
-                  "value": "1998"
-                },
-                {
-                  "key": "Quota-Remaining",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Limit-Month",
-                  "value": "650000000"
-                },
-                {
-                  "key": "Quota-Reset",
-                  "value": "1"
-                },
-                {
-                  "key": "Quota-Limit",
-                  "value": "8000"
-                },
-                {
-                  "key": "X-Quota-Remaining-Second",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Limit-Second",
-                  "value": "8000"
-                },
-                {
-                  "key": "X-Quota-Remaining-Month",
-                  "value": "649999437"
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"figment.near\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"221.415622439422952523250579 NEAR\",\n                    \"currency\": \"NEAR\",\n                    \"numeric\": 2.21415622439422952523250579e+26,\n                    \"exp\": 24\n                }\n            ],\n            \"period\": \"75743490\",\n            \"validator\": \"figment.poolv1.near\",\n            \"timestamp\": \"2022-10-08T13:33:18.784283459Z\"\n        },\n        {\n            \"accounts\": [\n                \"figment.near\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0 NEAR\",\n                    \"currency\": \"NEAR\",\n                    \"numeric\": 0,\n                    \"exp\": 24\n                }\n            ],\n            \"period\": \"75743490\",\n            \"validator\": \"ledgerbyfigment.poolv1.near\",\n            \"timestamp\": \"2022-10-08T13:33:18.784283459Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"near\",\n        \"period_unit\": \"epoch\"\n    }\n}"
-            }
-          ]
-        }
-      ],
-      "id": "58f5dfe4-c1d8-445f-982d-84410fdd5d8a"
-    },
-    {
-      "name": "Polkadot",
-      "item": [
-        {
-          "name": "Rewards by era",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "bbf9b82d-b33e-46fc-b3dc-17779b157626",
-                "exec": [
-                  "const schema = {",
-                  "    \"type\": \"array\",",
-                  "    \"items\": {",
-                  "        \"type\": \"object\",",
-                  "        \"properties\": {",
-                  "            \"accounts\": {",
-                  "                \"type\": \"array\",",
-                  "                \"items\": {",
-                  "                    \"type\": \"string\"",
-                  "                }",
-                  "            },",
-                  "            \"chain_id\": {",
-                  "                \"type\": \"string\"",
-                  "            },",
-                  "            \"epoch\": {",
-                  "                \"type\": \"string\"",
-                  "            },",
-                  "            \"network\": {",
-                  "                \"type\": \"string\"",
-                  "            },",
-                  "            \"rewards\": {",
-                  "                \"type\": \"array\",",
-                  "                \"items\": {",
-                  "                    \"type\": \"object\",",
-                  "                    \"properties\": {",
-                  "                        \"currency\": {",
-                  "                            \"type\": \"string\"",
-                  "                        },",
-                  "                        \"exp\": {",
-                  "                            \"type\": \"number\"",
-                  "                        },",
-                  "                        \"numeric\": {",
-                  "                            \"type\": \"number\"",
-                  "                        },",
-                  "                        \"text\": {",
-                  "                            \"type\": \"string\"",
-                  "                        }",
-                  "                    },",
-                  "                    \"required\": [",
-                  "                        \"currency\",",
-                  "                        \"numeric\",",
-                  "                        \"exp\",",
-                  "                        \"text\"",
-                  "                    ]",
-                  "                }",
-                  "            },",
-                  "            \"time\": {",
-                  "                \"type\": \"string\"",
-                  "            },",
-                  "            \"validator\": {",
-                  "                \"type\": \"string\"",
-                  "            }",
-                  "        },",
-                  "        \"required\": [",
-                  "            \"rewards\",",
-                  "            \"epoch\",",
-                  "            \"network\",",
-                  "            \"validator\",",
-                  "            \"time\",",
-                  "            \"accounts\",",
-                  "            \"chain_id\"",
-                  "        ]",
-                  "    }",
-                  "};",
-                  "",
-                  "pm.test(\"status code 200\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"validating schema\", function() {",
-                  "    pm.response.to.have.jsonSchema(schema);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ],
-          "id": "cbea2d15-b449-43bb-9a4a-c30a6d52a70d",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"network\": \"polkadot\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"12m7XtVWZQuxTirqtzm2dm5J4r16vSQruPmahThMnskG8Bcp\"\n    ], \n    \"start\": 845,\n    \"end\": 847 \n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "https://polkadot-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
-            "description": "Returns net delegator rewards (post on-chain validator commission) by epoch\n\n## Request\n\n\\* `network` is `polkadot` _(Required)_  \n\\* `chain_id` is `mainnet` _(Required)_  \n\\* `accounts` takes in an array of stash accounts addresses _(Required)_  \n\\* `start` and `end` are era numbers, both inclusive. _(Required)_\n\n## Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data`\n\n##### `data`\n\nis an array of objects - one for each era - containing:\n\n\\* `validator` returns the validator that distributed the rewards  \n\\* `period` is the era number  \n\\* `timestamp` is the timestamp of the end of the era  \n\\* `rewards` is an array of objects with four components: `numeric` , `exp` and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^-exp`(`text` is the string version of this)\n\n## Limitations\n\n\\* The API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
-          },
-          "response": [
-            {
-              "id": "8ae20a25-0da0-4770-ae0a-cedd96b179fd",
-              "name": "by era",
-              "originalRequest": {
-                "method": "GET",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"network\": \"polkadot\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"12m7XtVWZQuxTirqtzm2dm5J4r16vSQruPmahThMnskG8Bcp\"\n    ], \n    \"start\": 845,\n    \"end\": 847\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": "https://polkadot-rewards.datahub.figment.io/v2/rewards"
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "Date",
-                  "value": "Tue, 11 Oct 2022 14:12:18 GMT"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "637"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                },
-                {
-                  "key": "RateLimit-Remaining",
-                  "value": "1999"
-                },
-                {
-                  "key": "RateLimit-Reset",
-                  "value": "43"
-                },
-                {
-                  "key": "X-RateLimit-Limit-Minute",
-                  "value": "2000"
-                },
-                {
-                  "key": "X-RateLimit-Remaining-Minute",
-                  "value": "1999"
-                },
-                {
-                  "key": "RateLimit-Limit",
-                  "value": "2000"
-                },
-                {
-                  "key": "X-Quota-Remaining-Month",
-                  "value": "649998676"
-                },
-                {
-                  "key": "Quota-Remaining",
-                  "value": "7999"
-                },
-                {
-                  "key": "X-Quota-Limit-Month",
-                  "value": "650000000"
-                },
-                {
-                  "key": "Quota-Limit",
-                  "value": "8000"
-                },
-                {
-                  "key": "X-Quota-Remaining-Second",
-                  "value": "7999"
-                },
-                {
-                  "key": "Quota-Reset",
-                  "value": "1"
-                },
-                {
-                  "key": "X-Quota-Limit-Second",
-                  "value": "8000"
-                }
-              ],
-              "cookie": [],
-              "responseTime": null,
-              "body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"12m7XtVWZQuxTirqtzm2dm5J4r16vSQruPmahThMnskG8Bcp\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"4.4045175383 DOT\",\n                    \"currency\": \"DOT\",\n                    \"numeric\": 44045175383,\n                    \"exp\": 10\n                }\n            ],\n            \"period\": \"845\",\n            \"validator\": \"138QdRbUTB9eNY94Q4Mj5r39FkgMiyHCAy8UFMNA5gvtrfSB\",\n            \"timestamp\": \"2022-09-25T15:36:18Z\"\n        },\n        {\n            \"accounts\": [\n                \"12m7XtVWZQuxTirqtzm2dm5J4r16vSQruPmahThMnskG8Bcp\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"3.6694634053 DOT\",\n                    \"currency\": \"DOT\",\n                    \"numeric\": 36694634053,\n                    \"exp\": 10\n                }\n            ],\n            \"period\": \"846\",\n            \"validator\": \"138QdRbUTB9eNY94Q4Mj5r39FkgMiyHCAy8UFMNA5gvtrfSB\",\n            \"timestamp\": \"2022-09-26T15:36:18Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"polkadot\",\n        \"period_unit\": \"era\"\n    }\n}"
-            }
-          ]
-        }
-      ],
-      "id": "88ce3dd9-3927-49bf-92ec-534c859bced7"
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "id": "dad06c44-b2c8-44e0-8d17-54c620d6e74c",
-        "type": "text/javascript",
-        "exec": [""]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "id": "222c157a-fec5-49fe-8365-ed12763168d2",
-        "type": "text/javascript",
-        "exec": [""]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "id": "92e0be42-7d25-42b2-8efc-6f0f8d24ae97",
-      "key": "ETH_REWARDS_HOST",
-      "value": "eth-rewards.datahub.figment.io",
-      "type": "string"
-    },
-    {
-      "id": "3ba5cbc7-c748-484e-813c-7cebdf670a48",
-      "key": "SOL_REWARDS_HOST",
-      "value": "solana-rewards.datahub.figment.io",
-      "type": "string"
-    },
-    {
-      "id": "ec5a5fb5-6485-4297-8aa2-613ceba8d7f8",
-      "key": "DOT_REWARDS_HOST",
-      "value": "polkadot-rewards.datahub.figment.io",
-      "type": "string"
-    },
-    {
-      "id": "5a6b5df7-68ad-4ffc-a92f-cd304f09d1db",
-      "key": "NEAR_REWARDS_HOST",
-      "value": "near-rewards.datahub.figment.io",
-      "type": "string"
-    }
-  ]
+	"info": {
+		"_postman_id": "06743fe3-0dcb-4fd5-8548-b27c8656ef07",
+		"name": "rewards-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ethereum",
+			"item": [
+				{
+					"name": "Rewards by epoch",
+					"id": "0fac7278-6e28-4af9-9af2-f7ca29b4abf0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\"\n    ], \n    \"start\": 151759,\n    \"end\": 151760\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
+						"description": "Returns gross validator rewards grouped by epoch\n\n## Request\n\n\\* `network`: `ethereum` _(Required)_  \n\\* `chain_id`: `mainnet` _(Required)_  \n\\* `accounts` takes an array of validator's public addresses. 50 max. _(Required)_  \n\\* `start` and `end` are epoch numbers (as integers). _(Required)_\n\n## Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data` : `epoch` here\n\n##### `data`\n\nis an array of objects - one for each period - containing:\n\n\\* `validator` returns the validator that distributed the rewards  \n\\* `period` is the epoch number (only present when no aggregation)  \n\\* `timestamp` is the timestamp of the end of the period  \n\\* `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this). `type` is either `staking` (for consensus layer rewards) or `tips` (for execution layer rewards). `recipient` is the address of the rewards recipient\n\n## Limitations\n\n\\* This API serves data for the last 7 days for epoch and 60 days for daily aggregation  \n\\* This API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n\n## FAQ\n\n\\* **Reward Types:** `staking` type rewards are the net aggregation of all consensus layer rewards: block proposal, attestation, sync committee and slashing.  \n\\* **Negative Rewards:** In theory, there could be a negative rewards amount for a day. But slashing events are rare. Current negative amounts would more likely be caused by repeatedly missing attestations and/or sync committee votes."
+					},
+					"response": [
+						{
+							"id": "ae29ee95-f7c7-4258-895d-26b490a841e8",
+							"name": "by epoch",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\"\n    ], \n    \"start\": 151759,\n    \"end\": 151760\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Oct 2022 14:03:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "746"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1998"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1998"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "49"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649999454"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.029536246 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 29536246000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"address\": \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\"\n                },\n                {\n                    \"text\": \"0.093912121905014256 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 93912121905014256,\n                    \"exp\": 18,\n                    \"type\": \"tips\",\n                    \"address\": \"0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5\"\n                }\n            ],\n            \"period\": \"151759\",\n            \"validator\": \"0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299\",\n            \"timestamp\": \"2022-10-06T23:38:48Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\",\n        \"period_unit\": \"epoch\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Rewards  by day",
+					"id": "bd90e4a8-c6be-4020-b25b-d6314eedac20",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\"\n    ], \n    \"start\": \"2022-09-20\",\n    \"end\": \"2022-09-21\",\n    \"aggregation\": \"daily\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
+						"description": "Returns gross validator rewards grouped by day (from midnight UTC to midnight UTC)\n\n#### Request\n\n\\* `network`: `ethereum` _(Required)_  \n\\* `chain_id`: `mainnet` _(Required)_  \n\\* `accounts` takes in an array of validator's public addresses. 50 max. _(Required)_  \n\\* `aggregation`: `daily` _(Required)_  \n\\* `start` and `end` are timestamps in the format \"YYYY-MM-DD\" _(Required)_\n\n#### Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data`: `daily` here\n\n##### `data`\n\nis an array of objects - one for each period - containing:  \n\\* `validator` returns the validator that distributed the rewards  \n\\* `timestamp` is the timestamp of the beginning of the day  \n\\* `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this). `type` is either `staking` (for consensus layer rewards) or `tips` (for execution layer rewards). `recipient` is the address of the rewards recipient\n\n#### Limitations\n\n\\* This API serves data for the last 7 days for epoch and 60 days for daily aggregation  \n\\* This API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n\n#### FAQ\n\n**Reward Types:** `staking` type rewards are the net aggregation of all consensus layer rewards: block proposal, attestation, sync committee and slashing.\n\n**Negative Rewards:** In theory, there could be a negative rewards amount for a day. But slashing events are rare. Current negative amounts would more likely be caused by repeatedly missing attestations and/or sync committee votes."
+					},
+					"response": [
+						{
+							"id": "48c45da5-2692-4c9a-aa2b-0cb043a57027",
+							"name": "by day",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0x93257a7d4f1e6998f019483f149a4dbe3bfc8b89358411be769aeedd943de907f178da1773aea9016d1ac2bdfe3794ba\"\n    ], \n    \"start\": \"2022-10-01\",\n    \"end\": \"2022-10-02\",\n    \"aggregation\": \"daily\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Oct 2022 14:03:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "568"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1997"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1997"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "21"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649999453"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"0x93257a7d4f1e6998f019483f149a4dbe3bfc8b89358411be769aeedd943de907f178da1773aea9016d1ac2bdfe3794ba\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.003111407 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 3111407000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"address\": \"0x93257a7d4f1e6998f019483f149a4dbe3bfc8b89358411be769aeedd943de907f178da1773aea9016d1ac2bdfe3794ba\"\n                }\n            ],\n            \"validator\": \"0x93257a7d4f1e6998f019483f149a4dbe3bfc8b89358411be769aeedd943de907f178da1773aea9016d1ac2bdfe3794ba\",\n            \"timestamp\": \"2022-10-01T00:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\",\n        \"period_unit\": \"daily\"\n    }\n}"
+						},
+						{
+							"id": "e37b5359-0ef6-4239-a019-56437650e088",
+							"name": "by day (with block proposal)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"network\": \"ethereum\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\"\n    ], \n    \"start\": \"2022-09-20\",\n    \"end\": \"2022-09-21\",\n    \"aggregation\": \"daily\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://eth-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Oct 2022 14:04:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "726"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1999"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1999"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "34"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649999452"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.0393619508575944 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 39361950857594400,\n                    \"exp\": 18,\n                    \"type\": \"tips\",\n                    \"address\": \"0xb646D87963Da1FB9D192Ddba775f24f33e857128\"\n                },\n                {\n                    \"text\": \"0.032147875 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 32147875000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"address\": \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\"\n                }\n            ],\n            \"validator\": \"0xb851b31a812f7dc8c844cb7470560cde02e3a04161430c56493ac96c6e2630b38e37b0d839b8640c56a2b09f2f20e5ab\",\n            \"timestamp\": \"2022-09-20T00:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\",\n        \"period_unit\": \"daily\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "c8594856-7151-4247-b205-e696c9ad12c8"
+		},
+		{
+			"name": "Solana",
+			"item": [
+				{
+					"name": "Rewards by epoch",
+					"id": "8c0f2da9-05df-4d16-bb5e-a2b6da83fff1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"network\": \"solana\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"2yoofMr4N78WPxVK8MU8Yy26dfRZbPw5WDzTRCA9uv95\"\n    ], \n    \"start\": 342,\n    \"end\": 343\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://solana-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
+						"description": "Returns net delegator rewards (post on-chain validator commission) by epoch\n\n## Request\n\n\\* `network` is `solana` _(Required)_  \n\\* `chain_id` is `mainnet` _(Required)_  \n\\* `accounts` is an array of stake accounts addresses _(Required)_  \n\\* `start` and `end` are epoch numbers, both inclusive. _(Required)_\n\n## Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data`: here it will be `epoch`\n\n##### `data`\n\nis an array of objects - one for each epoch - containing:\n\n\\* `validator` returns the validator that distributed the rewards  \n\\* `period` is the epoch number  \n\\* `timestamp` is the timestamp at the end of the epoch  \n\\* `rewards` is an array of objects containing `numeric` , `exp`, `currency` and `text`. The formula to compute the rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n## Limitations\n\n\\* The API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+					},
+					"response": [
+						{
+							"id": "98eb195c-380a-45ef-8a42-eff70f54f32b",
+							"name": "by epoch",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"network\": \"solana\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"2yoofMr4N78WPxVK8MU8Yy26dfRZbPw5WDzTRCA9uv95\"\n    ], \n    \"start\": 342,\n    \"end\": 343\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://solana-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Oct 2022 14:06:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "335"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1999"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1999"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "43"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649999577"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"2yoofMr4N78WPxVK8MU8Yy26dfRZbPw5WDzTRCA9uv95\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.001348938 SOL\",\n                    \"currency\": \"SOL\",\n                    \"numeric\": 1348938,\n                    \"exp\": 9\n                }\n            ],\n            \"period\": \"342\",\n            \"validator\": \"CcaHc2L43ZWjwCHART3oZoJvHLAe9hzT2DJNUpBzoTN1\",\n            \"timestamp\": \"2022-08-29T09:13:09Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"solana\",\n        \"period_unit\": \"epoch\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "45d9bd01-3412-4a81-823f-e7b96995696e"
+		},
+		{
+			"name": "NEAR",
+			"item": [
+				{
+					"name": "Rewards by epoch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bbf9b82d-b33e-46fc-b3dc-17779b157626",
+								"exec": [
+									"const schema = {",
+									"    \"type\": \"array\",",
+									"    \"items\": {",
+									"        \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"accounts\": {",
+									"                \"type\": \"array\",",
+									"                \"items\": {",
+									"                    \"type\": \"string\"",
+									"                }",
+									"            },",
+									"            \"chain_id\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"epoch\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"network\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"rewards\": {",
+									"                \"type\": \"array\",",
+									"                \"items\": {",
+									"                    \"type\": \"object\",",
+									"                    \"properties\": {",
+									"                        \"currency\": {",
+									"                            \"type\": \"string\"",
+									"                        },",
+									"                        \"exp\": {",
+									"                            \"type\": \"number\"",
+									"                        },",
+									"                        \"numeric\": {",
+									"                            \"type\": \"number\"",
+									"                        },",
+									"                        \"text\": {",
+									"                            \"type\": \"string\"",
+									"                        }",
+									"                    },",
+									"                    \"required\": [",
+									"                        \"currency\",",
+									"                        \"numeric\",",
+									"                        \"exp\",",
+									"                        \"text\"",
+									"                    ]",
+									"                }",
+									"            },",
+									"            \"time\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"validator\": {",
+									"                \"type\": \"string\"",
+									"            }",
+									"        },",
+									"        \"required\": [",
+									"            \"rewards\",",
+									"            \"epoch\",",
+									"            \"network\",",
+									"            \"validator\",",
+									"            \"time\",",
+									"            \"accounts\",",
+									"            \"chain_id\"",
+									"        ]",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"status code 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"validating schema\", function() {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "39a63b9d-567c-4943-b098-a0906cc50196",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"network\": \"near\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"figment.near\"\n    ], \n    \"start\": 75743490,\n    \"end\": 75743491\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://near-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
+						"description": "Returns net delegator rewards (post on-chain validator commission) by epoch\n\n## Request\n\n\\* `network` is `near` _(Required)_  \n\\* `chain_id` is `mainnet` _(Required)_  \n\\* `accounts` takes in an array of delegator accounts addresses _(Required)_  \n\\* `start` and `end` are epoch numbers, both inclusive. _(Required)_\n\n## Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data`\n\n##### `data`\n\nis an array of objects - one for each epoch - containing:\n\n\\* `validator` returns the validator that distributed the rewards  \n\\* `period` is the epoch number  \n\\* `timestamp` is the timestamp of the end of the epoch  \n\\* `rewards` is an array of objects with four components: `numeric` , `exp` and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n## Limitations\n\n\\* The API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+					},
+					"response": [
+						{
+							"id": "76c8a855-b24b-449f-b24e-af2485d8ae48",
+							"name": "by epoch",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"network\": \"near\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"figment.near\"\n    ], \n    \"start\": 75743490,\n    \"end\": 75743491\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://near-rewards.datahub.figment.io/v2/rewards"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Oct 2022 14:10:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "558"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "23"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1998"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1998"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649999437"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"figment.near\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"221.415622439422952523250579 NEAR\",\n                    \"currency\": \"NEAR\",\n                    \"numeric\": 2.21415622439422952523250579e+26,\n                    \"exp\": 24\n                }\n            ],\n            \"period\": \"75743490\",\n            \"validator\": \"figment.poolv1.near\",\n            \"timestamp\": \"2022-10-08T13:33:18.784283459Z\"\n        },\n        {\n            \"accounts\": [\n                \"figment.near\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0 NEAR\",\n                    \"currency\": \"NEAR\",\n                    \"numeric\": 0,\n                    \"exp\": 24\n                }\n            ],\n            \"period\": \"75743490\",\n            \"validator\": \"ledgerbyfigment.poolv1.near\",\n            \"timestamp\": \"2022-10-08T13:33:18.784283459Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"near\",\n        \"period_unit\": \"epoch\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "58f5dfe4-c1d8-445f-982d-84410fdd5d8a"
+		},
+		{
+			"name": "Polkadot",
+			"item": [
+				{
+					"name": "Rewards by era",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bbf9b82d-b33e-46fc-b3dc-17779b157626",
+								"exec": [
+									"const schema = {",
+									"    \"type\": \"array\",",
+									"    \"items\": {",
+									"        \"type\": \"object\",",
+									"        \"properties\": {",
+									"            \"accounts\": {",
+									"                \"type\": \"array\",",
+									"                \"items\": {",
+									"                    \"type\": \"string\"",
+									"                }",
+									"            },",
+									"            \"chain_id\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"epoch\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"network\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"rewards\": {",
+									"                \"type\": \"array\",",
+									"                \"items\": {",
+									"                    \"type\": \"object\",",
+									"                    \"properties\": {",
+									"                        \"currency\": {",
+									"                            \"type\": \"string\"",
+									"                        },",
+									"                        \"exp\": {",
+									"                            \"type\": \"number\"",
+									"                        },",
+									"                        \"numeric\": {",
+									"                            \"type\": \"number\"",
+									"                        },",
+									"                        \"text\": {",
+									"                            \"type\": \"string\"",
+									"                        }",
+									"                    },",
+									"                    \"required\": [",
+									"                        \"currency\",",
+									"                        \"numeric\",",
+									"                        \"exp\",",
+									"                        \"text\"",
+									"                    ]",
+									"                }",
+									"            },",
+									"            \"time\": {",
+									"                \"type\": \"string\"",
+									"            },",
+									"            \"validator\": {",
+									"                \"type\": \"string\"",
+									"            }",
+									"        },",
+									"        \"required\": [",
+									"            \"rewards\",",
+									"            \"epoch\",",
+									"            \"network\",",
+									"            \"validator\",",
+									"            \"time\",",
+									"            \"accounts\",",
+									"            \"chain_id\"",
+									"        ]",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"status code 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"validating schema\", function() {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "cbea2d15-b449-43bb-9a4a-c30a6d52a70d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"network\": \"polkadot\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"12m7XtVWZQuxTirqtzm2dm5J4r16vSQruPmahThMnskG8Bcp\"\n    ], \n    \"start\": 845,\n    \"end\": 847 \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://polkadot-rewards.datahub.figment.io/v2/apikey/{{API_KEY}}/rewards",
+						"description": "Returns net delegator rewards (post on-chain validator commission) by epoch\n\n## Request\n\n\\* `network` is `polkadot` _(Required)_  \n\\* `chain_id` is `mainnet` _(Required)_  \n\\* `accounts` takes in an array of stash accounts addresses _(Required)_  \n\\* `start` and `end` are era numbers, both inclusive. _(Required)_\n\n## Response\n\nThe response is broken down between `meta` and `data`\n\n##### `meta`\n\n\\* `network` is the same as in the request  \n\\* `period_unit` is the unit of the `period` field under `data`\n\n##### `data`\n\nis an array of objects - one for each era - containing:\n\n\\* `validator` returns the validator that distributed the rewards  \n\\* `period` is the era number  \n\\* `timestamp` is the timestamp of the end of the era  \n\\* `rewards` is an array of objects with four components: `numeric` , `exp` and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^-exp`(`text` is the string version of this)\n\n## Limitations\n\n\\* The API returns rewards for Figment validators only  \n\\* Data is available approximatively an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+					},
+					"response": [
+						{
+							"id": "8ae20a25-0da0-4770-ae0a-cedd96b179fd",
+							"name": "by era",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"network\": \"polkadot\",\n    \"chain_id\": \"mainnet\",\n    \"accounts\": [\n        \"12m7XtVWZQuxTirqtzm2dm5J4r16vSQruPmahThMnskG8Bcp\"\n    ], \n    \"start\": 845,\n    \"end\": 847\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://polkadot-rewards.datahub.figment.io/v2/rewards"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Oct 2022 14:12:18 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "637"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1999"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "43"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1999"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649998676"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"12m7XtVWZQuxTirqtzm2dm5J4r16vSQruPmahThMnskG8Bcp\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"4.4045175383 DOT\",\n                    \"currency\": \"DOT\",\n                    \"numeric\": 44045175383,\n                    \"exp\": 10\n                }\n            ],\n            \"period\": \"845\",\n            \"validator\": \"138QdRbUTB9eNY94Q4Mj5r39FkgMiyHCAy8UFMNA5gvtrfSB\",\n            \"timestamp\": \"2022-09-25T15:36:18Z\"\n        },\n        {\n            \"accounts\": [\n                \"12m7XtVWZQuxTirqtzm2dm5J4r16vSQruPmahThMnskG8Bcp\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"3.6694634053 DOT\",\n                    \"currency\": \"DOT\",\n                    \"numeric\": 36694634053,\n                    \"exp\": 10\n                }\n            ],\n            \"period\": \"846\",\n            \"validator\": \"138QdRbUTB9eNY94Q4Mj5r39FkgMiyHCAy8UFMNA5gvtrfSB\",\n            \"timestamp\": \"2022-09-26T15:36:18Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"polkadot\",\n        \"period_unit\": \"era\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "88ce3dd9-3927-49bf-92ec-534c859bced7"
+		},
+		{
+			"name": "Avalanche",
+			"item": [
+				{
+					"name": "Rewards by day",
+					"id": "3687b3ec-a458-4382-863b-262e21d64e82",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"network\": \"avalanche\",\n    \"accounts\": [\n        \"avax1na8x8j4yk5cwad3kgy6c9t2h2tpj2p2jljk92u\"\n    ], \n    \"start\": \"2022-10-01\",\n    \"end\": \"2022-10-08\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{AVAX_REWARDS_HOST}}/v2/apikey/{{API_KEY}}/rewards"
+					},
+					"response": [
+						{
+							"id": "186a29a0-2fa5-4f95-88c5-ef6578b51273",
+							"name": "Rewards by day",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"network\": \"avalanche\",\n    \"accounts\": [\n        \"avax1na8x8j4yk5cwad3kgy6c9t2h2tpj2p2jljk92u\"\n    ], \n    \"start\": \"2022-10-01\",\n    \"end\": \"2022-10-08\"\n}\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{AVAX_REWARDS_HOST}}/v2/apikey/{{API_KEY}}/rewards"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 14 Oct 2022 14:26:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "316"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1999"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1999"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "52"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "https://docs.figment.io"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "2499"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "52"
+								},
+								{
+									"key": "X-Quota-Limit-Minute",
+									"value": "2500"
+								},
+								{
+									"key": "X-Quota-Remaining-Minute",
+									"value": "2499"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "2500"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"avax1na8x8j4yk5cwad3kgy6c9t2h2tpj2p2jljk92u\"\n            ],\n            \"chain_id\": \"P\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.278488965 AVAX\",\n                    \"currency\": \"AVAX\",\n                    \"numeric\": 278488965,\n                    \"exp\": 9\n                }\n            ],\n            \"validator\": \"NodeID-KcCxyypJ5m55f17fbuzkKqeotY64DScum\",\n            \"timestamp\": \"2022-10-07T00:00:00Z\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"avalanche\",\n        \"period_unit\": \"daily\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"id": "0e26d119-f2e9-44cf-bd69-8d91bac17f8a"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "dad06c44-b2c8-44e0-8d17-54c620d6e74c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "222c157a-fec5-49fe-8365-ed12763168d2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "69e2dbdd-1811-4b99-9a82-b419fddd2cb2",
+			"key": "ETH_REWARDS_HOST",
+			"value": "eth-rewards.datahub.figment.io"
+		},
+		{
+			"id": "80eeb694-769a-4d39-b409-c93b94b9286c",
+			"key": "SOL_REWARDS_HOST",
+			"value": "solana-rewards.datahub.figment.io"
+		},
+		{
+			"id": "7bba6f5e-4953-43e4-af6a-4dca9d703d46",
+			"key": "DOT_REWARDS_HOST",
+			"value": "polkadot-rewards.datahub.figment.io"
+		},
+		{
+			"id": "958826f3-93b1-4fc7-8dc3-d2e7485af7a9",
+			"key": "NEAR_REWARDS_HOST",
+			"value": "near-rewards.datahub.figment.io"
+		},
+		{
+			"id": "e00ef07a-8c5e-4a9c-9df4-04b655211d17",
+			"key": "AVAX_REWARDS_HOST",
+			"value": "avalanche-rewards.datahub.figment.io"
+		}
+	]
 }

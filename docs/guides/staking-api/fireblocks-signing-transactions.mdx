@@ -1,5 +1,5 @@
 ---
-title: Signing Transactions with Fireblocks
+title: Signing Transactions with the Fireblocks API
 sidebar_position: 10
 pagination_next: null
 ---
@@ -7,3 +7,140 @@ pagination_next: null
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import Link from "@docusaurus/Link";
+
+:::caution important
+
+This guide assumes that you are familiar with using the <Link to="https://www.fireblocks.com/about/">Fireblocks</Link> API.
+Refer to their [Getting Started](https://docs.fireblocks.com/api/#getting-started) documentation for details.
+
+:::
+
+<br />
+
+To sign transactions with the Fireblocks API, first identify the `signing_payload` from the Staking API response, then submit it to the Fireblocks API.
+Fireblocks will return a signed transaction which can be used to complete the Staking API flow.
+
+## The Signing Payload
+
+The response from the Staking API contains the `signing_payload`, which is located in the signing action, in the `inputs` array under `signatures`.
+This `signing_payload` can be sent to the Fireblocks API as a raw message. Some networks such as Polkadot may require alteration of the `signing_payload` prior to submission.
+
+<details><summary>Click to view an example</summary>
+
+```json {10,22,29} title="Example Staking API response"
+{
+  "id": "8307b0d1-fc17-45b1-b540-2d9c31578d99",
+  "state": "deposit_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_deposit_tx",
+      "inputs": []
+    },
+    {
+      "name": "sign_deposit_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [],
+          "signers": ["0x7362cC429Fd2e2abB3F1217c660967E6Ed52B594"],
+          "transaction_payload": "0x02f901d605018459682f008459682f1882e83394ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120d446d3cfa7e6783d3963d66e37003e394d53282226489ec8ac62ce0560063f910000000000000000000000000000000000000000000000000000000000000030a7d2f0af53247c58acbbaf272e538aff10cdaa61490550882bb2095e3410cd9db46c86905c0d8df50fda3e62670a1549000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000287ab3d1da953b1a53b19f859dd902b5bbff79ca0000000000000000000000000000000000000000000000000000000000000060876409ab394841bbb8ab7f6f04641443f0ecc0f9c9800484f90c5c2795962b6426c66577853158d626a273ccc554e7341016fc094791d106f0880ccbdcdcf68017bc861286b0d5b03eaa04d65f5e834efdb4ec72114497ad61c50e5254d9e65bc0"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "signers": ["0x7362cC429Fd2e2abB3F1217c660967E6Ed52B594"],
+          "transaction_payload": "0x02f901d605018459682f008459682f1882e83394ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120d446d3cfa7e6783d3963d66e37003e394d53282226489ec8ac62ce0560063f910000000000000000000000000000000000000000000000000000000000000030a7d2f0af53247c58acbbaf272e538aff10cdaa61490550882bb2095e3410cd9db46c86905c0d8df50fda3e62670a1549000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000287ab3d1da953b1a53b19f859dd902b5bbff79ca0000000000000000000000000000000000000000000000000000000000000060876409ab394841bbb8ab7f6f04641443f0ecc0f9c9800484f90c5c2795962b6426c66577853158d626a273ccc554e7341016fc094791d106f0880ccbdcdcf68017bc861286b0d5b03eaa04d65f5e834efdb4ec72114497ad61c50e5254d9e65bc0",
+          "signing_payload": "0xfa2fde357ca51a2f2c2b9aab0b00451d0b7ba8772837b2c6fab7a5371d9a509e"
+        }
+      ]
+    }
+  ],
+  "data": {
+    "funding_account_address": "0x7362cC429Fd2e2abB3F1217c660967E6Ed52B594",
+    "validator_pub_key": "0xa7d2f0af53247c58acbbaf272e538aff10cdaa61490550882bb2095e3410cd9db46c86905c0d8df50fda3e62670a1549",
+    "withdrawal_credentials": "0x010000000000000000000000287ab3d1da953b1a53b19f859dd902b5bbff79ca",
+    "signature": "0x876409ab394841bbb8ab7f6f04641443f0ecc0f9c9800484f90c5c2795962b6426c66577853158d626a273ccc554e7341016fc094791d106f0880ccbdcdcf68017bc861286b0d5b03eaa04d65f5e834efdb4ec72114497ad61c50e5254d9e65b",
+    "deposit_data_root": "0xd446d3cfa7e6783d3963d66e37003e394d53282226489ec8ac62ce0560063f91",
+    "amount": "32.0",
+    "gas_price": null,
+    "gas_limit": null,
+    "deposit_transaction": {
+      "raw": "0x02f901d605018459682f008459682f1882e83394ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120d446d3cfa7e6783d3963d66e37003e394d53282226489ec8ac62ce0560063f910000000000000000000000000000000000000000000000000000000000000030a7d2f0af53247c58acbbaf272e538aff10cdaa61490550882bb2095e3410cd9db46c86905c0d8df50fda3e62670a1549000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000287ab3d1da953b1a53b19f859dd902b5bbff79ca0000000000000000000000000000000000000000000000000000000000000060876409ab394841bbb8ab7f6f04641443f0ecc0f9c9800484f90c5c2795962b6426c66577853158d626a273ccc554e7341016fc094791d106f0880ccbdcdcf68017bc861286b0d5b03eaa04d65f5e834efdb4ec72114497ad61c50e5254d9e65bc0",
+      "signing_payload": "0xfa2fde357ca51a2f2c2b9aab0b00451d0b7ba8772837b2c6fab7a5371d9a509e",
+      "signed": null,
+      "hash": null,
+      "status": null,
+      "error": null,
+      "signatures": null
+    }
+  },
+  "network_code": "ethereum",
+  "chain_code": "goerli-prater",
+  "created_at": "2022-08-04T03:56:12.111Z",
+  "updated_at": "2022-08-04T04:11:54.830Z"
+}
+```
+
+</details>
+
+:::info note
+
+In comparison, the `transaction_payload` is what would need to be signed if you control the private keys for the signing account(s). Follow the guide <Link to="/guides/staking-api/figment-signing-transactions">Signing Transactions with Figment's npm Package</Link> for more information.
+
+:::
+
+## Sending Payloads to the Fireblocks API
+
+Fireblocks transaction objects have a [`RawMessageData`](https://docs.fireblocks.com/api/?javascript#rawmessagedata) property, which can be passed an array of [`UnsignedRawMessage`](https://docs.fireblocks.com/api/?javascript#unsignedrawmessage) objects.
+
+When sending the `signing_payload` from a Staking API flow to the Fireblocks API for signing, the `extraParameters.rawMessageData.messages[].content` property of the Fireblocks transaction object is where you want to insert the `signing_payload`.
+
+The Fireblocks API will return a [`signedMessages[]`](https://docs.fireblocks.com/api/#signedmessage) array, containing the required signatures.
+
+## Sending Signatures to the Staking API
+
+When sending the signed result back to Figment's Staking API, you must pass the `signatures` as the `inputs`.
+
+`signatures` is an array of objects, each containing:
+
+- `account_address` &mdash; The signer.
+- `signature` &mdash; The `signedMessages[].signature.fullsig` from Fireblocks.
+
+```bash {7-12} title="Sample cURL Request"
+curl -X PUT 'https://eth-slate.datahub.figment.io/api/v1/flows/8307b0d1-fc17-45b1-b540-2d9c31578d99/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "sign_deposit_tx",
+  "inputs": {
+    "signatures": [
+        {
+          "account_address": "",
+          "signature": ""
+        }
+    ]
+  }
+}'
+```
+
+:::info note
+
+When sending the signed result back to Figment's Staking API, you should have one object for each result received from Fireblocks (`N` responses == `N` `signatures[]<account_address, signature>` pairs).
+
+:::
+
+## Polkadot Specifics
+
+If the transaction you are signing is part of a Polkadot flow, you must remove the leading `00` from the `signing_payload` before sending it to the Fireblocks API.
+
+When sending the resulting `signature` from Fireblocks to the Staking API, you must prepend `0x00` to the `signedMessages[].signature.fullsig` value.
+
+## References
+
+- [Fireblocks API Reference](https://docs.fireblocks.com/api)

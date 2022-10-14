@@ -3,7 +3,7 @@ title: Submit a Signed Remove Proxy Transaction for Broadcast
 slug: /guides/staking-api/polkadot/remove-staking-proxy/submit-signed-transaction
 ---
 
-After signing the transaction, send a PUT request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
@@ -27,7 +27,7 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/060252ff-19a
 
 ### Response
 
-With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be one of:
+With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
 
 - `remove_proxy_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting confirmation.
 - `removed` &mdash; Transaction has been confirmed and the proxy is revoked.

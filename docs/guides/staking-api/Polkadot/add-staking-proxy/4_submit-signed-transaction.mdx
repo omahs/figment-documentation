@@ -3,7 +3,7 @@ title: Submit Signed Add Proxy Transaction for Broadcast
 slug: /guides/staking-api/polkadot/add-staking-proxy/submit-signed-transaction
 ---
 
-After signing the transaction, you will `PUT /api/v1/flows/[:flow_id]/next` (as always!) and the Staking API will manage broadcasting the transaction to the Polkadot network.
+After signing the transaction, you will `PUT /api/v1/flows/[:flow_id]/next` (as always!) and the Staking API will broadcast the transaction to the Polkadot network.
 
 ### Parameters
 
@@ -27,7 +27,7 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/0bfcc570-57d
 
 ### Response
 
-With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be one of:
+With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
 
 - `add_proxy_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting confirmation.
 - `registered` &mdash; Transaction has been confirmed and the proxy is complete.

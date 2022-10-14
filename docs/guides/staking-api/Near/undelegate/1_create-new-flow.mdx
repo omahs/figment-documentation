@@ -3,7 +3,7 @@ title: Create New Undelegation Flow
 slug: /guides/staking-api/near/undelegate/create-new-flow
 ---
 
-To initiate the undelegation process, create a new flow with a POST request to `/api/v1/flows`.
+To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.
 
 ### Parameters
 
@@ -44,7 +44,7 @@ The `create_undelegate_tx` action indicates six fields for data collection:
 - `delegator_pubkey` &mdash; The public key of the signing account.
 - `validator_address` &mdash; Validator address from which NEAR will be undelegated.
 - `undelegate_amount` &mdash; The amount of NEAR to be undelegated.
-- `undelegate_maximum` &mdash; Set to true if you wish to unbond the full delegated balance without needing to know the exact delegated balance.
+- `undelegate_maximum` &mdash; Set to `true`if you wish to unbond the full delegated balance without needing to know the exact delegated balance.
 - `max_gas` &mdash; Adjust if you wish to limit the possible transaction fee.
 
 #### Sample Response

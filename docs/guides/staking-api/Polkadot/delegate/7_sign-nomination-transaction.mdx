@@ -3,21 +3,21 @@ title: Sign the Nomination Transaction
 slug: /guides/staking-api/polkadot/delegate/sign-nomination-transaction
 ---
 
-After successfully submiting the staking account data, in reasponse you have received the `transaction_payload`, you'll be using this `transaction_payload` to sign the transaction for confirmation.
+After successfully submitting the staking account data, in reasponse you have received the `transaction_payload`, you'll be using this `transaction_payload` to sign the transaction for confirmation.
 
-`transaction_payload` look something like this -
+`transaction_payload` look something like this:
 
 ```json
 "transaction_payload": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e0000000000000000000000000000000000000000000000000000000000000000000000000006050400f268995cc38974ce0686df1364875f26f2c32b246ddc18835512c3f9969f58361c77657374656e64387061726974792d77657374656e64020000004a2400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0200000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a801000000f3ff14d5ab5270590100000017a6bc0d0062aeb3010000000c0000000004"
 ```
 
-Figment has a tool for signing and decoding payloads, see the guide [HERE](/guides/staking-api/figment-signing-transactions) to continue.
+Figment has a tool for signing and decoding payloads: see the guide [HERE](/guides/staking-api/figment-signing-transactions).
 
-OR you can sign transaction using the [Polkadot JS Tools](https://wiki.polkadot.network/docs/build-transaction-construction) or [Fireblocks](/guides/staking-api/fireblocks-signing-transactions).
+You may also sign the transaction using the [Polkadot JS Tools](https://wiki.polkadot.network/docs/build-transaction-construction) or [Fireblocks](/guides/staking-api/fireblocks-signing-transactions).
 
-Once you sign the transaction successfully you'll get the signed transaction payload in response which you'll need in next step so make sure to copy/save it.
+Once you sign the transaction successfully, you'll get the signed transaction payload in response which you'll need in next step so make sure to copy/save it.
 
-Signed transaction payload will look something like this -
+The signed transaction payload will look something like this:
 
 ```bash
 0x290284009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a3166601ee8b719a3b17e67a5918ccd7552ec57bfa9f2b1e94ef04121434f1fc10fb413df73dd29b931bb91612e87f6c9c3abaa2bfbb2d6e1a987c08e55d1dcf4edfd78500000006050400f268995cc38974ce0686df1364875f26f2c32b246ddc18835512c3f9969f5836
@@ -27,6 +27,6 @@ This part is all on you! Get that transaction signed and move on to the next ste
 
 :::caution important
 
-At this point, it is best practice to always confirm the details of the transaction, which can be done using our provided [NPM package](https://www.npmjs.com/package/@figmentio/slate) or CLI tool.
+Always confirm the details of the transaction, which can be done using our provided [npm package](https://www.npmjs.com/package/@figmentio/slate) or CLI tool.
 
 :::

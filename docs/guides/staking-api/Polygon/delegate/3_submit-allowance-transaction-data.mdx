@@ -3,7 +3,7 @@ title: Submit Staking Allowance Data
 slug: /guides/staking-api/polygon/delegate/submit-staking-allowance-data
 ---
 
-After collecting the required inputs, send a PUT request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
@@ -33,12 +33,12 @@ In this response you can find the unsigned, serialized transaction in `data[crea
 
 There are two possible `actions`:
 
-- `refresh_allowance_tx` &mdash; If you need to get a fresh version of the transaction Payload.
-- `sign_allowance_tx` &mdash; Submit a signed transaction Payload ready to be broadcast to the network.
+- `refresh_allowance_tx` &mdash; If you need to get a fresh version of the transaction payload.
+- `sign_allowance_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
 
 We will chose `sign_allowance_tx`, so note that it indicates one Input to collect:
 
-- `transaction_payload` &mdash; the signed transaction Payload ready to be broadcast to the network.
+- `transaction_payload` &mdash; the signed transaction payload ready to be broadcast to the network.
 
 #### Sample Response
 
@@ -104,4 +104,8 @@ We will chose `sign_allowance_tx`, so note that it indicates one Input to collec
 }
 ```
 
-The `transaction_payload` you've received in the response make sure to copy/save it because you'll require it in the next step to sign the transaction.
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

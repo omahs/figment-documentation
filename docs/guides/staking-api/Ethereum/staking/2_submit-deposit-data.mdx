@@ -3,18 +3,18 @@ title: Submit Deposit Data
 slug: /guides/staking-api/ethereum/staking/submit-deposit-data
 ---
 
-After collecting the required Inputs, we `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.
+After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.
 
 ### Parameters
 
 - `name` &mdash; `string` Name of the action to execute (required).
 - `inputs` &mdash; `array` (required).
-  - `funding_account_address` &mdash; `string` The wallet ETH will be originating from (required).
-  - `validator_pub_key` &mdash; `string` The public key of the validator that the ETH is to be deposited to. (required).
+  - `funding_account_address` &mdash; `string` The wallet from which the ETH will originate. (required).
+  - `validator_pub_key` &mdash; `string` The public key of the validator to which the ETH will be deposited. (required).
   - `withdrawal_credentials` &mdash; `string` The withdrawal address for the given validator. (required).
-  - `signature` &mdash; `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pub_key` is known by the signer (required).
-  - `deposit_data_root` &mdash; `string` Uniquely identifies the set of deposits made so far (required).
-  - `amount` &mdash; `number` Number of tokens you want to delegate (required).
+  - `signature` &mdash; `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pub_key` is known by the signer. (required).
+  - `deposit_data_root` &mdash; `string` Uniquely identifies the set of deposits made so far. (required).
+  - `amount` &mdash; `number` Number of tokens you want to delegate. (required).
   - `gas_price` &mdash; `string` Adjust the gas price (optional).
   - `gas_limit` &mdash; `string` Adjust the gas limit (optional).
 
@@ -42,11 +42,11 @@ Note that in this response you can find the unsigned, serialized transaction in 
 The response indicates two possible `actions` :
 
 - `refresh_deposit_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
-- `sign_deposit_tx` &mdash; Submit a signed transaction Payload ready to be broadcast to the network.
+- `sign_deposit_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
 
-We will choose `sign_deposit_tx`, which indicates one Input to collect:
+We will choose `sign_deposit_tx`, which indicates one input to collect:
 
-- `transaction_payload` &mdash; The signed transaction Payload ready to be broadcast to the network.
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
 
 #### Sample Response
 

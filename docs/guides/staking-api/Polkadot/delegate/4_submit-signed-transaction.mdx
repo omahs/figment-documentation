@@ -3,7 +3,7 @@ title: Submit Signed Bonding Transaction for Broadcast
 slug: /guides/staking-api/polkadot/delegate/submit-signed-bonding-transaction
 ---
 
-After signing the transaction, send a PUT request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the network.
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the network.
 
 ### Parameters
 
@@ -29,7 +29,7 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/90a28f6e-09b
 
 With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be `bonding_tx_broadcasting`.
 
-Upon transaction finalization, the bond will be complete and you can move on to the next step - The nomination transaction!
+Upon transaction finalization, the bond will be complete and you can move on to the next step—the nomination transaction!
 
 #### Sample Response
 

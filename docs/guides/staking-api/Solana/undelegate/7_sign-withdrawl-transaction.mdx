@@ -3,9 +3,9 @@ title: Sign the Withdrawal Transaction
 slug: /guides/staking-api/solana/undelegate/sign-withdrawal-transaction
 ---
 
-After successfully submiting the withdrawal transaction data, in reasponse you have received the `transaction_payload`, you'll be using this `transaction_payload` to sign the transaction for un-delegation.
+After successfully submiting the withdrawal transaction data, in response you have received the `transaction_payload`, you'll be using this `transaction_payload` to sign the transaction for undelegation.
 
-`transaction_payload` look something like this -
+`transaction_payload` look something like this:
 
 ```json
 "transaction_payload": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534d57c96845584709596f8fb1e1be584d1be3e8f258cdba157ab5a3cb8397e712606a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff4000000b95f34bc063f1d5ef7fcc5d933bb8a74093e6bda9fa84e5c406a4a85fd76450001020501000304000c04000000002f685900000000"
@@ -17,7 +17,7 @@ OR you can sign transaction using the [Solana CLI](https://docs.solana.com/offli
 
 Once you sign the transaction successfully you'll get the signed transaction payload in response which you'll need in next step so make sure to copy/save it.
 
-Signed transaction payload will look something like this -
+Signed transaction payload will look something like this:
 
 ```bash
 0119aad039c7256d8d84780b612471e19df5b80a64b9540dd1844afe5069fbf9755fdefd83fb43ba1b0ce6df7e5003a5d86486bfcbdd3dc85881608b0ada77c10c01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534d57c96845584709596f8fb1e1be584d1be3e8f258cdba157ab5a3cb8397e712606a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff4000000b95f34bc063f1d5ef7fcc5d933bb8a74093e6bda9fa84e5c406a4a85fd76450001020501000304000c04000000002f685900000000
@@ -27,6 +27,6 @@ This part is all on you! Get that transaction signed and move on to the next ste
 
 :::caution important
 
-At this point, it is best practice to always confirm the details of the transaction, which can be done using our provided [NPM package](https://www.npmjs.com/package/@figmentio/slate) or CLI tool.
+Always confirm the details of the transaction, which can be done using our provided [npm package](https://www.npmjs.com/package/@figmentio/slate) or CLI tool.
 
 :::

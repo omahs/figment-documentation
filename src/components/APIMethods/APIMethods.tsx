@@ -13,6 +13,7 @@ interface Props {
   interactive: boolean;
   request: RequestObject;
   response: ResponseObject;
+  endpoint: string;
 }
 
 function APIMethod({
@@ -22,6 +23,7 @@ function APIMethod({
   request,
   accordionOpen = false,
   response,
+  endpoint,
 }: Props) {
   if (["Rewards (by epoch)", "Rewards (daily)"].includes(name)) {
     request.body = {
@@ -34,6 +36,7 @@ function APIMethod({
       end_time: new Date().toISOString().split("T")[0],
     };
   }
+
   return (
     <>
       <h2
@@ -46,14 +49,19 @@ function APIMethod({
 
       <Description content={content} accordionOpen={accordionOpen} />
 
-      <CodeExample req={request} res={response} interactive={interactive} />
+      <CodeExample
+        req={request}
+        res={response}
+        interactive={interactive}
+        endpoint={endpoint}
+      />
 
       <hr />
     </>
   );
 }
 
-export default function APIMethods({ network, methods, service }) {
+export default function APIMethods({ network, methods, service, proxy }) {
   return (
     <>
       <h3>Available Methods</h3>
@@ -61,6 +69,7 @@ export default function APIMethods({ network, methods, service }) {
         <APIMethod
           key={network + index}
           {...method}
+          endpoint={`${proxy}/${service}/${network}`}
           accordionOpen={service !== "node-api"}
         />
       ))}

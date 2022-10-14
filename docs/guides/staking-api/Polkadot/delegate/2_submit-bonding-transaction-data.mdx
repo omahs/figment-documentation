@@ -3,13 +3,13 @@ title: Submit Bonding Transaction Data
 slug: /guides/staking-api/polkadot/delegate/submit-bonding-transaction-data
 ---
 
-After collecting the required inputs, send a PUT request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+After creating a new staking flow, submit the staking account data. Collect the required inputs. Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
 - `name` &mdash; `string` Name of the action to execute (required).
 - `inputs` &mdash; `object`
-  - `controller_account_address` &mdash; `string` Address of the wallet DOT will be bonded to (required).
+  - `controller_account_address` &mdash; `string` Address of the wallet to which the DOT will be bonded (required).
   - `controller_proxy_account_address` &mdash; `string` A proxy account that will sign on behalf of the controller account (optional).
   - `stash_account_address` &mdash; `string` Primary wallet from which DOT will be bonded. Cannot have a zero balance (required).
   - `stash_proxy_account_address` &mdash; `string` A proxy account that will sign on behalf of the controller account (optional).
