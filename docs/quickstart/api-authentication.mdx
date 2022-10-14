@@ -20,9 +20,9 @@ If your app makes any cross-origin requests, you must also have an [Allowed Orig
 
 :::caution
 
-To maintain the security of your API keys, we recommend you to always use [**HTTPS**](https://www.cloudflare.com/en-ca/learning/ssl/what-is-https/).
+To maintain the security of your API keys, we recommend you to always use <Link to="https://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</Link> (TLS), meaning [**WSS**](https://developers.cloudflare.com/workers/learning/using-websockets/) or [**HTTPS**](https://www.cloudflare.com/en-ca/learning/ssl/what-is-https/) protocols.
 
-Keep in mind that API keys sent over **HTTP** are insecure, regardless of the method used.
+Keep in mind that traffic sent over **WS** or **HTTP** protocols are not secure, regardless of the method used.
 
 :::
 

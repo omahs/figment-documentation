@@ -2,6 +2,7 @@
 title: Proxy Requests to Figment APIs
 ---
 
+import Link from "@docusaurus/Link";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import CodeBlock from "@theme/CodeBlock";
@@ -14,15 +15,45 @@ import img5 from "@site/static/img/guides/proxy-requests/env_vars.png";
 import img6 from "@site/static/img/guides/proxy-requests/quick_edit.png";
 import img7 from "@site/static/img/guides/proxy-requests/code_editor.png";
 import img8 from "@site/static/img/guides/proxy-requests/save_and_deploy.png";
+import img9 from "@site/static/img/guides/proxy-requests/cloudflare_request.png";
 
-<!-- <Tabs><TabItem value="cloudflare" label="Cloudflare Workers Example"> -->
+This guide will show you how to protect your Figment API keys by setting up a serverless proxy.
 
-Learn how to protect your Figment API keys by setting up a proxy using Cloudflare workers.
+## Security Overview
 
-## Cloudflare Setup
+A proactive approach to securing sensitive information such as API keys is an important consideration when building a web application.
 
-1. Create a [Cloudflare](https://cloudflare.com) account and log into the Cloudflare Dashboard.
-2. From the Workers tab, click the "Create a Service" button.
+When sending requests to Figment APIs, the traffic must be authorized by passing your API key via the `Authorization` HTTP header. See the quick start guide on <Link to="/quickstart/api-authentication">API Authentication</Link> for details.
+
+We don't want to store API keys in our codebase, where they would be vulnerable to accidental exposure.
+Instead, we can store the API key in an encrypted form on Cloudflare where it will be accessible to the Service Workers API, but not the client making requests via a web browser.
+
+It's important to maintain awareness of the security considerations for the environment in which you're operating.
+Best practices for development tend not to work in production.
+The code example we've provided in the guide below is not guaranteed to be production ready, but with some adaptation it can cover a wide variety of use cases.
+
+Cloudflare Service Workers are "built on the <Link to="https://v8.dev/">V8 JavaScript engine</Link>, which is arguably the most scrutinized code sandbox in the history of computing, and the Chrome security team is one of the best in the world."\*
+
+:::caution
+
+To maintain the security of your API keys, we recommend you to always use <Link to="https://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</Link> (TLS), meaning [**WSS**](https://developers.cloudflare.com/workers/learning/using-websockets/) or [**HTTPS**](https://www.cloudflare.com/en-ca/learning/ssl/what-is-https/) protocols.
+
+Keep in mind that traffic sent over **WS** or **HTTP** protocols is not secure, regardless of the method used.
+
+Read more about the <Link to="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSockets API</Link>.
+
+:::
+
+## Cloudflare Service Worker Setup
+
+#### Prerequisites
+
+- A working knowledge of JavaScript.
+- Create a [Cloudflare](https://cloudflare.com) account if you do not already have one, sign in to the Cloudflare Dashboard.
+
+### Create a new Service
+
+1. From the Workers Overview tab, click the "Create a Service" button.
 
 <img
   src={img1}
@@ -31,7 +62,7 @@ Learn how to protect your Figment API keys by setting up a proxy using Cloudflar
   className="shadow--tl inline-image"
 />
 
-3. Give the service a name, then click the "Create service" button.
+2. Give the service a name, then click the "Create service" button.
 
 <img
   src={img2}
@@ -40,9 +71,9 @@ Learn how to protect your Figment API keys by setting up a proxy using Cloudflar
   className="shadow--tl inline-image"
 />
 
-<br />
+### Add Environment Variables to Cloudflare
 
-4. From the Settings tab of that worker, add the necessary environment variables.
+3. From the Settings tab of that worker, add the necessary environment variables.
 
 <img
   src={img3}
@@ -51,9 +82,9 @@ Learn how to protect your Figment API keys by setting up a proxy using Cloudflar
   className="shadow--tl inline-image"
 />
 
-- Add an environment variable named `API_KEY`. Click "Encrypt" when you've set the value of `API_KEY`. It is hidden from the frontend, but still accessible from the context of the worker.
-- Add an environment variable named `ALLOWED_ORIGINS`. The values must be in an array, and it must include `null` if you need to proxy from outside of a web browser. i.e., `["docs.figment.io", null]`
-- Add an environment variable named `PROXY_ORIGIN`. The value must be the URL where the worker is deployed. i.e., `https://proxy.username.workers.dev`.
+- Add an environment variable named `API_KEY`. Click the "Encrypt" button once you've set the value of `API_KEY`. The key will be hidden in the Cloudflare UI, but still accessible within the worker.
+- Add an environment variable named `ALLOWED_ORIGINS`. The values must be enclosed in quotes, in an array (`["docs.figment.io"]`). Requests from outside of a web browser will not include an `Origin`. Include the value `null`, without quotes if you intend to make requests from a non-browser environment (`["docs.figment.io", null]`) .
+- Add an environment variable named `PROXY_ORIGIN`. The value must be the URL where the worker is deployed (ex. `https://proxy.yourusername.workers.dev`). If you have set up a custom domain in Cloudflare, use that instead.
 
 <img
   src={img4}
@@ -69,7 +100,9 @@ Learn how to protect your Figment API keys by setting up a proxy using Cloudflar
   className="shadow--tl inline-image"
 />
 
-5. Click on the "Quick edit" button, then copy and paste the code below into the code editor on the left side of the page.
+### Add Proxy Code to Cloudflare Worker
+
+4. Click on the "Quick edit" button, then copy and paste the code below into the code editor on the left side of the page.
 
 <img
   src={img6}
@@ -78,7 +111,30 @@ Learn how to protect your Figment API keys by setting up a proxy using Cloudflar
   className="shadow--tl inline-image"
 />
 
-<details><summary>Click to view example JavaScript code</summary>
+6. Save and Deploy the code explained below to the worker, making any adjustments required by your specific use case.
+
+<img
+  src={img8}
+  width="400"
+  alt="Save and Deploy"
+  className="shadow--tl inline-image"
+/>
+
+You can now send requests to Figment APIs and pass responses back to the client without exposing your API keys!
+
+<br />
+
+:::note
+
+Use the example code we've supplied as a starting point for your own proxy.
+
+Continue with the explanation below or proceed to the <Link to="#testing-and-troubleshooting">Testing and Troubleshooting</Link> section.
+
+:::
+
+## Code Explanation
+
+<details><summary>Click here to view the full example proxy, ≈200 lines of code. Each function has JSDoc comments for convenience.</summary>
 
 ```js
 const env = {
@@ -227,10 +283,10 @@ function getPreflightResponse(request) {
 }
 
 /**
- * Establishes a websocket connection and returns response containing ws client
+ * Establishes WebSocket connection and returns response containing ws client
  * @param {string} url - the figment api url
  * @throws {Response} relays status and statusText if connection fails
- * @returns {Response} with required websocket client
+ * @returns {Response} with required WebSocket client
  */
 async function getWebsocketConnection(url) {
   const result = await fetch(url, {
@@ -309,19 +365,278 @@ addEventListener("fetch", function handleFetch(event) {
 
 </details>
 
-6. Save and Deploy the code to the worker.
+<br />
 
-<img
-  src={img8}
-  width="400"
-  alt="Save and Deploy"
-  className="shadow--tl inline-image"
-/>
+<details><summary>Click here to view details about the environment variables</summary>
 
-7. You can now send requests to Figment APIs and pass responses back to the client without exposing your API keys!
+:::info
 
-<!-- </TabItem></Tabs> -->
+The `env` constant contains the values of the Cloudflare environment variables `API_KEY`, `ALLOWED_ORIGINS`, `PROXY_ORIGIN` as well as a list of `ALLOWED_METHODS` and `HOSTS`.
+
+It is also useful to define hostnames for the Figment API endpoints to which we would be sending requests, separated by their protocol &mdash; either WebSocket Secure (`wss`) or SSL (`https`).
+
+`HOSTS` separates `wss` and `https` hostnames, and places them into each applicable service. Figment provides access to infrastructure that is managed by a world class DevOps team. One such API is the Node API, allowing clients to communicate directly with Proof-of-Stake networks.
+
+Hence, `env.HOSTS['wss']['node-api'][0]` would refer to the Arbitrum hostname.
+:::
+
+```js {2,3,4,5,6} title="Note: ... indicates where values were removed for display"
+const env = {
+  API_KEY: API_KEY,
+  ALLOWED_ORIGINS: JSON.parse(ALLOWED_ORIGINS),
+  PROXY_ORIGIN: PROXY_ORIGIN,
+  ALLOWED_METHODS: ["POST", "GET", "OPTIONS"],
+  HOSTS: {
+    wss: {
+      "node-api": {
+        arbitrum: "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
+        ...
+      }
+      ...
+    },
+    https: {
+      "node-api": {
+        arbitrum: "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
+        ...
+      }
+      ...
+    },
+  },
+};
+```
+
+</details>
+
+<br />
+
+`buildURL` processes an inbound request, returning the completed URL to be queried. This will be the Figment API endpoint, including the route.
+
+- `protocol` in this scope will be `wss` or `https`. Based on the presence of an `Upgrade` header, we know if the incoming connection is requesting to be upgraded to a WebSocket. Each protocol is handled separately.
+- `services` in this scope will be one of the defined keys in `HOSTS`, assigned to either protocol &mdash; ex. `node-api`
+- `routes` are passed via the request URL, they indicate which Figment API endpoint to query. For example, `/solana/node-api` would direct the request to the `HOSTS` value for that network and service.
+
+<details><summary>Click here to view the code.</summary>
+
+```js
+function buildURL(request) {
+  const [base, network, service, ...routes] =
+    request.url.split(/(?<!\/)\/(?!\/)/g);
+  const protocol =
+    request.headers.get("Upgrade") === "websocket" ? "wss" : "https";
+  const services = env.HOSTS[protocol][service];
+  const url = services ? services[network] : null;
+  if (!url) {
+    throw new Response(
+      `service '${service}' for network '${network}' could not be found`,
+      {
+        status: 500,
+        statusText: `Invalid network`,
+      }
+    );
+  }
+  return new URL(`${protocol}://${url}/${routes.join("/")}`);
+}
+```
+
+</details>
+
+<br />
+
+We want to restrict access to the proxy to `Origins` and methods which are explicitly allowed.
+If the request does not meet these criteria, or if there is an error, we will respond to the request with the appropriate <Link to="/guides/response-codes-and-error-codes">`4xx` status codes</Link>.
+
+<details><summary>Click here to view the code.</summary>
+
+```js
+function ensureAuthorized(request) {
+  let error;
+
+  if (!env.ALLOWED_ORIGINS.includes(request.headers.get("Origin"))) {
+    error = {
+      message: `Origin ${request.headers.get("Origin")} not allowed`,
+      status: 405,
+      statusText: "Not Allowed",
+    };
+  } else if (!env.ALLOWED_METHODS.includes(request.method)) {
+    error = {
+      message: `Method ${request.method} not allowed`,
+      status: 405,
+      statusText: "Not Allowed",
+    };
+  }
+
+  if (error) {
+    throw new Response(error.message, {
+      status: 403,
+      statusText: `Not allowed`,
+    });
+  }
+}
+```
+
+</details>
+
+<br />
+
+Handle **C**ross **O**rigin **R**esource **S**haring (CORS) requests by responding with the appropriate headers.
+
+All CORS preflight requests use the `OPTIONS` method but not all `OPTIONS` requests are CORS preflight requests.
+
+What this means in practice is that we must treat all `OPTIONS` requests as CORS preflight requests.
+
+CORS Resources:
+
+- [Quick Start: Settings and Security](/quickstart/settings-and-security#app-security-settings)
+- [Troubleshooting CORS Errors](/guides/troubleshoot-cors-errors)
+
+<details><summary>Click here to view the code.</summary>
+
+```js
+function getPreflightResponse(request) {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Headers":
+        request.headers.get("Access-Control-Request-Headers") || "",
+      "Access-Control-Allow-Origin": request.headers.get("Origin") || "",
+      "Access-Control-Allow-Methods": env.ALLOWED_METHODS.join(","),
+      "Access-Control-Max-Age": "86400",
+    },
+  });
+}
+```
+
+</details>
+
+<br />
+
+`getWebsocketConnection` handles WebSocket traffic by upgrading the connection, accepting the request, creating a client/server pair, and then `addEventListener` can pass the messages between the client and server.
+A successful response must always return status code `101 Switching Protocols`. Read more about the status code, WebSockets and WebSocket security in the <Link to="#references">Reference section</Link> at the end of the guide.
+
+<details><summary>Click here to view the code.</summary>
+
+```js
+async function getWebsocketConnection(url) {
+  const result = await fetch(url, {
+    headers: {
+      Upgrade: "websocket",
+      Authorization: env.API_KEY,
+    },
+  });
+
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101
+  if (result.status !== 101) {
+    throw new Response(null, {
+      status: result.status,
+      statusText: result.statusText,
+    });
+  }
+
+  // Accept the WebSocket connection
+  const websocket = result.webSocket;
+  websocket.accept();
+
+  // Create a client/server to act as the proxy layer
+  const clientServerPair = new WebSocketPair();
+  const [client, server] = Object.values(clientServerPair);
+
+  // Tell the Workers runtime to listen for WebSocket data & keep the connection open
+  server.accept();
+
+  // Any messages from the client are forwarded to the Figment socket
+  server.addEventListener("message", (event) => {
+    websocket.send(event.data);
+  });
+
+  // Any messages coming from Figment are forwarded back to the client
+  websocket.addEventListener("message", (event) => {
+    server.send(event.data);
+  });
+
+  return new Response(null, {
+    status: 101,
+    webSocket: client,
+  });
+}
+```
+
+</details>
+
+<br />
+
+This function uses the `fetch` API after setting the `Authorization` and `Origin` headers.
+This is a naive implementation, though it is effective when all you want to do is keep your API key secure.
+From the client point of view, the API key is never visible.
+
+<details><summary>Click here to view the code.</summary>
+
+```js
+async function getRpcResponse(url, request) {
+  const apiRequest = new Request(url, request);
+  apiRequest.headers.set("Authorization", env.API_KEY);
+  apiRequest.headers.set("Origin", `https://${env.PROXY_ORIGIN}`);
+  return await fetch(apiRequest);
+}
+```
+
+</details>
+
+<br />
+
+Cloudflare's Service Worker API uses event listeners to handle the request with a callback function.
+In this case, we want to tie our functionality together and ensure it is used to direct the request to the appropriate function.
+
+<details><summary>Click here to view the code.</summary>
+
+```js
+addEventListener("fetch", function handleFetch(event) {
+  try {
+    const { request } = event;
+    const url = buildURL(request);
+    ensureAuthorized(request);
+    if (request.method === "OPTIONS") {
+      event.respondWith(getPreflightResponse(request));
+    } else if (request.headers.get("Upgrade") === "websocket") {
+      event.respondWith(getWebsocketConnection(url));
+    } else {
+      event.respondWith(getRpcResponse(url, request));
+    }
+  } catch (error) {
+    event.respondWith(error);
+  }
+});
+```
+
+</details>
+
+<br />
 
 ## Testing and Troubleshooting
 
-...
+In the Cloudflare worker's quick edit view, you can send various HTTP requests directly to the proxy URL.
+To verify that the proxy is working with your application:
+
+1. Ensure that you have set your deployed app's hostname in the `ALLOWED_ORIGINS` environment variable.
+2. Also ensure the deployed proxy worker's URL is set in the `PROXY_ORIGIN` environment variable.
+3. Send a request to the proxy in Cloudflare:
+   - If you change the HTTP method in the Cloudflare Service Worker to `POST`, remember to also add a `Content-Type` header with a value of `application/json`.
+   - In the case of the example shown below, we would also need to append `/solana/node-api` to the request URL.
+
+<img
+  src={img9}
+  width="400"
+  alt="Send a Request From Cloudflare"
+  className="shadow--tl inline-image"
+/>
+
+###
+
+## References
+
+- \* [Cloudflare Blog: Introducing Cloudflare Workers](https://blog.cloudflare.com/introducing-cloudflare-workers/)
+- [Tim Kleyersburg: Create an API proxy with Cloudflare Workers](https://www.tim-kleyersburg.de/articles/api-proxy-with-cloudflare-workers/)
+- [MDN Docs: HTTP Status 101](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101)
+- [PortSwigger Web Security Academy: What are WebSockets?](https://portswigger.net/web-security/websockets/what-are-websockets)
+- [Bright AppSec Blog: WebSocket Security](https://brightsec.com/blog/websocket-security-top-vulnerabilities/)
+
+You should now have everything you need in order to successfully implement a proxy as a serverless function. Happy building!
