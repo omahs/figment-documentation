@@ -1,6 +1,7 @@
 require("dotenv").config();
 const fs = require("fs-extra");
 const SCHEMAS_DIR = "schemas";
+const cliArgs = process.argv.slice(2);
 
 function toDashCase(str) {
   return str?.toLowerCase().replace(/\s+/g, "-");
@@ -463,7 +464,7 @@ function generateCORSTests(services) {
     process()
   `;
 
-  fs.writeFileSync("tests.js", testScript, "utf-8");
+  fs.writeFileSync("cors-tests.js", testScript, "utf-8");
 }
 
 (function process() {
@@ -471,6 +472,14 @@ function generateCORSTests(services) {
   const variables = getEnvironmentVariables(schemas);
   const services = processServices(schemas, variables);
   createMarkdown(services, variables);
-  //generateCORSTests(services);
+  switch (cliArgs[0]) {
+    case "tests":
+      console.log("Created ./cors-tests.js");
+      generateCORSTests(services);
+      break;
+    default:
+      // console.log('Use `node generate tests` to create test files')
+      break;
+  }
   process.exit?.();
 })();
