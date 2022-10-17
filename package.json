@@ -6,6 +6,7 @@
     "docusaurus": "docusaurus",
     "start": "node generate.js && docusaurus start",
     "build": "node generate.js && docusaurus build",
+    "tests": "node generate tests",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
