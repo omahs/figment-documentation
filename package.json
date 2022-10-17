@@ -5,6 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "node generate.js && docusaurus start",
+    "gentests": "node generate.js tests",
     "build": "node generate.js && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
@@ -16,6 +17,7 @@
     "type-api": "quicktype ./schemas -o ./types/api.ts --just-types",
     "type-node": "quicktype ./schemas/node-api.json -s postman -o ./types/schemas/node-api.ts --just-types",
     "type-rewards": "quicktype ./schemas/rewards-api.json -s postman -o ./types/schemas/rewards-api.ts --just-types",
+    "type-rates": "quicktype ./schemas/rewards-rates-api.json -s postman -o ./types/schemas/rewards-rates-api.ts --just-types",
     "type-search": "quicktype ./schemas/tx-search-api.json -s json -o ./types/schemas/tx-search-api.ts --just-types",
     "prepare": "husky install"
   },
