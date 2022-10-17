@@ -478,7 +478,6 @@ function generateCORSTests(services) {
       generateCORSTests(services);
       break;
     default:
-      // console.log('Use `node generate tests` to create test files')
       break;
   }
   process.exit?.();
