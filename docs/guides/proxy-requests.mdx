@@ -15,7 +15,8 @@ import img5 from "@site/static/img/guides/proxy-requests/env_vars.png";
 import img6 from "@site/static/img/guides/proxy-requests/quick_edit.png";
 import img7 from "@site/static/img/guides/proxy-requests/code_editor.png";
 import img8 from "@site/static/img/guides/proxy-requests/save_and_deploy.png";
-import img9 from "@site/static/img/guides/proxy-requests/cloudflare_request.png";
+import img9 from "@site/static/img/guides/proxy-requests/proxy_send_post_request.png";
+import img10 from "@site/static/img/guides/proxy-requests/proxy_response_200.png";
 
 This guide will show you how to protect your Figment API keys by setting up a serverless proxy.
 
@@ -75,6 +76,12 @@ Read more about the <Link to="https://developer.mozilla.org/en-US/docs/Web/API/W
 
 3. From the Settings tab of that worker, add the necessary environment variables.
 
+:::info note
+
+Read more about [environment variables](https://developers.cloudflare.com/workers/platform/environment-variables/#environment-variables-via-the-dashboard) in the Cloudflare documentation.
+
+:::
+
 <img
   src={img3}
   width="400"
@@ -82,8 +89,8 @@ Read more about the <Link to="https://developer.mozilla.org/en-US/docs/Web/API/W
   className="shadow--tl inline-image"
 />
 
-- Add an environment variable named `API_KEY`. Click the "Encrypt" button once you've set the value of `API_KEY`. The key will be hidden in the Cloudflare UI, but still accessible within the worker.
-- Add an environment variable named `ALLOWED_ORIGINS`. The values must be enclosed in quotes, in an array (`["docs.figment.io"]`). Requests from outside of a web browser will not include an `Origin`. Include the value `null`, without quotes if you intend to make requests from a non-browser environment (`["docs.figment.io", null]`) .
+- Add an environment variable named `API_KEY`. Click the "Encrypt" button once you've set the value of `API_KEY`.
+- Add an environment variable named `ALLOWED_ORIGINS`. The values must be quoted, in an array (`["docs.figment.io"]`). Include the value `null` without quotes _only if you intend to make requests from an environment that does not include an_ `Origin`, (`["docs.figment.io", null]`) .
 - Add an environment variable named `PROXY_ORIGIN`. The value must be the URL where the worker is deployed (ex. `https://proxy.yourusername.workers.dev`). If you have set up a custom domain in Cloudflare, use that instead.
 
 <img
@@ -102,7 +109,7 @@ Read more about the <Link to="https://developer.mozilla.org/en-US/docs/Web/API/W
 
 ### Add Proxy Code to Cloudflare Worker
 
-4. Click on the "Quick edit" button, then copy and paste the code below into the code editor on the left side of the page.
+4. Click on the "Quick edit" button, then copy and paste the code from <Link to="#code-explanation">the section below</Link> into the Cloudflare code editor on the left side of the page.
 
 <img
   src={img6}
@@ -126,15 +133,9 @@ You can now send requests to Figment APIs and pass responses back to the client 
 
 :::note
 
-Use the example code we've supplied as a starting point for your own proxy.
+Use the example code we've supplied as a starting point for your own proxy!
 
-Continue with the explanation below or proceed to the <Link to="#testing-and-troubleshooting">Testing and Troubleshooting</Link> section.
-
-:::
-
-## Code Explanation
-
-<details><summary>Click here to view the full example proxy, ≈200 lines of code. Each function has JSDoc comments for convenience.</summary>
+<details><summary>Click here to view the complete example proxy, ≈200 lines of code.</summary>
 
 ```js
 const env = {
@@ -365,20 +366,23 @@ addEventListener("fetch", function handleFetch(event) {
 
 </details>
 
-<br />
+Continue with the explanation below or proceed to the <Link to="#testing-and-troubleshooting">Testing and Troubleshooting</Link> section.
 
-<details><summary>Click here to view details about the environment variables</summary>
+:::
 
-:::info
+## Code Explanation
+
+### Environment Variables
 
 The `env` constant contains the values of the Cloudflare environment variables `API_KEY`, `ALLOWED_ORIGINS`, `PROXY_ORIGIN` as well as a list of `ALLOWED_METHODS` and `HOSTS`.
 
 It is also useful to define hostnames for the Figment API endpoints to which we would be sending requests, separated by their protocol &mdash; either WebSocket Secure (`wss`) or SSL (`https`).
 
-`HOSTS` separates `wss` and `https` hostnames, and places them into each applicable service. Figment provides access to infrastructure that is managed by a world class DevOps team. One such API is the Node API, allowing clients to communicate directly with Proof-of-Stake networks.
+`HOSTS` separates `wss` and `https` hostnames, and places them into each applicable service. Figment provides access to infrastructure as well as APIs. One such API is the Node API, allowing clients to communicate directly with Proof-of-Stake networks.
 
-Hence, `env.HOSTS['wss']['node-api'][0]` would refer to the Arbitrum hostname.
-:::
+Thus, `env.HOSTS['wss']['node-api'][0]` would refer to the Arbitrum hostname, which is where clients send their requests to the Arbitrum Node API.
+
+<details><summary>Click here to view the code.</summary>
 
 ```js {2,3,4,5,6} title="Note: ... indicates where values were removed for display"
 const env = {
@@ -407,7 +411,7 @@ const env = {
 
 </details>
 
-<br />
+### Building a Request URL
 
 `buildURL` processes an inbound request, returning the completed URL to be queried. This will be the Figment API endpoint, including the route.
 
@@ -440,7 +444,7 @@ function buildURL(request) {
 
 </details>
 
-<br />
+### Restricted Access
 
 We want to restrict access to the proxy to `Origins` and methods which are explicitly allowed.
 If the request does not meet these criteria, or if there is an error, we will respond to the request with the appropriate <Link to="/guides/response-codes-and-error-codes">`4xx` status codes</Link>.
@@ -476,7 +480,7 @@ function ensureAuthorized(request) {
 
 </details>
 
-<br />
+### CORS Requests
 
 Handle **C**ross **O**rigin **R**esource **S**haring (CORS) requests by responding with the appropriate headers.
 
@@ -508,7 +512,7 @@ function getPreflightResponse(request) {
 
 </details>
 
-<br />
+### Handle WebSocket Connections
 
 `getWebsocketConnection` handles WebSocket traffic by upgrading the connection, accepting the request, creating a client/server pair, and then `addEventListener` can pass the messages between the client and server.
 A successful response must always return status code `101 Switching Protocols`. Read more about the status code, WebSockets and WebSocket security in the <Link to="#references">Reference section</Link> at the end of the guide.
@@ -562,7 +566,7 @@ async function getWebsocketConnection(url) {
 
 </details>
 
-<br />
+### Handle HTTP Requests
 
 This function uses the `fetch` API after setting the `Authorization` and `Origin` headers.
 This is a naive implementation, though it is effective when all you want to do is keep your API key secure.
@@ -581,10 +585,17 @@ async function getRpcResponse(url, request) {
 
 </details>
 
-<br />
+### addEventListener
 
-Cloudflare's Service Worker API uses event listeners to handle the request with a callback function.
-In this case, we want to tie our functionality together and ensure it is used to direct the request to the appropriate function.
+:::info
+
+The `addEventListener` function defines triggers for a Worker script to execute.
+
+Read more about the [fetch API](https://developers.cloudflare.com/workers/runtime-apis/fetch/) and [`addEventListener`](https://developers.cloudflare.com/workers/runtime-apis/add-event-listener/) in the Cloudflare documentation.
+
+:::
+
+In this case we want to tie all of the functionality together, ensuring requests are handled with the appropriate function. The `try`/`catch` block here is necessary to pass along any errors that occur.
 
 <details><summary>Click here to view the code.</summary>
 
@@ -620,7 +631,8 @@ To verify that the proxy is working with your application:
 2. Also ensure the deployed proxy worker's URL is set in the `PROXY_ORIGIN` environment variable.
 3. Send a request to the proxy in Cloudflare:
    - If you change the HTTP method in the Cloudflare Service Worker to `POST`, remember to also add a `Content-Type` header with a value of `application/json`.
-   - In the case of the example shown below, we would also need to append `/solana/node-api` to the request URL.
+   - To get the current block height of Solana for example, append the network and service (`/solana/node-api`) to the request URL.
+4. Check the response. Status `200` and the expected response from the requested method indicate that all is working as intended.
 
 <img
   src={img9}
@@ -629,7 +641,24 @@ To verify that the proxy is working with your application:
   className="shadow--tl inline-image"
 />
 
-###
+<img
+  src={img10}
+  width="400"
+  alt="Figment API Response via Cloudflare Proxy"
+  className="shadow--tl inline-image"
+/>
+
+### Potential Issues & Solutions
+
+- **415 Unsupported Media Type**
+
+  - Remember to supply a `Content-Type` header when sending `POST` requests.
+
+- **500 Invalid network**
+
+  - Remember to specify the network and service in the request URL. <Link to="#building-a-request-url">Refer to the `buildURL` function</Link>.
+
+- ***
 
 ## References
 
