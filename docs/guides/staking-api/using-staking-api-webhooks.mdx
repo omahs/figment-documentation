@@ -7,6 +7,8 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import CodeBlock from "@theme/CodeBlock";
 
+import img1 from "@site/static/img/guides/staking-api/ngrok_console.png";
+
 ## Security Overview
 
 In general, webhooks are a way to send automated messages between apps.
@@ -133,12 +135,31 @@ Remember to capture this data.
 
 </TabItem></Tabs>
 
-## ngrok Setup for Testing
+## Cloudflare Setup for Testing
 
-- Follow the instructions in <Link to="https://ngrok.com/docs/getting-started">Getting Started with ngrok</Link>
+...
 
-Once ngrok is installed, you can forward your locally running server by running the following command in a terminal:
+## Optional: ngrok Setup for Testing
+
+If you do not already have ngrok installed, follow the instructions in <Link to="https://ngrok.com/docs/getting-started">Getting Started with ngrok</Link>
+
+Once ngrok is installed, you can provide your locally running server with a globally accessible URL with the following command:
 
 ```bash
 ngrok http http://localhost:3001
 ```
+
+:::caution important
+
+This is only for testing purposes.
+
+:::
+
+The ngrok console will display the forwarding URL, which you can use to test your webhook server.
+
+<img
+  src={img1}
+  alt="ngrok Console"
+  width="500"
+  className="shadow--tl inline-image"
+/>
