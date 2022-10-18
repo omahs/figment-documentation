@@ -1,0 +1,45 @@
+---
+title: Create a New Flow
+slug: /guides/staking-api/cosmos/transfer/create-new-flow
+---
+
+To initiate the transfer process, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network this flow operates on (ex. `cosmos`) (required).
+  - `chain_code` &mdash; `string` Chain this flow operates on (ex. `testnet`) (required).
+  - `operation` &mdash; `string` The operation to perform (ex. `transfer`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://cosmos-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer YOUR-BEARER-TOKEN' \
+-d '{
+  "flow": {
+    "network_code": "cosmos",
+    "chain_code": "testnet",
+    "operation": "transfer",
+    "version": "v1"
+  }
+}'
+```
+
+The response indicates one possible action:
+
+- `create_transfer_tx`
+
+The `create_transfer_tx` action indicates six possible fields for data collection:
+
+- `from_account_address` (required) &mdash; The address from which ATOM will be transferred.
+- `to_account_address` (required) &mdash; The address to which ATOM will be transferred.
+- `amount` (required) &mdash; The amount of ATOM to be transferred.
+- `memo` &mdash; an optional message to record on-chain with your transfer.
+- `gas_limit` &mdash; the total amount of gas you're willing to let this transaction consume.
+  - If you do not include this, we'll use a Cosmos library to select a good default for you.
+- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction.
+  - If you do not include this, we'll use a Cosmos library to select a good default for you.

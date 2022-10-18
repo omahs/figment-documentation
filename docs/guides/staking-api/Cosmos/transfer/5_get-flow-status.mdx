@@ -1,0 +1,29 @@
+---
+title: Get Flow Status
+slug: /guides/staking-api/cosmos/transfer/get-flow-status-transferred
+---
+
+To refresh the transaction state and get the latest status of the existing flow, use the the flow ID from the previous step.
+
+### Parameters
+
+- None
+
+#### Sample cURL Request
+
+```bash
+curl -X GET 'https://cosmos-slate.datahub.figment.io/api/v1/flows/:flow_id' \
+-H 'Authorization: Bearer YOUR-BEARER-TOKEN'
+```
+
+### Response
+
+- `state` &mdash; `string` The current state of the flow.
+
+:::info note
+
+The `state` field will update from `transfer_tx_broadcasting` to `completed`.
+
+### Token Transfer Flow Complete
+
+Congratulations, you have successfully transfered your tokens!

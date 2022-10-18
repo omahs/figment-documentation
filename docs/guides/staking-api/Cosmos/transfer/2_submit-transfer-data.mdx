@@ -1,0 +1,53 @@
+---
+title: Submit Transfer Data
+slug: /guides/staking-api/cosmos/transfer/submit-transfer-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute - `create_transfer_tx`.
+- `inputs` &mdash; `object`
+  - `from_account_address` &mdash; `string` The address which ATOM will be transferred from (required).
+  - `to_account_address` &mdash; `string` The address to which NEAR will be transferred (required).
+  - `amount` &mdash; `number` The amount of ATOM to be transferred (required).
+  - `memo` &mdash; `string` An optional message to record on-chain with your transfer.
+  - `gas_limit` &mdash; `number` The total amount of gas you're willing to let this transaction consume.
+  - `gas_price` &mdash; `number` How many ATOM you're willing to pay per unit of gas consumed by this transaction.
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer YOUR-BEARER-TOKEN' \
+-d '{
+  "name": "create_transfer_tx",
+  "inputs": {
+    "from_account_address": "[:from_account_address]",
+    "to_account_address": "[:from_account_address]",
+    "amount": "[:amount]",
+    "memo": "[:memo]",
+    "gas_limit": "[:gas_limit]",
+    "gas_price": "[:gas_price]",
+  }
+}'
+```
+
+Note that in this step, Slate will check that your account balance is greater than or equal to the amount you've submitted for transfer. Expect an error response if that is not the case.
+
+We see two possible `actions`:
+
+- `refresh_deposit_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
+- `sign_deposit_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+
+We will choose `sign_deposit_tx`, which indicates one input to collect:
+
+- `transaction_payload` (required) &mdash; The signed transaction payload ready to be broadcast to the network.
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::
