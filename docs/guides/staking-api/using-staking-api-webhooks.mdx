@@ -1,0 +1,144 @@
+---
+title: Using Staking API Webhooks
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import CodeBlock from "@theme/CodeBlock";
+
+## Security Overview
+
+In general, webhooks are a way to send automated messages between apps.
+For example, the Figment Staking API uses webhooks to notify clients of events related to the various Staking API flows.
+When an undelegation flow is complete, a webhook can be sent to the server of your choosing and in turn this can trigger some predefined response.
+
+This guide will provide you with all the information needed to successfully manage webhooks in the context of Figment's Staking API.
+
+:::note
+
+We have chosen to use <Link to="https://ngrok.com">ngrok</Link> for testing as it provides a secure way to access a locally running service from anywhere.
+
+:::
+
+## WebHook Server Setup
+
+#### Prerequisites
+
+- A working knowledge of JavaScript.
+- `git` installed.
+- Node.js v16+ installed.
+
+### Clone Example Repository
+
+The full code for this project is available on GitHub.
+
+```bash
+git clone git@github.com:figment-networks/webhooks-server.git
+cd webhooks-server
+npm install
+```
+
+### Handle Webhooks
+
+<Tabs><TabItem value="eth" label="Example WebHook Server" default>
+
+The following code is an example server using <Link to="https://expressjs.com/">express.js</Link>, that will listen for incoming webhooks from the Staking API.
+
+<details><summary>Click here to view the code.</summary>
+
+```js title="server.js"
+import express from "express";
+import fetch from "cross-fetch";
+import { serializeError } from "serialize-error";
+
+const app = express();
+const port = 3001;
+
+app.use(express.json());
+
+app.use("/", (req, res) => {
+  const timestamp = new Date().toGMTString();
+  const payload = JSON.stringify(req.body, null, 2);
+  try {
+    console.log("Received:", timestamp, "\n");
+    console.log("Payload:\n", payload);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(serializeError(error));
+    res.sendStatus(500);
+  }
+});
+
+// Once the server has been started with `node server`:
+//  - Expose the server via ngrok for testing with `ngrok http http://localhost:<port>`
+//  - ngrok will provide a Forwarding URL -> Use this as the target_url of the Staking API webhook
+app.listen(port, () => {
+  console.log(`WebHook Server Listening: http://localhost:${port}`);
+});
+```
+
+</details>
+
+</TabItem><TabItem value="avax" label="Using the Staking API WebHook Endpoint">
+
+:::caution important
+
+For a complete list of available actions with Staking API webhooks, refer to <Link to="/guides/staking-api/staking-api-endpoints#managing-webhooks">Managing Webhooks</Link>.
+
+:::
+
+### Create a new WebHook endpoint
+
+Send a `POST` request to `/api/v1/webhook_endpoints` to create a new webhook.
+
+The Staking API will send a webhook payload to the specified `target_url` when an event is triggered (undelegation, etc.)
+
+:::info note
+
+Each webhook is identified by a sequential number.
+Currently when a webhook ID has been deleted it cannot be reused.
+
+:::
+
+Specify the `target_url`, where your webhook server is located. When using ngrok, this will be the **Forwarding** URL shown in the ngrok console.
+
+```bash {6} title="Sample cURL Request"
+curl -X POST 'https://eth-slate.figment.io/api/v1/webhook_endpoints' \
+-H 'Authorization: API-KEY' \
+-H 'Content-Type: application/json' \
+-d '{
+    "webhook_endpoint": {
+        "target_url": "https://example.com/my/endpoint",
+        "event_types": ["*"],
+        "enabled": "true"
+    }
+}'
+```
+
+You will only be provided with the `secret` in the response when you first create a webhook.
+Remember to capture this data.
+
+```json {8} title="Sample Response - The value of secret has been truncated for display."
+{
+  "id": 16,
+  "event_types": [],
+  "target_url": "https://example.com/my/endpoint",
+  "enabled": true,
+  "object": "webhook_endpoint",
+  "created": "2022-07-26T19:27:12.647Z",
+  "secret": "whsec_B8sidV4Bm8NnstMuP3a9TSGYov..."
+}
+```
+
+</TabItem></Tabs>
+
+## ngrok Setup for Testing
+
+- Follow the instructions in <Link to="https://ngrok.com/docs/getting-started">Getting Started with ngrok</Link>
+
+Once ngrok is installed, you can forward your locally running server by running the following command in a terminal:
+
+```bash
+ngrok http http://localhost:3001
+```
