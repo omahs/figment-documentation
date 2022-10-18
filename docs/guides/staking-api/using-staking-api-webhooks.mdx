@@ -139,6 +139,21 @@ Remember to capture this data.
 
 <!-- TODO: Add Cloudflare instructions -->
 
+You can use the <Link to="https://github.com/cloudflare/cf-webhook-relay/">Cloudflare Webhook Relay</Link> to transform a webhook response payload before passing it off to another service.
+
+```json title="Example Cloudflare Webhook Response"
+{
+  "name": "Your custom webhook.",
+  "text": "The alert text",
+  "data": {
+    "some": "further",
+    "info": ["about", "your", "alert", "in"],
+    "json": "format"
+  },
+  "ts": 123456789
+}
+```
+
 ## Optional: ngrok Setup for Testing
 
 If you do not already have ngrok installed, follow the instructions in <Link to="https://ngrok.com/docs/getting-started">Getting Started with ngrok</Link>
