@@ -12,8 +12,8 @@ To refresh the transaction state and get the latest status of the existing flow,
 #### Sample cURL Request
 
 ```bash
-curl -X GET 'https://cosmos-slate.datahub.figment.io/api/v1/flows/:flow_id' \
--H 'Authorization: Bearer YOUR-BEARER-TOKEN'
+curl -X GET 'https://cosmos-slate.datahub.figment.io/api/v1/flows/[:flow_id]' \
+-H 'Authorization: <api_key>'
 ```
 
 ### Response
@@ -23,6 +23,8 @@ curl -X GET 'https://cosmos-slate.datahub.figment.io/api/v1/flows/:flow_id' \
 :::info note
 
 The `state` field will update from `transfer_tx_broadcasting` to `completed`.
+
+:::
 
 ### Token Transfer Flow Complete
 

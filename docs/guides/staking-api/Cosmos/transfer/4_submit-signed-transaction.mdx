@@ -14,13 +14,13 @@ After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]
 #### Sample cURL Request
 
 ```bash {5-8}
-curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/:flow_id/next' \
+curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next' \
 -H 'Content-Type: application/json' \
--H 'Authorization: Bearer YOUR-BEARER-TOKEN' \
+-H 'Authorization: <api_key>' \
 -d '{
   "name": "sign_transfer_tx",
   "inputs": {
-    "transaction_payload": "TODO paste signed payload here"
+    "transaction_payload": "[:transaction_payload]"
   }
 }'
 ```
@@ -29,5 +29,5 @@ curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/:flow_id/next'
 
 With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
 
-- `transfer_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting confirmation.
+- `transfer_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting for confirmation.
 - `completed` &mdash; Transaction has been confirmed and the transfer is complete.

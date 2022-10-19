@@ -18,7 +18,7 @@ To initiate the transfer process, create a new flow with a `POST` request to `/a
 ```bash {5-10}
 curl -X POST 'https://cosmos-slate.datahub.figment.io/api/v1/flows' \
 -H 'Content-Type: application/json' \
--H 'Authorization: Bearer YOUR-BEARER-TOKEN' \
+-H 'Authorization: <api_key>' \
 -d '{
   "flow": {
     "network_code": "cosmos",

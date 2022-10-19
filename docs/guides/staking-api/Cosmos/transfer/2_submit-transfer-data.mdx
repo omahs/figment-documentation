@@ -21,7 +21,7 @@ After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:f
 ```bash {5-10}
 curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next' \
 -H 'Content-Type: application/json' \
--H 'Authorization: Bearer YOUR-BEARER-TOKEN' \
+-H 'Authorization: <api_key>' \
 -d '{
   "name": "create_transfer_tx",
   "inputs": {
@@ -35,7 +35,7 @@ curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/[:flow_id]/nex
 }'
 ```
 
-Note that in this step, Slate will check that your account balance is greater than or equal to the amount you've submitted for transfer. Expect an error response if that is not the case.
+Note that in this step, the Staking API will check that your account balance is greater than or equal to the amount you've submitted for transfer. Expect an error response if that is not the case.
 
 We see two possible `actions`:
 
