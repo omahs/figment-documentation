@@ -18,30 +18,21 @@ import img8 from "@site/static/img/guides/proxy-requests/save_and_deploy.png";
 import img9 from "@site/static/img/guides/proxy-requests/proxy_send_post_request.png";
 import img10 from "@site/static/img/guides/proxy-requests/proxy_response_200.png";
 
-This guide will show you how to protect your Figment API keys by setting up a serverless proxy.
+This guide will show you how to deploy a proxy using a Cloudflare worker to remove API Keys from your clientside codebase and provide a foundational middleware for further security controls.
 
-## Security Overview
+## Motivation
 
-A proactive approach to securing sensitive information such as API keys is an important consideration when building a web application.
+To make use of Figment APIs calls must be <Link to="/quickstart/api-authentication">authenticated using your project's API key</Link>. In certain instances you may want to make calls from client side applications. Doing so directly would mean having the API Key in the client codebase and visible during network requests.
+Using a proxy means we can take API Key out of the client side. In addition having a middleware means we can take further steps such as validating CORS Origins, whitelisting IPs, throttling requests and more.
 
-When sending requests to Figment APIs, the traffic must be authorized by passing your API key via the `Authorization` HTTP header. See the quick start guide on <Link to="/quickstart/api-authentication">API Authentication</Link> for details.
+## Disclaimer
 
-We don't want to store API keys in our codebase, where they would be vulnerable to accidental exposure.
-Instead, we can store the API key in an encrypted form on Cloudflare where it will be accessible to the Service Workers API, but not the client making requests via a web browser.
+It's important to maintain awareness of the security considerations for the environment in which you're operating. The code example we've provided in the guide below is an example to get you started and not meant for production out of the box.
 
-It's important to maintain awareness of the security considerations for the environment in which you're operating.
-Best practices for development tend not to work in production.
-The code example we've provided in the guide below is not guaranteed to be production ready, but with some adaptation it can cover a wide variety of use cases.
+:::caution reminder
 
-Cloudflare Service Workers are "built on the <Link to="https://v8.dev/">V8 JavaScript engine</Link>, which is arguably the most scrutinized code sandbox in the history of computing, and the Chrome security team is one of the best in the world."\*
-
-:::caution
-
-To maintain the security of your API keys, we recommend you to always use <Link to="https://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</Link> (TLS), meaning [**WSS**](https://developers.cloudflare.com/workers/learning/using-websockets/) or [**HTTPS**](https://www.cloudflare.com/en-ca/learning/ssl/what-is-https/) protocols.
-
-Keep in mind that traffic sent over **WS** or **HTTP** protocols is not secure, regardless of the method used.
-
-Read more about the <Link to="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSockets API</Link>.
+Always use <Link to="https://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</Link> (TLS), meaning [**WSS**](https://developers.cloudflare.com/workers/learning/using-websockets/) or [**HTTPS**](https://www.cloudflare.com/en-ca/learning/ssl/what-is-https/) protocols.
+Traffic sent over **WS** or **HTTP** protocols is not secure, regardless of the method used.
 
 :::
 
