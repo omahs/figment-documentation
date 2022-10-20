@@ -60,56 +60,56 @@ Cloudflare Workers provide flexibility and scalability when handling webhooks se
 "use strict";
 (() => {
   // src/index.ts
-  addEventListener("fetch", (event) => {
-    event.respondWith(handleRequest(event.request));
-  });
-  async function handleRequest(request) {
-    const headers = request.headers;
-    const data = await request.json();
-    try {
-      if (data) {
-        console.log(WEBHOOK_SECRET);
-
-        let sig = headers.get("Slate-Signature");
-        console.log(sig);
-        let splitsig = sig.split(",");
-        console.log("sigsplit", splitsig);
-        var uint8array = new TextEncoder().encode(WEBHOOK_SECRET);
-        var uint8 = new TextEncoder().encode(splitsig[1]);
-        var uint = new TextEncoder().encode(JSON.stringify(data));
-
-        let akey = uint8array;
-        console.log(akey);
-        console.log(uint8);
-        console.log("Encoded data:", uint);
-        let ckey = await crypto.subtle.importKey(
-          "raw",
-          akey,
-          { name: "HMAC", hash: "SHA-256" },
-          false,
-          ["verify"]
-        );
-        let hmac = await crypto.subtle.verify("HMAC", ckey, uint8, uint);
-
-        console.log("Should be true: ", hmac);
-
-        for (const [key, value] of Object.entries(data)) {
-          console.log(`${key}: ${value}`);
+  (() => {
+    addEventListener("fetch", (event) => {
+      event.respondWith(handleRequest(event.request));
+    });
+    async function handleRequest(request) {
+      const headers = request.headers;
+      const data = await request.json();
+      try {
+        if (data) {
+          console.log(WEBHOOK_SECRET);
+          let sig = headers.get("Slate-Signature");
+          console.log(sig);
+          let splitsig = sig.split(",");
+          console.log("sigsplit", splitsig);
+          var whSecret = new TextEncoder().encode(WEBHOOK_SECRET);
+          var sign = new TextEncoder().encode(splitsig[1]);
+          var jsonData = new TextEncoder().encode(JSON.stringify(data));
+          let akey = whSecret;
+          console.log(akey);
+          console.log(sign);
+          console.log("Encoded data:", jsonData);
+          let ckey = await crypto.subtle.importKey(
+            "raw",
+            akey,
+            { name: "HMAC", hash: "SHA-256" },
+            false,
+            ["verify"]
+          );
+          let hmac = await crypto.subtle.verify("HMAC", ckey, sign, jsonData);
+          console.log("Should be true: ", hmac);
+          for (const [key, value] of Object.entries(data)) {
+            console.log(`${key}: ${value}`);
+          }
+          console.log("Request Headers:\n");
+          for (var pair of request.headers.entries()) {
+            console.log(pair[0] + ": " + pair[1]);
+          }
+          console.log("Incoming payload:", data);
+          return new Response(JSON.stringify(data, null, 2), {
+            headers: { "content-type": "text/plain" },
+          });
         }
-        console.log("Request Headers:\n");
-        for (var pair of request.headers.entries()) {
-          console.log(pair[0] + ": " + pair[1]);
-        }
-        console.log("Incoming payload:", data);
-        return new Response(JSON.stringify(data, null, 2), {
+      } catch (error) {
+        console.log(error);
+        return new Response(error, {
           headers: { "content-type": "text/plain" },
         });
       }
-    } catch (error) {
-      console.log(error);
-      return new Response(error, { headers: { "content-type": "text/plain" } });
     }
-  }
+  })();
 })();
 //# sourceMappingURL=index.js.map
 ```
