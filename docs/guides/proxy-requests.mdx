@@ -686,7 +686,7 @@ To verify that the proxy is working with your application:
 2. Also ensure the deployed proxy worker's URL is set in the `PROXY_ORIGIN` environment variable.
 3. Send a request to the proxy in Cloudflare:
    - If you change the HTTP method in the Cloudflare Service Worker to `POST`, remember to also add a `Content-Type` header with a value of `application/json`.
-   - To get the current block height of Solana for example, append the network and service (`/solana/node-api`) to the request URL.
+   - To get the current block height of Solana for example, append the service and network (`/node-api/solana`) to the request URL.
 4. Check the response. Status `200` and the expected response from the requested method indicate that all is working as intended.
 
 <img
