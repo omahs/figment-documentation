@@ -414,19 +414,19 @@ Thus, `env.HOSTS['wss']['node-api'][0]` would refer to the Arbitrum hostname, wh
 const env = {
   API_KEY: API_KEY,
   ALLOWED_ORIGINS: JSON.parse(ALLOWED_ORIGINS),
-  PROXY_ORIGIN: PROXY_ORIGIN,
+  PROXY_HOST: PROXY_HOST,
   ALLOWED_METHODS: ["POST", "GET", "OPTIONS"],
   HOSTS: {
-    wss: {
+    "wss": {
       "node-api": {
-        arbitrum: "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
+        "arbitrum": "arbitrum-mainnet-ws-archive-dbgtxn.datahub.figment.io",
         ...
       }
       ...
     },
-    https: {
+    "https": {
       "node-api": {
-        arbitrum: "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
+        "arbitrum": "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
         ...
       }
       ...
@@ -449,8 +449,9 @@ const env = {
 
 ```js
 function buildURL(request) {
-  const [base, network, service, ...routes] =
+  const [base, service, network, ...routes] =
     request.url.split(/(?<!\/)\/(?!\/)/g);
+
   const protocol =
     request.headers.get("Upgrade") === "websocket" ? "wss" : "https";
   const services = env.HOSTS[protocol][service];
@@ -464,7 +465,9 @@ function buildURL(request) {
       }
     );
   }
-  return new URL(`${protocol}://${url}/${routes.join("/")}`);
+  return new URL(
+    `${protocol}://${url}/apikey/${env.API_KEY}/${routes.join("/")}`
+  );
 }
 ```
 
@@ -491,6 +494,15 @@ function ensureAuthorized(request) {
     error = {
       message: `Method ${request.method} not allowed`,
       status: 405,
+      statusText: "Not Allowed",
+    };
+  } else if (
+    request.method !== "OPTIONS" &&
+    request.headers.get("Authorization") !== env.API_KEY
+  ) {
+    error = {
+      message: `Not Authorized ${request.method}!`,
+      status: 403,
       statusText: "Not Allowed",
     };
   }
@@ -564,7 +576,7 @@ async function getWebsocketConnection(url) {
     });
   }
 
-  // Accept the WebSocket connection
+  // Accept the websocket connection
   const websocket = result.webSocket;
   websocket.accept();
 
@@ -575,12 +587,12 @@ async function getWebsocketConnection(url) {
   // Tell the Workers runtime to listen for WebSocket data & keep the connection open
   server.accept();
 
-  // Any messages from the client are forwarded to the Figment socket
+  // Any messages from the client are forwarded to the DataHub socket
   server.addEventListener("message", (event) => {
     websocket.send(event.data);
   });
 
-  // Any messages coming from Figment are forwarded back to the client
+  // Any messages coming from DataHub are forwarded back to the client
   websocket.addEventListener("message", (event) => {
     server.send(event.data);
   });
@@ -605,9 +617,24 @@ From the client point of view, the API key is never visible.
 ```js
 async function getRpcResponse(url, request) {
   const apiRequest = new Request(url, request);
-  apiRequest.headers.set("Authorization", env.API_KEY);
-  apiRequest.headers.set("Origin", `https://${env.PROXY_ORIGIN}`);
-  return await fetch(apiRequest);
+  apiRequest.headers.set("origin", `https://${env.PROXY_HOST}`);
+
+  // create then rebuild a new response from the API result so it's mutable
+  let response = await fetch(apiRequest);
+  response = new Response(response.body, response);
+  response.headers.set(
+    "Access-Control-Allow-Headers",
+    request.headers.get("Access-Control-Request-Headers") || ""
+  );
+  response.headers.set(
+    "Access-Control-Allow-Origin",
+    request.headers.get("Origin") || ""
+  );
+  response.headers.set(
+    "Access-Control-Allow-Methods",
+    env.ALLOWED_METHODS.join(",")
+  );
+  return response;
 }
 ```
 
