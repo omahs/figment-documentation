@@ -11,7 +11,7 @@ The Staking API has three endpoints for managing flows.
 
 There are also five endpoints for managing webhooks, which are covered in the <Link to="#managing-staking-api-webhooks">Managing Staking API Webhooks</Link> section.
 
-## Managing Flows
+## Managing Staking API Flows
 
 ### Start a New Flow
 
@@ -159,7 +159,7 @@ In the response, the `actions` array contains the name of the next action in the
 #### curl Request
 
 ```bash
-curl -X GET 'https://eth-slate.figment.io/api/v1/flows/[:flow_id]' \
+curl -X GET 'https://eth-slate.datahub.figment.io/api/v1/flows/[:flow_id]' \
 -H "Authorization: <api_key>"
 ```
 
@@ -283,21 +283,21 @@ In the response, the `actions` array contains the name of the next action in the
 
 ##### Body
 
-The parameters will be different, depending on which protocol and flow you are using.
-Refer to the individual protocol guides for more details (links are in the sidebar).
+The parameters you're sending in the `inputs` will be different, depending on which network and flow you are using.
+Refer to the individual protocol guides (Avalanche, Ethereum, etc.) for more details. The links are in the navigation menu on the left.
 
 #### curl Request
 
-```text title="Example curl request for the next step of a flow, with blank values"
-curl -X POST https://eth-slate.figment.io/api/v1/flows/FLOW-ID/next \
--H "Authorization: API-KEY" \
+```bash {1} title="Sample cURL Request (without values)"
+curl -X POST https://eth-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next \
+-H "Authorization: <api_key>" \
 -d '{"name": "create_deposit_transaction", \
   "inputs": {
-  "funding_account_address": "",
-  "validator_pub_key": "",
-  "withdrawal_credentials": "",
-  "signature": "",
-  "deposit_data_root": ""
+    "funding_account_address": "",
+    "validator_pub_key": "",
+    "withdrawal_credentials": "",
+    "signature": "",
+    "deposit_data_root": ""
   }
 }'
 ```
@@ -306,11 +306,11 @@ curl -X POST https://eth-slate.figment.io/api/v1/flows/FLOW-ID/next \
 
 :::note
 
-In the response, the `actions` array contains the name of the next action in the flow and the expected inputs for the next step in the `data` field.
+In the response, the `actions` array contains the name of the next action in the flow and the expected `inputs`.
 
 :::
 
-```json
+```json {4,6}
 {
   "id": "1d9e9d5d-f4a2-4974-b549-c35531344fa9",
   "state": "initialized",
@@ -414,13 +414,18 @@ In the response, the `actions` array contains the name of the next action in the
 
 ### Code Examples for Managing Flows
 
-<Tabs><TabItem value="broadcasting" label="JavaScript">
+This code assumes you are not using a proxy, and so it will pass the `Authorization` header.
 
-<details><summary>Click to expand sample code</summary>
+In production, you will want to use a proxy. Follow our guide <Link to="/guides/proxy-requests-to-figment-apis">Proxy Requests to Figment APIs</Link> for more information.
+
+<Tabs><TabItem value="js" label="JavaScript">
+
+<details><summary>Click to view sample code</summary>
 
 ```javascript
 const NETWORK_CODES = {
   avalanche: "avalanche",
+  cosmos: "cosmos",
   ethereum: "ethereum",
   near: "near",
   polkadot: "dot",
@@ -439,7 +444,7 @@ const CHAIN_CODES = {
 const OPERATIONS = {
   staking: "staking", // Ethereum only supports staking
   unstaking: "unstaking", // NEAR or Polkadot
-  transfer: "transfer", // NEAR or Polkadot or Solana
+  transfer: "transfer", // NEAR or Polkadot or Solana or Cosmos
   sol_unstaking: "unstaking", // Solana unstaking
   add_proxy: "add_proxy", // Polkadot only
   remove_proxy: "remove_proxy", // Polkadot only
@@ -447,6 +452,8 @@ const OPERATIONS = {
 
 const API_KEY = "YOUR API KEY";
 
+// flowUrl would be the Figment API endpoint for the network you're using
+// i.e., https://eth-slate.datahub.figment.io/api/v1/flows/
 function startNewFlow(network, chain, operation, params = {}) {
   fetch(flowUrl, {
     method: "POST",
@@ -525,11 +532,11 @@ Currently when a webhook ID has been deleted it cannot be reused.
 
 :::
 
-Specify the `target_url`, where your webhook server is located. When using ngrok, this will be the **Forwarding** URL shown in the ngrok console.
+Specify the `target_url`, where your webhook server is located.
 
 ```bash {6} title="Sample cURL Request"
 curl -X POST 'https://near-slate.figment.io/api/v1/webhook_endpoints' \
--H 'Authorization: API-KEY' \
+-H 'Authorization: <api_key>' \
 -H 'Content-Type: application/json' \
 -d '{
     "webhook_endpoint": {
@@ -540,7 +547,7 @@ curl -X POST 'https://near-slate.figment.io/api/v1/webhook_endpoints' \
 }'
 ```
 
-You will only be provided with the `secret` in the response when you first create a webhook.
+You will only be provided with the `secret` in the response when you create a webhook.
 Remember to capture this data. Learn more about webhook signature verification in the <Link to="#references">References</Link> section.
 
 ```json {8} title="Sample Response - The value of secret has been truncated for display."
@@ -559,9 +566,9 @@ Remember to capture this data. Learn more about webhook signature verification i
 
 You can send a `GET` request, including the webhook ID number in the request URL, to retreive details for an existing webhook endpoint.
 
-```text title="GET /webhook_endpoints/[:webhook_endpoint_id]"
+```bash title="Sample cURL Request"
 curl -X GET 'https://eth-slate.figment.io/api/v1/webhook_endpoints/15' \
--H 'Authorization: API-KEY'
+-H 'Authorization: <api_key>'
 ```
 
 ```json title="Sample Response"
@@ -586,27 +593,25 @@ curl -X GET 'https://eth-slate.figment.io/api/v1/webhook_endpoints/15' \
 
 You can send a `PUT` request to update details for an existing webhook endpoint.
 
-```bash title="PUT /webhook_endpoints/[:webhook_endpoint_id]"
+```bash {8} title="Sample cURL Request"
 curl -X PUT 'https://eth-slate.figment.io/api/v1/webhook_endpoints/15' \
--H 'Authorization: API-KEY' \
+-H 'Authorization: <api_key>' \
 -H 'Content-Type: application/json' \
 -d '{
     "webhook_endpoint": {
         "target_url": "https://example.com/my/new/endpoint",
         "event_types": ["*"],
-        // highlight-next-line
-        "enabled": "true"
+        "enabled": "false"
     }
 }'
 ```
 
-```json title="Sample Response"
+```json {5} title="Sample Response"
 {
   "id": 15,
   "event_types": ["*"],
   "target_url": "https://example.com/my/new/endpoint",
-  // highlight-next-line
-  "enabled": true,
+  "enabled": false,
   "object": "webhook_endpoint",
   "created": "2022-07-26T19:27:12.647Z"
 }
@@ -616,9 +621,9 @@ curl -X PUT 'https://eth-slate.figment.io/api/v1/webhook_endpoints/15' \
 
 You can send a `GET` request to retreive details for all your webhook endpoints.
 
-```text title="GET /webhook_endpoints"
+```bash title="Sample cURL Request"
 curl -X PUT 'https://eth-slate.figment.io/api/v1/webhook_endpoints' \
--H 'Authorization: API-KEY'
+-H 'Authorization: <api_key>'
 ```
 
 ```json title="Sample Response"
@@ -651,12 +656,12 @@ curl -X PUT 'https://eth-slate.figment.io/api/v1/webhook_endpoints' \
 
 You can send a `DELETE` request, including the webhook ID number in the request URL, to delete a webhook endpoint.
 
-```text title="DELETE /webhook_endpoints/[:webhook_endpoint_id]"
+```bash title="Sample cURL Request"
 curl -X PUT 'https://eth-slate.figment.io/api/v1/webhook_endpoints/15' \
--H 'Authorization: API-KEY'
+-H 'Authorization: <api_key>'
 ```
 
-```text title="Example response"
+```text title="Sample Response"
 204 - No Content
 ```
 

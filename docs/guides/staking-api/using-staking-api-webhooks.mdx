@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem";
 
 import img1 from "@site/static/img/guides/staking-api/ngrok_console.png";
 
-## Security Overview
+## Motivation
 
 A webhook is an HTTP request which triggers by an event in a source system (ex. Figment's Staking API) and sent to a destination system (ex. Cloudflare Worker) with a payload of data. In general, webhooks are a way to send automated messages between systems whenever a new event takes place.
 
@@ -27,18 +27,11 @@ JSON is encoded as UTF-8 by default.
 
 :::
 
-<!-- <details><summary>Click here for more details</summary>
-
-Click on the thumbnail image below to view a demonstration recording on ASCIInema (this will open a new tab):
-<a href="https://asciinema.org/a/HaZ78Y4wuzJV7ohfmCaNDceW0?autoplay=1"><img src="https://asciinema.org/a/HaZ78Y4wuzJV7ohfmCaNDceW0.png" width="700" className="shadow--tl inline-image"/></a>
-
-</details> -->
-
 ### Code Explanation
 
 Secure your webhook with a client signature to validate that the Staking API generated the webhook you are consuming and that it didn't come from a malicious origin.
 
-Webhooks are sent with the `Slate-Signature` header, which you can use to verify the payload. The value will look like this:
+Webhooks from the Staking API are sent with the `Slate-Signature` header, which you can use to verify the payload. The value will look like this:
 
 ```text
 t=1666214090,v1=f790a584722ff6c0ebf4e9b59835ba5b93ee824ae0a7164feba30953d6b52cee
@@ -56,62 +49,8 @@ Cloudflare Workers provide flexibility and scalability when handling webhooks se
 
 <details><summary>Click here to view the code.</summary>
 
-```js title="Example Cloudflare Worker"
-"use strict";
-(() => {
-  // src/index.ts
-  (() => {
-    addEventListener("fetch", (event) => {
-      event.respondWith(handleRequest(event.request));
-    });
-    async function handleRequest(request) {
-      const headers = request.headers;
-      const data = await request.json();
-      try {
-        if (data) {
-          console.log(WEBHOOK_SECRET);
-          let sig = headers.get("Slate-Signature");
-          console.log(sig);
-          let splitsig = sig.split(",");
-          console.log("sigsplit", splitsig);
-          var whSecret = new TextEncoder().encode(WEBHOOK_SECRET);
-          var sign = new TextEncoder().encode(splitsig[1]);
-          var jsonData = new TextEncoder().encode(JSON.stringify(data));
-          let akey = whSecret;
-          console.log(akey);
-          console.log(sign);
-          console.log("Encoded data:", jsonData);
-          let ckey = await crypto.subtle.importKey(
-            "raw",
-            akey,
-            { name: "HMAC", hash: "SHA-256" },
-            false,
-            ["verify"]
-          );
-          let hmac = await crypto.subtle.verify("HMAC", ckey, sign, jsonData);
-          console.log("Should be true: ", hmac);
-          for (const [key, value] of Object.entries(data)) {
-            console.log(`${key}: ${value}`);
-          }
-          console.log("Request Headers:\n");
-          for (var pair of request.headers.entries()) {
-            console.log(pair[0] + ": " + pair[1]);
-          }
-          console.log("Incoming payload:", data);
-          return new Response(JSON.stringify(data, null, 2), {
-            headers: { "content-type": "text/plain" },
-          });
-        }
-      } catch (error) {
-        console.log(error);
-        return new Response(error, {
-          headers: { "content-type": "text/plain" },
-        });
-      }
-    }
-  })();
-})();
-//# sourceMappingURL=index.js.map
+```js title="Sample Cloudflare Worker"
+// TBD
 ```
 
 </details>
@@ -131,6 +70,12 @@ A Staking API webhook payload will look something like this:
 }
 ```
 
+:::info
+
+The fields which are common to all Staking API webhook payloads are `flow_id` and `event_type`.
+
+:::
+
 ## References
 
 Learn more about webhook fundamentals in these excellent articles from HookDeck:
@@ -147,6 +92,9 @@ Learn more about webhook fundamentals in these excellent articles from HookDeck:
 - <Link to="https://hookdeck.com/webhooks/guides/how-to-implement-sha256-webhook-signature-verification">
     How to Implement SHA256 Webhook Signature Verification
   </Link>
+
+Useful blog posts from other sources:
+
 - <Link to="https://cjav.dev/posts/webhook-trip-hazards/">
     Webhook Trip Hazards
   </Link>
