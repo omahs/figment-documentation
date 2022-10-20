@@ -5,8 +5,11 @@ sidebar_position: 2
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
 
-The Staking API has three endpoints for managing flows and five endpoints for managing webhooks.
+The Staking API has three endpoints for managing flows.
+
+There are also five endpoints for managing webhooks, which are covered in the <Link to="#managing-staking-api-webhooks">Managing Staking API Webhooks</Link> section.
 
 ## Managing Flows
 
@@ -497,41 +500,50 @@ function getFlow(flowId) {
 
 </TabItem></Tabs>
 
----
-
-## Managing Webhooks
+## Managing Staking API Webhooks
 
 ### Authentication
 
 You require an API key to authorize requests to the Webhooks API endpoint.
+Refer to the <Link to="/quickstart/api-authentication">API Authentication</Link> quick start for details.
 
-```bash {2} title="Authorization header"
+```bash {2} title="Sample cURL Request"
 curl -X GET 'https://eth-slate.figment.io/api/v1/webhook_endpoints/15' \
 -H 'Authorization: <api_key>'
 ```
 
 ### Create a new Webhook endpoint
 
-You can send a `POST` request to create a new webhook endpoint.
+Send a `POST` request to `/api/v1/webhook_endpoints` to create a new webhook.
+
+The Staking API will send a webhook payload to the specified `target_url` when an event is triggered (undelegation, etc.)
+
+:::info note
+
 Each webhook is identified by a sequential number.
 Currently when a webhook ID has been deleted it cannot be reused.
 
-You will be provided with the `secret` when you first create a webhook. Remember to capture this data.
+:::
 
-```bash title="Sample request POST /webhook_endpoints"
-curl -X POST 'https://eth-slate.figment.io/api/v1/webhook_endpoints' \
+Specify the `target_url`, where your webhook server is located. When using ngrok, this will be the **Forwarding** URL shown in the ngrok console.
+
+```bash {6} title="Sample cURL Request"
+curl -X POST 'https://near-slate.figment.io/api/v1/webhook_endpoints' \
 -H 'Authorization: API-KEY' \
 -H 'Content-Type: application/json' \
 -d '{
     "webhook_endpoint": {
         "target_url": "https://example.com/my/endpoint",
         "event_types": ["*"],
-        "enabled": "false"
+        "enabled": "true"
     }
 }'
 ```
 
-```json title="Sample Response"
+You will only be provided with the `secret` in the response when you first create a webhook.
+Remember to capture this data. Learn more about webhook signature verification in the <Link to="#references">References</Link> section.
+
+```json {8} title="Sample Response - The value of secret has been truncated for display."
 {
   "id": 16,
   "event_types": [],
@@ -539,8 +551,7 @@ curl -X POST 'https://eth-slate.figment.io/api/v1/webhook_endpoints' \
   "enabled": true,
   "object": "webhook_endpoint",
   "created": "2022-07-26T19:27:12.647Z",
-  // highlight-next-line
-  "secret": "whsec_B8sidV4Bm8NnstMuP3a9TSGYov... [REDACTED]"
+  "secret": "whsec_B8sidV4Bm8NnstMuP3a9TSGYov..."
 }
 ```
 

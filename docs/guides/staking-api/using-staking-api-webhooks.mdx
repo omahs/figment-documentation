@@ -12,169 +12,137 @@ import img1 from "@site/static/img/guides/staking-api/ngrok_console.png";
 ## Security Overview
 
 In general, webhooks are a way to send automated messages between apps.
-For example, the Figment Staking API uses webhooks to notify clients of events related to the various Staking API flows.
-When an undelegation flow is complete, a webhook can be sent to the server of your choosing and in turn this can trigger some predefined response.
+There are some security considerations when dealing with webhooks.
+This guide provides all the information needed to successfully manage webhooks in the context of Figment's Staking API.
 
-This guide will provide you with all the information needed to successfully manage webhooks in the context of Figment's Staking API.
+The Staking API uses webhooks to send notifications about events related to the various Staking API flows.
+For example, when an undelegation flow is completed, a webhook can be sent to the server of your choosing.
+
+We will examine how serverless functions (Cloudflare Workers) can be beneficial to this process, and provide example code which can be used as the basis for your own solution.
 
 :::note
 
-We have chosen to use <Link to="https://ngrok.com">ngrok</Link> for testing as it provides a secure way to access a locally running service from anywhere.
+If your particular language and server implementation specifies a character encoding, ensure that you handle the payload as UTF-8.
+JSON is encoded as UTF-8 by default.
 
 :::
 
-## WebHook Server Setup
+<!-- <details><summary>Click here for more details</summary>
 
-#### Prerequisites
+Click on the thumbnail image below to view a demonstration recording on ASCIInema (this will open a new tab):
+<a href="https://asciinema.org/a/HaZ78Y4wuzJV7ohfmCaNDceW0?autoplay=1"><img src="https://asciinema.org/a/HaZ78Y4wuzJV7ohfmCaNDceW0.png" width="700" className="shadow--tl inline-image"/></a>
 
-- A working knowledge of JavaScript.
-- `git` installed.
-- Node.js v16+ installed.
+</details> -->
 
-### Clone Example Repository
+### Code Explanation
 
-The full code for this project is available on GitHub.
+Secure your webhook with a client signature to validate that the Staking API generated the webhook you are consuming and that it didn’t come from a malicious origin.
 
-```bash
-git clone git@github.com:figment-networks/webhooks-server.git
-cd webhooks-server
-npm install
+Webhooks are sent with the `Slate-Signature` header, which you can use to verify the payload. The value will look like this:
+
+```text
+t=1666214090,v1=f790a584722ff6c0ebf4e9b59835ba5b93ee824ae0a7164feba30953d6b52cee
 ```
 
-### Handle Webhooks
+- `t` is a UNIX Epoch timestamp.
+- `v1` is the signature string that you can use.
 
-<Tabs><TabItem value="eth" label="Example WebHook Server" default>
+### HMAC
 
-The following code is an example server using <Link to="https://expressjs.com/">express.js</Link>, that will listen for incoming webhooks from the Staking API.
+## Listening for Webhooks With Cloudflare
+
+We'll be using a serverless function on Cloudflare to capture, inspect, and manage a webhook response payload from the Staking API.
+Cloudflare Workers provide flexibility and scalability when handling webhooks sent by the Staking API.
 
 <details><summary>Click here to view the code.</summary>
 
-```js title="server.js"
-import express from "express";
-import fetch from "cross-fetch";
-import { serializeError } from "serialize-error";
+```js title="Example Cloudflare Worker"
+//
+const FLOW_ID = "3e079c15-befb-4bd2-bdf9-f3e7eaeb182d";
 
-const app = express();
-const port = 3001;
+addEventListener("fetch", (event) => {
+  event.respondWith(handleRequest(event.request));
+});
 
-app.use(express.json());
+async function handleRequest(request) {
+  const headers = request.headers;
+  const data = await request.json();
 
-app.use("/", (req, res) => {
-  const timestamp = new Date().toGMTString();
-  const payload = JSON.stringify(req.body, null, 2);
   try {
-    console.log("Received:", timestamp, "\n");
-    console.log("Payload:\n", payload);
-    res.sendStatus(200);
-  } catch (error) {
-    console.log(serializeError(error));
-    res.sendStatus(500);
-  }
-});
+    if (data) {
+      // Different events will generate different payload structures
+      // All Staking API payloads should include a "flow_id"
+      // If the key "error" is present, the "event_type" should end with .error
+      // Staking API Webhooks can be set to filter by event type, making it easier to
+      // handle only the events you care about.
+      //
+      // Handling differing payload structures in a Staking API webhook payload,
+      // we can iterate over the existing keys to see what we're dealing with
+      for (const [key, value] of Object.entries(data)) {
+        console.log(`${key}: ${value}`);
+      }
 
-// Once the server has been started with `node server`:
-//  - Expose the server via ngrok for testing with `ngrok http http://localhost:<port>`
-//  - ngrok will provide a Forwarding URL -> Use this as the target_url of the Staking API webhook
-app.listen(port, () => {
-  console.log(`WebHook Server Listening: http://localhost:${port}`);
-});
+      // Display the Headers key/value pairs
+      console.log("Request Headers:\n");
+      for (var pair of request.headers.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+      }
+
+      // Always have a configured webhook secret!
+      // Validate we received a request with this secret efore proceeding any further.
+      if (headers.get("staking-webhook-auth") !== WEBHOOK_SECRET) {
+        return new Response(
+          "Incorrect webhook secret. Ensure that your staking-webhook-auth header is set to the appropriate value.",
+          {
+            headers: { "content-type": "text/plain" },
+            status: 401,
+          }
+        );
+      }
+
+      console.log("Incoming payload:", data);
+
+      // Return the incoming payload as a response.
+      return new Response(JSON.stringify(data, null, 2), {
+        headers: { "content-type": "text/plain" },
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return new Response(error, { headers: { "content-type": "text/plain" } });
+  }
+}
 ```
 
 </details>
 
-</TabItem><TabItem value="avax" label="Using the Staking API WebHook Endpoint">
+A Staking API webhook payload will look something like this:
 
-:::caution important
-
-For a complete list of available actions with Staking API webhooks, refer to <Link to="/guides/staking-api/staking-api-endpoints#managing-webhooks">Managing Webhooks</Link>.
-
-:::
-
-### Create a new WebHook endpoint
-
-Send a `POST` request to `/api/v1/webhook_endpoints` to create a new webhook.
-
-The Staking API will send a webhook payload to the specified `target_url` when an event is triggered (undelegation, etc.)
-
-:::info note
-
-Each webhook is identified by a sequential number.
-Currently when a webhook ID has been deleted it cannot be reused.
-
-:::
-
-Specify the `target_url`, where your webhook server is located. When using ngrok, this will be the **Forwarding** URL shown in the ngrok console.
-
-```bash {6} title="Sample cURL Request"
-curl -X POST 'https://eth-slate.figment.io/api/v1/webhook_endpoints' \
--H 'Authorization: API-KEY' \
--H 'Content-Type: application/json' \
--d '{
-    "webhook_endpoint": {
-        "target_url": "https://example.com/my/endpoint",
-        "event_types": ["*"],
-        "enabled": "true"
-    }
-}'
-```
-
-You will only be provided with the `secret` in the response when you first create a webhook.
-Remember to capture this data.
-
-```json {8} title="Sample Response - The value of secret has been truncated for display."
+```json title="Sample Staking API Webhook Payload"
 {
-  "id": 16,
-  "event_types": [],
-  "target_url": "https://example.com/my/endpoint",
-  "enabled": true,
-  "object": "webhook_endpoint",
-  "created": "2022-07-26T19:27:12.647Z",
-  "secret": "whsec_B8sidV4Bm8NnstMuP3a9TSGYov..."
+  "status": "broadcast",
+  "flow_id": "3e079c15-befb-4bd2-bdf9-f3e7eaeb182d",
+  "event_type": "v1.polkadot.staking.bonding_tx.confirmed",
+  "transaction_hash": "0xb59949456f2bbf347011d7da6204b0a3fff4fe05f6905e1bef533e482e9bf346"
 }
 ```
 
-</TabItem></Tabs>
+## References
 
-## Cloudflare Setup for Testing
+Learn more about webhook fundamentals in these excellent articles from HookDeck:
 
-<!-- TODO: Add Cloudflare instructions -->
-
-You can use the <Link to="https://github.com/cloudflare/cf-webhook-relay/">Cloudflare Webhook Relay</Link> to transform a webhook response payload before passing it off to another service.
-
-```json title="Example Cloudflare Webhook Response"
-{
-  "name": "Your custom webhook.",
-  "text": "The alert text",
-  "data": {
-    "some": "further",
-    "info": ["about", "your", "alert", "in"],
-    "json": "format"
-  },
-  "ts": 123456789
-}
-```
-
-## Optional: ngrok Setup for Testing
-
-If you do not already have ngrok installed, follow the instructions in <Link to="https://ngrok.com/docs/getting-started">Getting Started with ngrok</Link>
-
-Once ngrok is installed, you can provide your locally running server with a globally accessible URL with the following command:
-
-```bash
-ngrok http http://localhost:3001
-```
-
-:::caution important
-
-This is only for testing purposes. We do not recommend this approach in a production environment.
-
-:::
-
-The ngrok console will display the forwarding URL, which you can use to test your webhook server.
-
-<img
-  src={img1}
-  alt="ngrok Console"
-  width="500"
-  className="shadow--tl inline-image"
-/>
+- <Link to="https://hookdeck.com/webhooks/guides/what-are-webhooks-how-they-work">
+    What Are Webhooks And How They Work
+  </Link>
+- <Link to="https://hookdeck.com/webhooks/guides/complete-guide-to-webhook-security">
+    Complete Guide to Webhook Security
+  </Link>
+- <Link to="https://hookdeck.com/webhooks/guides/webhooks-security-checklist">
+    How to Secure Webhooks &mdash; 5-step Checklist
+  </Link>
+- <Link to="https://hookdeck.com/webhooks/guides/how-to-implement-sha256-webhook-signature-verification">
+    How to Implement SHA256 Webhook Signature Verification
+  </Link>
+- <Link to="https://cjav.dev/posts/webhook-trip-hazards/">
+    Webhook Trip Hazards
+  </Link>
