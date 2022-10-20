@@ -132,39 +132,41 @@ Use the example code we've supplied as a starting point for your own proxy!
 const env = {
   API_KEY: API_KEY,
   ALLOWED_ORIGINS: JSON.parse(ALLOWED_ORIGINS),
-  PROXY_ORIGIN: PROXY_ORIGIN,
+  PROXY_HOST: PROXY_HOST,
   ALLOWED_METHODS: ["POST", "GET", "OPTIONS"],
   HOSTS: {
     wss: {
       "node-api": {
-        arbitrum: "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
-        bnb: "bsc--mainnet--rpc-archive-dbgtxn.datahub.figment.io",
-        celo: "celo-mainnet--rpc.datahub.figment.io",
-        "cosmos-lcd": "cosmoshub-4--lcd--archive.datahub.figment.io",
-        "cosmos-tendermint-rpc": "cosmoshub-4--rpc--archive.datahub.figment.io",
-        ethereum: "erigon-mainnet--rpc-dbgtxn.datahub.figment.io",
-        fantom: "ftm--mainnet--rpc-archive-dbgtxn.datahub.figment.io",
-        optimism: "optimism-mainnet-rpc-archive.datahub.figment.io",
-        polygon: "matic-mainnet--jsonrpc-archive-dbgtxn.datahub.figment.io",
+        arbitrum: "arbitrum-mainnet-ws-archive-dbgtxn.datahub.figment.io",
+        bnb: "bsc--mainnet--ws-archive-dbgtxn.datahub.figment.io",
+        celo: "celo-mainnet--ws.datahub.figment.io",
+        "cosmos-tendermint-rpc":
+          "cosmoshub-4--rpc--archive.datahub.figment.io/websocket",
+        ethereum: "ethereum-mainnet--ws.datahub.figment.io",
+        fantom: "ftm--mainnet--ws-archive-dbgtxn.datahub.figment.io",
+        kusama: "kusama--ws.datahub.figment.io",
+        optimism: "optimism-mainnet-ws-archive.datahub.figment.io",
+        "osmosis-tendermint-rpc":
+          "osmosis-1--rpc--archive.datahub.figment.io/websocket",
+        polkadot: "polkadot--ws.datahub.figment.io",
+        polygon: "matic-mainnet--ws-archive-dbgtxn.datahub.figment.io",
         solana: "solana--mainnet.datahub.figment.io",
       },
     },
     https: {
       "node-api": {
         arbitrum: "arbitrum-mainnet-rpc-archive-dbgtxn.datahub.figment.io",
-        "avalanche-c-chain":
-          "avalanche--mainnet--rpc.datahub.figment.io/ext/bc/C/rpc",
-        "avalanche-p-chain":
-          "avalanche--mainnet--rpc.datahub.figment.io/ext/bc/P",
-        "avalanche-x-chain":
-          "avalanche--mainnet--rpc.datahub.figment.io/ext/vm/avm",
+        "avalanche-c-chain": "avalanche--mainnet--rpc.datahub.figment.io",
+        "avalanche-p-chain": "avalanche--mainnet--rpc.datahub.figment.io",
+        "avalanche-x-chain": "avalanche--mainnet--rpc.datahub.figment.io",
         bnb: "bsc--mainnet--rpc-archive-dbgtxn.datahub.figment.io",
         celo: "celo-mainnet--rpc.datahub.figment.io",
         "cosmos-lcd": "cosmoshub-4--lcd--archive.datahub.figment.io",
         "cosmos-tendermint-rpc": "cosmoshub-4--rpc--archive.datahub.figment.io",
         ethereum: "erigon-mainnet--rpc-dbgtxn.datahub.figment.io",
         fantom: "ftm--mainnet--rpc-archive-dbgtxn.datahub.figment.io",
-        "mina-graphql": "mina-mainnet--graphql.datahub.figment.io/graphql",
+        "kusama-sidecar": "polkadot-kusama--sidecar.datahub.figment.io",
+        "mina-graphql": "mina-mainnet--graphql.datahub.figment.io",
         near: "near-mainnet--rpc--archive.datahub.figment.io",
         optimism: "optimism-mainnet-rpc-archive.datahub.figment.io",
         "osmosis-lcd": "osmosis-1--lcd--archive.datahub.figment.io",
@@ -174,13 +176,19 @@ const env = {
         solana: "solana--mainnet.datahub.figment.io",
       },
       "rewards-api": {
-        ethereum: "eth-rewards.datahub.figment.io/rewards",
-        polkadot: "polkadot-rewards.datahub.figment.io/rewards",
-        solana: "solana-rewards.datahub.figment.io/rewards",
+        ethereum: "eth-rewards.datahub.figment.io/v2",
+        polkadot: "polkadot-rewards.datahub.figment.io/v2",
+        solana: "solana-rewards.datahub.figment.io/v2",
+        near: "near-rewards.datahub.figment.io/v2",
+      },
+      "rewards-rates-api": {
+        ethereum: "eth-rewards.datahub.figment.io",
+        polkadot: "polkadot-rewards.datahub.figment.io",
+        solana: "solana-rewards.datahub.figment.io",
       },
       "transaction-search-api": {
         avalanche: "avalanche--mainnet--indexer.datahub.figment.io",
-        near: "near--indexer.datahub.figment.io",
+        "near-protocol": "near--indexer.datahub.figment.io",
       },
       "staking-api": {
         avalanche: "avalanche-slate.datahub.figment.io/api/v1/flows",
@@ -208,8 +216,9 @@ const env = {
  * @returns {URL} of the node endpoint
  */
 function buildURL(request) {
-  const [base, network, service, ...routes] =
+  const [base, service, network, ...routes] =
     request.url.split(/(?<!\/)\/(?!\/)/g);
+
   const protocol =
     request.headers.get("Upgrade") === "websocket" ? "wss" : "https";
   const services = env.HOSTS[protocol][service];
@@ -223,7 +232,9 @@ function buildURL(request) {
       }
     );
   }
-  return new URL(`${protocol}://${url}/${routes.join("/")}`);
+  return new URL(
+    `${protocol}://${url}/apikey/${env.API_KEY}/${routes.join("/")}`
+  );
 }
 
 /**
@@ -244,6 +255,15 @@ function ensureAuthorized(request) {
     error = {
       message: `Method ${request.method} not allowed`,
       status: 405,
+      statusText: "Not Allowed",
+    };
+  } else if (
+    request.method !== "OPTIONS" &&
+    request.headers.get("Authorization") !== env.API_KEY
+  ) {
+    error = {
+      message: `Not Authorized ${request.method}!`,
+      status: 403,
       statusText: "Not Allowed",
     };
   }
@@ -275,10 +295,10 @@ function getPreflightResponse(request) {
 }
 
 /**
- * Establishes WebSocket connection and returns response containing ws client
+ * Establishes a websocket connection and returns response containing ws client
  * @param {string} url - the figment api url
  * @throws {Response} relays status and statusText if connection fails
- * @returns {Response} with required WebSocket client
+ * @returns {Response} with required websocket client
  */
 async function getWebsocketConnection(url) {
   const result = await fetch(url, {
@@ -296,7 +316,7 @@ async function getWebsocketConnection(url) {
     });
   }
 
-  // Accept the WebSocket connection
+  // Accept the websocket connection
   const websocket = result.webSocket;
   websocket.accept();
 
@@ -331,12 +351,27 @@ async function getWebsocketConnection(url) {
  */
 async function getRpcResponse(url, request) {
   const apiRequest = new Request(url, request);
-  apiRequest.headers.set("Authorization", env.API_KEY);
-  apiRequest.headers.set("Origin", `https://${env.PROXY_ORIGIN}`);
-  return await fetch(apiRequest);
+  apiRequest.headers.set("origin", `https://${env.PROXY_HOST}`);
+
+  // create then rebuild a new response from the API result so it's mutable
+  let response = await fetch(apiRequest);
+  response = new Response(response.body, response);
+  response.headers.set(
+    "Access-Control-Allow-Headers",
+    request.headers.get("Access-Control-Request-Headers") || ""
+  );
+  response.headers.set(
+    "Access-Control-Allow-Origin",
+    request.headers.get("Origin") || ""
+  );
+  response.headers.set(
+    "Access-Control-Allow-Methods",
+    env.ALLOWED_METHODS.join(",")
+  );
+  return response;
 }
 
-// Process the incoming fetch request
+// main function to process the incoming fetch request
 addEventListener("fetch", function handleFetch(event) {
   try {
     const { request } = event;
