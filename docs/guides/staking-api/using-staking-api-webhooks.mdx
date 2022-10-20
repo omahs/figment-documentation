@@ -57,61 +57,61 @@ Cloudflare Workers provide flexibility and scalability when handling webhooks se
 <details><summary>Click here to view the code.</summary>
 
 ```js title="Example Cloudflare Worker"
-//
-const FLOW_ID = "3e079c15-befb-4bd2-bdf9-f3e7eaeb182d";
+"use strict";
+(() => {
+  // src/index.ts
+  addEventListener("fetch", (event) => {
+    event.respondWith(handleRequest(event.request));
+  });
+  async function handleRequest(request) {
+    const headers = request.headers;
+    const data = await request.json();
+    try {
+      if (data) {
+        console.log(WEBHOOK_SECRET);
 
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
+        let sig = headers.get("Slate-Signature");
+        console.log(sig);
+        let splitsig = sig.split(",");
+        console.log("sigsplit", splitsig);
+        var uint8array = new TextEncoder().encode(WEBHOOK_SECRET);
+        var uint8 = new TextEncoder().encode(splitsig[1]);
+        var uint = new TextEncoder().encode(JSON.stringify(data));
 
-async function handleRequest(request) {
-  const headers = request.headers;
-  const data = await request.json();
-
-  try {
-    if (data) {
-      // Different events will generate different payload structures
-      // All Staking API payloads should include a "flow_id"
-      // If the key "error" is present, the "event_type" should end with .error
-      // Staking API Webhooks can be set to filter by event type, making it easier to
-      // handle only the events you care about.
-      //
-      // Handling differing payload structures in a Staking API webhook payload,
-      // we can iterate over the existing keys to see what we're dealing with
-      for (const [key, value] of Object.entries(data)) {
-        console.log(`${key}: ${value}`);
-      }
-
-      // Display the Headers key/value pairs
-      console.log("Request Headers:\n");
-      for (var pair of request.headers.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
-      }
-
-      // Always have a configured webhook secret!
-      // Validate we received a request with this secret efore proceeding any further.
-      if (headers.get("staking-webhook-auth") !== WEBHOOK_SECRET) {
-        return new Response(
-          "Incorrect webhook secret. Ensure that your staking-webhook-auth header is set to the appropriate value.",
-          {
-            headers: { "content-type": "text/plain" },
-            status: 401,
-          }
+        let akey = uint8array;
+        console.log(akey);
+        console.log(uint8);
+        console.log("Encoded data:", uint);
+        let ckey = await crypto.subtle.importKey(
+          "raw",
+          akey,
+          { name: "HMAC", hash: "SHA-256" },
+          false,
+          ["verify"]
         );
+        let hmac = await crypto.subtle.verify("HMAC", ckey, uint8, uint);
+
+        console.log("Should be true: ", hmac);
+
+        for (const [key, value] of Object.entries(data)) {
+          console.log(`${key}: ${value}`);
+        }
+        console.log("Request Headers:\n");
+        for (var pair of request.headers.entries()) {
+          console.log(pair[0] + ": " + pair[1]);
+        }
+        console.log("Incoming payload:", data);
+        return new Response(JSON.stringify(data, null, 2), {
+          headers: { "content-type": "text/plain" },
+        });
       }
-
-      console.log("Incoming payload:", data);
-
-      // Return the incoming payload as a response.
-      return new Response(JSON.stringify(data, null, 2), {
-        headers: { "content-type": "text/plain" },
-      });
+    } catch (error) {
+      console.log(error);
+      return new Response(error, { headers: { "content-type": "text/plain" } });
     }
-  } catch (error) {
-    console.log(error);
-    return new Response(error, { headers: { "content-type": "text/plain" } });
   }
-}
+})();
+//# sourceMappingURL=index.js.map
 ```
 
 </details>
