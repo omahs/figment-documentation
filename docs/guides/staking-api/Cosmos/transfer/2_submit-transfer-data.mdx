@@ -3,34 +3,31 @@ title: Submit Transfer Data
 slug: /guides/staking-api/cosmos/transfer/submit-transfer-data
 ---
 
-After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
 
 ### Parameters
 
 - `name` &mdash; `string` Name of the action to execute - `create_transfer_tx`.
 - `inputs` &mdash; `object`
   - `from_account_address` &mdash; `string` The address which ATOM will be transferred from (required).
-  - `to_account_address` &mdash; `string` The address to which NEAR will be transferred (required).
+  - `to_account_address` &mdash; `string` The address to which ATOM will be transferred (required).
   - `amount` &mdash; `number` The amount of ATOM to be transferred (required).
-  - `memo` &mdash; `string` An optional message to record on-chain with your transfer.
-  - `gas_limit` &mdash; `number` The total amount of gas you're willing to let this transaction consume.
-  - `gas_price` &mdash; `number` How many ATOM you're willing to pay per unit of gas consumed by this transaction.
+  - `memo` &mdash; `string` A message to record on-chain with your transfer (optional).
+  - `gas_limit` &mdash; `number` The total amount of gas you're willing to let this transaction consume (optional).
+  - `gas_price` &mdash; `number` How many ATOM you're willing to pay per unit of gas consumed by this transaction (optional).
 
 #### Sample cURL Request
 
 ```bash {5-10}
-curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next' \
+curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/fd37503c-17d0-2164-8537-8f4a33f694a9/next' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: <api_key>' \
 -d '{
   "name": "create_transfer_tx",
   "inputs": {
-    "from_account_address": "[:from_account_address]",
-    "to_account_address": "[:from_account_address]",
-    "amount": "[:amount]",
-    "memo": "[:memo]",
-    "gas_limit": "[:gas_limit]",
-    "gas_price": "[:gas_price]",
+    "from_account_address": "cosmos1q73f398z4egpsj0fg2u55w34qxxkjzmf37fje7",
+    "to_account_address": "cosmos1hjyde2kfgtl78twvhs53u5j2gcsxrt649nn8j5",
+    "amount": "10",
   }
 }'
 ```
