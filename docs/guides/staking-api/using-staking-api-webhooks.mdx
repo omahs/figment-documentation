@@ -11,12 +11,12 @@ import img1 from "@site/static/img/guides/staking-api/ngrok_console.png";
 
 ## Security Overview
 
-In general, webhooks are a way to send automated messages between apps.
+A webhook is an HTTP request which triggers by an event in a source system (ex. Figment's Staking API) and sent to a destination system (ex. Cloudflare Worker) with a payload of data. In general, webhooks are a way to send automated messages between systems whenever a new event takes place.
+
+The Staking API uses webhooks to send notifications about events related to the various Staking API flows. For example, when an undelegation flow is completed, a webhook can be sent to the server of your choosing.
+
 There are some security considerations when dealing with webhooks.
 This guide provides all the information needed to successfully manage webhooks in the context of Figment's Staking API.
-
-The Staking API uses webhooks to send notifications about events related to the various Staking API flows.
-For example, when an undelegation flow is completed, a webhook can be sent to the server of your choosing.
 
 We will examine how serverless functions (Cloudflare Workers) can be beneficial to this process, and provide example code which can be used as the basis for your own solution.
 
@@ -36,7 +36,7 @@ Click on the thumbnail image below to view a demonstration recording on ASCIInem
 
 ### Code Explanation
 
-Secure your webhook with a client signature to validate that the Staking API generated the webhook you are consuming and that it didn’t come from a malicious origin.
+Secure your webhook with a client signature to validate that the Staking API generated the webhook you are consuming and that it didn't come from a malicious origin.
 
 Webhooks are sent with the `Slate-Signature` header, which you can use to verify the payload. The value will look like this:
 
@@ -118,12 +118,16 @@ Cloudflare Workers provide flexibility and scalability when handling webhooks se
 
 A Staking API webhook payload will look something like this:
 
-```json title="Sample Staking API Webhook Payload"
+```bash title="Sample Staking API Webhook Payload"
 {
-  "status": "broadcast",
-  "flow_id": "3e079c15-befb-4bd2-bdf9-f3e7eaeb182d",
-  "event_type": "v1.polkadot.staking.bonding_tx.confirmed",
-  "transaction_hash": "0xb59949456f2bbf347011d7da6204b0a3fff4fe05f6905e1bef533e482e9bf346"
+  amount: '10.0',
+  status: 'success',
+  flow_id: '49a1bab1-e3e6-4f77-8212-ee254e1ab9a3',
+  event_type: 'near.transfer.transfer_tx.confirmed',
+  transaction_hash: '2a9fnT6j5M9Fy6TFNbX2bA1Ncjh6aXK9Ky8oPBUuJwtS',
+  to_account_address: 'pizza.testnet',
+  from_account_pubkey: 'ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY',
+  from_account_address: 'slate-demo.testnet'
 }
 ```
 
