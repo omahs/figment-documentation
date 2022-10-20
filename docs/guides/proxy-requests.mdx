@@ -19,12 +19,16 @@ import img9 from "@site/static/img/guides/proxy-requests/proxy_send_post_request
 import img10 from "@site/static/img/guides/proxy-requests/proxy_response_200.png";
 
 This guide will show you how to deploy a proxy using a Cloudflare worker to remove API Keys from your clientside codebase and
-provide a foundational middleware for further security controls. This guide assumes working knowledge of JavaScript and a <Link to="https://cloudflare.com/">Cloudflare</Link> account.
+provide a foundational middleware for further security controls.
+This guide assumes working knowledge of JavaScript and a <Link to="https://cloudflare.com/">Cloudflare</Link> account.
 
 ## Motivation
 
-To make use of Figment APIs calls must be <Link to="/quickstart/api-authentication">authenticated using your project's API key</Link>. In certain instances you may want to make calls from client side applications. Doing so directly would mean having the API Key in the client codebase and visible during network requests.
-Using a proxy means we can take API Key out of the client side. In addition having a middleware means we can take further steps such as validating CORS Origins, whitelisting IPs, throttling requests and more.
+To make use of Figment APIs, calls must be <Link to="/quickstart/api-authentication">authenticated using your project's API key</Link>.
+In certain instances you may want to make calls from client side applications.
+Doing so directly would mean having the API Key in the client codebase and visible during network requests.
+Using a proxy means we can take API Key out of the client side.
+In addition having a middleware means we can take further steps such as validating CORS Origins, whitelisting IPs, throttling requests and more.
 
 ## Disclaimer
 
@@ -37,7 +41,7 @@ Traffic sent over **WS** or **HTTP** protocols is not secure, regardless of the 
 
 :::
 
-### Create a Cloudflare Service Worker
+## Create a Cloudflare Service Worker
 
 1. From the Workers Overview tab, click the "Create a Service" button.
 
@@ -107,6 +111,8 @@ You'll need:
   alt="Save and Deploy"
   className="shadow--tl inline-image"
 />
+
+## Usage
 
 :::note
 
@@ -257,7 +263,7 @@ function ensureAuthorized(request) {
   if (error) {
     throw new Response(error.message, {
       status: 403,
-      statusText: `Not allowed`,
+      statusText: `Not Allowed`,
     });
   }
 }
@@ -339,7 +345,7 @@ async function getRpcResponse(url, request) {
   const apiRequest = new Request(url, request);
   apiRequest.headers.set("origin", `https://${env.PROXY_HOST}`);
 
-  // create then rebuild a new response from the API result so it's mutable
+  // Create then rebuild a new response from the API result so it's mutable
   let response = await fetch(apiRequest);
   response = new Response(response.body, response);
   response.headers.set(
@@ -357,7 +363,7 @@ async function getRpcResponse(url, request) {
   return response;
 }
 
-// main function to process the incoming fetch request
+// Main function to process the incoming fetch request
 addEventListener("fetch", function handleFetch(event) {
   try {
     const { request } = event;
@@ -378,25 +384,23 @@ addEventListener("fetch", function handleFetch(event) {
 
 </details>
 
-Continue with the explanation below or proceed to the <Link to="#testing-and-troubleshooting">Testing and Troubleshooting</Link> section.
-
 :::
 
-### Usage
+You're all set to make requests to Figment APIs and pass responses back to the client without exposing your API keys!
+To make calls with the proxy, formulate your `URL` using `<proxy-url>/<service>/<network>` followed by any query parameters
+just as with the Figment API calls.
 
-You're all set to make requests to Figment APIs and pass responses back to the client without exposing your API keys! To make calls with the proxy formulate your `URL` using `<proxy-url>/<service>/<network>` followed by any query parameters just as with the Figment API calls.
+Here are some examples using the JavaScript fetch API, given the proxy `http://api-proxy.username.workers.dev`:
 
-Some examples given the proxy `http://api-proxy.roganx.worker.dev`:
-
-<details><summary>Get Arbitrum block number from Node API</summary>
+<details><summary>Get Ethereum gas price from Node API</summary>
 
 ```javascript
-fetch("http://api-proxy.roganx.worker.dev/node-api/arbitrum", {
+fetch("http://api-proxy.username.workers.dev/node-api/ethereum", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     jsonrpc: "2.0",
-    method: "eth_blockNumber",
+    method: "eth_gasPrice",
     params: [],
     id: 1,
   }),
@@ -404,6 +408,46 @@ fetch("http://api-proxy.roganx.worker.dev/node-api/arbitrum", {
 ```
 
 </details>
+
+<details><summary>Get Ethereum rewards for a Validator from Rewards API</summary>
+
+```javascript
+fetch("http://api-proxy.username.workers.dev/rewards-api/ethereum", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    network: "ethereum",
+    accounts: [
+      "0x8914b656ad92ffd6ad2920f8f2ad186b0502e4848ad5c5451fea01e42898a2ea07009afb5ca0fd20119da155d745a299",
+    ],
+    start: 151759,
+    end: 151760,
+  }),
+});
+```
+
+</details>
+
+<details><summary>Get Avalanche transactions from Transaction Search API</summary>
+
+:::caution important
+
+`GET` requests supply the query parameters in the request URL. There is no request body.
+
+:::
+
+```javascript
+fetch(
+  "http://api-proxy.username.workers.dev/transaction-search-api/avalanche/transactions?network=avalanche&chain_ids=mainnet&start_height=1921984&address=avax1pvkhyf0y9674p2ps40vmp0a8w427384lpr8zan,avax1rlu93pnalclt7h0dte3evua97lv4fp4qzax5wq",
+  {
+    method: "GET",
+  }
+);
+```
+
+</details>
+
+Continue with the explanation below, or proceed to the <Link to="#testing-and-troubleshooting">Testing and Troubleshooting</Link> section.
 
 ## Code Explanation
 
@@ -457,6 +501,12 @@ const env = {
 <details><summary>Click here to view the code.</summary>
 
 ```js
+/**
+ * Builds and returns the URL for the node request
+ * @param {Request} request - inbount request
+ * @throws {Response} 500 error if network isn't found
+ * @returns {URL} of the node endpoint
+ */
 function buildURL(request) {
   const [base, service, network, ...routes] =
     request.url.split(/(?<!\/)\/(?!\/)/g);
@@ -490,6 +540,11 @@ If the request does not meet these criteria, or if there is an error, we will re
 <details><summary>Click here to view the code.</summary>
 
 ```js
+/**
+ * Ensures the request is authorized to proceed
+ * @param {Request} request - inbound request
+ * @throws {Response} 403 or 405 if unauthorized
+ */
 function ensureAuthorized(request) {
   let error;
 
@@ -519,7 +574,7 @@ function ensureAuthorized(request) {
   if (error) {
     throw new Response(error.message, {
       status: 403,
-      statusText: `Not allowed`,
+      statusText: `Not Allowed`,
     });
   }
 }
@@ -545,6 +600,11 @@ CORS Resources:
 <details><summary>Click here to view the code.</summary>
 
 ```js
+/**
+ * Builds and returns preflight response based on request
+ * @param {Request} request - inbound request
+ * @returns {Response} with required CORS params
+ */
 function getPreflightResponse(request) {
   return new Response(null, {
     status: 200,
@@ -569,6 +629,12 @@ A successful response must always return status code `101 Switching Protocols`. 
 <details><summary>Click here to view the code.</summary>
 
 ```js
+/**
+ * Establishes a websocket connection and returns response containing ws client
+ * @param {string} url - the figment api url
+ * @throws {Response} relays status and statusText if connection fails
+ * @returns {Response} with required websocket client
+ */
 async function getWebsocketConnection(url) {
   const result = await fetch(url, {
     headers: {
@@ -624,11 +690,17 @@ From the client point of view, the API key is never visible.
 <details><summary>Click here to view the code.</summary>
 
 ```js
+/**
+ * Fetches results from Figment APIs and returns result
+ * @param {string} url - the figment api url
+ * @param {Request} request - inbound request
+ * @returns {Response} relays Figment API node response
+ */
 async function getRpcResponse(url, request) {
   const apiRequest = new Request(url, request);
   apiRequest.headers.set("origin", `https://${env.PROXY_HOST}`);
 
-  // create then rebuild a new response from the API result so it's mutable
+  // Create then rebuild a new response from the API result so it's mutable
   let response = await fetch(apiRequest);
   response = new Response(response.body, response);
   response.headers.set(
@@ -664,6 +736,11 @@ In this case we want to tie all of the functionality together, ensuring requests
 <details><summary>Click here to view the code.</summary>
 
 ```js
+/**
+ * addEventListener is the Service Worker entrypoint.
+ * @param {string} - fetch
+ * @param {callback} - A named function to handle the event
+ */
 addEventListener("fetch", function handleFetch(event) {
   try {
     const { request } = event;
