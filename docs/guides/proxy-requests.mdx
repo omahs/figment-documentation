@@ -1,6 +1,5 @@
 ---
 title: Proxy Requests to Figment APIs
-slug: /guides/proxy-requests-to-figment-apis
 ---
 
 import Link from "@docusaurus/Link";
@@ -19,7 +18,8 @@ import img8 from "@site/static/img/guides/proxy-requests/save_and_deploy.png";
 import img9 from "@site/static/img/guides/proxy-requests/proxy_send_post_request.png";
 import img10 from "@site/static/img/guides/proxy-requests/proxy_response_200.png";
 
-This guide will show you how to deploy a proxy using a Cloudflare worker to remove API Keys from your clientside codebase and provide a foundational middleware for further security controls.
+This guide will show you how to deploy a proxy using a Cloudflare worker to remove API Keys from your clientside codebase and
+provide a foundational middleware for further security controls. This guide assumes working knowledge of JavaScript and a <Link to="https://cloudflare.com/">Cloudflare</Link> account.
 
 ## Motivation
 
@@ -37,14 +37,7 @@ Traffic sent over **WS** or **HTTP** protocols is not secure, regardless of the 
 
 :::
 
-## Cloudflare Service Worker Setup
-
-#### Prerequisites
-
-- A working knowledge of JavaScript.
-- Create a [Cloudflare](https://cloudflare.com) account if you do not already have one, sign in to the Cloudflare Dashboard.
-
-### Create a new Service
+### Create a Cloudflare Service Worker
 
 1. From the Workers Overview tab, click the "Create a Service" button.
 
@@ -64,15 +57,9 @@ Traffic sent over **WS** or **HTTP** protocols is not secure, regardless of the 
   className="shadow--tl inline-image"
 />
 
-### Add Environment Variables to Cloudflare
+### Add Environment Variables
 
-3. From the Settings tab of that worker, add the necessary environment variables.
-
-:::info note
-
-Read more about [environment variables](https://developers.cloudflare.com/workers/platform/environment-variables/#environment-variables-via-the-dashboard) in the Cloudflare documentation.
-
-:::
+3. From the Settings tab the worker, add the necessary [environment variables](https://developers.cloudflare.com/workers/platform/environment-variables/#environment-variables-via-the-dashboard).
 
 <img
   src={img3}
@@ -81,9 +68,11 @@ Read more about [environment variables](https://developers.cloudflare.com/worker
   className="shadow--tl inline-image"
 />
 
-- Add an environment variable named `API_KEY`. Click the "Encrypt" button once you've set the value of `API_KEY`.
-- Add an environment variable named `ALLOWED_ORIGINS`. The values must be quoted, in an array (`["docs.figment.io"]`). Include the value `null` without quotes _only if you intend to make requests from an environment that does not include an_ `Origin`, (`["docs.figment.io", null]`) .
-- Add an environment variable named `PROXY_ORIGIN`. The value must be the URL where the worker is deployed (ex. `https://proxy.yourusername.workers.dev`). If you have set up a custom domain in Cloudflare, use that instead.
+You'll need:
+
+- `API_KEY` - Your Figment API Key, click the "Encrypt" button once you've set the value.
+- `ALLOWED_ORIGINS` - A JSON array of all origins that the service should accept calls from e.g. `["docs.figment.io", null]`. Note that providing `null` will allow the service to accept calls without Origin headers e.g. terminal curl request. To disable this feature remove `null` from the array.
+- `PROXY_ORIGIN` - The the URL where the worker is deployed e.g. `https://proxy.yourusername.workers.dev`. If you have set up a custom domain in Cloudflare, use that instead.
 
 <img
   src={img4}
@@ -118,10 +107,6 @@ Read more about [environment variables](https://developers.cloudflare.com/worker
   alt="Save and Deploy"
   className="shadow--tl inline-image"
 />
-
-You can now send requests to Figment APIs and pass responses back to the client without exposing your API keys!
-
-<br />
 
 :::note
 
@@ -396,6 +381,29 @@ addEventListener("fetch", function handleFetch(event) {
 Continue with the explanation below or proceed to the <Link to="#testing-and-troubleshooting">Testing and Troubleshooting</Link> section.
 
 :::
+
+### Usage
+
+You're all set to make requests to Figment APIs and pass responses back to the client without exposing your API keys! To make calls with the proxy formulate your `URL` using `<proxy-url>/<service>/<network>` followed by any query parameters just as with the Figment API calls.
+
+Some examples given the proxy `http://api-proxy.roganx.worker.dev`:
+
+<details><summary>Get Arbitrum block number from Node API</summary>
+
+```javascript
+fetch("http://api-proxy.roganx.worker.dev/node-api/arbitrum", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    jsonrpc: "2.0",
+    method: "eth_blockNumber",
+    params: [],
+    id: 1,
+  }),
+});
+```
+
+</details>
 
 ## Code Explanation
 
