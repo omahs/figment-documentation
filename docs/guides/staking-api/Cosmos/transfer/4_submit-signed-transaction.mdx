@@ -3,7 +3,8 @@ title: Submit Signed Transfer Transaction for Broadcast
 slug: /guides/staking-api/cosmos/transfer/submit-signed-transaction
 ---
 
-After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the network.
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload.
+The Staking API will broadcast the transaction to the Cosmos network.
 
 ### Parameters
 
@@ -14,13 +15,13 @@ After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]
 #### Sample cURL Request
 
 ```bash {5-8}
-curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/[:flow_id]/next' \
+curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/fd37503c-17d0-2164-8537-8f4a33f694a9/next' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: <api_key>' \
 -d '{
   "name": "sign_transfer_tx",
   "inputs": {
-    "transaction_payload": "[:transaction_payload]"
+    "transaction_payload": "0aa4010a8f010a1c2f636f736d6f732e62616e6b2e763162657461312e4d736753656e64126f0a2d636f736d6f73313738366a6a6b6835786b343376636d72633439307a6e34386668386e6c303274637572306365122d636f736d6f73313561707464716d6d376464677463726a7663356873393838726c726b7a6534306c34713068651a0f0a057561746f6d1206313030303030121054657374696e67206175746f2d67617312670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a210269bc2f2b61cdddb0bb2cf169d5fad0afc19326aa13d2bf967ee3092f7ade88f712040a020801181d12130a0d0a057561746f6d12043138343310d1bf041a40a987ccc429bbeca8f8e3295f3ccb800a35400944ca17801ee888cfb28f1ec6b40d654a45aedfc46f3e1f825951ace283f911258131a989d925827bd322b2b0fb"
   }
 }'
 ```
