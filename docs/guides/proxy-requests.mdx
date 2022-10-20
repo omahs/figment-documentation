@@ -443,7 +443,7 @@ const env = {
 
 - `protocol` in this scope will be `wss` or `https`. Based on the presence of an `Upgrade` header, we know if the incoming connection is requesting to be upgraded to a WebSocket. Each protocol is handled separately.
 - `services` in this scope will be one of the defined keys in `HOSTS`, assigned to either protocol &mdash; ex. `node-api`
-- `routes` are passed via the request URL, they indicate which Figment API endpoint to query. For example, `/solana/node-api` would direct the request to the `HOSTS` value for that network and service.
+- `routes` are passed via the request URL, they indicate which Figment API endpoint to query. For example, `/node-api/solana` would direct the request to the `HOSTS` value for that service and network.
 
 <details><summary>Click here to view the code.</summary>
 
