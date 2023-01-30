@@ -19,7 +19,7 @@ After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:f
     - `Staked` Added to the staked balance.
     - `Controller` Sent to the controller account, liquid.
     - `Stash` Sent to the stash account, liquid. Providing the `stash_account_address` is equivalent to using `Stash`.
-  - `amount` &mdash; `number` &mdash; The amount of DOT to be bonded to the controller. Minimum of `1.0`. This field should be in full DOT, not in Planck (ie. if you want to stake 5 DOT, return `"amount": 5.0`). Staking API will translate the amount to Plancks so you do not have to worry about the conversion factor (required). A Planck is the smallest unit of DOT. One DOT contains 10,000,000,000 Plancks.
+  - `amount` &mdash; `number` &mdash; The amount of DOT to be bonded to the controller. Minimum of `1.0`. This field should be in full DOT, not in Planck (ie. if you want to stake 5 DOT, return `"amount": 5.0`). Staking API will translate the amount to Plancks so you do not have to worry about the conversion factor (required). A Planck is the smallest unit in Substrate based blockchains. One DOT contains 10,000,000,000 Plancks.
 
 ### Sample cURL Request
 
