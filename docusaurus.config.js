@@ -203,8 +203,12 @@ const config = {
                 to: "https://figment.io/solutions/governance",
               },
               {
-                label: "Terms & Conditions",
-                to: "/terms-and-conditions/",
+                label: "Terms of Use",
+                to: "https://www.figment.io/legal/terms-of-use",
+              },
+              {
+                label: "Privacy Policy",
+                to: "https://www.figment.io/legal/privacy-policy",
               },
             ],
           },
