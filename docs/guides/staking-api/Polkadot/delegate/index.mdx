@@ -5,6 +5,11 @@ sidebar_position: 1
 pagination_prev: null
 ---
 
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/polkadot/Workflows::V1::Polkadot::StakingFlow_workflow.png";
+
+## Introduction
+
 The Staking API's DOT staking flow will walk your application through the process of both bonding DOT, and making validator nominations. You are able to skip either step so effectively you can:
 
 - Bond and nominate
@@ -12,3 +17,19 @@ The Staking API's DOT staking flow will walk your application through the proces
 - Just nominate
 
 In the following steps we will illustrate how to bond and nominate in one flow.
+
+## Flow Diagram
+
+Below is a complete diagram for the Polkadot Delegation flow:
+
+<img
+  src={img1}
+  alt="Polkadot Delegation Flow Diagram"
+  className="inline-image"
+/>
+
+## References
+
+- <Link to="https://wiki.polkadot.network/docs/learn-staking">
+    Polkadot Wiki: Staking
+  </Link>

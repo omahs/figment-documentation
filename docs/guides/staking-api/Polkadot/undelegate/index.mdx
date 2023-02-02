@@ -5,6 +5,11 @@ sidebar_position: 2
 pagination_prev: null
 ---
 
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/polkadot/Workflows::V1::Polkadot::UnstakingFlow_workflow.png";
+
+## Introduction
+
 The Staking API's DOT unstaking flow will walk your application through the process of unbonding DOT, and optional processes of chilling and withdrawing. There are a few different routes through this process:
 
 - **Withdraw** from delegated account
@@ -16,8 +21,24 @@ The Staking API's DOT unstaking flow will walk your application through the proc
 
 **After** unbonding:
 
-- If an unbonded entry does not exist, then it is considered rebonded and we are done.
-- If there are no funds to withdraw, then it is considered unbonded and we are done.
-- If there are funds to withdraw, we proceed to withdraw funds and are done.
+- If an unbonded entry does not exist, then it is considered rebonded and we are done
+- If there are no funds to withdraw, then it is considered unbonded and we are done
+- If there are funds to withdraw, we proceed to withdraw funds and are done
 
-In the following steps we will illustrate the entire flow from chilling to withdrawing.
+In the following guide we will illustrate the entire flow from chilling to withdrawing.
+
+## Flow Diagram
+
+Below is a complete diagram for the Polkadot Undelegation flow:
+
+<img
+  src={img1}
+  alt="Polkadot Undelegation Flow Diagram"
+  className="inline-image"
+/>
+
+## References
+
+- <Link to="https://wiki.polkadot.network/docs/learn-staking">
+    Polkadot Wiki: Learn Staking
+  </Link>

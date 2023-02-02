@@ -5,8 +5,27 @@ sidebar_position: 2
 pagination_prev: null
 ---
 
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/solana/Workflows::V1::Solana::UnstakingFlow_workflow.png";
+
+## Introduction
+
 In order to undelegate SOL, we will:
 
-- Deactivate a given stake account.
-- Wait for the stake to become inactive (generally at the next epoch boundary).
-- Withdraw the inactive SOL back to the funding account.
+- Deactivate a given stake account
+- Wait for the stake to become inactive (generally at the next epoch boundary)
+- Withdraw the inactive SOL back to the funding account
+
+## Flow Diagram
+
+Below is a complete diagram for the Solana Undelegation flow:
+
+<img
+  src={img1}
+  alt="Solana Undelegation Flow Diagram"
+  className="inline-image"
+/>
+
+## References
+
+- <Link to="https://docs.solana.com/staking">Solana Docs: Staking</Link>

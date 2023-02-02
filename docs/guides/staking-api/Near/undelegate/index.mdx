@@ -4,14 +4,17 @@ slug: /guides/staking-api/near/undelegate
 sidebar_position: 2
 ---
 
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/near/Workflows::V1::Near::UnstakingFlow_workflow.png";
+
 Undelegating NEAR is a simple process. We will collect:
 
-- The delegating address.
-- The signing address.
-- The validator address to undelegate from.
-- Amount of NEAR to be undelegated.
-- Optionally, a `maximum` Boolean if you wish to undelegate the full amount without having to check the current balance.
-- Optionally, a max gas amount (upper limit of the transaction fee to be paid).
+- The delegating address
+- The signing address
+- The validator address to undelegate from
+- Amount of NEAR to be undelegated
+- Optionally, a `maximum` Boolean if you wish to undelegate the full amount without having to check the current balance
+- Optionally, a max gas amount (upper limit of the transaction fee to be paid)
 
 Once the undelegation transaction is confirmed on-chain, the unbonding process will begin immediately.
 
@@ -20,6 +23,19 @@ Upon completion of the unbonding period, the NEAR will be available to be withdr
 
 :::info
 
-If you have a balance waiting to be withdrawn and do not wish to undelegate more NEAR, you can use the `create_withdraw_tx` action to withdraw from that balance without first unbonding any NEAR.
+If you have a balance waiting to be withdrawn and do not wish to undelegate more NEAR,
+you can use the `create_withdraw_tx` action to withdraw from that balance without first unbonding any NEAR.
 
 :::
+
+## Flow Diagram
+
+Below is a complete diagram for the NEAR Undelegation flow:
+
+<img src={img1} alt="NEAR Undelegation Flow Diagram" className="inline-image" />
+
+## References
+
+- <Link to="https://wiki.near.org/overview/tokenomics/delegation">
+    NEAR Docs for Staking
+  </Link>

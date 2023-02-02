@@ -1,16 +1,16 @@
 ---
-title: Create a New Delegation Flow
-slug: /guides/staking-api/cosmos/staking/create-new-flow
+title: Create a New Undelegation Flow
+slug: /guides/staking-api/cosmos/undelegate/create-new-flow
 ---
 
-To initiate the staking process, create a new flow with a `POST` request to `/api/v1/flows`.
+To initiate the unstaking process, create a new flow with a `POST` request to `/api/v1/flows`.
 
 ### Parameters
 
 - `flow` &mdash; `object`
   - `network_code` &mdash; `string` Network this flow operates on (ex. `cosmos`) (required).
   - `chain_code` &mdash; `string` Chain this flow operates on (ex. `testnet`) (required).
-  - `operation` &mdash; `string` The operation to perform (ex. `staking`) (required).
+  - `operation` &mdash; `string` The operation to perform (ex. `unstaking`) (required).
   - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
 
 #### Sample cURL Request
@@ -23,7 +23,7 @@ curl -X POST 'https://cosmos-slate.datahub.figment.io/api/v1/flows' \
   "flow": {
     "network_code": "cosmos",
     "chain_code": "testnet",
-    "operation": "staking",
+    "operation": "unstaking",
     "version": "v1"
   }
 }'
@@ -36,13 +36,13 @@ curl -X POST 'https://cosmos-slate.datahub.figment.io/api/v1/flows' \
 
 The response indicates one possible action:
 
-- `create_delegate_tx` &mdash; Use this action to generate a delegation transaction to stake your ATOM.
+- `create_undelegate_tx` &mdash; Use this action to generate an undelegation transaction to unstake your ATOM.
 
-The `create_delegate_tx` action indicates seven possible fields for data collection:
+The `create_undelegate_tx` action indicates seven possible fields for data collection:
 
-- `delegator_address` &mdash; The address from which ATOM will be delegated.
-- `validator_address` &mdash; The validator address to which ATOM will be delegated.
-- `amount` &mdash; The amount of ATOM to be delegated.
+- `delegator_address` &mdash; The address from which ATOM was delegated.
+- `validator_address` &mdash; The validator address from which ATOM will be undelegated.
+- `amount` &mdash; The amount of ATOM to be undelegated.
 - `memo` &mdash; an optional message to record on-chain with your transaction.
 - `gas_limit` &mdash; the total amount of gas you're willing to let this transaction consume.
   - If you do not include this, we'll use a Cosmos library to select a good default for you.
@@ -54,11 +54,11 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
 
 ```json {3}
 {
-  "id": "cd7fe433-91a2-96eb-b16a-deb93a504cd2",
+  "id": "34a3e428-2cad-4205-bd17-ea3ba2fc8c2e",
   "state": "initialized",
   "actions": [
     {
-      "name": "create_delegate_tx",
+      "name": "create_undelegate_tx",
       "inputs": [
         {
           "name": "delegator_address",
@@ -70,7 +70,9 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "validator_address",
@@ -83,76 +85,55 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
               "options": {}
             },
             {
+              "type": "presence",
+              "options": {}
+            },
+            {
               "type": "format",
               "options": {
                 "with": "(?-mix:\\Acosmosvaloper.*)",
                 "message": "should start with `cosmosvaloper`"
               }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "amount",
           "display": "Amount",
           "description": "",
           "type": "decimal",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            },
-            {
-              "type": "numericality",
-              "options": {
-                "greater_than": 0
-              }
-            }
-          ]
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "memo",
           "display": "Memo",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "gas_price",
           "display": "Gas Price",
           "description": "",
           "type": "decimal",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "gas_limit",
           "display": "Gas Limit",
           "description": "",
           "type": "decimal",
-          "validations": []
-        },
-        {
-          "name": "account_number",
-          "display": "Account Number",
-          "description": "Value will be retrieved from the chain if available",
-          "type": "integer",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            }
-          ]
-        },
-        {
-          "name": "sequence",
-          "display": "Sequence",
-          "description": "Value will be retrieved from the chain if available",
-          "type": "integer",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            }
-          ]
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "pubkey",
@@ -164,7 +145,9 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -176,14 +159,13 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
     "memo": null,
     "gas_price": null,
     "gas_limit": null,
-    "delegate_transaction": null,
-    "account_number": null,
-    "sequence": null,
+    "undelegate_transaction": null,
+    "estimated_unbonded_at": null,
     "pubkey": null
   },
   "network_code": "cosmos",
   "chain_code": "testnet",
-  "created_at": "2022-11-16T10:25:57.852Z",
-  "updated_at": "2022-11-16T10:25:57.852Z"
+  "created_at": "2022-12-15T10:37:31.604Z",
+  "updated_at": "2022-12-15T10:37:31.604Z"
 }
 ```

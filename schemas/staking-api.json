@@ -5065,7 +5065,7 @@
 							}
 						},
 						"url": "https://{{SOL_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
-						"description": "To initiate the merge stake account process with Staking API, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` &mdash; `object`\n  - `network_code` &mdash; `string` Network on which this flow operates (ex. `solana`) (required).\n  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `devnet`) (required).\n  - `operation` `string` The operation to perform (ex. `merge_stake_account`) (required).\n  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` &mdash; `string` ID of the flow.\n- `state` &mdash; `string` The current state of the flow.\n- `actions` &mdash; `array` It includes the `name` & `inputs` of all next possible actions.\n  - `create_merge_tx` &mdash; Use this Action to create a merge stake account transaction.\n    - `destination_stake_account_pubkey` - Public key of the stake account in which you want to merge the another stake account.\n    - `source_stake_account_pubkey` - Public key of the stake account which you want to merge with the another stake account.\n    - `funding_account_pubkey` - The pubkey of the account which will pay the transaction fee.\n- `data` &mdash; `object` Merge stake flow & transaction data."
+						"description": "To initiate the merge stake account process with Staking API, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network on which this flow operates (ex. `solana`) (required).\n    - `chain_code` — `string` Chain on which this flow operates (ex. `devnet`) (required).\n    - `operation` `string` The operation to perform (ex. `merge_stake_account`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_merge_tx` — Use this Action to create a merge stake account transaction.\n        - `destination_stake_account_pubkey` - Public key of the stake account into which you want to merge another stake account.\n        - `source_stake_account_pubkey` - Public key of the stake account which you want to merge with the destination stake account.\n        - `funding_account_pubkey` - Public key of the account which will pay the transaction fee.\n- `data` — `object` Merge stake flow & transaction data."
 					},
 					"response": [
 						{
@@ -5110,7 +5110,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"create_merge_tx\",\n    \"inputs\": {\n        \"destination_stake_account_pubkey\": \"FTaF4QGit4W71p9goN9XTbA48LHfCE9PSY7RvLXemVxc\",\n        \"source_stake_account_pubkey\": \"7XSFYEJLBnpXfwQLHcErUJhmYJAFZ2rQU4jiuMzzyQNX\",\n        \"funding_account_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\"\n    }\n}",
+							"raw": "{\n    \"name\": \"create_merge_tx\",\n    \"inputs\": {\n        \"source_stake_account_pubkey\": \"7XSFYEJLBnpXfwQLHcErUJhmYJAFZ2rQU4jiuMzzyQNX\",\n        \"destination_stake_account_pubkey\": \"FTaF4QGit4W71p9goN9XTbA48LHfCE9PSY7RvLXemVxc\",\n        \"funding_account_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5118,7 +5118,7 @@
 							}
 						},
 						"url": "https://{{SOL_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{solanaMergeStakeFlowId}}/next",
-						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` &mdash; `string` Name of the action to execute (required).\n- `inputs` &mdash; `object`\n  - `destination_stake_account_pubkey` - Public key of the stake account in which you want to merge the another stake account (required).\n  - `source_stake_account_pubkey` - Public key of the stake account which you want to merge with the another stake account (required).\n  - `funding_account_pubkey` - The pubkey of the account which will pay the transaction fee (required).\n\n### Response\n\n- `id` &mdash; `string` ID of the flow.\n- `state` &mdash; `string` The current state of the flow.\n- `actions` &mdash; `array` It includes the `name` & `inputs` of all next possible actions.\n  - `refresh_merge_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).\n  - `sign_merge_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.\n- `data` &mdash; `object` Merge stake flow & transaction data."
+						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `source_stake_account_pubkey` - Public key of the stake account from which you want to merge (required).\n    - `destination_stake_account_pubkey` - Public key of the stake account into which you want to merge the stake account balances (required).\n    - `funding_account_pubkey` - Public key of the account which will pay the transaction fee (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_merge_tx` — If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).\n    - `sign_merge_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n- `data` — `object` Merge stake flow & transaction data."
 					},
 					"response": [
 						{
@@ -5129,7 +5129,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"create_merge_tx\",\n    \"inputs\": {\n        \"destination_stake_account_pubkey\": \"FTaF4QGit4W71p9goN9XTbA48LHfCE9PSY7RvLXemVxc\",\n        \"source_stake_account_pubkey\": \"7XSFYEJLBnpXfwQLHcErUJhmYJAFZ2rQU4jiuMzzyQNX\",\n        \"funding_account_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\"\n    }\n}",
+									"raw": "{\n    \"name\": \"create_merge_tx\",\n    \"inputs\": {\n        \"source_stake_account_pubkey\": \"7XSFYEJLBnpXfwQLHcErUJhmYJAFZ2rQU4jiuMzzyQNX\",\n        \"destination_stake_account_pubkey\": \"FTaF4QGit4W71p9goN9XTbA48LHfCE9PSY7RvLXemVxc\",\n        \"funding_account_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\"\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5268,42 +5268,42 @@
 	],
 	"variable": [
 		{
-			"id": "0477bf69-0669-4f30-9dc0-6d155f9e23b9",
+			"id": "e115b88b-77a4-4078-890f-4f54cd3738c9",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "5b88765b-6f29-4281-be6d-6f2ea42fe4b4",
+			"id": "51228d00-1d39-4007-91a6-92b30b715988",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "4ea2a519-4ee2-4e34-bbe9-cc59c4b51468",
+			"id": "c51a82ec-7342-4a0d-8e97-60dcc8c084e9",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "6d50ba90-169f-4fbf-93e0-cd4a2d7964f4",
+			"id": "00b7dbba-520f-4c07-b046-595a9b8696ea",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "9b40302d-233e-41aa-ae1d-0ccf3d5283f0",
+			"id": "fc77b977-736b-4e1f-b0b7-b56a5a903a6f",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "53872db1-ec18-4ee6-8acc-4c1d82ca4c5c",
+			"id": "aee1d00b-7a1f-4963-b484-b635faefb1c2",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "33ea0a9e-0ca9-4f75-bd2b-2007f176b1d3",
+			"id": "0171dae3-173c-4e92-9819-46a39bd8d390",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "polygon-slate.datahub.figment.io"
 		},
 		{
-			"id": "36e79142-1005-4d21-aef6-35e14498be9d",
+			"id": "ab3904b1-cbf3-4b2e-839a-97dde81e6827",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}

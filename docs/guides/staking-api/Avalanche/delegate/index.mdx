@@ -4,6 +4,11 @@ slug: /guides/staking-api/avalanche/delegate
 pagination_prev: null
 ---
 
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/avalanche/Workflows::V1::Avalanche::StakingFlow_workflow.png";
+
+## Introduction
+
 Delegating AVAX is a simple process. We will collect:
 
 - The delegating address
@@ -23,3 +28,19 @@ If no end time is specified, it will default to the end time of the validator.
 This can not be changed once the delegation transaction is confirmed on-chain.
 
 :::
+
+## Flow Diagram
+
+Below is a complete diagram for the Avalanche Delegation flow:
+
+<img
+  src={img1}
+  alt="Avalanche Delegation Flow Diagram"
+  className="inline-image"
+/>
+
+## References
+
+- <Link to="https://docs.avax.network/nodes/validate/staking">
+    AVAX Docs for Staking
+  </Link>

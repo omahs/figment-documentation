@@ -1,51 +1,38 @@
 ---
-title: Submit Signed Delegate Transaction for Broadcast
-slug: /guides/staking-api/cosmos/staking/submit-signed-transaction
+title: Get Flow Status
+slug: /guides/staking-api/cosmos/delegate/get-flow-status-completed
 ---
 
-After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload.
-The Staking API will broadcast the transaction to the Cosmos network.
+To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.
 
 ### Parameters
 
-- `name` &mdash; `string` Name of the action to execute (required). `sign_delegate_tx` in this case.
-- `inputs` &mdash; `object`
-  - `transaction_payload` &mdash; Signed transaction payload from the previous step's response.
+- None
 
 #### Sample cURL Request
 
-```bash {5-8}
-curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/cd7fe433-91a2-96eb-b16a-deb93a504cd2/next' \
--H 'Content-Type: application/json' \
--H 'Authorization: <api_key>' \
--d '{
-  "name": "sign_delegate_tx",
-  "inputs": {
-    "transaction_payload": "0aa1010a9e010a232f636f736d6f732e7374616b696e672e763162657461312e4d736744656c656761746512770a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c1234636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a3665657465331a100a057561746f6d12073230303030303012670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2102db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe23512040a020801180212130a0d0a057561746f6d12043338393710d8c1091a40970af80c824579cc1fe7dbf33b2118bb72e92e4c61f80e6e3dbb3a943abfb49825baa026830536b1c7e826cf1da23fae829cb7ef91db0c8ea856bf7bd60488b9"
-  }
-}'
+```bash
+curl -X GET 'https://cosmos-slate.datahub.figment.io/api/v1/flows/cd7fe433-91a2-96eb-b16a-deb93a504cd2' \
+-H 'Authorization: <api_key>'
 ```
 
 ### Response
 
-With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
+- `state` &mdash; `string` The current state of the flow.
 
-- `delegate_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting for confirmation.
-- `completed` &mdash; Transaction has been confirmed and the transfer is complete.
+:::info note
+
+The `state` field will update from `delegate_tx_broadcasting` to `completed`.
+
+:::
 
 #### Sample Response
 
 ```json {3}
 {
   "id": "cd7fe433-91a2-96eb-b16a-deb93a504cd2",
-  "state": "delegate_tx_broadcasting",
-  "actions": [
-    {
-      "name": "wait",
-      "estimated_state_change_at": "2022-11-16T10:35:09.384Z",
-      "inputs": []
-    }
-  ],
+  "state": "completed",
+  "actions": [],
   "data": {
     "delegator_address": "cosmos1u89ikp2v7pr95g0wv2687zleu6v8qjl9qprvzl",
     "validator_address": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3",
@@ -58,7 +45,7 @@ With the signed transaction provided, the Staking API will broadcast it to the n
       "signing_payload": "dbf7cf4ae014c1dc3a17ede2fb00d717e0fca156252542da5c0712713caceb19",
       "signed": "0aa1010a9e010a232f636f736d6f732e7374616b696e672e763162657461312e4d736744656c656761746512770a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c1234636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a3665657465331a100a057561746f6d12073230303030303012670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2102db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe23512040a020801180212130a0d0a057561746f6d12043338393710d8c1091a40970af80c824579cc1fe7dbf33b2118bb72e92e4c61f80e6e3dbb3a943abfb49825baa026830536b1c7e826cf1da23fae829cb7ef91db0c8ea856bf7bd60488b9",
       "hash": "EAC7E2CF7FB035599F25CFDFDC53B146BF0E72BDAD24649197A07F467709B079",
-      "status": null,
+      "status": "confirmed",
       "error": null,
       "signatures": []
     },
@@ -69,6 +56,10 @@ With the signed transaction provided, the Staking API will broadcast it to the n
   "network_code": "cosmos",
   "chain_code": "testnet",
   "created_at": "2022-11-16T10:25:57.852Z",
-  "updated_at": "2022-11-16T10:34:09.068Z"
+  "updated_at": "2022-11-16T10:34:20.425Z"
 }
 ```
+
+### Token Delegation Flow Complete
+
+Congratulations, you have successfully delegated your ATOM tokens. Your stake is now active and earning rewards.

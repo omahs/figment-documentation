@@ -1,8 +1,13 @@
 ---
 title: Undelegate
-slug: /guides/staking-api/cosmos/unstaking
+slug: /guides/staking-api/cosmos/undelegate
 sidebar_position: 3
 ---
+
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/cosmos/Workflows::V1::Cosmos::UnstakingFlow_workflow.png";
+
+## Introduction
 
 The Cosmos Undelegate flow allows you to unstake your ATOM tokens from the validator. With the Staking API, you can unstake your ATOM tokens within a few steps.
 
@@ -16,3 +21,22 @@ To unstake ATOM tokens, you will need:
 - The `pubkey` (public key) of the `delegator_address`.
 
 Follow the steps in this section for the details on this process.
+
+## Flow Diagram
+
+Below is a complete diagram for the Cosmos Undelegation flow:
+
+<img
+  src={img1}
+  alt="Cosmos Undelegation Flow Diagram"
+  className="inline-image"
+/>
+
+## References
+
+- <Link to="https://docs.cosmos.network/v0.47/modules/staking">
+    Cosmos Docs for Staking
+  </Link>
+- <Link to="https://www.figment.io/protocols/cosmos">
+    Figment Protocol Docs for Cosmos
+  </Link>

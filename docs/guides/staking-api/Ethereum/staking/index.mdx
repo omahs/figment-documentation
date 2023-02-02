@@ -5,16 +5,33 @@ sidebar_position: 1
 pagination_prev: null
 ---
 
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/ethereum/Workflows::V1::Ethereum::StakingFlow_workflow.png";
+
+## Introduction
+
 Make a deposit to the Ethereum staking smart contract using this flow in the Staking API!
 
 To stake ETH, you will need:
 
-- `funding_account_address` &mdash; The wallet from which the ETH will originate.
-- `validator_pub_key` &mdash; The public key of the validator to which the ETH will be deposited.
-- `withdrawal_credentials` &mdash; The withdrawal address for the given validator.
-- `signature` &mdash; A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer.
-- `deposit_data_root` &mdash; Uniquely identifies the set of deposits made so far.
-- `gas_limit` &mdash; Adjust the gas limit.
-- `gas_price` &mdash; Adjust the gas price.
+- `funding_account_address` &mdash; The wallet from which the ETH will originate
+- `validator_pub_key` &mdash; The public key of the validator to which the ETH will be deposited
+- `withdrawal_credentials` &mdash; The withdrawal address for the given validator
+- `signature` &mdash; A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer
+- `deposit_data_root` &mdash; Uniquely identifies the set of deposits made so far
+- `gas_limit` &mdash; Adjust the gas limit
+- `gas_price` &mdash; Adjust the gas price
 
-Follow the steps in this section for the details on this process.
+Follow the steps in this guide for the details on this process.
+
+## Flow Diagram
+
+Below is a complete diagram for the Ethereum staking flow:
+
+<img src={img1} alt="Ethereum Staking Flow Diagram" className="inline-image" />
+
+## References
+
+- <Link to="https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/">
+    Ethereum Docs: PoS Consensus
+  </Link>

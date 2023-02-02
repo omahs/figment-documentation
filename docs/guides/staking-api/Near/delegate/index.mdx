@@ -5,6 +5,11 @@ sidebar_position: 1
 pagination_prev: null
 ---
 
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/near/Workflows::V1::Near::StakingFlow_workflow.png";
+
+## Introduction
+
 Delegating NEAR is a simple process. We will collect:
 
 - The delegating address
@@ -14,3 +19,15 @@ Delegating NEAR is a simple process. We will collect:
 - Optionally, a max gas amount (upper limit of the transaction fee to be paid)
 
 Once the delegating transaction is confirmed on-chain, the delegation will immediately be active and earning staking rewards.
+
+## Flow Diagram
+
+Below is a complete diagram for the NEAR Delegation flow:
+
+<img src={img1} alt="NEAR Delegation Flow Diagram" className="inline-image" />
+
+## References
+
+- <Link to="https://wiki.near.org/overview/tokenomics/delegation">
+    NEAR Wiki: Delegation
+  </Link>

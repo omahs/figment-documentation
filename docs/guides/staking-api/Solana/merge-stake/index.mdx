@@ -5,22 +5,45 @@ sidebar_position: 4
 pagination_prev: null
 ---
 
-The Merge Stake Account flow allows you to merge two stake accounts that have the same authorities and lockup, into a single stake account. A merge is possible between two stakes in the following states with no additional conditions:
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/solana/Workflows::V1::Solana::MergeStakeAccountFlow_workflow.png";
+
+## Introduction
+
+The Merge Stake Account flow allows you to merge two stake accounts that have the same authorities and lockup, into a single stake account.
+A merge is possible between two stakes in the following states with no additional conditions:
 
 - Two deactivated stakes
 - An inactive stake into an activating stake during its activation epoch
 
-For the following cases, the voter pubkey and vote credits observed must match:
+For the following cases, the voter public key and vote credits observed must match:
 
 - Two activated stakes
 - Two activating accounts that share an activation epoch, during the activation epoch
 
-All other combinations of stake states will fail to merge, including all "transient" states, where a stake is activating or deactivating with a non-zero effective stake. For more details check [Solana docs](https://docs.solana.com/staking/stake-accounts#merging-stake-accounts).
+All other combinations of stake account states will fail to merge, including all "transient" states
+(where a stake is activating or deactivating with a non-zero effective stake).
 
 To merge two separate stake accounts into one, you will need:
 
-- `destination_stake_account_pubkey` - Public key of the stake account in which you want to merge the another stake account.
-- `source_stake_account_pubkey` - Public key of the stake account which you want to merge with the another stake account.
-- `funding_account_pubkey` - The pubkey of the wallet which will pay the transaction fee
+- `destination_stake_account_pubkey` - Public key of the stake account into which you want to merge another stake account
+- `source_stake_account_pubkey` - Public key of the stake account which you want to merge into a destination stake account
+- `funding_account_pubkey` - Public key of the account which will pay the transaction fee
 
 The Staking API will manage the rest.
+
+## Flow Diagram
+
+Below is a complete diagram for the Solana Merge Stake Account flow:
+
+<img
+  src={img1}
+  alt="Solana Merge Stake Account Flow Diagram"
+  className="inline-image"
+/>
+
+## References
+
+- <Link to="https://docs.solana.com/staking/stake-accounts#merging-stake-accounts">
+    Solana Docs: Stake Accounts
+  </Link>
