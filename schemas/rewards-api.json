@@ -10,7 +10,7 @@
 			"item": [
 				{
 					"name": "ETH Rewards by validator address",
-					"id": "0fac7278-6e28-4af9-9af2-f7ca29b4abf0",
+					"_postman_id": "0fac7278-6e28-4af9-9af2-f7ca29b4abf0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -137,7 +137,7 @@
 							}
 						}
 					],
-					"id": "3014009b-007c-48a8-9d3a-dde085ff9f01",
+					"_postman_id": "3014009b-007c-48a8-9d3a-dde085ff9f01",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -250,7 +250,7 @@
 					]
 				}
 			],
-			"id": "c8594856-7151-4247-b205-e696c9ad12c8"
+			"_postman_id": "c8594856-7151-4247-b205-e696c9ad12c8"
 		},
 		{
 			"name": "Solana",
@@ -361,7 +361,7 @@
 							}
 						}
 					],
-					"id": "aed3598d-ac2d-4efd-b8b4-a8c50fae7db6",
+					"_postman_id": "aed3598d-ac2d-4efd-b8b4-a8c50fae7db6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -579,7 +579,7 @@
 							}
 						}
 					],
-					"id": "61393f97-24e6-4b88-825d-176f9dfa747c",
+					"_postman_id": "61393f97-24e6-4b88-825d-176f9dfa747c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -692,7 +692,7 @@
 					]
 				}
 			],
-			"id": "45d9bd01-3412-4a81-823f-e7b96995696e"
+			"_postman_id": "45d9bd01-3412-4a81-823f-e7b96995696e"
 		},
 		{
 			"name": "NEAR",
@@ -782,7 +782,7 @@
 							}
 						}
 					],
-					"id": "39a63b9d-567c-4943-b098-a0906cc50196",
+					"_postman_id": "39a63b9d-567c-4943-b098-a0906cc50196",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -898,7 +898,7 @@
 					]
 				}
 			],
-			"id": "58f5dfe4-c1d8-445f-982d-84410fdd5d8a"
+			"_postman_id": "58f5dfe4-c1d8-445f-982d-84410fdd5d8a"
 		},
 		{
 			"name": "Polkadot",
@@ -988,7 +988,7 @@
 							}
 						}
 					],
-					"id": "cbea2d15-b449-43bb-9a4a-c30a6d52a70d",
+					"_postman_id": "cbea2d15-b449-43bb-9a4a-c30a6d52a70d",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1104,14 +1104,14 @@
 					]
 				}
 			],
-			"id": "88ce3dd9-3927-49bf-92ec-534c859bced7"
+			"_postman_id": "88ce3dd9-3927-49bf-92ec-534c859bced7"
 		},
 		{
 			"name": "Avalanche",
 			"item": [
 				{
 					"name": "Rewards by day",
-					"id": "3687b3ec-a458-4382-863b-262e21d64e82",
+					"_postman_id": "3687b3ec-a458-4382-863b-262e21d64e82",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1227,7 +1227,7 @@
 					]
 				}
 			],
-			"id": "0e26d119-f2e9-44cf-bd69-8d91bac17f8a"
+			"_postman_id": "0e26d119-f2e9-44cf-bd69-8d91bac17f8a"
 		}
 	],
 	"event": [
@@ -1254,49 +1254,58 @@
 	],
 	"variable": [
 		{
-			"id": "bd2ce568-d0f3-473a-8a66-4bc0232486e2",
+			"id": "30e68c4a-52e2-4039-bcb9-845344873997",
 			"key": "ETH_REWARDS_HOST",
-			"value": "eth-rewards.datahub.figment.io"
+			"value": "eth-rewards.datahub.figment.io",
+			"type": "string"
 		},
 		{
-			"id": "47803779-24bf-460b-84b1-f9eedd497ae3",
+			"id": "f900290a-d401-4c62-bc2a-8ca1cb7acd35",
 			"key": "SOL_REWARDS_HOST",
-			"value": "solana-rewards.datahub.figment.io"
+			"value": "solana-rewards.datahub.figment.io",
+			"type": "string"
 		},
 		{
-			"id": "8ef71279-a8ee-4fe7-a389-2eb85f076496",
+			"id": "6a46d436-ddde-41a1-bd0e-7f70990e7abb",
 			"key": "DOT_REWARDS_HOST",
-			"value": "polkadot-rewards.datahub.figment.io"
+			"value": "polkadot-rewards.datahub.figment.io",
+			"type": "string"
 		},
 		{
-			"id": "b805b022-9ac8-42ee-80ff-c7ba7f4adaef",
+			"id": "a8729b78-c978-4108-a28d-42840eebaf97",
 			"key": "NEAR_REWARDS_HOST",
-			"value": "near-rewards.datahub.figment.io"
+			"value": "near-rewards.datahub.figment.io",
+			"type": "string"
 		},
 		{
-			"id": "9160e02b-2f8c-4ad1-aef8-846ba38ff3a6",
+			"id": "1c930c0c-b6fe-4397-afec-e16cbc85366f",
 			"key": "AVAX_REWARDS_HOST",
-			"value": "avalanche-rewards.datahub.figment.io"
+			"value": "avalanche-rewards.datahub.figment.io",
+			"type": "string"
 		},
 		{
-			"id": "e8157aff-970d-4fb9-96cc-7248e8d524de",
+			"id": "cf6380d9-910e-4b4e-82b9-96679d0d22b7",
 			"key": "sol-start-epoch",
-			"value": ""
+			"value": "",
+			"type": "string"
 		},
 		{
-			"id": "b619ad72-855f-49cd-9e34-4d9b98261b86",
+			"id": "a5d50b94-4d4c-457b-b077-58e0507acdd0",
 			"key": "sol-end-epoch",
-			"value": ""
+			"value": "",
+			"type": "string"
 		},
 		{
-			"id": "1c6d6cc1-6bbe-4df7-bb7d-a34564fcb599",
+			"id": "7f42aafb-6f71-46e0-a1ec-ffd6f257b8e8",
 			"key": "verified-epoch",
-			"value": ""
+			"value": "",
+			"type": "string"
 		},
 		{
-			"id": "1401c787-ec73-40e9-b7b6-c925dee18a7f",
+			"id": "8facb362-1855-49e7-ba0d-e549dd853f69",
 			"key": "epoch-start-date",
-			"value": ""
+			"value": "",
+			"type": "string"
 		}
 	]
 }
