@@ -16895,7 +16895,7 @@
 							}
 						}
 					],
-					"id": "5248b9c6-a802-422c-8d89-2a3aa1792fd4",
+					"_postman_id": "5248b9c6-a802-422c-8d89-2a3aa1792fd4",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -17014,7 +17014,7 @@
 					]
 				}
 			],
-			"id": "154d5b0d-bf51-41c7-ac4c-9d181a35243b"
+			"_postman_id": "154d5b0d-bf51-41c7-ac4c-9d181a35243b"
 		},
 		{
 			"name": "Solana",
@@ -26682,7 +26682,7 @@
 							}
 						}
 					],
-					"id": "c708c71a-e4d2-451b-9f3e-c146e09c20b3",
+					"_postman_id": "c708c71a-e4d2-451b-9f3e-c146e09c20b3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -26777,7 +26777,7 @@
 					]
 				}
 			],
-			"id": "3d168579-dd2d-4bac-a109-6a1eb28ad764"
+			"_postman_id": "3d168579-dd2d-4bac-a109-6a1eb28ad764"
 		},
 		{
 			"name": "Polkadot",
@@ -36445,7 +36445,7 @@
 							}
 						}
 					],
-					"id": "c5a119c2-7014-488d-a277-dc69d7616976",
+					"_postman_id": "c5a119c2-7014-488d-a277-dc69d7616976",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -36540,7 +36540,7 @@
 					]
 				}
 			],
-			"id": "e513b61a-39be-49ac-a084-36750d92ae46"
+			"_postman_id": "e513b61a-39be-49ac-a084-36750d92ae46"
 		}
 	],
 	"event": [
@@ -36567,17 +36567,19 @@
 	],
 	"variable": [
 		{
-			"id": "86ae8d0a-7eb3-4670-91e7-f127bbb886aa",
+			"id": "6ee2eb30-d01e-456b-a35f-d6a07a83539f",
 			"key": "ETH_REWARDS_HOST",
-			"value": "eth-rewards.datahub.figment.io"
+			"value": "eth-rewards.datahub.figment.io",
+			"type": "string"
 		},
 		{
-			"id": "351c3e4b-f9f1-4958-8c16-732aa29d7fd9",
+			"id": "10d14881-aa90-49e5-913e-486a6b01a663",
 			"key": "SOL_REWARDS_HOST",
-			"value": "solana-rewards.datahub.figment.io"
+			"value": "solana-rewards.datahub.figment.io",
+			"type": "string"
 		},
 		{
-			"id": "4039fa47-1a64-456e-bc3c-a2a3ff1915e6",
+			"id": "b27926b4-1b6e-479b-b785-922ba98f1ba5",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
