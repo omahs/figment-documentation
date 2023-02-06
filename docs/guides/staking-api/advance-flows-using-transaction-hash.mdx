@@ -1,0 +1,135 @@
+---
+title: Advance Flows using a Transaction Hash
+sidebar_position: 4
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Motivation
+
+The Staking API provides the option for clients to use an existing solution to sign and broadcast transactions themselves,
+and to use a transaction hash from a completed transaction to advance the state of a flow and confirm the transaction on-chain &mdash; in lieu of providing a signed transaction payload.
+
+The following example uses a Polkadot bonding flow on the Westend testnet to illustrate the process.
+
+## Action
+
+Polkadot delegation flows use the `create_bonding_tx` action to generate a transaction payload.
+It is still possible to bond from a Stash account, outside the scope of the Staking API.
+In this case, we want to perform the bond transaction (including the signature) from the Polkadot.js Apps UI,
+then complete the bonding flow with the Staking API by providing the transaction hash of the completed transaction.
+
+The general form of this action is **`confirm_<action>_tx_by_hash`**.
+Since we are performing a `bonding` transaction, the action name to use is `confirm_bonding_tx_by_hash`.
+
+Using this action in a flow lets you supply a transaction hash to the Staking API while the flow is in the `<action>_tx_signature` state.
+In the case of Polkadot, the block number of the block which includes the transaction hash must also be specified.
+
+This action is also available for other networks and flows.
+
+<details>
+  <summary>Click to view Staking API response</summary>
+
+```json {3,7,10,24} title="Partial response for create_bonding_tx (... indicates where response was trimmed)"
+{
+  "id": "a4ce43fd-237b-4b64-9ceb-6860676a1f8b",
+  "state": "bonding_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_bonding_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-01-20T22:10:26.800Z",
+  "updated_at": "2023-01-20T22:28:19.348Z"
+}
+```
+
+</details>
+
+### Usage
+
+On Polkadot, the input for <code>hash</code> should be the Extrinsic Hash of the transaction, and the input for <code>block</code>
+should be the block number in which that extrinsic occurred. For other networks, supply the <code>hash</code> of a confirmed transaction.
+
+<Link to="https://westend.subscan.io/extrinsic/0x53b66da426dca5386408f0a3cdc5300477dd7151c7459701e9dcbbf0fa0b07c8">
+  Check out an example bonding transaction
+</Link> on the Subscan block explorer for an example of where to find this information.
+
+:::caution important
+
+Code examples provided as samples only and should not be used in production out of the box. Use at your own risk.
+
+:::
+
+<Tabs><TabItem value="curl_wh" label="curl">
+
+```bash title="Example PUT /api/v1/flows/<flow_id>/next"
+curl -X PUT 'https://polkadot-slate.figment.io/api/v1/flows/<flow_id>/next' \
+-H 'Authorization: API-KEY' \
+-H 'Content-Type: application/json' \
+-d '{
+    "name": "confirm_bonding_tx_by_hash",
+    "inputs": {
+        "hash": "0x53b66da426dca5386408f0a3cdc5300477dd7151c7459701e9dcbbf0fa0b07c8",
+        "block_number": "14295923"
+    }
+}'
+```
+
+:::info note
+
+The parameter `block_number` only applies to Polkadot.
+
+:::
+
+</TabItem><TabItem value="js_wh" label="JavaScript">
+
+```js title="Example PUT /api/v1/flows/<flow_id>/next"
+fetch(`https://polkadot-slate.figment.io/api/v1/flows/${FLOW_ID}/next`, {
+  method: 'PUT',
+  headers: {
+    "Authorization" : "<API_KEY>",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "name": "confirm_bonding_tx_by_hash",
+    "inputs": {
+        "hash": "0x53b66da426dca5386408f0a3cdc5300477dd7151c7459701e9dcbbf0fa0b07c8",
+        "block_number": "14295923"
+    }
+  });
+});
+```
+
+</TabItem></Tabs>
