@@ -311,7 +311,7 @@
 							}
 						},
 						"url": "https://{{ETH_HOST}}/apikey/{{API_KEY}}/api/v1/prime/eth2_staking/provision",
-						"description": "Provision a new validator with passed attributes.\n\n### Parameters\n\n- `external_user_id` — `string` — A customer user ID.\n- `external_user_email` — `string` — A customer email address.\n- `withdrawal_address` — `string` — An Ethereum address.\n- `validators_count` — `integer` — A number of validators.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`), or mainnet (`mainnet`).\n    \n\n### Response\n\n- `staked_eth_amount` - `integer` — An amount of staked ETH.\n- `eth1_withdrawal_address` - `string` — An Ethereum address.\n- `eth2_network_name` - `string` — A network name, denoting testnet (`goerli`) or mainnet (`mainnet`).\n    \n\n### Webhook configuration\n\nUser can be notified once a new validator is provisioned. Configure a webhook URL and webhook API key under Prime / ETH Staking in the Prime Dashboard. The configured API key will be sent as an `Authorization` header.\n\n#### Note\n\nValidator API webhooks can only be configured from the Prime dashboard.\n\n### Webhook response format\n\n``` json\n{\n  \"action\": \"\",\n  \"data\": {\n    \"id\": \"\",\n    \"withdrawal_address\": \"\",\n    \"validators_count\": 0\n  }\n}\n\n```\n\n- `action` — `string`\n- `data` — `object`\n    - `id` — `string`\n    - `withdrawal_address` — `string`\n    - `validators_count` — `number`"
+						"description": "Provision a new validator with passed attributes.\n\n### Parameters\n\n- `external_user_id` — `string` — A customer user ID.\n- `external_user_email` — `string` — A customer email address.\n- `withdrawal_address` — `string` — An Ethereum address.\n- `validators_count` — `integer` — A number of validators.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`), or mainnet (`mainnet`).\n    \n\n### Response\n\n- `staked_eth_amount` — `integer` — An amount of staked ETH.\n- `eth1_withdrawal_address` — `string` — An Ethereum address.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`) or mainnet (`mainnet`).\n- `success` — `boolean` — The response code of a successful result will be `201`. \n    \n\n### Webhook configuration\n\nUser can be notified once a new validator is provisioned. Configure a webhook URL and webhook API key under Prime / ETH Staking in the Prime Dashboard. The configured API key will be sent as an `Authorization` header.\n\n#### Note\n\nValidator API webhooks can only be configured from the Prime dashboard.\n\n### Webhook response format\n\n``` json\n{\n  \"action\": \"\",\n  \"data\": {\n    \"id\": \"\",\n    \"withdrawal_address\": \"\",\n    \"validators_count\": 0\n  }\n}\n\n```\n\n- `action` — `string`\n- `data` — `object`\n    - `id` — `string`\n    - `withdrawal_address` — `string`\n    - `validators_count` — `number`"
 					},
 					"response": [
 						{
@@ -670,19 +670,19 @@
 	],
 	"variable": [
 		{
-			"id": "0bacaacd-9a6e-4b02-afd7-8f6edd8a5b77",
+			"id": "884e3012-0826-4e13-8030-6fa60049739f",
 			"key": "ETH_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "7b8fe256-6952-4c4d-9a3b-08a435f93697",
+			"id": "dabda7d1-393b-4258-9a1c-e8545d419317",
 			"key": "DOT_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "6ffc439a-5341-4bd1-959a-ea97ad955f5e",
+			"id": "63baf048-1d01-4b80-a8bd-c0e95ff0eb87",
 			"key": "INTERACTIVE",
 			"value": "false",
 			"type": "string"
