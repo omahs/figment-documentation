@@ -303,7 +303,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"external_user_id\": \"user_id\",\n  \"external_user_email\": \"user@company.com\",\n  \"withdrawal_address\": \"0x01000000000000000000000003777debd25dcdbc4cdb56178906ac0ecac94019\",\n  \"validators_count\": 1,\n  \"eth2_network_name\": \"mainnet\"\n}",
+							"raw": "{\n  \"external_user_id\": \"user_id\",\n  \"external_user_email\": \"user@company.com\",\n  \"withdrawal_address\": \"0x01000000000000000000000003777debd25dcdbc4cdb56178906ac0ecac94019\",\n  \"validators_count\": 1,\n  \"eth2_network_name\": \"goerli\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -311,7 +311,7 @@
 							}
 						},
 						"url": "https://{{ETH_HOST}}/apikey/{{API_KEY}}/api/v1/prime/eth2_staking/provision",
-						"description": "Provision a new validator with passed attributes.\n\n### Parameters\n\n- `external_user_id` — `string` — A customer user ID.\n- `external_user_email` — `string` — A customer email address.\n- `withdrawal_address` — `string` — An Ethereum address.\n- `validators_count` — `integer` — A number of validators.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`), or mainnet (`mainnet`).\n    \n\n### Response\n\n- `staked_eth_amount` — `integer` — An amount of staked ETH.\n- `eth1_withdrawal_address` — `string` — An Ethereum address.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`) or mainnet (`mainnet`).\n- `success` — `boolean` — The response code of a successful result will be `201`. \n    \n\n### Webhook configuration\n\nUser can be notified once a new validator is provisioned. Configure a webhook URL and webhook API key under Prime / ETH Staking in the Prime Dashboard. The configured API key will be sent as an `Authorization` header.\n\n#### Note\n\nValidator API webhooks can only be configured from the Prime dashboard.\n\n### Webhook response format\n\n``` json\n{\n  \"action\": \"\",\n  \"data\": {\n    \"id\": \"\",\n    \"withdrawal_address\": \"\",\n    \"validators_count\": 0\n  }\n}\n\n```\n\n- `action` — `string`\n- `data` — `object`\n    - `id` — `string`\n    - `withdrawal_address` — `string`\n    - `validators_count` — `number`"
+						"description": "Provision a new validator with passed attributes.\n\n### Parameters\n\n- `external_user_id` — `string` — A customer user ID.\n- `external_user_email` — `string` — A customer email address.\n- `withdrawal_address` — `string` — An Ethereum address.\n- `validators_count` — `integer` — A number of validators.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`), or mainnet (`mainnet`).\n    \n\n### Response\n\n- `staked_eth_amount` — `integer` — An amount of staked ETH.\n- `eth1_withdrawal_address` — `string` — An Ethereum address.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`) or mainnet (`mainnet`).\n- `success` — `boolean` — The response code of a successful result can be either `200` or `201`.\n    \n\n### Note\n\n- Each withdrawal address has a maximum of 100 un-funded validators that can be provisioned at any time.\n- Specifying a `validators_count` greater than the number of existing un-funded validators for a given `withdrawal_address` will cause the request to fail.\n  - For example, if withdrawal address `0x123` has zero existing, un-funded validators, then the maximum value of `validators_count` is 100. However, if withdrawal address `0x123` has 30 existing, un-funded validators, the maximum value for `validators_count` is 70.\n\n### Webhook configuration\n\nUser can be notified once a new validator is provisioned. Configure a webhook URL and webhook API key under Prime / ETH Staking in the Prime Dashboard. The configured API key will be sent as an `Authorization` header.\n\n#### Note\n\nValidator API webhooks can only be configured from the Prime dashboard.\n\n### Webhook response format\n\n``` json\n{\n  \"action\": \"\",\n  \"data\": {\n    \"id\": \"\",\n    \"withdrawal_address\": \"\",\n    \"validators_count\": 0\n  }\n}\n\n```\n\n- `action` — `string`\n- `data` — `object`\n    - `id` — `string`\n    - `withdrawal_address` — `string`\n    - `validators_count` — `number`"
 					},
 					"response": [
 						{
@@ -322,7 +322,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"external_user_id\": \"user_id\",\n  \"external_user_email\": \"user@company.com\",\n  \"withdrawal_address\": \"0x01000000000000000000000003777debd25dcdbc4cdb56178906ac0ecac94019\",\n  \"validators_count\": 1,\n  \"eth2_network_name\": \"mainnet\"\n}",
+									"raw": "{\n  \"external_user_id\": \"user_id\",\n  \"external_user_email\": \"user@company.com\",\n  \"withdrawal_address\": \"0x01000000000000000000000003777debd25dcdbc4cdb56178906ac0ecac94019\",\n  \"validators_count\": 1,\n  \"eth2_network_name\": \"goerli\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -335,7 +335,7 @@
 							"header": null,
 							"cookie": [],
 							"responseTime": null,
-							"body": "{\n    \"staked_eth_amount\": 32,\n    \"eth1_withdrawal_address\": \"0xE40F80618324C814cD444434670a44ba4583aE38\",\n    \"eth2_network_name\": \"mainnet\",\n    \"success\": true\n}"
+							"body": "{\n    \"staked_eth_amount\": 32,\n    \"eth1_withdrawal_address\": \"0xE40F80618324C814cD444434670a44ba4583aE38\",\n    \"eth2_network_name\": \"goerli\",\n    \"success\": true\n}"
 						}
 					]
 				},
@@ -670,19 +670,19 @@
 	],
 	"variable": [
 		{
-			"id": "884e3012-0826-4e13-8030-6fa60049739f",
+			"id": "62753c8e-8810-4846-beb9-9efd61608368",
 			"key": "ETH_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "dabda7d1-393b-4258-9a1c-e8545d419317",
+			"id": "443e64b7-0652-41da-a8ab-10039276ddf3",
 			"key": "DOT_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "63baf048-1d01-4b80-a8bd-c0e95ff0eb87",
+			"id": "5de3437c-2c6f-40c3-afb3-3886fb640cbe",
 			"key": "INTERACTIVE",
 			"value": "false",
 			"type": "string"
