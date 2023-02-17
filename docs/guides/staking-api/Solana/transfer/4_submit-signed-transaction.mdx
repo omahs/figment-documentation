@@ -31,6 +31,7 @@ curl -X PUT 'https://solana-slate.datahub.figment.io/api/v1/flows/b45f40d1-051a-
 With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be:
 
 - `transfer_tx_broadcasting` &mdash; Transaction has been broadcast and is awaiting confirmation.
+- `transferred` &mdash; Transaction has been confirmed and tokens have been transferred.
 
 #### Sample Response
 

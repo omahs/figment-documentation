@@ -29,12 +29,178 @@ In the case of Polkadot, the block number of the block which includes the transa
 
 This action is also available for other networks and flows.
 
+<Tabs><TabItem value="avax" label="Avalanche">
+
 <details>
-  <summary>Click to view Staking API response</summary>
+  <summary>Click to view Staking API response for Avalanche</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "9eb608e0-4453-46ca-aa81-795e2100bf59",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "avalanche",
+  "chain_code": "testnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="atom" label="Cosmos">
+
+<details>
+  <summary>Click to view Staking API response for Cosmos</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "a766231b-c29a-4749-ade5-97ce22b8c3e6",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "cosmos",
+  "chain_code": "testnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="eth" label="Ethereum">
+
+<details>
+  <summary>Click to view Staking API response for Ethereum</summary>
+
+```json {3,7,10} title="Partial response for create_deposit_tx (... indicates where response was trimmed)"
+{
+  "id": "ab4c3708-18a0-4594-ba11-a980be1b1968",
+  "state": "deposit_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_deposit_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "ethereum",
+  "chain_code": "goerli",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="near" label="NEAR">
+
+  <details>
+  <summary>Click to view Staking API response for NEAR</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "1028b6e5-235a-4545-a0c0-49ee65b744d8",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "near",
+  "chain_code": "testnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="dot" label="Polkadot" default>
+
+<details>
+  <summary>Click to view Staking API response for Polkadot</summary>
 
 ```json {3,7,10,24} title="Partial response for create_bonding_tx (... indicates where response was trimmed)"
 {
-  "id": "a4ce43fd-237b-4b64-9ceb-6860676a1f8b",
+  "id": "3ace9f6b-7298-4fc7-b780-f2c3ea521784",
   "state": "bonding_tx_signature",
   "actions": [
     ...
@@ -77,22 +243,107 @@ This action is also available for other networks and flows.
 
 </details>
 
+</TabItem><TabItem value="matic" label="Polygon">
+
+<details>
+  <summary>Click to view Staking API response for Polygon</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "d2aa7d3a-21f9-4e88-a774-c3f5ba878c6d",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "polygon",
+  "chain_code": "testnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="sol" label="Solana">
+
+<details>
+  <summary>Click to view Staking API response for Solana</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "2702363a-0b90-4aea-9e70-af8e30e442a8",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem></Tabs>
+
 ### Usage
 
-On Polkadot, the input for <code>hash</code> should be the Extrinsic Hash of the transaction, and the input for <code>block</code>
-should be the block number in which that extrinsic occurred. For other networks, supply the <code>hash</code> of a confirmed transaction.
+On Polkadot, the input for `hash` should be the Extrinsic Hash of the transaction, and the input for `block`
+should be the block number in which that extrinsic occurred. For other networks, supply the `hash` of a confirmed transaction.
 
-<Link to="https://westend.subscan.io/extrinsic/0x53b66da426dca5386408f0a3cdc5300477dd7151c7459701e9dcbbf0fa0b07c8">
-  Check out an example bonding transaction
-</Link> on the Subscan block explorer for an example of where to find this information.
+Check out an <Link to="https://westend.subscan.io/extrinsic/0x53b66da426dca5386408f0a3cdc5300477dd7151c7459701e9dcbbf0fa0b07c8">example bonding transaction</Link>
+on the Subscan block explorer for an example of where to find this information.
+
+### Code Examples
+
+<Tabs><TabItem value="curl_wh" label="curl">
 
 :::caution important
 
 Code examples provided as samples only and should not be used in production out of the box. Use at your own risk.
 
 :::
-
-<Tabs><TabItem value="curl_wh" label="curl">
 
 ```bash title="Example PUT /api/v1/flows/<flow_id>/next"
 curl -X PUT 'https://polkadot-slate.figment.io/api/v1/flows/<flow_id>/next' \
@@ -115,6 +366,12 @@ The parameter `block_number` only applies to Polkadot.
 
 </TabItem><TabItem value="js_wh" label="JavaScript">
 
+:::caution important
+
+Code examples provided as samples only and should not be used in production out of the box. Use at your own risk.
+
+:::
+
 ```js title="Example PUT /api/v1/flows/<flow_id>/next"
 fetch(`https://polkadot-slate.figment.io/api/v1/flows/${FLOW_ID}/next`, {
   method: 'PUT',
@@ -131,5 +388,70 @@ fetch(`https://polkadot-slate.figment.io/api/v1/flows/${FLOW_ID}/next`, {
   });
 });
 ```
+
+:::info note
+
+The parameter `block_number` only applies to Polkadot.
+
+:::
+
+</TabItem></Tabs>
+
+### Flow State
+
+The action `confirm_<action>_tx_by_hash` updates the flow state, depending on whether the confirmed transaction hash can be found by the Staking API.
+
+- When `confirm_<action>_tx_by_hash` succeeds, the flow state will reflect the successful action, the same as if a transaction payload had been signed
+  and sent to the Staking API. Check the network tabs below for a summary of flow states after `confirm_<action>_tx_by_hash`.
+
+- In case `confirm_<action>_tx_by_hash` fails, the flow state will remain `<action>_tx_signature`, allowing for retries &mdash; the flow state **does not** become `<action>_tx_broadcasting`.
+
+In the case of the example Polkadot bonding transaction, the state would be `bonding_complete` after a successful `confirm_bonding_tx_by_hash` action.
+
+For comparison, an Ethereum staking flow state would be `deposited` after a successful `confirm_deposit_tx_by_hash` action.
+
+<Tabs><TabItem value="avax" label="Avalanche">
+
+- Avalanche [delegation flow](avalanche/delegate/submit-signed-delegate-transaction) final state is `completed`
+
+</TabItem><TabItem value="atom" label="Cosmos">
+
+- Cosmos [delegation](cosmos/delegate/submit-signed-delegate-transaction),
+  [redelegation](cosmos/redelegate/submit-signed-redelegate-transaction),
+  [transfer](cosmos/transfer/submit-signed-transfer-transaction) &
+  [claim rewards](cosmos/claim-rewards/submit-signed-claim-rewards-transaction) flows&apos; final state is `completed`
+- Cosmos [undelegation](cosmos/undelegate/submit-signed-undelegate-transaction) state is `unbonding` during the unbonding period, moving to `completed` when successful
+
+</TabItem><TabItem value="eth" label="Ethereum">
+
+- Ethereum [staking](ethereum/staking/submit-signed-deposit-transaction) flow final state is `deposited`
+- Ethereum [aggregated staking](ethereum/aggregated-staking/submit-signed-aggregated-deposit-transaction) flow state is `activating` during the activation period, moving to `active` when successful
+
+</TabItem><TabItem value="near" label="NEAR">
+
+- NEAR [delegation](near/delegate/submit-signed-delegate-transaction) flow final state is `delegated`
+- NEAR [undelegation](near/undelegate/submit-signed-undelegate-transaction) flow state is `cool_down` during the unbonding period, moving to `withdrawn` after a successful withdrawal transaction
+- NEAR [transfer](near/transfer/submit-signed-transfer-transaction) flow final state is `transferred`
+
+</TabItem><TabItem value="dot" label="Polkadot" default>
+
+- Polkadot [delegation](polkadot/delegate/submit-signed-bonding-transaction) flow state is `bonding_complete` after a successful bonding transaction and `delegated` after a successful nomination transaction
+- Polkadot [undelegation](polkadot/undelegate) flow final state is `done` or `ready_to_withdraw`, moving to `done` after a successful withdrawal transaction
+- Polkadot [add proxy](polkadot/add-staking-proxy/submit-signed-add-proxy-transaction) flow final state is `registered`
+- Polkadot [remove proxy](polkadot/remove-staking-proxy/submit-signed-remove-proxy-transaction) flow final state is `removed`
+- Polkadot [transfer](polkadot/transfer/submit-signed-transfer-transaction) flow final state is `transferred`
+
+</TabItem><TabItem value="matic" label="Polygon">
+
+- Polygon [delegation](polygon/delegate/submit-signed-delegate-transaction) flow state is `create_delegate_tx` after a successful allowance transaction and `completed` after a successful delegate transaction
+- Polygon [undelegation](polygon/undelegate/submit-signed-unbonding-transaction) flow state is `unbonding` during the unbonding period, moving to `done` after a successful claim transaction
+- Polygon [claim rewards](polygon/claim-rewards/submit-signed-claim-rewards-transaction) flow final state is `done` after a successful claim rewards transaction
+
+</TabItem><TabItem value="sol" label="Solana">
+
+- Solana [delegation](solana/delegate/submit-signed-delegate-transaction) flow state is `stake_account` after a stake account is created or assigned, moving to `delegation_activating` during the bonding period to a final state of `delegation_active` after a successful delegation
+- Solana [undelegation](solana/undelegate/submit-signed-deactivate-transaction) flow state is `cool_down` during the deactivation period, moving to a final state of `withdrawn` after a successful withdrawal transaction
+- Solana [transfer](solana/transfer/submit-signed-transfer-transaction) flow final state is `transferred`
+- Solana [merge stake account](solana/merge-stake-account/submit-signed-merge-stake-account-transaction) and [split stake account](solana/split-stake-account/submit-signed-split-stake-account-transaction) account flow final states are both `completed`
 
 </TabItem></Tabs>
