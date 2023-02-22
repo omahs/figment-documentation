@@ -2185,7 +2185,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKADOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2232,13 +2232,60 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
 							"cookie": [],
 							"responseTime": null,
 							"body": "{\n  \"id\": \"90a28f6e-09b4-4fe1-aeb4-c8e3720933ab\",\n  \"state\": \"bonding_tx_signature\",\n  \"actions\": [\n    {\n      \"name\": \"refresh_bonding_tx\",\n      \"inputs\": []\n    },\n    {\n      \"name\": \"sign_bonding_tx\",\n      \"inputs\": [\n        {\n          \"name\": \"transaction_payload\",\n          \"display\": \"Transaction Payload\",\n          \"description\": \"\",\n          \"type\": \"signed_transaction\",\n          \"validations\": [],\n          \"signers\": [\"5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz\"],\n          \"transaction_payload\": \"0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c1c77657374656e64387061726974792d77657374656e64020000004a2400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0200000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a801000000f3ff14d5ab5270590100000017a6bc0d0062aeb3010000000c0000000004\"\n        },\n        {\n          \"name\": \"signatures\",\n          \"display\": \"Signatures\",\n          \"description\": \"\",\n          \"type\": \"array_of_signatures\",\n          \"validations\": [],\n          \"signers\": [\"5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz\"],\n          \"transaction_payload\": \"0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c1c77657374656e64387061726974792d77657374656e64020000004a2400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0200000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a801000000f3ff14d5ab5270590100000017a6bc0d0062aeb3010000000c0000000004\",\n          \"signing_payload\": \"0x0600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c0000004a2400000c000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e\"\n        }\n      ]\n    }\n  ],\n  \"data\": {\n    \"controller_account_address\": \"5FWX3P9gwg4FKAyDHp1UYJp4ZZYPPoQZHfWRcN74HwBgXifh\",\n    \"controller_proxy_account_address\": null,\n    \"stash_account_address\": \"5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz\",\n    \"stash_proxy_account_address\": null,\n    \"validator_addresses\": null,\n    \"reward_destination\": \"5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz\",\n    \"amount\": \"1.0\",\n    \"bonding_transaction\": {\n      \"raw\": \"0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c1c77657374656e64387061726974792d77657374656e64020000004a2400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0200000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a801000000f3ff14d5ab5270590100000017a6bc0d0062aeb3010000000c0000000004\",\n      \"signing_payload\": \"0x0600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c0000004a2400000c000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e\",\n      \"signed\": null,\n      \"hash\": null,\n      \"status\": null,\n      \"error\": null,\n      \"signatures\": null,\n      \"block_number\": null,\n      \"proxy\": false\n    },\n    \"nomination_transaction\": null\n  },\n  \"network_code\": \"polkadot\",\n  \"chain_code\": \"westend\",\n  \"created_at\": \"2022-10-06T18:26:22.984Z\",\n  \"updated_at\": \"2022-10-06T18:27:50.048Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Bond More Transaction Data",
+					"id": "2518c7c4-4281-4f5a-b6e8-7c4186347b4c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"create_bond_more_tx\",\n    \"inputs\": {\n        \"amount\": 1.0\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next",
+						"description": "Bond more tokens between an existing Stash and Controller account. The required input is the `amount`. Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute, i.e. `create_bond_more_tx` (required).\n- `inputs` — `object`\n    - `amount` — `number` — The amount of DOT to be bonded to the controller. Minimum of `1.0`. This field should be in full DOT, not in Planck (ie. if you want to stake 5 DOT, return `\"amount\": 5.0`). The Staking API will translate the amount to Plancks so you do not have to worry about the conversion factor (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_bond_more_tx` — If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_bond_more_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_bond_more_tx_by_hash` — Submit a valid extrinsic hash and block number to confirm the transaction on-chain.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "925cbe6a-e880-4671-a4cb-0ce5703b17fb",
+							"name": "Submit Bond More Transaction Data",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"create_bonding_tx\",\n    \"inputs\": {\n        \"controller_account_address\": \"5FWX3P9gwg4FKAyDHp1UYJp4ZZYPPoQZHfWRcN74HwBgXifh\",\n        \"stash_account_address\": \"5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz\",\n        \"reward_destination\": \"5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz\",\n        \"amount\": 1.0\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"2dd1fb5e-d089-4aca-81e9-fb52f2e245d1\",\n  \"state\": \"bond_more_tx_signature\",\n  \"actions\": [\n    {\n      \"name\": \"refresh_bond_more_tx\",\n      \"inputs\": [\n        {\n          \"name\": \"amount\",\n          \"display\": \"Amount\",\n          \"description\": \"in DOT\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            },\n            {\n              \"type\": \"numericality\",\n              \"options\": {\n                \"greater_than\": 0\n              }\n            }\n          ],\n          \"array\": false,\n          \"default_value\": \"1.0\"\n        }\n      ]\n    },\n    {\n      \"name\": \"sign_bond_more_tx\",\n      \"inputs\": [\n        {\n          \"name\": \"transaction_payload\",\n          \"display\": \"Transaction Payload\",\n          \"description\": \"\",\n          \"type\": \"signed_transaction\",\n          \"validations\": [\n            {\n              \"type\": \"sign_payload\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": null,\n          \"signers\": [\n            \"5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG\"\n          ],\n          \"transaction_payload\": \"0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004\"\n        },\n        {\n          \"name\": \"signatures\",\n          \"display\": \"Signatures\",\n          \"description\": \"\",\n          \"type\": \"array_of_signatures\",\n          \"validations\": [],\n          \"array\": true,\n          \"default_value\": null,\n          \"element_type\": \"signature_data\",\n          \"signers\": [\n            \"5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG\"\n          ],\n          \"transaction_payload\": \"0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004\",\n          \"signing_payload\": \"0x0601070010a5d4e8000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e\",\n          \"inputs\": {\n            \"input_klass\": \"Workflows::Signature\",\n            \"input_instance\": {\n              \"account_address\": null,\n              \"signature\": null\n            },\n            \"flow\": {\n              \"workflow_state\": \"bond_more_tx_signature\",\n              \"id\": 3770,\n              \"customer_id\": 40,\n              \"chain_id\": 8,\n              \"data\": {\n                \"controller_account_address\": \"5EsUYYB1wj2MYkQF1Wrr4gQo8L2v5aRZWjZunxRjFXdUm81k\",\n                \"controller_proxy_account_address\": null,\n                \"stash_account_address\": \"5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG\",\n                \"stash_proxy_account_address\": null,\n                \"validator_addresses\": null,\n                \"reward_destination\": \"5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG\",\n                \"amount\": \"1.0\",\n                \"bonding_transaction\": {\n                  \"raw\": \"0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c5871651c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004\",\n                  \"signing_payload\": \"0x0600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e\",\n                  \"signed\": \"0xc102840092460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c58716501f0890cf1144825f8e40321cf344105c6af1a17e62e2c73c5e9681037dce1c250843ace78df337737c23935fcdf9da1a67c911fb90fbe9541241b63e01edf9e840000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165\",\n                  \"hash\": \"0x6a967111a86491612dae27bdc6dcbfcd01884c994737e54f0941afffe36f6649\",\n                  \"status\": \"confirmed\",\n                  \"error\": null,\n                  \"signatures\": [],\n                  \"block_number\": 14742751,\n                  \"proxy\": false\n                },\n                \"nomination_transaction\": null,\n                \"bond_more_transaction\": {\n                  \"raw\": \"0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004\",\n                  \"signing_payload\": \"0x0601070010a5d4e8000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e\",\n                  \"signed\": null,\n                  \"hash\": null,\n                  \"status\": null,\n                  \"error\": null,\n                  \"signatures\": null,\n                  \"block_number\": null,\n                  \"proxy\": false\n                }\n              },\n              \"created_at\": \"2023-02-21T19:48:20.974Z\",\n              \"updated_at\": \"2023-02-21T20:00:54.058Z\",\n              \"id_public\": \"2dd1fb5e-d089-4aca-81e9-fb52f2e245d1\",\n              \"supported_operation_id\": 22\n            },\n            \"flow_attributes\": {},\n            \"empty_input\": {\n              \"account_address\": null,\n              \"signature\": null\n            }\n          }\n        }\n      ]\n    },\n    {\n      \"name\": \"confirm_bond_more_tx_by_hash\",\n      \"inputs\": [\n        {\n          \"name\": \"hash\",\n          \"display\": \"Hash\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": null\n        },\n        {\n          \"name\": \"block_number\",\n          \"display\": \"Block Number\",\n          \"description\": \"\",\n          \"type\": \"integer\",\n          \"validations\": [],\n          \"array\": false,\n          \"default_value\": null\n        }\n      ]\n    }\n  ],\n  \"data\": {\n    \"controller_account_address\": \"5EsUYYB1wj2MYkQF1Wrr4gQo8L2v5aRZWjZunxRjFXdUm81k\",\n    \"controller_proxy_account_address\": null,\n    \"stash_account_address\": \"5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG\",\n    \"stash_proxy_account_address\": null,\n    \"validator_addresses\": null,\n    \"reward_destination\": \"5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG\",\n    \"amount\": \"1.0\",\n    \"bonding_transaction\": {\n      \"raw\": \"0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c5871651c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004\",\n      \"signing_payload\": \"0x0600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e\",\n      \"signed\": \"0xc102840092460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c58716501f0890cf1144825f8e40321cf344105c6af1a17e62e2c73c5e9681037dce1c250843ace78df337737c23935fcdf9da1a67c911fb90fbe9541241b63e01edf9e840000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165\",\n      \"hash\": \"0x6a967111a86491612dae27bdc6dcbfcd01884c994737e54f0941afffe36f6649\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [],\n      \"block_number\": 14742751,\n      \"proxy\": false\n    },\n    \"nomination_transaction\": null,\n    \"bond_more_transaction\": {\n      \"raw\": \"0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004\",\n      \"signing_payload\": \"0x0601070010a5d4e8000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e\",\n      \"signed\": null,\n      \"hash\": null,\n      \"status\": null,\n      \"error\": null,\n      \"signatures\": null,\n      \"block_number\": null,\n      \"proxy\": false\n    }\n  },\n  \"network_code\": \"polkadot\",\n  \"chain_code\": \"westend\",\n  \"created_at\": \"2023-02-21T19:48:20.974Z\",\n  \"updated_at\": \"2023-02-21T20:00:54.058Z\"\n}"
 						}
 					]
 				},
@@ -2279,7 +2326,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2308,7 +2355,7 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2355,7 +2402,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2402,7 +2449,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2431,7 +2478,7 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotStakingFlowId}}"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2478,7 +2525,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2525,7 +2572,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2572,7 +2619,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2619,7 +2666,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2666,7 +2713,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2713,7 +2760,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2760,7 +2807,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2807,7 +2854,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2836,7 +2883,7 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotUnstakingFlowId}}"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2883,7 +2930,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2930,7 +2977,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotAddProxyFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotAddProxyFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -2977,7 +3024,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotAddProxyFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotAddProxyFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3006,7 +3053,7 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotAddProxyFlowId}}"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotAddProxyFlowId}}"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3053,7 +3100,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3100,7 +3147,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotRemoveProxyFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotRemoveProxyFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3147,7 +3194,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotRemoveProxyFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotRemoveProxyFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3176,7 +3223,7 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotRemoveProxyFlowId}}"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotRemoveProxyFlowId}}"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3223,7 +3270,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3270,7 +3317,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotTransferFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotTransferFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3317,7 +3364,7 @@
 										}
 									}
 								},
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotTransferFlowId}}/next"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotTransferFlowId}}/next"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -3346,7 +3393,7 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"url": "https://{{POLKAOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotTransferFlowId}}"
+								"url": "https://{{DOT_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{polkadotTransferFlowId}}"
 							},
 							"_postman_previewlanguage": "json",
 							"header": null,
@@ -5268,42 +5315,42 @@
 	],
 	"variable": [
 		{
-			"id": "e115b88b-77a4-4078-890f-4f54cd3738c9",
+			"id": "856adfd0-82f3-440a-870f-c55cf52eb215",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "51228d00-1d39-4007-91a6-92b30b715988",
+			"id": "15f5d3e4-b415-4cdc-ac86-5b1778268db7",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "c51a82ec-7342-4a0d-8e97-60dcc8c084e9",
+			"id": "f9241a05-419e-4bfe-a592-b53a79d686ac",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "00b7dbba-520f-4c07-b046-595a9b8696ea",
+			"id": "02f87768-ec43-42c8-908e-32bf64e221d5",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "fc77b977-736b-4e1f-b0b7-b56a5a903a6f",
+			"id": "8d6966dc-991a-4083-94ef-6049036de310",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "aee1d00b-7a1f-4963-b484-b635faefb1c2",
+			"id": "04c6b0bb-ee17-422e-ac8c-dc4acd71261a",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "0171dae3-173c-4e92-9819-46a39bd8d390",
+			"id": "eca48c07-5fbe-4e46-a57d-f93d06509e6d",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "polygon-slate.datahub.figment.io"
 		},
 		{
-			"id": "ab3904b1-cbf3-4b2e-839a-97dde81e6827",
+			"id": "672344cd-25c0-4da3-80ae-924d71d65b6f",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
