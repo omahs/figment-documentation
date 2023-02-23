@@ -555,7 +555,7 @@
 							}
 						},
 						"url": "https://{{NEAR_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Parameters\n\n*   `accounts` takes in an array of delegator accounts addresses (required)\n*   `start` and `end` are epoch numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n*   `meta`\n    *   `network` is the name of the network queried\n    *   `period_unit` is the unit of the `period` field under `data`\n*   `data` is an array of objects - one for each epoch - containing:\n    *   `validator` returns the validator that distributed the rewards\n    *   `period` is the epoch number\n    *   `timestamp` is the timestamp of the end of the epoch\n    *   `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n### Limitations\n\n*   The API returns rewards for Figment validators only\n*   Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+						"description": "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Body\n\n- `accounts` takes in an array of delegator accounts addresses (required)\n- `start` and `end` are epoch numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`\n- `data` is an array of objects - one for each epoch - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `period` is the epoch number\n    - `timestamp` is the timestamp of the end of the epoch\n    - `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
 					},
 					"response": [
 						{
@@ -1254,47 +1254,47 @@
 	],
 	"variable": [
 		{
-			"id": "7cb45795-77ba-494f-9782-83a90a15df3b",
+			"id": "47d29885-c73b-4f3d-8a13-e1b01d4acc38",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "01b4f6b9-fc61-4312-9a99-77703849a0c0",
+			"id": "9cd1dc49-f6ce-4f05-99ca-639e25ecf919",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "6dab165b-9c1b-44d8-bc91-8f39d0d61d99",
+			"id": "e2347731-031b-4528-9b5a-6b78aff94fd9",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "48fe7cf6-fcf4-4629-8495-6c399e296dfd",
+			"id": "eecc7e28-03d0-470a-a32f-a449319b4638",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "06e20569-9c14-4f23-9e0b-87607e52b508",
+			"id": "c0f6d1a3-b983-4046-bd42-00b17944c6dc",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "18b1f5c1-fa6c-478c-83c3-e009b21a2762",
+			"id": "afc26f75-a4fb-4e52-8ab0-54dd41f16118",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "d2a80b03-8f3a-43ba-900b-94c56b77ae97",
+			"id": "3c79a0c3-0730-45ad-9b55-5985b1b8f0d8",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "00d6a1cc-49df-4be7-adbf-c626fc949bd2",
+			"id": "415d50a8-b115-45ee-bcb1-c91c0d4dacb0",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "c3bbdc21-0863-46f3-9587-b50f96e141cd",
+			"id": "818e5fbe-b48e-477b-bb9b-f7a35495d11f",
 			"key": "epoch-start-date",
 			"value": ""
 		}
