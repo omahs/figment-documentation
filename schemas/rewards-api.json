@@ -761,7 +761,7 @@
 							}
 						},
 						"url": "https://{{DOT_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Parameters\n\n*   `accounts` takes in an array of stash accounts addresses (required)\n*   `start` and `end` are era numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n*   `meta`\n    *   `network` is the name of the network queried\n    *   `period_unit` is the unit of the `period` field under `data`\n*   `data` is an array of objects - one for each era - containing:\n    *   `validator` returns the validator that distributed the rewards\n    *   `period` is the era number\n    *   `timestamp` is the timestamp of the end of the era\n    *   `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^-exp`(`text` is the string version of this)\n\n### Limitations\n\n*   The API returns rewards for Figment validators only\n*   Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+						"description": "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Body\n\n- `accounts` takes in an array of stash accounts addresses (required)\n- `start` and `end` are era numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`\n- `data` is an array of objects - one for each era - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `period` is the era number\n    - `timestamp` is the timestamp of the end of the era\n    - `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^-exp`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
 					},
 					"response": [
 						{
@@ -1254,47 +1254,47 @@
 	],
 	"variable": [
 		{
-			"id": "47d29885-c73b-4f3d-8a13-e1b01d4acc38",
+			"id": "5b6a3c8e-e795-441d-8fca-1667ca61751d",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "9cd1dc49-f6ce-4f05-99ca-639e25ecf919",
+			"id": "f8f464b3-107e-4a0e-bac9-8bee4089fa41",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "e2347731-031b-4528-9b5a-6b78aff94fd9",
+			"id": "bf346248-e3fd-4890-92a2-3e50fd51c708",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "eecc7e28-03d0-470a-a32f-a449319b4638",
+			"id": "0e238944-65bb-4950-a4cc-53f60fb80366",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "c0f6d1a3-b983-4046-bd42-00b17944c6dc",
+			"id": "6641ff01-61da-4933-9f71-8f0a597d4640",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "afc26f75-a4fb-4e52-8ab0-54dd41f16118",
+			"id": "9d091e21-fb89-4908-84d6-6044dd0bad9f",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "3c79a0c3-0730-45ad-9b55-5985b1b8f0d8",
+			"id": "2a9bb68a-77b6-4edf-b7c9-85a5e15c0857",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "415d50a8-b115-45ee-bcb1-c91c0d4dacb0",
+			"id": "c7177ea3-7242-47ed-ae35-c20d6eb6dfc2",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "818e5fbe-b48e-477b-bb9b-f7a35495d11f",
+			"id": "4d1fc7c7-c9d4-4aaf-b5e8-42e0ac50a189",
 			"key": "epoch-start-date",
 			"value": ""
 		}
