@@ -884,7 +884,7 @@
 							}
 						},
 						"url": "https://{{AVAX_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns net rewards grouped by day\n\n### Parameters\n\n*   `accounts` takes an array of addresses. (required)\n*   `start` and `end` are timestamps (in the format YYYY-MM-DD) (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n*   `meta`\n    *   `network` is the name of the network queried\n    *   `period_unit` is the unit of the `period` field under `data`: `daily` here\n*   `data` is an array of objects - one for each period - containing:\n    *   `validator` returns the validator that distributed the rewards\n    *   `timestamp` is the timestamp of the day's start (midnight UTC)\n    *   `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n\n### Limitations\n\n*   This API returns rewards for Figment validators only\n*   Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+						"description": "Returns net rewards grouped by day\n\n### Body\n\n- `accounts` takes an array of addresses. (required)\n- `start` and `end` are timestamps (in the format YYYY-MM-DD) (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`: `daily` here\n- `data` is an array of objects - one for each period - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `timestamp` is the timestamp of the day's start (midnight UTC)\n    - `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n\n### Limitations\n\n- This API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
 					},
 					"response": [
 						{
@@ -1254,47 +1254,47 @@
 	],
 	"variable": [
 		{
-			"id": "5b6a3c8e-e795-441d-8fca-1667ca61751d",
+			"id": "6ca8fcdc-092a-4a45-99f2-57275718cdcb",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "f8f464b3-107e-4a0e-bac9-8bee4089fa41",
+			"id": "b45aba3d-0894-41e2-9fa6-347d4cd2fa39",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "bf346248-e3fd-4890-92a2-3e50fd51c708",
+			"id": "a348efb9-9a16-42f1-9cff-a220a55df3c5",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "0e238944-65bb-4950-a4cc-53f60fb80366",
+			"id": "515b624f-9b80-483b-8c51-e1d97b25f655",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "6641ff01-61da-4933-9f71-8f0a597d4640",
+			"id": "a292f57b-17f7-420a-9a58-0d98119bc010",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "9d091e21-fb89-4908-84d6-6044dd0bad9f",
+			"id": "370d44d7-3f04-483e-9a83-455568cd759d",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "2a9bb68a-77b6-4edf-b7c9-85a5e15c0857",
+			"id": "c288783a-32b8-4165-85d9-74e02489097e",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "c7177ea3-7242-47ed-ae35-c20d6eb6dfc2",
+			"id": "9394876b-f60a-4b0b-93bf-ab0ec332d070",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "4d1fc7c7-c9d4-4aaf-b5e8-42e0ac50a189",
+			"id": "e1c37a5f-7d99-4d3f-8f67-22fe360bd15e",
 			"key": "epoch-start-date",
 			"value": ""
 		}
