@@ -2266,7 +2266,6 @@
 					"response": [
 						{
 							"id": "925cbe6a-e880-4671-a4cb-0ce5703b17fb",
-
 							"name": "Submit Bond More Transaction Data",
 							"originalRequest": {
 								"method": "PUT",
@@ -5296,7 +5295,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "5e0d763f-f617-4270-af58-07c7755d0c0e",
+				"id": "d808f201-6d18-4060-ae23-3c8b8e545059",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -5306,7 +5305,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "061ec6ec-0e9e-4065-8e67-c75541223d80",
+				"id": "3c76f643-5433-473d-84af-5897c2602bd5",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -5316,42 +5315,48 @@
 	],
 	"variable": [
 		{
-			"id": "856adfd0-82f3-440a-870f-c55cf52eb215",
+			"id": "b8108821-d362-495e-a4af-ff869d902e53",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "15f5d3e4-b415-4cdc-ac86-5b1778268db7",
+			"id": "e7506fc4-f3be-464f-a7c5-2a11753eb5fd",
+			"key": "CARDANO_STAKING_HOST",
+			"value": "cardano-slate.datahub.figment.io",
+			"type": "string"
+		},
+		{
+			"id": "c5bb2160-dde5-4fc0-bed1-57a99de604e6",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "f9241a05-419e-4bfe-a592-b53a79d686ac",
+			"id": "30cf66a9-6150-44ab-9bc9-25e3a70ded93",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "02f87768-ec43-42c8-908e-32bf64e221d5",
+			"id": "a61fdc4f-e86f-4930-8f91-fb2dfbed5925",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "8d6966dc-991a-4083-94ef-6049036de310",
+			"id": "9495dcb6-1225-46a1-9767-84d109a0b034",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "04c6b0bb-ee17-422e-ac8c-dc4acd71261a",
+			"id": "44cdc417-36e3-490f-b838-1892347ecd9c",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "eca48c07-5fbe-4e46-a57d-f93d06509e6d",
+			"id": "f64def7b-6f5f-4935-9ae7-6a458e162ad0",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "polygon-slate.datahub.figment.io"
 		},
 		{
-			"id": "672344cd-25c0-4da3-80ae-924d71d65b6f",
+			"id": "2894556e-9c0b-41a4-92e3-ccec48a658d4",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
