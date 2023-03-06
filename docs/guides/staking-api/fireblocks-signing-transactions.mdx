@@ -110,7 +110,7 @@ When sending the signed result back to Figment's Staking API, you must pass the 
 `signatures` is an array of objects, each containing:
 
 - `account_address` &mdash; The signer.
-- `signature` &mdash; The `signedMessages[].signature.fullsig` from Fireblocks.
+- `signature` &mdash; The `signedMessages[].signature.fullsig` from Fireblocks. See below for network specifics.
 
 ```bash {7-12} title="Sample cURL Request"
 curl -X PUT 'https://eth-slate.datahub.figment.io/api/v1/flows/8307b0d1-fc17-45b1-b540-2d9c31578d99/next' \
@@ -139,7 +139,30 @@ When sending the signed result back to Figment's Staking API, you should have on
 
 If the transaction you are signing is part of a Polkadot flow, you must remove the leading `00` from the `signing_payload` before sending it to the Fireblocks API.
 
-When sending the resulting `signature` from Fireblocks to the Staking API, you must prepend `0x00` to the `signedMessages[].signature.fullsig` value.
+When sending the resulting `signature` from Fireblocks to the Staking API, you must prepend `0x00` to the `signedMessages[].signature.fullSig` value returned by the Fireblocks API.
+
+## Ethereum Specifics
+
+When sending the resulting `signature` for an Ethereum transaction from Fireblocks to the Staking API, you must format the full signature value from `signedMessages[].signature.fullSig` like so: `0x + fullSig + (27 + signedMessages[].signature.v).toString(16)`.
+
+:::info note
+
+As shown, the value of `v` comes from the Fireblocks API `signature`:
+
+```js
+'signature': {
+  'fullSig': 'ab5af10f1b81a731c886cf8fb014940dc2d4b0cca63a1b4f092b94025b27f91976f36d42208bca6fc37f1992b56635eeef6365d83c0064909a4fb150cfd3bf7c',
+  'r': 'ab5af10f1b81a731c886cf8fb014940dc2d4b0cca63a1b4f092b94025b27f919',
+  's': '76f36d42208bca6fc37f1992b56635eeef6365d83c0064909a4fb150cfd3bf7c',
+  'v': 1
+}
+```
+
+:::
+
+## Other Networks
+
+Other networks only require the `signedMessages[].signature.fullSig` value.
 
 ## References
 
