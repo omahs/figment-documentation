@@ -34,7 +34,7 @@ curl -X POST 'https://polkadot-slate.datahub.figment.io/api/v1/flows' \
 - `id` &mdash; `string` ID of the newly created flow.
 - `state` &mdash; `string` The current state of the flow.
 
-The response indicates one possible action:
+The response indicates one possible `actions`:
 
 - `create_remove_proxy_tx` &mdash; Use this action to generate a proxy removal transaction.
 
@@ -45,9 +45,10 @@ The `create_remove_proxy_tx` action indicates two fields for data collection:
 
 #### Sample Response
 
-```json {2-3,6,9,21}
+```json {3-4,7,10,24}
 {
-  "id": "060252ff-19a0-4144-828f-3a55d9c179fc",
+  "id": "b2e0c44a-e1cd-4772-9e71-eaddacc6c7f4",
+  "operation": "remove_proxy",
   "state": "initialized",
   "actions": [
     {
@@ -63,7 +64,9 @@ The `create_remove_proxy_tx` action indicates two fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "proxied_account_address",
@@ -75,7 +78,9 @@ The `create_remove_proxy_tx` action indicates two fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -87,7 +92,7 @@ The `create_remove_proxy_tx` action indicates two fields for data collection:
   },
   "network_code": "polkadot",
   "chain_code": "westend",
-  "created_at": "2022-10-06T19:01:10.498Z",
-  "updated_at": "2022-10-06T19:01:10.498Z"
+  "created_at": "2023-02-28T19:31:21.057Z",
+  "updated_at": "2023-02-28T19:31:21.057Z"
 }
 ```

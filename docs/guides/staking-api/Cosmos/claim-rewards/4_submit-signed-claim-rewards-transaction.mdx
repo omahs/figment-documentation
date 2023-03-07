@@ -1,39 +1,52 @@
 ---
-title: Get Flow Status
-slug: /guides/staking-api/cosmos/claim-rewards/get-flow-status-completed
+title: Submit Signed Claim Rewards Transaction for Broadcast
+slug: /guides/staking-api/cosmos/claim-rewards/submit-signed-claim-rewards-transaction
 ---
 
-To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload.
+The Staking API will broadcast the transaction to the Cosmos network.
 
 ### Parameters
 
-- None
+- `name` &mdash; `string` Name of the action to execute (required). `sign_withdraw_tx` in this case.
+- `inputs` &mdash; `object`
+  - `transaction_payload` &mdash; Signed transaction payload from the previous step's response.
 
 #### Sample cURL Request
 
-```bash
-curl -X GET 'https://cosmos-slate.datahub.figment.io/api/v1/flows/15a26af4-6c71-4d6a-9dc5-934ebdb095c7' \
--H 'Authorization: <api_key>'
+```bash {5-8}
+curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/15a26af4-6c71-4d6a-9dc5-934ebdb095c7/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "sign_withdraw_tx",
+  "inputs": {
+    "transaction_payload": "0aa3010aa0010a372f636f736d6f732e646973747269627574696f6e2e763162657461312e4d7367576974686472617744656c656761746f7252657761726412650a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c1234636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a36656574653312670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2102db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe23512040a020801180912130a0d0a057561746f6d120433353931108fe2081a400f39e63b287138ece0e3d78f4bf8bfeb95b354191abc3545c61f78d1009083880648187192980f87aadfb94bb82f97ff9a5ba6b3d99fc38eb1adbdec2e12e3e4"
+  }
+}'
 ```
 
 ### Response
 
-- `state` &mdash; `string` The current state of the flow.
+With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
 
-:::info note
-
-The `state` field will update from `withdraw_tx_broadcasting` to `completed`.
-
-:::
+- `withdraw_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting for confirmation.
+- `completed` &mdash; Transaction has been confirmed and rewards claimed successfully.
 
 #### Sample Response
 
-```json {4,19-20}
+```json {4,8}
 {
   "id": "15a26af4-6c71-4d6a-9dc5-934ebdb095c7",
   "operation": "claim_rewards",
-  "state": "completed",
-  "actions": [],
+  "state": "withdraw_tx_broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-28T11:43:16.888Z",
+      "inputs": []
+    }
+  ],
   "data": {
     "delegator_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
     "validator_addresses": [
@@ -48,7 +61,7 @@ The `state` field will update from `withdraw_tx_broadcasting` to `completed`.
       "signing_payload": "c67009f9018391e00842e4b793a2bb5e02b0f27713010960071a28356b30b0d7",
       "signed": "0aa3010aa0010a372f636f736d6f732e646973747269627574696f6e2e763162657461312e4d7367576974686472617744656c656761746f7252657761726412650a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c1234636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a36656574653312670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2102db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe23512040a020801180912130a0d0a057561746f6d120433353931108fe2081a400f39e63b287138ece0e3d78f4bf8bfeb95b354191abc3545c61f78d1009083880648187192980f87aadfb94bb82f97ff9a5ba6b3d99fc38eb1adbdec2e12e3e4",
       "hash": "62FBD6133C846A747E58983757545E301CF69D5916A65DC7C9CA755B455B605C",
-      "status": "confirmed",
+      "status": null,
       "error": null,
       "signatures": [
         {
@@ -56,16 +69,12 @@ The `state` field will update from `withdraw_tx_broadcasting` to `completed`.
           "signature": ""
         }
       ],
-      "block_time": "2023-02-28T11:42:14.902Z"
+      "block_time": null
     }
   },
   "network_code": "cosmos",
   "chain_code": "testnet",
   "created_at": "2023-02-28T11:39:46.810Z",
-  "updated_at": "2023-02-28T11:42:26.556Z"
+  "updated_at": "2023-02-28T11:42:16.132Z"
 }
 ```
-
-### Claim Rewards Flow Complete
-
-Congratulations, you have successfully claimed your staking rewards paid in ATOM tokens.

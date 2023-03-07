@@ -34,9 +34,9 @@ curl -X POST 'https://polygon-slate.datahub.figment.io/api/v1/flows' \
 - `id` &mdash; `string` ID of the newly created flow.
 - `state` &mdash; `string` The current state of the flow.
 
-The response indicates one possible `action`:
+The response indicates one possible `actions`:
 
-- `create_claim_rewards_tx` -
+- `create_claim_rewards_tx` &mdash; Create a transaction to claim rewards using the Staking API.
 
 The `create_claim_rewards_tx` action indicates four fields for data collection:
 
@@ -47,9 +47,10 @@ The `create_claim_rewards_tx` action indicates four fields for data collection:
 
 #### Sample Response
 
-```json
+```json {4,7,10,24,38,56}
 {
-  "id": "21ec6775-720c-4c58-bfd2-73275200e1d0",
+  "id": "faa0231b-b993-4fc2-9360-0cda96ef415c",
+  "operation": "claim_rewards",
   "state": "initialized",
   "actions": [
     {
@@ -65,7 +66,9 @@ The `create_claim_rewards_tx` action indicates four fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "validator_address",
@@ -77,7 +80,9 @@ The `create_claim_rewards_tx` action indicates four fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "gas_limit",
@@ -88,27 +93,38 @@ The `create_claim_rewards_tx` action indicates four fields for data collection:
             {
               "type": "numericality",
               "options": {
-                "allow_nil": true,
+                "allow_blank": true,
                 "only_integer": true,
                 "greater_than": 0
               }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "gas_price",
           "display": "Gas Price",
-          "description": "",
+          "description": "in GWEI",
           "type": "string",
           "validations": [
             {
               "type": "numericality",
               "options": {
-                "allow_nil": true,
+                "allow_blank": true,
                 "greater_than": 0
               }
+            },
+            {
+              "type": "precision",
+              "options": {
+                "allow_blank": true,
+                "max": 9
+              }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -120,7 +136,7 @@ The `create_claim_rewards_tx` action indicates four fields for data collection:
   },
   "network_code": "polygon",
   "chain_code": "testnet",
-  "created_at": "2022-10-07T17:52:50.865Z",
-  "updated_at": "2022-10-07T17:52:50.865Z"
+  "created_at": "2023-03-02T19:33:40.360Z",
+  "updated_at": "2023-03-02T19:33:40.360Z"
 }
 ```

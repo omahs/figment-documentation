@@ -34,6 +34,7 @@ curl -X POST 'https://polkadot-slate.datahub.figment.io/api/v1/flows' \
 ### Response
 
 - `id` &mdash; `string` ID of the newly created flow.
+- `operation` &mdash; `string` The operation being used in the flow.
 - `state` &mdash; `string` The current state of the flow.
 
 :::info
@@ -42,7 +43,7 @@ If you want to skip creating a stash / controller relationship, use the `assign_
 
 :::
 
-The response indicates two possible actions:
+The response indicates two possible `actions`:
 
 - `assign_stash_and_controller_account` &mdash; Use this action if you already have a controller account set up and wish to add bond to it.
 - `create_bonding_tx` &mdash; Use this action if you do not have a controller account set up and would like to create a controller and bond tokens.
@@ -61,9 +62,10 @@ To create a new controller relationship, use the `create_bonding_tx` action whic
 
 #### Sample Response
 
-```json {2-3,6,,49,52,64,71,83,90,102}
+```json {2-4,7,10,24,33,47,58,61,75,84,98,107,121}
 {
-  "id": "90a28f6e-09b4-4fe1-aeb4-c8e3720933ab",
+  "id": "705bd51b-f9a7-4dbf-aa78-2523e32bd24a",
+  "operation": "staking",
   "state": "initialized",
   "actions": [
     {
@@ -79,14 +81,18 @@ To create a new controller relationship, use the `create_bonding_tx` action whic
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "controller_proxy_account_address",
           "display": "Controller Proxy Account Address",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "stash_account_address",
@@ -98,14 +104,18 @@ To create a new controller relationship, use the `create_bonding_tx` action whic
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "stash_proxy_account_address",
           "display": "Stash Proxy Account Address",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     },
@@ -122,14 +132,18 @@ To create a new controller relationship, use the `create_bonding_tx` action whic
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "controller_proxy_account_address",
           "display": "Controller Proxy Account Address",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "stash_account_address",
@@ -141,14 +155,18 @@ To create a new controller relationship, use the `create_bonding_tx` action whic
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "stash_proxy_account_address",
           "display": "Stash Proxy Account Address",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "reward_destination",
@@ -160,31 +178,23 @@ To create a new controller relationship, use the `create_bonding_tx` action whic
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "amount",
           "display": "Amount",
-          "description": "",
+          "description": "in DOT",
           "type": "decimal",
           "validations": [
             {
               "type": "presence",
               "options": {}
-            },
-            {
-              "type": "numericality",
-              "options": {
-                "greater_than_or_equal_to": 1
-              }
-            },
-            {
-              "type": "precision",
-              "options": {
-                "max": 12
-              }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -198,11 +208,12 @@ To create a new controller relationship, use the `create_bonding_tx` action whic
     "reward_destination": null,
     "amount": null,
     "bonding_transaction": null,
-    "nomination_transaction": null
+    "nomination_transaction": null,
+    "bond_more_transaction": null
   },
   "network_code": "polkadot",
   "chain_code": "westend",
-  "created_at": "2022-10-06T18:26:22.984Z",
-  "updated_at": "2022-10-06T18:26:22.984Z"
+  "created_at": "2023-02-28T17:13:26.096Z",
+  "updated_at": "2023-02-28T17:13:26.096Z"
 }
 ```

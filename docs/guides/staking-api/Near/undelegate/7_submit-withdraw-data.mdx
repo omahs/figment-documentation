@@ -35,10 +35,11 @@ curl -X PUT 'https://near-slate.datahub.figment.io/api/v1/flows/96237daf-973a-45
 
 ### Response
 
-The response indicates two possible `actions`:
+The response indicates three possible `actions`:
 
 - `refresh_withdraw_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., if the nonce needs to be updated)
 - `sign_withdraw_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_withdraw_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
 
 We will choose `sign_withdraw_tx`, which indicates one input to collect:
 
@@ -46,12 +47,100 @@ We will choose `sign_withdraw_tx`, which indicates one input to collect:
 
 #### Sample Response
 
-```json {5,7,16}
+```json {4,7,95,98,111,159,162,205-216}
 {
-  "id": "96237daf-973a-456b-ae07-a5e16eeffbd1",
+  "id": "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+  "operation": "unstaking",
   "state": "withdraw_tx_signature",
   "actions": [
-    { "name": "refresh_withdraw_tx", "inputs": [] },
+    {
+      "name": "refresh_withdraw_tx",
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet"
+        },
+        {
+          "name": "delegator_pubkey",
+          "display": "Delegator Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV"
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "legends.pool.f863973.m0"
+        },
+        {
+          "name": "withdraw_amount",
+          "display": "Withdraw Amount",
+          "description": "",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {
+                "unless": "withdraw_maximum"
+              }
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "unless": "withdraw_maximum",
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "5.0"
+        },
+        {
+          "name": "withdraw_maximum",
+          "display": "Withdraw Maximum",
+          "description": "",
+          "type": "boolean",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "max_gas",
+          "display": "Max Gas",
+          "description": "in NEAR",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
     {
       "name": "sign_withdraw_tx",
       "inputs": [
@@ -60,9 +149,16 @@ We will choose `sign_withdraw_tx`, which indicates one input to collect:
           "display": "Transaction Payload",
           "description": "",
           "type": "signed_transaction",
-          "validations": [],
-          "signers": ["ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY"],
-          "transaction_payload": "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3907cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d3084edd29289b3a590be582317bb0061016a8df058b7c29a0278f5b82f86c283010100000002080000007769746864726177270000007b22616d6f756e74223a223235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000"
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": ["ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV"],
+          "transaction_payload": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000"
         },
         {
           "name": "signatures",
@@ -70,46 +166,109 @@ We will choose `sign_withdraw_tx`, which indicates one input to collect:
           "description": "",
           "type": "array_of_signatures",
           "validations": [],
-          "signers": ["ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY"],
-          "transaction_payload": "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3907cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d3084edd29289b3a590be582317bb0061016a8df058b7c29a0278f5b82f86c283010100000002080000007769746864726177270000007b22616d6f756e74223a223235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
-          "signing_payload": "b3988227217a53c7eaf6b904aa30c40fe218f81c6a9c6313baf22a305b5600b2"
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV"],
+          "transaction_payload": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+          "signing_payload": "3d86e4c351bc002fd7fbdb0686cc872393c87ffe3a4470cb010857bc739d6784",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_withdraw_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     }
   ],
   "data": {
-    "delegator_address": "slate-demo.testnet",
-    "delegator_pubkey": "ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY",
-    "validator_address": "01node.pool.f863973.m0",
+    "delegator_address": "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+    "delegator_pubkey": "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+    "validator_address": "legends.pool.f863973.m0",
     "max_gas": null,
-    "undelegate_amount": "25.0",
+    "undelegate_amount": "5.0",
     "undelegate_maximum": null,
     "undelegate_transaction": {
-      "raw": "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3905cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d308e0f6b6bb5b283186516419e2d4c06a47f7d55b456b83947fb5f8fb815957df6010000000207000000756e7374616b65270000007b22616d6f756e74223a223235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
-      "signing_payload": "3ff41ac1a4b1f35e22412c3ebaa29b5e3075427929f111609d1cfc6706a27e2b",
-      "signed": "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3905cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d308e0f6b6bb5b283186516419e2d4c06a47f7d55b456b83947fb5f8fb815957df6010000000207000000756e7374616b65270000007b22616d6f756e74223a223235303030303030303030303030303030303030303030303030227d00e057eb481b00000000000000000000000000000000000000d27fe1cabf4535e130002217b79d743941e22110d0b3b3f446aba92d3416eb5774efb6aa925af5ebc78e459218de9ae0baeee7de0e4fad77d299ace7fcf80107",
-      "hash": "5JeaBzEJguWfF35C8duE1vDRzP8rSQU4DM8T7stXLcEN",
+      "raw": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+      "signing_payload": "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+      "signed": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000006be83dd7cd920e48058cad0e8962b5abff1641ec07f0b5dd9e6f218e6f0d783b2f799113d87da39febaabda95e0bfdce07fabfc6583af55525b6a9ef6f9dfb01 ",
+      "hash": "CWc9R6SdHVwVHj1rhYiwBgK2sqkVdbBj1wG4QniUXwqT",
       "status": "confirmed",
       "error": null,
-      "signatures": []
+      "signatures": [],
+      "block_time": null
     },
-    "estimated_inactive_at": "2022-09-28T16:24:34.472Z",
-    "withdraw_amount": "25.0",
+    "estimated_inactive_at": "2023-03-01T18:29:48.741Z",
+    "withdraw_amount": "5.0",
     "withdraw_maximum": null,
     "withdraw_transaction": {
-      "raw": "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3907cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d3084edd29289b3a590be582317bb0061016a8df058b7c29a0278f5b82f86c283010100000002080000007769746864726177270000007b22616d6f756e74223a223235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
-      "signing_payload": "b3988227217a53c7eaf6b904aa30c40fe218f81c6a9c6313baf22a305b5600b2",
+      "raw": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+      "signing_payload": "3d86e4c351bc002fd7fbdb0686cc872393c87ffe3a4470cb010857bc739d6784",
       "signed": null,
-      "hash": "D64riKQvR9ZjTgKG5rNBpQC8WDsxSNPxMQvLb8Ckyk81",
+      "hash": "59BAsPfQtJEzaNJghq6HYDhTBupTUvm63FRNdXG447vb",
       "status": null,
       "error": null,
-      "signatures": null
+      "signatures": null,
+      "block_time": null
     }
   },
   "network_code": "near",
   "chain_code": "testnet",
-  "created_at": "2022-09-26T16:15:50.379Z",
-  "updated_at": "2022-09-28T16:40:32.482Z"
+  "created_at": "2023-02-27T17:51:08.550Z",
+  "updated_at": "2023-03-01T18:14:38.809Z"
 }
 ```
 

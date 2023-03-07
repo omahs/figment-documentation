@@ -31,25 +31,71 @@ In this response you can find the unsigned, serialized transaction in `data[crea
 
 :::
 
-There are two possible `actions`:
+The response indicates four possible `actions`:
 
 - `refresh_delegate_tx` &mdash; If you need to get a fresh version of the transaction payload.
 - `sign_delegate_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_delegate_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
+- `assign_staking_data` &mdash; Used to assign new staking data, if needed. Otherwise, previously provided defaults will be used.
 
-We will chose `sign_delegate_tx`, which indicates one input to collect:
+We will choose `sign_delegate_tx`, which indicates one input to collect:
 
 - `transaction_payload` &mdash; the signed transaction payload ready to be broadcast to the network.
 
 #### Sample Response
 
-```json {6,10,19}
+```json {4,7,54,57,70,118,121,146}
 {
-  "id": "e6dc662e-f77c-4235-9b28-7141d90c8ab8",
+  "id": "536921d0-d0f3-4887-8177-69c855cbcce3",
+  "operation": "staking",
   "state": "delegate_tx_signature",
   "actions": [
     {
       "name": "refresh_delegate_tx",
-      "inputs": []
+      "inputs": [
+        {
+          "name": "gas_limit",
+          "display": "Gas Limit",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_blank": true,
+                "only_integer": true,
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_price",
+          "display": "Gas Price",
+          "description": "in GWEI",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_blank": true,
+                "greater_than": 0
+              }
+            },
+            {
+              "type": "precision",
+              "options": {
+                "allow_blank": true,
+                "max": 9
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
     },
     {
       "name": "sign_delegate_tx",
@@ -59,9 +105,16 @@ We will chose `sign_delegate_tx`, which indicates one input to collect:
           "display": "Transaction Payload",
           "description": "",
           "type": "signed_transaction",
-          "validations": [],
-          "signers": ["0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf"],
-          "transaction_payload": "0x02f86d05018459682f0084598840d28303d2e19415ed57ca28cbebb58d9c6c62f570046bc089bc6680b8446ab150710000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000000000000000000c0"
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": ["0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed"],
+          "transaction_payload": "0x02f86e05018459682f00850a82b48cc683039b269415ed57ca28cbebb58d9c6c62f570046bc089bc6680b8446ab150710000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000000000000000000c0"
         },
         {
           "name": "signatures",
@@ -69,15 +122,165 @@ We will chose `sign_delegate_tx`, which indicates one input to collect:
           "description": "",
           "type": "array_of_signatures",
           "validations": [],
-          "signers": ["0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf"],
-          "transaction_payload": "0x02f86d05018459682f0084598840d28303d2e19415ed57ca28cbebb58d9c6c62f570046bc089bc6680b8446ab150710000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000000000000000000c0",
-          "signing_payload": null
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed"],
+          "transaction_payload": "0x02f86e05018459682f00850a82b48cc683039b269415ed57ca28cbebb58d9c6c62f570046bc089bc6680b8446ab150710000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000000000000000000c0",
+          "signing_payload": "0x1032c3301634d32b8da886c67a72346ecb7f9b818e43c5675797233d2e0ecdac",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "assign_staking_data",
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed"
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in MATIC",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        },
+        {
+          "name": "minimum_shares_to_mint",
+          "display": "Minimum Shares To Mint",
+          "description": "",
+          "type": "integer",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_nil": true,
+                "greater_than_or_equal_to": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": 0
+        },
+        {
+          "name": "max_slippage_percentage",
+          "display": "Max Slippage Percentage",
+          "description": "",
+          "type": "integer",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_nil": true,
+                "only_integer": true,
+                "less_than_or_equal_to": 100,
+                "greater_than_or_equal_to": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
   ],
   "data": {
-    "delegator_address": "0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf",
+    "delegator_address": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed",
     "validator_address": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66",
     "amount": "1.0",
     "minimum_shares_to_mint": 0,
@@ -85,31 +288,33 @@ We will chose `sign_delegate_tx`, which indicates one input to collect:
     "exchange_rate": null,
     "exchange_rate_precision": null,
     "allowance_transaction": {
-      "raw": "0x02f86c05808459682f00845994f6fa82b58394499d11e0b6eac7c0593d8fb292dcbbf815fb29ae80b844095ea7b300000000000000000000000000200ea4ee292e253e6ca07dba5edc07c8aa37a3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc0",
-      "signing_payload": null,
-      "signed": "0x02f8af05808459682f00845994f6fa82b58394499d11e0b6eac7c0593d8fb292dcbbf815fb29ae80b844095ea7b300000000000000000000000000200ea4ee292e253e6ca07dba5edc07c8aa37a3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc001a08019145182b704f15aca2a95242e25abfe9382dd74d0c15e88087978beb476b1a05b4c37b70e316c91e6a19738208e7eae6b79dd2c8ef62aa229f76548490c26b7",
-      "hash": "0xb71295568a41375014cb4de57ffbdb489f9d81283b3d6647029424d72c176f6d",
+      "raw": "0x02f86d05808459682f00850eaa6fba0e82b58394499d11e0b6eac7c0593d8fb292dcbbf815fb29ae80b844095ea7b300000000000000000000000000200ea4ee292e253e6ca07dba5edc07c8aa37a3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc0",
+      "signing_payload": "0xd0c61a6d5d143d80f9f1455ec289275a096c65d4bfb89afb981857835c0106a6",
+      "signed": "0x02f8b005808459682f00850eaa6fba0e82b58394499d11e0b6eac7c0593d8fb292dcbbf815fb29ae80b844095ea7b300000000000000000000000000200ea4ee292e253e6ca07dba5edc07c8aa37a3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc001a0a9cac4be7a0c56d6ed520814958b94d4385b1ac7d791485f85c6c58fa53e0d8aa002f14d836c1b5090b12ef16566056abd57e6fce013a759e444d925b8951633ea",
+      "hash": "0x754e90f50c9b656e469baea0b18bb8221b58170b0fb57556b62d51c60d494af9",
       "status": null,
       "error": null,
       "signatures": [],
+      "block_time": null,
       "gas_limit": null,
       "gas_price": null
     },
     "delegate_transaction": {
-      "raw": "0x02f86d05018459682f0084598840d28303d2e19415ed57ca28cbebb58d9c6c62f570046bc089bc6680b8446ab150710000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000000000000000000c0",
-      "signing_payload": null,
+      "raw": "0x02f86e05018459682f00850a82b48cc683039b269415ed57ca28cbebb58d9c6c62f570046bc089bc6680b8446ab150710000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000000000000000000c0",
+      "signing_payload": "0x1032c3301634d32b8da886c67a72346ecb7f9b818e43c5675797233d2e0ecdac",
       "signed": null,
       "hash": null,
       "status": null,
       "error": null,
       "signatures": null,
+      "block_time": null,
       "gas_limit": null,
       "gas_price": null
     }
   },
   "network_code": "polygon",
   "chain_code": "testnet",
-  "created_at": "2022-10-06T22:57:14.491Z",
-  "updated_at": "2022-10-07T17:17:36.976Z"
+  "created_at": "2023-03-02T18:23:42.248Z",
+  "updated_at": "2023-03-02T18:48:54.349Z"
 }
 ```

@@ -44,17 +44,18 @@ The `create_undelegate_tx` action indicates seven possible fields for data colle
 - `validator_address` &mdash; The validator address from which ATOM will be undelegated.
 - `amount` &mdash; The amount of ATOM to be undelegated.
 - `memo` &mdash; an optional message to record on-chain with your transaction.
-- `gas_limit` &mdash; the total amount of gas you're willing to let this transaction consume.
-  - If you do not include this, we'll use a Cosmos library to select a good default for you.
-- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction.
-  - If you do not include this, we'll use a Cosmos library to select a good default for you.
-- `pubkey` &mdash; Pubkey value will be retrieved from the chain but if you're using a fresh account (that does not have any outgoing activity) then this information is not available and it requires the user to pass it.
+- `gas_limit` &mdash; Total amount of gas you're willing to let this transaction consume (optional).
+  - If you do not include a gas limit, the Staking API uses a Cosmos library to select a good default for you.
+- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction (optional).
+  - If you do not include a gas price, the Staking API uses a Cosmos library to select a good default for you.
+- `pubkey` &mdash; The public key value will be retrieved from the chain, however if you're using a fresh account (that does not have any outgoing activity) then this information is not available and it requires the user to pass it.
 
 #### Sample Response
 
-```json {3}
+```json {3,4,7,10,24,49,58,76,85}
 {
-  "id": "34a3e428-2cad-4205-bd17-ea3ba2fc8c2e",
+  "id": "f624c185-afb0-46d5-aa63-4d7649a2690a",
+  "operation": "unstaking",
   "state": "initialized",
   "actions": [
     {
@@ -165,7 +166,7 @@ The `create_undelegate_tx` action indicates seven possible fields for data colle
   },
   "network_code": "cosmos",
   "chain_code": "testnet",
-  "created_at": "2022-12-15T10:37:31.604Z",
-  "updated_at": "2022-12-15T10:37:31.604Z"
+  "created_at": "2023-02-28T11:02:24.657Z",
+  "updated_at": "2023-02-28T11:02:24.657Z"
 }
 ```

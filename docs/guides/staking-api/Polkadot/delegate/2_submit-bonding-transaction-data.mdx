@@ -30,9 +30,9 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/90a28f6e-09b
 -d '{
     "name": "create_bonding_tx",
     "inputs": {
-        "controller_account_address": "5FWX3P9gwg4FKAyDHp1UYJp4ZZYPPoQZHfWRcN74HwBgXifh",
-        "stash_account_address": "5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz",
-        "reward_destination": "5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz",
+        "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+        "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+        "reward_destination": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
         "amount": 1.0
     }
 }'
@@ -42,25 +42,109 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/90a28f6e-09b
 
 Note that in this response you can find the unsigned, serialized transaction in `data[create_bonding_tx][raw]`.
 
-Again we see two possible `actions`:
+The response indicates three possible `actions`:
 
 - `refresh_bonding_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
 - `sign_bonding_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_delegate_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
 
 We will choose `sign_bonding_tx`, which indicates one input to collect:
 
 - `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
 
+:::info note
+
+- The **Stash** account must have the amount to be bonded, plus the [existential deposit amount](<https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-#:~:text=On%20the%20Polkadot%20network%2C%20an,the%20Existential%20Deposit%20(ED).>).
+- The **Controller** account must have at least the [existential deposit amount](<https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-#:~:text=On%20the%20Polkadot%20network%2C%20an,the%20Existential%20Deposit%20(ED).>).
+
+:::
+
 #### Sample Response
 
-```json {19}
+```json {4,7,86,89,102,150,153}
 {
   "id": "90a28f6e-09b4-4fe1-aeb4-c8e3720933ab",
+  "operation": "staking",
   "state": "bonding_tx_signature",
   "actions": [
     {
       "name": "refresh_bonding_tx",
-      "inputs": []
+      "inputs": [
+        {
+          "name": "controller_account_address",
+          "display": "Controller Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg"
+        },
+        {
+          "name": "controller_proxy_account_address",
+          "display": "Controller Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "stash_account_address",
+          "display": "Stash Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t"
+        },
+        {
+          "name": "stash_proxy_account_address",
+          "display": "Stash Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "reward_destination",
+          "display": "Reward Destination",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in DOT",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        }
+      ]
     },
     {
       "name": "sign_bonding_tx",
@@ -70,9 +154,16 @@ We will choose `sign_bonding_tx`, which indicates one input to collect:
           "display": "Transaction Payload",
           "description": "",
           "type": "signed_transaction",
-          "validations": [],
-          "signers": ["5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz"],
-          "transaction_payload": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c1c77657374656e64387061726974792d77657374656e64020000004a2400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0200000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a801000000f3ff14d5ab5270590100000017a6bc0d0062aeb3010000000c0000000004"
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": ["5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t"],
+          "transaction_payload": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e00000000000000000000000000000000000000000000000000000000000000000000000000060000246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e679070010a5d4e803ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec7451c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004"
         },
         {
           "name": "signatures",
@@ -80,43 +171,103 @@ We will choose `sign_bonding_tx`, which indicates one input to collect:
           "description": "",
           "type": "array_of_signatures",
           "validations": [],
-          "signers": ["5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz"],
-          "transaction_payload": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c1c77657374656e64387061726974792d77657374656e64020000004a2400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0200000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a801000000f3ff14d5ab5270590100000017a6bc0d0062aeb3010000000c0000000004",
-          "signing_payload": "0x0600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c0000004a2400000c000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e"
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t"],
+          "transaction_payload": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e00000000000000000000000000000000000000000000000000000000000000000000000000060000246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e679070010a5d4e803ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec7451c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+          "signing_payload": "0x060000246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e679070010a5d4e803ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec745000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_bonding_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     }
   ],
   "data": {
-    "controller_account_address": "5FWX3P9gwg4FKAyDHp1UYJp4ZZYPPoQZHfWRcN74HwBgXifh",
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
     "controller_proxy_account_address": null,
-    "stash_account_address": "5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz",
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
     "stash_proxy_account_address": null,
     "validator_addresses": null,
-    "reward_destination": "5FH4Ek1u9d4V5R1REoary3MDSApLL6vkEEcW2M7fZR9bnUuz",
+    "reward_destination": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
     "amount": "1.0",
     "bonding_transaction": {
-      "raw": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c1c77657374656e64387061726974792d77657374656e64020000004a2400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0200000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a801000000f3ff14d5ab5270590100000017a6bc0d0062aeb3010000000c0000000004",
-      "signing_payload": "0x0600009864ac6455584af3c38540ec03927eca126342d266d3c9b62e44b41844a31666070010a5d4e8038e20409ae393dc420d8c9efbc03028dc58718e74bf3c3fec437fc089ae80fc4c0000004a2400000c000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "raw": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e00000000000000000000000000000000000000000000000000000000000000000000000000060000246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e679070010a5d4e803ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec7451c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x060000246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e679070010a5d4e803ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec745000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
       "signed": null,
       "hash": null,
       "status": null,
       "error": null,
       "signatures": null,
+      "block_time": null,
       "block_number": null,
       "proxy": false
     },
-    "nomination_transaction": null
+    "nomination_transaction": null,
+    "bond_more_transaction": null
   },
   "network_code": "polkadot",
   "chain_code": "westend",
-  "created_at": "2022-10-06T18:26:22.984Z",
-  "updated_at": "2022-10-06T18:27:50.048Z"
+  "created_at": "2023-02-28T17:28:38.940Z",
+  "updated_at": "2023-02-28T18:05:30.096Z"
 }
 ```
-
-- The **Stash** account must have the amount to be bonded, plus the existential deposit amount.
-- The **Controller** account must have at least the [existential deposit amount](<https://support.polkadot.network/support/solutions/articles/65000168651-what-is-the-existential-deposit-#:~:text=On%20the%20Polkadot%20network%2C%20an,the%20Existential%20Deposit%20(ED).>).
 
 :::info note
 

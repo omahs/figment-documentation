@@ -9,7 +9,7 @@ To initiate the merge stake account process with the Staking API, create a new f
 
 - `flow` &mdash; `object`
   - `network_code` &mdash; `string` Network on which this flow operates (ex. `solana`) (required).
-  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`,`devnet`) (required).
   - `operation` `string` The operation to perform (ex. `merge_stake_account`) (required).
   - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
 
@@ -46,9 +46,10 @@ The `create_merge_tx` action indicates three fields for data collection:
 
 #### Sample Response
 
-```json {2-3,6}
+```json {3-4,7,10,24,38}
 {
-  "id": "09162adc-e9c0-40ee-bc3d-59c2df7f50a7",
+  "id": "07fa6b05-476e-493e-aa02-0d855fe98b78",
+  "operation": "merge_stake_account",
   "state": "initialized",
   "actions": [
     {
@@ -108,7 +109,7 @@ The `create_merge_tx` action indicates three fields for data collection:
   },
   "network_code": "solana",
   "chain_code": "devnet",
-  "created_at": "2022-12-05T12:29:17.030Z",
-  "updated_at": "2022-12-05T12:29:17.030Z"
+  "created_at": "2023-02-28T09:12:59.071Z",
+  "updated_at": "2023-02-28T09:12:59.071Z"
 }
 ```

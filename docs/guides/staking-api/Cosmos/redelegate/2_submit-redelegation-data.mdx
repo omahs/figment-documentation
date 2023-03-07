@@ -20,8 +20,8 @@ After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:f
 
 #### Sample cURL Request
 
-```bash {5-10}
-curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/00fbd7bd-054c-4138-99a8-2fe238cdc947/next' \
+```bash {5-12}
+curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/8fc829e2-9e8a-40aa-8c2d-d6bd9125b7f0/next' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: <api_key>' \
 -d '{
@@ -30,8 +30,8 @@ curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/00fbd7bd-054c-
     "delegator_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
     "source_validator_address": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3",
     "destination_validator_address": "cosmosvaloper1t8dv80kdq3t2g88kn8vtyeldvnf8xq5c4sklmx",
-    "amount": "0.1",
-    "pubkey": "0a2102db66d27dd215f1a61e5f4gga098b5293cc1da6f5c3557974ad5f39a2ec0fe125"
+    "amount": 0.1,
+    "pubkey": "02db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe235"
   }
 }'
 ```
@@ -41,10 +41,11 @@ curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/00fbd7bd-054c-
 Note that in this step, the Staking API will check that your account balance is greater than or equal to the amount you've submitted for redelegate.
 Expect an error response if that is not the case.
 
-The response indicates two possible `actions`:
+The response indicates three possible `actions`:
 
 - `refresh_redelegate_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
 - `sign_redelegate_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_redelegate_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
 
 We will choose `sign_redelegate_tx`, which indicates one input to collect:
 
@@ -52,14 +53,130 @@ We will choose `sign_redelegate_tx`, which indicates one input to collect:
 
 #### Sample Response
 
-```json {3}
+```json {4,126,129,142,190,193,227}
 {
-  "id": "00fbd7bd-054c-4138-99a8-2fe238cdc947",
+  "id": "8fc829e2-9e8a-40aa-8c2d-d6bd9125b7f0",
+  "operation": "redelegate",
   "state": "redelegate_tx_signature",
   "actions": [
     {
       "name": "refresh_redelegate_tx",
-      "inputs": []
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl"
+        },
+        {
+          "name": "source_validator_address",
+          "display": "Source Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "format",
+              "options": {
+                "with": "(?-mix:\\Acosmosvaloper.*)",
+                "message": "should start with `cosmosvaloper`"
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3"
+        },
+        {
+          "name": "destination_validator_address",
+          "display": "Destination Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "format",
+              "options": {
+                "with": "(?-mix:\\Acosmosvaloper.*)",
+                "message": "should start with `cosmosvaloper`"
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "cosmosvaloper1t8dv80kdq3t2g88kn8vtyeldvnf8xq5c4sklmx"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": "0.1"
+        },
+        {
+          "name": "memo",
+          "display": "Memo",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_price",
+          "display": "Gas Price",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_limit",
+          "display": "Gas Limit",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "pubkey",
+          "display": "Pubkey",
+          "description": "Value will be retrieved from the chain if available",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "02db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe235"
+        }
+      ]
     },
     {
       "name": "sign_redelegate_tx",
@@ -78,7 +195,7 @@ We will choose `sign_redelegate_tx`, which indicates one input to collect:
           "array": false,
           "default_value": null,
           "signers": ["cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl"],
-          "transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7253726341646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c2276616c696461746f7244737441646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2237363437222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22333035383535227d2c226d656d6f223a22227d"
+          "transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7253726341646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c2276616c696461746f7244737441646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2239333936222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22333735383232227d2c226d656d6f223a22227d"
         },
         {
           "name": "signatures",
@@ -90,49 +207,66 @@ We will choose `sign_redelegate_tx`, which indicates one input to collect:
           "default_value": null,
           "element_type": "signature_data",
           "signers": ["cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl"],
-          "transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7253726341646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c2276616c696461746f7244737441646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2237363437222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22333035383535227d2c226d656d6f223a22227d",
-          "signing_payload": "a91be5146aba3e90b8be70a055e4ec6d4115969d424a57a0e6fe89a08ee9f436",
-          "inputs": {
-            "input_klass": "Workflows::Signature",
-            "input_instance": {
-              "account_address": null,
-              "signature": null
+          "transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7253726341646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c2276616c696461746f7244737441646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2239333936222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22333735383232227d2c226d656d6f223a22227d",
+          "signing_payload": "e236c0d65b21f6b03bef964974bb4ba9ca8567405e6077b5fc5510b374005959",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
             },
-            "flow": {
-              "id": 140561,
-              "customer_id": 7,
-              "chain_id": 10,
-              "workflow_state": "redelegate_tx_signature",
-              "data": {
-                "delegator_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
-                "source_validator_address": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3",
-                "destination_validator_address": "cosmosvaloper1t8dv80kdq3t2g88kn8vtyeldvnf8xq5c4sklmx",
-                "amount": "0.1",
-                "memo": null,
-                "gas_price": null,
-                "gas_limit": null,
-                "redelegate_transaction": {
-                  "raw": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7253726341646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c2276616c696461746f7244737441646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2237363437222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22333035383535227d2c226d656d6f223a22227d",
-                  "signing_payload": "a91be5146aba3e90b8be70a055e4ec6d4115969d424a57a0e6fe89a08ee9f436",
-                  "signed": null,
-                  "hash": null,
-                  "status": null,
-                  "error": null,
-                  "signatures": null
-                },
-                "pubkey": "0a2102db66d27dd215f1a61e5f4gga098b5293cc1da6f5c3557974ad5f39a2ec0fe125"
-              },
-              "created_at": "2022-12-15T10:11:12.773Z",
-              "updated_at": "2022-12-15T10:23:27.507Z",
-              "id_public": "00fbd7bd-054c-4138-99a8-2fe238cdc947",
-              "supported_operation_id": 33
-            },
-            "flow_attributes": {},
-            "empty_input": {
-              "account_address": null,
-              "signature": null
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
             }
-          }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_redelegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -142,24 +276,25 @@ We will choose `sign_redelegate_tx`, which indicates one input to collect:
     "source_validator_address": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3",
     "destination_validator_address": "cosmosvaloper1t8dv80kdq3t2g88kn8vtyeldvnf8xq5c4sklmx",
     "amount": "0.1",
-    "memo": null,
+    "memo": "",
     "gas_price": null,
     "gas_limit": null,
     "redelegate_transaction": {
-      "raw": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7253726341646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c2276616c696461746f7244737441646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2237363437222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22333035383535227d2c226d656d6f223a22227d",
-      "signing_payload": "a91be5146aba3e90b8be70a055e4ec6d4115969d424a57a0e6fe89a08ee9f436",
+      "raw": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7253726341646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c2276616c696461746f7244737441646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2239333936222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22333735383232227d2c226d656d6f223a22227d",
+      "signing_payload": "e236c0d65b21f6b03bef964974bb4ba9ca8567405e6077b5fc5510b374005959",
       "signed": null,
       "hash": null,
       "status": null,
       "error": null,
-      "signatures": null
+      "signatures": null,
+      "block_time": null
     },
-    "pubkey": "0a2102db66d27dd215f1a61e5f4gga098b5293cc1da6f5c3557974ad5f39a2ec0fe125"
+    "pubkey": "02db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe235"
   },
   "network_code": "cosmos",
   "chain_code": "testnet",
-  "created_at": "2022-12-15T10:11:12.773Z",
-  "updated_at": "2022-12-15T10:23:27.507Z"
+  "created_at": "2023-02-28T10:55:32.660Z",
+  "updated_at": "2023-02-28T10:59:08.269Z"
 }
 ```
 

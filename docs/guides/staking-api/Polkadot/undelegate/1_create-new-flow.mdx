@@ -65,9 +65,10 @@ The `assign_unstaking_data` action indicates five fields for data collection:
 
 #### Sample Response
 
-```json {2-3,6,9,21,33,40,61}
+```json {2-4,7,10,24,38,47,70,81,84,98,112}
 {
-  "id": "86d4a5d4-1c75-4c6a-926d-ab930e57f504",
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
   "state": "initialized",
   "actions": [
     {
@@ -83,7 +84,9 @@ The `assign_unstaking_data` action indicates five fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "controller_account_address",
@@ -95,19 +98,23 @@ The `assign_unstaking_data` action indicates five fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "controller_proxy_account_address",
           "display": "Controller Proxy Account Address",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "amount",
           "display": "Amount",
-          "description": "",
+          "description": "in DOT",
           "type": "decimal",
           "validations": [
             {
@@ -117,20 +124,24 @@ The `assign_unstaking_data` action indicates five fields for data collection:
               }
             },
             {
-              "type": "precision",
+              "type": "numericality",
               "options": {
                 "unless": "maximum",
-                "max": 12
+                "greater_than": 0
               }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "maximum",
           "display": "Maximum",
           "description": "",
           "type": "boolean",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     },
@@ -147,7 +158,9 @@ The `assign_unstaking_data` action indicates five fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "controller_account_address",
@@ -159,14 +172,18 @@ The `assign_unstaking_data` action indicates five fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "controller_proxy_account_address",
           "display": "Controller Proxy Account Address",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -186,7 +203,7 @@ The `assign_unstaking_data` action indicates five fields for data collection:
   },
   "network_code": "polkadot",
   "chain_code": "westend",
-  "created_at": "2022-10-06T16:15:36.383Z",
-  "updated_at": "2022-10-06T16:15:36.383Z"
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:04:29.799Z"
 }
 ```

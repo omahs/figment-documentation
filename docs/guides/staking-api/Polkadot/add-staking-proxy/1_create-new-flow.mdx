@@ -45,9 +45,10 @@ The `create_add_proxy_tx` action indicates two fields for data collection:
 
 #### Sample Response
 
-```json {2-3,6}
+```json {2-4,7,10,24}
 {
-  "id": "0bfcc570-57d1-4cb6-a78b-55e16710d76e",
+  "id": "5d2a7dc6-0f7c-41a5-bbb6-fb27b2e16a9b",
+  "operation": "add_proxy",
   "state": "initialized",
   "actions": [
     {
@@ -63,7 +64,9 @@ The `create_add_proxy_tx` action indicates two fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "proxied_account_address",
@@ -75,7 +78,9 @@ The `create_add_proxy_tx` action indicates two fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -87,7 +92,7 @@ The `create_add_proxy_tx` action indicates two fields for data collection:
   },
   "network_code": "polkadot",
   "chain_code": "westend",
-  "created_at": "2022-10-06T18:52:18.856Z",
-  "updated_at": "2022-10-06T18:52:18.856Z"
+  "created_at": "2023-02-28T19:11:38.281Z",
+  "updated_at": "2023-02-28T19:11:38.281Z"
 }
 ```

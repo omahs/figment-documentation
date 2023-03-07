@@ -49,9 +49,10 @@ The `create_transfer_tx` action indicates seven possible fields for data collect
 
 #### Sample Response
 
-```json {3}
+```json {3,4,7,10,24,38,47,56,65,74}
 {
-  "id": "87c3dd5f-bcbe-7934-92bd-1da47d5aca7e",
+  "id": "1ff5d5ce-9716-441f-a197-5c264e16965b",
+  "operation": "transfer",
   "state": "initialized",
   "actions": [
     {
@@ -67,7 +68,9 @@ The `create_transfer_tx` action indicates seven possible fields for data collect
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "to_account_address",
@@ -79,70 +82,45 @@ The `create_transfer_tx` action indicates seven possible fields for data collect
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "amount",
           "display": "Amount",
-          "description": "",
+          "description": "in ATOM",
           "type": "decimal",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            },
-            {
-              "type": "numericality",
-              "options": {
-                "greater_than": 0
-              }
-            }
-          ]
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "memo",
           "display": "Memo",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "gas_price",
           "display": "Gas Price",
-          "description": "",
+          "description": "in ATOM",
           "type": "decimal",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "gas_limit",
           "display": "Gas Limit",
-          "description": "",
+          "description": "in ATOM",
           "type": "decimal",
-          "validations": []
-        },
-        {
-          "name": "account_number",
-          "display": "Account Number",
-          "description": "Value will be retrieved from the chain if available",
-          "type": "integer",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            }
-          ]
-        },
-        {
-          "name": "sequence",
-          "display": "Sequence",
-          "description": "Value will be retrieved from the chain if available",
-          "type": "integer",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            }
-          ]
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "pubkey",
@@ -154,7 +132,9 @@ The `create_transfer_tx` action indicates seven possible fields for data collect
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -167,13 +147,11 @@ The `create_transfer_tx` action indicates seven possible fields for data collect
     "gas_limit": null,
     "memo": null,
     "transfer_transaction": null,
-    "account_number": null,
-    "sequence": null,
     "pubkey": null
   },
   "network_code": "cosmos",
   "chain_code": "testnet",
-  "created_at": "2022-11-16T07:08:33.793Z",
-  "updated_at": "2022-11-16T07:08:33.793Z"
+  "created_at": "2023-02-28T11:46:05.097Z",
+  "updated_at": "2023-02-28T11:46:05.097Z"
 }
 ```

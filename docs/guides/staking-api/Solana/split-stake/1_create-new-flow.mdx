@@ -9,7 +9,7 @@ To initiate the split stake account process with the Staking API, create a new f
 
 - `flow` &mdash; `object`
   - `network_code` &mdash; `string` Network on which this flow operates (ex. `solana`) (required).
-  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`,`devnet`) (required).
   - `operation` `string` The operation to perform (ex. `split_stake_account`) (required).
   - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
 
@@ -22,7 +22,7 @@ curl -X POST 'https://solana-slate.datahub.figment.io/api/v1/flows' \
 -d '{
   "flow": {
     "network_code": "solana",
-    "chain_code": "testnet",
+    "chain_code": "devnet",
     "operation": "split_stake_account",
     "version": "v1"
   }
@@ -46,9 +46,10 @@ The `create_split_tx` action indicates three fields for data collection:
 
 #### Sample Response
 
-```json {2-3,6}
+```json {3-4,7,10,24,38}
 {
-  "id": "730fbe4e-c4b4-480f-b3c5-4a25bfbd5cf3",
+  "id": "81a57270-89b2-46d9-83b0-2b6138b556cd",
+  "operation": "split_stake_account",
   "state": "initialized",
   "actions": [
     {
@@ -64,7 +65,9 @@ The `create_split_tx` action indicates three fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "source_stake_account_pubkey",
@@ -76,25 +79,23 @@ The `create_split_tx` action indicates three fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "amount",
           "display": "Amount",
-          "description": "",
+          "description": "in SOL",
           "type": "decimal",
           "validations": [
             {
               "type": "presence",
               "options": {}
-            },
-            {
-              "type": "numericality",
-              "options": {
-                "greater_than": 0
-              }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -108,9 +109,9 @@ The `create_split_tx` action indicates three fields for data collection:
     "destination_stake_account_pubkey": null
   },
   "network_code": "solana",
-  "chain_code": "testnet",
-  "created_at": "2022-11-02T04:25:28.997Z",
-  "updated_at": "2022-11-02T04:25:28.997Z"
+  "chain_code": "devnet",
+  "created_at": "2023-03-02T08:24:44.629Z",
+  "updated_at": "2023-03-02T08:24:44.629Z"
 }
 ```
 

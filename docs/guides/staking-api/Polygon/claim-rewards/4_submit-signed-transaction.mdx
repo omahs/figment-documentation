@@ -14,7 +14,7 @@ The Staking API will broadcast the transaction to the Polygon network.
 
 #### Sample cURL Request
 
-```bash
+```bash {5-8}
 curl -X PUT 'https://polygon-slate.datahub.figment.io/api/v1/flows/e6dc662e-f77c-4235-9b28-7141d90c8ab8/next' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: <api_key>' \
@@ -36,7 +36,7 @@ As the transaction progresses towards confirmation, the returned `state` will be
 
 #### Sample Response
 
-```json
+```json {3,7}
 {
   "id": "e6dc662e-f77c-4235-9b28-7141d90c8ab8",
   "state": "claim_rewards_tx_broadcasting",

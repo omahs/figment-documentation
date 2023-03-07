@@ -15,6 +15,19 @@ Delegating MATIC tokens happens on the Ethereum network (not the Polygon network
 1. **Allowance Transaction**: This approves sending a specific amount of MATIC tokens to a staking contract on Ethereum.
 2. **Delegation Transaction**: This delegates MATIC to a specific validator via its associated smart contract.
 
+:::info note
+
+Before using this flow, please ensure that your MATIC tokens are on Ethereum mainnet or testnet.
+This may require you to withdraw your MATIC tokens _from_ Polygon _to_ Ethereum via the [Polygon bridge](https://wallet.polygon.technology/polygon/bridge/withdraw).
+
+There is a step-by-step guide for the withdrawal process available on the Polygon docs: [https://wiki.polygon.technology/docs/develop/wallets/polygon-web-wallet/web-wallet-v3-guide/#step-by-step-guide-2](https://wiki.polygon.technology/docs/develop/wallets/polygon-web-wallet/web-wallet-v3-guide/#step-by-step-guide-2).
+
+- For `mainnet` the contract address of the MATIC token is `0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0` &mdash; [Etherscan - Mainnet MATIC Token](https://etherscan.io/token/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0#balances)
+
+- For `testnet` the contract address of the MATIC token is `0x499d11E0b6eAC7c0593d8Fb292DCBbF815Fb29Ae` &mdash; [Etherscan - Testnet MATIC Token](https://goerli.etherscan.io/token/0x499d11E0b6eAC7c0593d8Fb292DCBbF815Fb29Ae#balances)
+
+:::
+
 ## Flow Diagram
 
 Below is a complete diagram for the Polygon Delegation flow:

@@ -40,22 +40,23 @@ The response indicates one possible action:
 
 The `create_redelegate_tx` action indicates eight possible fields for data collection:
 
-- `delegator_address` &mdash; The address from which ATOM will be redelegated.
-- `source_validator_address` &mdash; The validator address from which ATOM will be redelegated.
-- `destination_validator_address` &mdash; The validator address to which ATOM will be redelegated.
-- `amount` &mdash; The amount of ATOM to be redelegated.
-- `memo` &mdash; an optional message to record on-chain with your transaction.
-- `gas_limit` &mdash; the total amount of gas you're willing to let this transaction consume.
-  - If you do not include this, we'll use a Cosmos library to select a good default for you.
-- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction.
-  - If you do not include this, we'll use a Cosmos library to select a good default for you.
-- `pubkey` &mdash; Pubkey value will be retrieved from the chain but if you're using a fresh account (that does not have any outgoing activity) then this information is not available and it requires the user to pass it.
+- `delegator_address` &mdash; The address from which ATOM will be redelegated (required).
+- `source_validator_address` &mdash; The validator address from which ATOM will be redelegated (required).
+- `destination_validator_address` &mdash; The validator address to which ATOM will be redelegated (required).
+- `amount` &mdash; The amount of ATOM to be redelegated (required).
+- `memo` &mdash; A message to record on-chain with your transaction (optional).
+- `gas_limit` &mdash; Total amount of gas you're willing to let this transaction consume (optional).
+  - If you do not include a gas limit, the Staking API uses a Cosmos library to select a good default for you.
+- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction (optional).
+  - If you do not include a gas price, the Staking API uses a Cosmos library to select a good default for you.
+- `pubkey` &mdash; The public key value will be retrieved from the chain, however if you're using a fresh account (that does not have any outgoing activity) then this information is not available and it requires the user to pass it.
 
 #### Sample Response
 
-```json {3}
+```json {3,4,7,10,24,49,74,83,92,101,110}
 {
-  "id": "00fbd7bd-054c-4138-99a8-2fe238cdc947",
+  "id": "8fc829e2-9e8a-40aa-8c2d-d6bd9125b7f0",
+  "operation": "redelegate",
   "state": "initialized",
   "actions": [
     {
@@ -191,7 +192,7 @@ The `create_redelegate_tx` action indicates eight possible fields for data colle
   },
   "network_code": "cosmos",
   "chain_code": "testnet",
-  "created_at": "2022-12-15T10:11:12.773Z",
-  "updated_at": "2022-12-15T10:11:12.773Z"
+  "created_at": "2023-02-28T10:55:32.660Z",
+  "updated_at": "2023-02-28T10:55:32.660Z"
 }
 ```

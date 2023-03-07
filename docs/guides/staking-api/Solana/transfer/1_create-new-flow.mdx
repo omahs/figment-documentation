@@ -22,7 +22,7 @@ curl -X POST 'https://solana-slate.datahub.figment.io/api/v1/flows' \
 -d '{
   "flow": {
     "network_code": "solana",
-    "chain_code": "testnet",
+    "chain_code": "devnet",
     "operation": "transfer",
     "version": "v1"
   }
@@ -47,9 +47,10 @@ The `create_transfer_tx` action indicates four fields for data collection:
 
 #### Sample Response
 
-```json {2-3,6}
+```json {3,4,7,10,19,33,47}
 {
-  "id": "abeb265c-9037-4a33-963e-b064d3ca81fe",
+  "id": "6b8502c2-77b3-4541-a742-62ff337f0d15",
+  "operation": "transfer",
   "state": "initialized",
   "actions": [
     {
@@ -60,7 +61,9 @@ The `create_transfer_tx` action indicates four fields for data collection:
           "display": "Funding Account Pubkey",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "from_account_pubkey",
@@ -72,7 +75,9 @@ The `create_transfer_tx` action indicates four fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "to_account_pubkey",
@@ -84,31 +89,23 @@ The `create_transfer_tx` action indicates four fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "amount",
           "display": "Amount",
-          "description": "",
+          "description": "in SOL",
           "type": "decimal",
           "validations": [
             {
               "type": "presence",
               "options": {}
-            },
-            {
-              "type": "numericality",
-              "options": {
-                "greater_than": 0
-              }
-            },
-            {
-              "type": "precision",
-              "options": {
-                "max": 9
-              }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -121,9 +118,9 @@ The `create_transfer_tx` action indicates four fields for data collection:
     "transfer_transaction": null
   },
   "network_code": "solana",
-  "chain_code": "testnet",
-  "created_at": "2022-10-04T17:13:57.539Z",
-  "updated_at": "2022-10-04T17:13:57.539Z"
+  "chain_code": "devnet",
+  "created_at": "2023-02-28T09:32:03.904Z",
+  "updated_at": "2023-02-28T09:32:03.904Z"
 }
 ```
 

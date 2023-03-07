@@ -49,9 +49,9 @@ The `create_delegate_tx` action indicates five fields for data collection:
 
 #### Sample Response
 
-```json {2-3,6,9,21,33,57,64,71}
+```json {2-3,6,9,23,41,55,64,73}
 {
-  "id": "a04dfc7b-03de-413a-9997-531025623d35",
+  "id": "ffa614e2-b50c-4d97-9e9d-de2a0413e363",
   "state": "initialized",
   "actions": [
     {
@@ -67,7 +67,9 @@ The `create_delegate_tx` action indicates five fields for data collection:
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "validator_address",
@@ -78,53 +80,55 @@ The `create_delegate_tx` action indicates five fields for data collection:
             {
               "type": "presence",
               "options": {}
+            },
+            {
+              "type": "is_node_address",
+              "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "amount",
           "display": "Amount",
-          "description": "",
+          "description": "in AVAX",
           "type": "decimal",
           "validations": [
             {
               "type": "presence",
               "options": {}
-            },
-            {
-              "type": "numericality",
-              "options": {
-                "greater_than": 0
-              }
-            },
-            {
-              "type": "precision",
-              "options": {
-                "max": 9
-              }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "start_time",
           "display": "Start Time",
           "description": "Defaults to 5 minutes from when the transaction is generated",
           "type": "timestamp",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "end_time",
           "display": "End Time",
           "description": "Defaults to the end time of the validator",
           "type": "timestamp",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "memo",
           "display": "Memo",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -140,7 +144,7 @@ The `create_delegate_tx` action indicates five fields for data collection:
   },
   "network_code": "avalanche",
   "chain_code": "testnet",
-  "created_at": "2022-10-06T14:27:41.016Z",
-  "updated_at": "2022-10-06T14:27:41.016Z"
+  "created_at": "2023-02-27T20:55:38.690Z",
+  "updated_at": "2023-02-27T20:55:38.690Z"
 }
 ```

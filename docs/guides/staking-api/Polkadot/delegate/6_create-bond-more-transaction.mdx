@@ -183,7 +183,7 @@ The underlying [Polkadot extrinsic `bond_extra`](https://paritytech.github.io/su
 ```bash {5-8}
 curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/2dd1fb5e-d089-4aca-81e9-fb52f2e245d1/next' \
 --header 'Content-Type: application/json' \
---header 'Authorization: <API-KEY>' \
+--header 'Authorization: <api_key>' \
 --data '{
     "name": "create_bond_more_tx",
     "inputs": {
@@ -402,7 +402,7 @@ Upon transaction finalization, the bond will be complete and you can move on to 
 ```bash {5-8}
 curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/2dd1fb5e-d089-4aca-81e9-fb52f2e245d1/next' \
 --header 'Content-Type: application/json' \
---header 'Authorization: <API-KEY>' \
+--header 'Authorization: <api_key>' \
 --data '{
     "name": "sign_bond_more_tx",
     "inputs": {

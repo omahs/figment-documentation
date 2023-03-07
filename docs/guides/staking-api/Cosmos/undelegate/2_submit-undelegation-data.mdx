@@ -20,26 +20,27 @@ After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:f
 #### Sample cURL Request
 
 ```bash {5-10}
-curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/34a3e428-2cad-4205-bd17-ea3ba2fc8c2e/next' \
+curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/f624c185-afb0-46d5-aa63-4d7649a2690a/next' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: <api_key>' \
 -d '{
   "name": "create_undelegate_tx",
   "inputs": {
     "delegator_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
-    "validator_address": "cosmosvaloper1t8dv80kdq3t2g88kn8vtyeldvnf8xq5c4sklmx",
-    "amount": 0.099998,
-    "pubkey": "0a2102db66d27dd215f1a61e5f4gga098b5293cc1da6f5c3557974ad5f39a2ec0fe125"
+    "validator_address": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3",
+    "amount": 1,
+    "pubkey": "02db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe235"
   }
 }'
 ```
 
 ### Response
 
-The response indicates two possible `actions`:
+The response indicates three possible `actions`:
 
 - `refresh_undelegate_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
 - `sign_undelegate_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_undelegate_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
 
 We will choose `sign_undelegate_tx`, which indicates one input to collect:
 
@@ -47,14 +48,105 @@ We will choose `sign_undelegate_tx`, which indicates one input to collect:
 
 #### Sample Response
 
-```json {3}
+```json {4,7,101,104,117,165,168,194-196,201}
 {
-  "id": "34a3e428-2cad-4205-bd17-ea3ba2fc8c2e",
+  "id": "f624c185-afb0-46d5-aa63-4d7649a2690a",
+  "operation": "unstaking",
   "state": "undelegate_tx_signature",
   "actions": [
     {
       "name": "refresh_undelegate_tx",
-      "inputs": []
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl"
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "format",
+              "options": {
+                "with": "(?-mix:\\Acosmosvaloper.*)",
+                "message": "should start with `cosmosvaloper`"
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": "1.0"
+        },
+        {
+          "name": "memo",
+          "display": "Memo",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_price",
+          "display": "Gas Price",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_limit",
+          "display": "Gas Limit",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "pubkey",
+          "display": "Pubkey",
+          "description": "Value will be retrieved from the chain if available",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "02db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe235"
+        }
+      ]
     },
     {
       "name": "sign_undelegate_tx",
@@ -73,7 +165,7 @@ We will choose `sign_undelegate_tx`, which indicates one input to collect:
           "array": false,
           "default_value": null,
           "signers": ["cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl"],
-          "transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367556e64656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7241646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a223939393938227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2235363934222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22323237373436227d2c226d656d6f223a22227d"
+          "transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367556e64656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7241646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a2231303030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2236323937222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22323531383435227d2c226d656d6f223a22227d"
         },
         {
           "name": "signatures",
@@ -85,78 +177,95 @@ We will choose `sign_undelegate_tx`, which indicates one input to collect:
           "default_value": null,
           "element_type": "signature_data",
           "signers": ["cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl"],
-          "transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367556e64656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7241646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a223939393938227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2235363934222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22323237373436227d2c226d656d6f223a22227d",
-          "signing_payload": "61558c76f2c70104bf4643e1bd91890a0c7897472178435bd345135297177acd",
-          "inputs": {
-            "input_klass": "Workflows::Signature",
-            "input_instance": {
-              "account_address": null,
-              "signature": null
+          "transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367556e64656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7241646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a2231303030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2236323937222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22323531383435227d2c226d656d6f223a22227d",
+          "signing_payload": "53ff624a7b8fb60956f3d88d249ff95e14202fe7185262802141cb3496a2e208",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
             },
-            "flow": {
-              "id": 140563,
-              "customer_id": 7,
-              "chain_id": 10,
-              "workflow_state": "undelegate_tx_signature",
-              "data": {
-                "delegator_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
-                "validator_address": "cosmosvaloper1t8dv80kdq3t2g88kn8vtyeldvnf8xq5c4sklmx",
-                "amount": "0.099998",
-                "memo": null,
-                "gas_price": null,
-                "gas_limit": null,
-                "undelegate_transaction": {
-                  "raw": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367556e64656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7241646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a223939393938227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2235363934222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22323237373436227d2c226d656d6f223a22227d",
-                  "signing_payload": "61558c76f2c70104bf4643e1bd91890a0c7897472178435bd345135297177acd",
-                  "signed": null,
-                  "hash": null,
-                  "status": null,
-                  "error": null,
-                  "signatures": null,
-                  "block_number": null
-                },
-                "estimated_unbonded_at": null,
-                "pubkey": "0a2102db66d27dd215f1a61e5f4gga098b5293cc1da6f5c3557974ad5f39a2ec0fe125"
-              },
-              "created_at": "2022-12-15T10:37:31.604Z",
-              "updated_at": "2022-12-15T10:40:22.559Z",
-              "id_public": "34a3e428-2cad-4205-bd17-ea3ba2fc8c2e",
-              "supported_operation_id": 32
-            },
-            "flow_attributes": {},
-            "empty_input": {
-              "account_address": null,
-              "signature": null
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
             }
-          }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_undelegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     }
   ],
   "data": {
     "delegator_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
-    "validator_address": "cosmosvaloper1t8dv80kdq3t2g88kn8vtyeldvnf8xq5c4sklmx",
-    "amount": "0.099998",
-    "memo": null,
+    "validator_address": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3",
+    "amount": "1.0",
+    "memo": "",
     "gas_price": null,
     "gas_limit": null,
     "undelegate_transaction": {
-      "raw": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367556e64656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7241646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a223939393938227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2235363934222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22323237373436227d2c226d656d6f223a22227d",
-      "signing_payload": "61558c76f2c70104bf4643e1bd91890a0c7897472178435bd345135297177acd",
+      "raw": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367556e64656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7241646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a2231303030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2236323937222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22323531383435227d2c226d656d6f223a22227d",
+      "signing_payload": "53ff624a7b8fb60956f3d88d249ff95e14202fe7185262802141cb3496a2e208",
       "signed": null,
       "hash": null,
       "status": null,
       "error": null,
       "signatures": null,
+      "block_time": null,
       "block_number": null
     },
     "estimated_unbonded_at": null,
-    "pubkey": "0a2102db66d27dd215f1a61e5f4gga098b5293cc1da6f5c3557974ad5f39a2ec0fe125"
+    "pubkey": "02db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe235"
   },
   "network_code": "cosmos",
   "chain_code": "testnet",
-  "created_at": "2022-12-15T10:37:31.604Z",
-  "updated_at": "2022-12-15T10:40:22.559Z"
+  "created_at": "2023-02-28T11:02:24.657Z",
+  "updated_at": "2023-02-28T11:20:48.379Z"
 }
 ```
 

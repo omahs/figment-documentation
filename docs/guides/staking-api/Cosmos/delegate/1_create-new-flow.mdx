@@ -43,18 +43,19 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
 - `delegator_address` &mdash; The address from which ATOM will be delegated.
 - `validator_address` &mdash; The validator address to which ATOM will be delegated.
 - `amount` &mdash; The amount of ATOM to be delegated.
-- `memo` &mdash; an optional message to record on-chain with your transaction.
-- `gas_limit` &mdash; the total amount of gas you're willing to let this transaction consume.
-  - If you do not include this, we'll use a Cosmos library to select a good default for you.
-- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction.
-  - If you do not include this, we'll use a Cosmos library to select a good default for you.
-- `pubkey` &mdash; Pubkey value will be retrieved from the chain but if you're using a fresh account (that does not have any outgoing activity) then this information is not available and it requires the user to pass it.
+- `memo` &mdash; An optional message to record on-chain with your transaction.
+- `gas_limit` &mdash; Total amount of gas you're willing to let this transaction consume (optional).
+  - If you do not include a gas limit, the Staking API uses a Cosmos library to select a good default for you.
+- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction (optional).
+  - If you do not include a gas price, the Staking API uses a Cosmos library to select a good default for you.
+- `pubkey` &mdash; The public key value will be retrieved from the chain, however if you're using a fresh account (that does not have any outgoing activity) then this information is not available and it requires the user to pass it.
 
 #### Sample Response
 
-```json {3}
+```json {3,4,7,10,24,45,54,63,72,81}
 {
-  "id": "cd7fe433-91a2-96eb-b16a-deb93a504cd2",
+  "id": "1d823c7f-be8a-430e-85cf-7269206cd867",
+  "operation": "staking",
   "state": "initialized",
   "actions": [
     {
@@ -70,7 +71,9 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "validator_address",
@@ -89,70 +92,45 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
                 "message": "should start with `cosmosvaloper`"
               }
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "amount",
           "display": "Amount",
           "description": "",
           "type": "decimal",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            },
-            {
-              "type": "numericality",
-              "options": {
-                "greater_than": 0
-              }
-            }
-          ]
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "memo",
           "display": "Memo",
           "description": "",
           "type": "string",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "gas_price",
           "display": "Gas Price",
           "description": "",
           "type": "decimal",
-          "validations": []
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "gas_limit",
           "display": "Gas Limit",
           "description": "",
           "type": "decimal",
-          "validations": []
-        },
-        {
-          "name": "account_number",
-          "display": "Account Number",
-          "description": "Value will be retrieved from the chain if available",
-          "type": "integer",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            }
-          ]
-        },
-        {
-          "name": "sequence",
-          "display": "Sequence",
-          "description": "Value will be retrieved from the chain if available",
-          "type": "integer",
-          "validations": [
-            {
-              "type": "presence",
-              "options": {}
-            }
-          ]
+          "validations": [],
+          "array": false,
+          "default_value": null
         },
         {
           "name": "pubkey",
@@ -164,7 +142,9 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
               "type": "presence",
               "options": {}
             }
-          ]
+          ],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -177,13 +157,11 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
     "gas_price": null,
     "gas_limit": null,
     "delegate_transaction": null,
-    "account_number": null,
-    "sequence": null,
     "pubkey": null
   },
   "network_code": "cosmos",
   "chain_code": "testnet",
-  "created_at": "2022-11-16T10:25:57.852Z",
-  "updated_at": "2022-11-16T10:25:57.852Z"
+  "created_at": "2023-02-28T10:45:13.156Z",
+  "updated_at": "2023-02-28T10:45:13.156Z"
 }
 ```

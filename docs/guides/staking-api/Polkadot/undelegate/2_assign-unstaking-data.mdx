@@ -18,14 +18,14 @@ After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:f
 ### Sample cURL Request
 
 ```bash {5-10}
-curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/86d4a5d4-1c75-4c6a-926d-ab930e57f504/next' \
+curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/6c37da8a-4b69-44db-b0df-6fb9af75f24b/next' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: <api_key>' \
 -d '{
   "name": "assign_unstaking_data",
   "inputs": {
-    "stash_account_address": "5GQmooiNwLwjXnsNp3woVDD3xhkHzcifVVAmdWcb6FaRVA4L",
-    "controller_account_address": "5GNhcVwpjND83kk6uqMeCjXNUnTSdz84SFyJmd3NmZe4uvrC",
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
     "maximum": true
   }
 }'
@@ -33,14 +33,58 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/86d4a5d4-1c7
 
 ### Response
 
-- If chilling is needed before unbonding, create a chill transaction: [Create Chill Transaction](/guides/staking-api/polkadot/undelegate/create-chill-transaction)
-- If no chilling is required, create an unbond transaction: [Create Unbond Transaction](/guides/staking-api/polkadot/undelegate/create-unbond-transaction)
+#### Sample Response `ready_to_chill`
 
-#### Sample Response
+:::info note
 
-```json
+- If chilling is required before unbonding, a chill transaction will automatically be created by the Staking API, and the flow state becomes `chill_tx_signature`.
+
+:::
+
+```json {4,8}
 {
-  "id": "86d4a5d4-1c75-4c6a-926d-ab930e57f504",
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
+  "state": "ready_to_chill",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-28T21:10:19.901Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "amount": "1.0",
+    "maximum": true,
+    "chill_transaction": null,
+    "estimated_chilled_at": null,
+    "unbond_transaction": null,
+    "unbonding_era": null,
+    "estimated_unbonded_at": null,
+    "withdraw_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:09:19.882Z"
+}
+```
+
+#### Sample Response `ready_to_unbond`
+
+:::info note
+
+- If no chilling is required, proceed to create an unbond transaction: [Create Unbond Transaction](/guides/staking-api/polkadot/undelegate/create-unbond-transaction)
+
+:::
+
+```json {4}
+{
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
   "state": "ready_to_unbond",
   "actions": [
     {
@@ -53,9 +97,9 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/86d4a5d4-1c7
     }
   ],
   "data": {
-    "controller_account_address": "5GNhcVwpjND83kk6uqMeCjXNUnTSdz84SFyJmd3NmZe4uvrC",
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
     "controller_proxy_account_address": null,
-    "stash_account_address": "5GQmooiNwLwjXnsNp3woVDD3xhkHzcifVVAmdWcb6FaRVA4L",
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
     "amount": "1.0",
     "maximum": true,
     "chill_transaction": null,
@@ -67,7 +111,7 @@ curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/86d4a5d4-1c7
   },
   "network_code": "polkadot",
   "chain_code": "westend",
-  "created_at": "2022-10-06T16:15:36.383Z",
-  "updated_at": "2022-10-06T16:16:30.263Z"
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:09:19.882Z"
 }
 ```

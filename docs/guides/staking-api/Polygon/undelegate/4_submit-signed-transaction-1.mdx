@@ -15,13 +15,13 @@ The Staking API will broadcast the transaction to the Polygon network.
 #### Sample cURL Request
 
 ```bash {5-8}
-curl -X PUT 'https://polygon-slate.datahub.figment.io/api/v1/flows/07d6752c-c412-4cfa-a12c-65feab06acd6/next' \
+curl -X PUT 'https://polygon-slate.datahub.figment.io/api/v1/flows/b46668f2-d6f3-4980-b3ca-c4957bbffd25/next' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: <api_key>' \
 -d '{
   "name": "sign_unbond_tx",
   "inputs": {
-    "transaction_payload": "0x02f8b005028459682f0084597a1b168304cf969415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c001a0f8462149f25c9942852611ea06820bf0b3f588f63aead9702225010b2e80a096a0765feade968806e16f36cadf533d779ceb071f54ca6cf4935f6464302c0873da"
+    "transaction_payload": "0x02f8b105028459682f008503a935a902830478739415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c001a07834830d929dc56ec6738fff963cca6339a2ca1bf5992aa3bf8025d0d5eb6069a035b4a9d5924392771ba9bad5bab438f9c641e6216b701f0817e3052ef9e2676f"
   }
 }'
 ```
@@ -34,21 +34,22 @@ As the transaction progresses towards confirmation, the returned state will eith
 - `unbond_tx_broadcasting` &mdash; The transaction has been broadcast and is waiting for confirmation.
 - `unbonding` &mdash; The transaction has been confirmed and the delegation is unbonding.
 
-#### Sample Response
+#### Sample Response `unbond_tx_broadcasting`
 
-```json {3}
+```json {4,8}
 {
-  "id": "07d6752c-c412-4cfa-a12c-65feab06acd6",
+  "id": "b46668f2-d6f3-4980-b3ca-c4957bbffd25",
+  "operation": "unstaking",
   "state": "unbond_tx_broadcasting",
   "actions": [
     {
       "name": "wait",
-      "estimated_state_change_at": "2022-10-07T17:25:17.899Z",
+      "estimated_state_change_at": "2023-03-02T20:08:24.698Z",
       "inputs": []
     }
   ],
   "data": {
-    "delegator_address": "0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf",
+    "delegator_address": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed",
     "validator_address": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66",
     "amount": "1.0",
     "max_shares_to_burn": 1e18,
@@ -56,13 +57,14 @@ As the transaction progresses towards confirmation, the returned state will eith
     "exchange_rate": "100000000000000000000000000000.0",
     "exchange_rate_precision": "100000000000000000000000000000.0",
     "unbond_transaction": {
-      "raw": "0x02f86d05028459682f0084597a1b168304cf969415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c0",
-      "signing_payload": null,
-      "signed": "0x02f8b005028459682f0084597a1b168304cf969415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c001a0f8462149f25c9942852611ea06820bf0b3f588f63aead9702225010b2e80a096a0765feade968806e16f36cadf533d779ceb071f54ca6cf4935f6464302c0873da",
-      "hash": "0x36c57e119ef341fb23f261a7a44d10d7fe4044ccbcd1b39d509730ee0b75797c",
+      "raw": "0x02f86e05028459682f008503a935a902830478739415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c0",
+      "signing_payload": "0x93ebb0e6cdbc4583093448ab562e77c4ae1400e97c4a0fd5177434380e0dd249",
+      "signed": "0x02f8b105028459682f008503a935a902830478739415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c001a07834830d929dc56ec6738fff963cca6339a2ca1bf5992aa3bf8025d0d5eb6069a035b4a9d5924392771ba9bad5bab438f9c641e6216b701f0817e3052ef9e2676f",
+      "hash": "0x8044468813d90c67522d28b86fad5732e7b4b9365f3cb42f6a2186790f447eed",
       "status": null,
       "error": null,
       "signatures": [],
+      "block_time": null,
       "gas_limit": null,
       "gas_price": null
     },
@@ -73,7 +75,53 @@ As the transaction progresses towards confirmation, the returned state will eith
   },
   "network_code": "polygon",
   "chain_code": "testnet",
-  "created_at": "2022-10-06T23:40:33.826Z",
-  "updated_at": "2022-10-07T17:24:17.339Z"
+  "created_at": "2023-03-02T19:55:55.101Z",
+  "updated_at": "2023-03-02T20:07:24.352Z"
+}
+```
+
+#### Sample Response `unbonding`
+
+```json {4,8}
+{
+  "id": "b46668f2-d6f3-4980-b3ca-c4957bbffd25",
+  "operation": "unstaking",
+  "state": "unbonding",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-03-04T12:07:43.615Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "delegator_address": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed",
+    "validator_address": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66",
+    "amount": "1.0",
+    "max_shares_to_burn": 1e18,
+    "max_slippage_percentage": 0,
+    "exchange_rate": "100000000000000000000000000000.0",
+    "exchange_rate_precision": "100000000000000000000000000000.0",
+    "unbond_transaction": {
+      "raw": "0x02f86e05028459682f008503a935a902830478739415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c0",
+      "signing_payload": "0x93ebb0e6cdbc4583093448ab562e77c4ae1400e97c4a0fd5177434380e0dd249",
+      "signed": "0x02f8b105028459682f008503a935a902830478739415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c001a07834830d929dc56ec6738fff963cca6339a2ca1bf5992aa3bf8025d0d5eb6069a035b4a9d5924392771ba9bad5bab438f9c641e6216b701f0817e3052ef9e2676f",
+      "hash": "0x8044468813d90c67522d28b86fad5732e7b4b9365f3cb42f6a2186790f447eed",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_time": "2023-03-02T20:07:36.000Z",
+      "gas_limit": null,
+      "gas_price": null
+    },
+    "claim_transaction": null,
+    "estimated_unbonded_at": "2023-03-04T12:07:43.615Z",
+    "unbond_checkpoint": 84322,
+    "unbond_nonce": 1
+  },
+  "network_code": "polygon",
+  "chain_code": "testnet",
+  "created_at": "2023-03-02T19:55:55.101Z",
+  "updated_at": "2023-03-02T20:07:43.620Z"
 }
 ```

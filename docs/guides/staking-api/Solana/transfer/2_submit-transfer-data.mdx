@@ -17,26 +17,27 @@ After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:f
 ### Sample cURL Request
 
 ```bash {5-11}
-curl -X PUT 'https://solana-slate.datahub.figment.io/api/v1/flows/abeb265c-9037-4a33-963e-b064d3ca81fe/next' \
+curl -X PUT 'https://solana-slate.datahub.figment.io/api/v1/flows/6b8502c2-77b3-4541-a742-62ff337f0d15/next' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: <api_key>' \
 -d '{
     "name": "create_transfer_tx",
     "inputs": {
-        "from_account_address": "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
-        "from_account_pubkey": "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
-        "to_account_pubkey": "CN9LHizsLs2MepAU2bEXzsghrrAWCpCpCjpdfsdBLEjG",
-        "amount": 1
+        "from_account_address": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+        "from_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+        "to_account_pubkey": "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
+        "amount": 1.0
     }
 }'
 ```
 
 ### Response
 
-We see two possible `actions`:
+We see three possible `actions`:
 
 - `refresh_transfer_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).
 - `sign_transfer_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_transfer_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
 
 We will choose `sign_transfer_tx`, which indicates one input to collect:
 
@@ -44,14 +45,67 @@ We will choose `sign_transfer_tx`, which indicates one input to collect:
 
 #### Sample Response
 
-```json {19}
+```json {4,7,63,66,79,127,130}
 {
-  "id": "abeb265c-9037-4a33-963e-b064d3ca81fe",
+  "id": "6b8502c2-77b3-4541-a742-62ff337f0d15",
+  "operation": "transfer",
   "state": "transfer_tx_signature",
   "actions": [
     {
       "name": "refresh_transfer_tx",
-      "inputs": []
+      "inputs": [
+        {
+          "name": "funding_account_pubkey",
+          "display": "Funding Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"
+        },
+        {
+          "name": "from_account_pubkey",
+          "display": "From Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"
+        },
+        {
+          "name": "to_account_pubkey",
+          "display": "To Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in SOL",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        }
+      ]
     },
     {
       "name": "sign_transfer_tx",
@@ -61,9 +115,16 @@ We will choose `sign_transfer_tx`, which indicates one input to collect:
           "display": "Transaction Payload",
           "description": "",
           "type": "signed_transaction",
-          "validations": [],
-          "signers": ["9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i"],
-          "transaction_payload": "0100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010001037fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade5a8db2cc1e3095d124006d9de8cc960372aef30ddca5a3ca39bca13209d9313ff0000000000000000000000000000000000000000000000000000000000000000e205f484bbe1bfc7a4deb58acc1f0762a1a655c9e7fe92315964edc08f99d10801020200010c0200000000ca9a3b00000000"
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+          "transaction_payload": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000"
         },
         {
           "name": "signatures",
@@ -71,32 +132,94 @@ We will choose `sign_transfer_tx`, which indicates one input to collect:
           "description": "",
           "type": "array_of_signatures",
           "validations": [],
-          "signers": ["9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i"],
-          "transaction_payload": "0100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010001037fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade5a8db2cc1e3095d124006d9de8cc960372aef30ddca5a3ca39bca13209d9313ff0000000000000000000000000000000000000000000000000000000000000000e205f484bbe1bfc7a4deb58acc1f0762a1a655c9e7fe92315964edc08f99d10801020200010c0200000000ca9a3b00000000",
-          "signing_payload": "010001037fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade5a8db2cc1e3095d124006d9de8cc960372aef30ddca5a3ca39bca13209d9313ff0000000000000000000000000000000000000000000000000000000000000000e205f484bbe1bfc7a4deb58acc1f0762a1a655c9e7fe92315964edc08f99d10801020200010c0200000000ca9a3b00000000"
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+          "transaction_payload": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+          "signing_payload": "01000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_transfer_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     }
   ],
   "data": {
-    "from_account_pubkey": "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
-    "to_account_pubkey": "CN9LHizsLs2MepAU2bEXzsghrrAWCpCpCjpdfsdBLEjG",
+    "from_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "to_account_pubkey": "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
     "amount": "1.0",
-    "funding_account_pubkey": "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
+    "funding_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
     "transfer_transaction": {
-      "raw": "0100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010001037fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade5a8db2cc1e3095d124006d9de8cc960372aef30ddca5a3ca39bca13209d9313ff0000000000000000000000000000000000000000000000000000000000000000e205f484bbe1bfc7a4deb58acc1f0762a1a655c9e7fe92315964edc08f99d10801020200010c0200000000ca9a3b00000000",
-      "signing_payload": "010001037fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade5a8db2cc1e3095d124006d9de8cc960372aef30ddca5a3ca39bca13209d9313ff0000000000000000000000000000000000000000000000000000000000000000e205f484bbe1bfc7a4deb58acc1f0762a1a655c9e7fe92315964edc08f99d10801020200010c0200000000ca9a3b00000000",
+      "raw": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+      "signing_payload": "01000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
       "signed": null,
       "hash": null,
       "status": null,
       "error": null,
-      "signatures": null
+      "signatures": null,
+      "block_time": null
     }
   },
   "network_code": "solana",
-  "chain_code": "testnet",
-  "created_at": "2022-10-04T17:13:57.539Z",
-  "updated_at": "2022-10-04T17:19:18.396Z"
+  "chain_code": "devnet",
+  "created_at": "2023-02-28T09:32:03.904Z",
+  "updated_at": "2023-02-28T09:37:45.799Z"
 }
 ```
 
