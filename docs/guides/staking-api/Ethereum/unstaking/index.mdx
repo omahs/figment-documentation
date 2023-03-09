@@ -1,0 +1,48 @@
+---
+title: Unstaking with a Pre-Signed Exit Transaction
+slug: /guides/staking-api/ethereum/unstaking
+sidebar_position: 3
+pagination_prev: null
+---
+
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/ethereum/Workflows::V1::Ethereum::UnstakingFlow_workflow.png";
+
+## Introduction
+
+Withdraw your staked ETH from Ethereum's consensus layer using Figment&apos;s Staking API!
+
+To unstake ETH using a pre-signed exit transaction and the Staking API, you will need:
+
+- `validator_index` &mdash; The validator index that your validator was assigned when it joined the beacon chain.
+- `epoch` &mdash; A recent epoch during which the validator will exit the active set.
+- `signature` &mdash; A BLS signature of the [`VoluntaryExit`](https://ethereum.github.io/beacon-APIs/#/Beacon/submitPoolVoluntaryExit) message by the validator&quot;s signing key.
+
+Follow the steps in this guide for the details on this process.
+
+## Flow Diagram
+
+Below is a complete diagram for the Ethereum unstaking flow:
+
+<img
+  src={img1}
+  alt="Ethereum Unstaking Flow Diagram"
+  className="inline-image"
+/>
+
+### Notes
+
+:::caution important
+
+- During the transition from `exiting` to `unstaked`,
+  hourly checks are performed by the Staking API for up to 28 hours. If hourly checks timeout (by exceeding 28 attempts) the flow state becomes `failed` and a webhook is sent.
+
+For more information on the withdrawal process, refer to Figment&apos;s <Link to="https://www.figment.io/resources/ethereum-withdrawals-a-comprehensive-faq-guide">Ethereum Withdrawals: A Comprehensive FAQ</Link>.
+
+:::
+
+## References
+
+- <Link to="https://notes.ethereum.org/@launchpad/withdrawals-faq#Q-What-are-withdrawals">
+    Ethereum.org: Withdrawals FAQ
+  </Link>
