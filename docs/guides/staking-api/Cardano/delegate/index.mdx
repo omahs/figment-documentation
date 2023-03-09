@@ -1,0 +1,58 @@
+---
+title: Delegate
+slug: /guides/staking-api/cardano/delegate
+pagination_prev: null
+---
+
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/cardano/Workflows::V1::Cardano::StakingFlow_workflow.png";
+
+## Introduction
+
+Make a delegation to a Cardano staking pool using this flow in the Staking API!
+
+To delegate ADA, you will need:
+
+- `delegator_address` &mdash; The wallet from which the ADA will originate
+- `validator_address` &mdash; The validator address to which the ADA will be delegated
+
+Cardano has specific requirements for staking account registration:
+
+- If the delegator has already posted a staking key registration certificate and a delegation certificate for their staking key, the Staking API will create a delegation transaction
+- If registration by the delegator is still required, the Staking API can create and broadcast the registration transaction
+
+Follow the steps in this guide for the details on this process.
+
+:::info
+
+Cardano has no unbonding period, any delegated balance is free to be transferred at any time.
+
+Delegation on Cardano differs from other networks, in that the entire balance of the delegator address is delegated, rather than a portion of the balance. Delegating more ADA is just a matter of transferring funds into the delegating wallet, the balance of which will be delegated without further action.
+
+Undelegating ADA only requires transferring that amount out of the delegating wallet.
+
+:::
+
+## Flow Diagram
+
+Below is a complete diagram for the Cardano staking flow:
+
+<img src={img1} alt="Cardano Staking Flow Diagram" className="inline-image" />
+
+## References
+
+- <Link to="https://www.figment.io/protocols/cardano">
+    Figment Protocol Docs for Cardano
+  </Link>
+- <Link to="https://docs.cardano.org/learn/delegation">
+    Cardano Docs: Delegation
+  </Link>
+- <Link to="https://github.com/input-output-hk/cardano-node/blob/master/doc/stake-pool-operations/5_register_key.md">
+    Input|Output GitHub Docs: Register stake address on the blockchain
+  </Link>
+- <Link to="https://iohk.zendesk.com/hc/en-us/articles/900002174303-How-to-choose-a-stake-pool">
+    Input|Output Docs: How to choose a stake pool
+  </Link>
+- <Link to="https://iohk.io/en/blog/posts/2020/11/13/the-general-perspective-on-staking-in-cardano/">
+    Input|Output Blog: The general perspective on staking in Cardano
+  </Link>

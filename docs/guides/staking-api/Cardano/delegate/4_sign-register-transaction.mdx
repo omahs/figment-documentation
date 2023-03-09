@@ -1,0 +1,26 @@
+---
+title: Sign the Register Transaction
+slug: /guides/staking-api/cardano/delegate/sign-registration-transaction
+---
+
+Sign the deposit transaction using the `transaction_payload` you received in response to submitting the deposit data.
+
+Locate the `transaction_payload` in the response from the previous step. It will look something like this:
+
+```json
+"transaction_payload": "84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a10081825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558403adfc52b66d1ceaba7372563d0572ea66c41c40973848a66044768ec81d41ddaf36149d38617db8f02f6c5a0c351d10a8b134e512aed2ca75bcb7b155c298807f5f6"
+```
+
+:::caution important
+
+Always confirm the details of the transaction before signing the payload.
+
+:::
+
+Transactions can also be signed using the [Cardano CLI](https://github.com/input-output-hk/cardano-node/blob/master/doc/reference/building-and-signing-tx.md) or offline signing tools such as Input|Output&apos;s [Jormungandr](https://input-output-hk.github.io/jormungandr/jcli/transaction.html).
+
+Sign the transaction and move on to the next step. A signed transaction payload for Cardano will look something like this:
+
+```text
+84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a10081825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558403adfc52b66d1ceaba7372563d0572ea66c41c40973848a66044768ec81d41ddaf36149d38617db8f02f6c5a0c351d10a8b134e512aed2ca75bcb7b155c298807f5f6
+```
