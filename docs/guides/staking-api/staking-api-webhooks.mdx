@@ -131,6 +131,32 @@ The event type format follows the pattern **`<network_code>.<operation>.<action>
 
 </details>
 
+</TabItem><TabItem value="cardano" label="Cardano">
+
+<details>
+<summary>Staking</summary>
+
+- `cardano.staking.*` &mdash; Wildcard for all staking events
+
+- `cardano.staking.registration.activating` &rarr; `cosmos.staking.registration.active`
+
+- `cardano.staking.register_tx.confirmed`
+
+- `cardano.staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+
+- `cardano.staking.delegate_tx.confirmed`
+
+</details>
+
+<details>
+<summary>Transfer</summary>
+
+- `cardano.transfer.*` &mdash; Wildcard for all transfer events
+
+- `cardano.transfer.transfer_tx.confirmed`
+
+</details>
+
 </TabItem><TabItem value="cosmos" label="Cosmos">
 
 <details>

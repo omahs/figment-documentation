@@ -31,7 +31,14 @@ The Staking API has three endpoints for managing flows and five endpoints for ma
 ```bash title="Example cURL request to the Staking API to start a staking flow on NEAR"
 curl -X POST 'https://near-slate.datahub.figment.io/api/v1/flows' \
 -H 'Authorization: <api_key>' \
--d '{"flow": {"network_code":"near", "chain_code": "testnet", "operation": "staking", "version": "v1"}}'
+-d '{
+  "flow": {
+    "network_code": "near",
+    "chain_code": "testnet",
+    "operation": "staking",
+    "version": "v1"
+  }
+}'
 ```
 
 <details><summary>Click to view sample response</summary>

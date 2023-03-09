@@ -70,6 +70,47 @@ This action is also available for other networks and flows.
 
 </details>
 
+</TabItem><TabItem value="ada" label="Cardano">
+
+<details>
+  <summary>Click to view Staking API response for Cardano</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "a766231b-c29a-4749-ade5-97ce22b8c3e6",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "cardano",
+  "chain_code": "preprod",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
 </TabItem><TabItem value="atom" label="Cosmos">
 
 <details>

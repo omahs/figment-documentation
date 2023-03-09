@@ -349,7 +349,7 @@
 					"response": [
 						{
 							"id": "3d9b400b-b984-4f7c-a854-88101fb1c5fb",
-							"name": "Assign Delegation Data",
+							"name": "Submit Delegation Data",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -2023,6 +2023,131 @@
 							],
 							"responseTime": null,
 							"body": "{\n  \"id\": \"336d0a12-4902-4b18-9219-3f0ed2ffcac7\",\n  \"state\": \"active\",\n  \"actions\": [],\n  \"data\": {\n    \"deposits\": [\n      {\n        \"validator_pub_key\": \"0x8d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d33\",\n        \"withdrawal_credentials\": \"0x010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85\",\n        \"signature\": \"0xa5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064\",\n        \"deposit_data_root\": \"0x67b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8\"\n      }\n    ],\n    \"funding_account_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n    \"gas_price\": null,\n    \"gas_limit\": null,\n    \"aggregated_deposit_transaction\": {\n      \"raw\": \"0x02f902d705808459682f0084598ab15683011706943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0\",\n      \"signing_payload\": \"0x13ac527a761599ba44d47eb3957d63257b835b3e1be410e5578f91bef55e298b\",\n      \"signed\": \"0x02f9031a05808459682f0084598ab15683011706943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c001a01c6536f2d69dddb7b10c653e7f7055a63fc870fcf7597c6f80d89a9a5234d238a015a74ac864235652dd0dace203aeae3343f44c4fb4d6328b61bad2719d7141dd\",\n      \"hash\": \"0x26b0c13f0ecce4049dd7d9ac885d6898e3bceafca25304aee51fc3cd39cb1460\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n          \"signature\": \"\"\n        }\n      ]\n    },\n    \"estimated_active_at\": \"2022-12-20T21:59:53.300Z\"\n  },\n  \"network_code\": \"ethereum\",\n  \"chain_code\": \"goerli\",\n  \"created_at\": \"2022-12-20T13:20:08.057Z\",\n  \"updated_at\": \"2022-12-20T23:52:43.307Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create New Unstaking Flow",
+					"id": "c242bcb2-47af-4e81-a2cc-19a7588fa069",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"flow\": {\n        \"network_code\": \"ethereum\",\n        \"chain_code\": \"goerli\",\n        \"operation\": \"staking\",\n        \"version\": \"v1\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
+						"description": "To initiate the staking process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` &mdash; `object`\n  - `network_code` &mdash; `string` Network this flow operates on (ex. `ethereum`) (required).\n  - `chain_code` &mdash; `string` Chain this flow operates on (ex. `goerli`) (required).\n  - `operation` &mdash; `string` The operation to perform (ex. `staking`) (required).\n  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` &mdash; `string` ID of the flow.\n- `state` &mdash; `string` The current state of the flow.\n- `actions` &mdash; `array` It includes the `name` & `inputs` of all next possible actions.\n - `create_deposit_transaction` &mdash; Use this action to generate a deposit transaction to stake your ETH.\n   - `funding_account_address` &mdash; The wallet ETH will be originating from.\n   - `validator_pub_key` -The public key of the validator that the ETH is to be deposited to.\n   - `withdraw_credentials` &mdash; The withdrawal address for the given validator.\n   - `signature` &mdash; A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer.\n   - `deposit_data_root` &mdash; Uniquely identifies the set of deposits made so far.\n   - `gas_limit` &mdash; Adjust the gas limit.\n   - `gas_price` &mdash; Adjust the gas price.\n- `data` &mdash; `object` Staking flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "09c6c24e-53ac-4bb5-af3a-a34153d9220b",
+							"name": "Create New Unstaking Flow",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"flow\": {\n        \"network_code\": \"ethereum\",\n        \"chain_code\": \"goerli\",\n        \"operation\": \"unstaking\",\n        \"version\": \"v1\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659\",\n  \"state\": \"initialized\",\n  \"actions\": [\n    {\n      \"name\": \"broadcast_unstaking_msg\",\n      \"inputs\": [\n        {\n          \"name\": \"validator_index\",\n          \"display\": \"Validator Index\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"numericality\",\n              \"options\": {\n                \"only_integer\": true,\n                \"greater_than_or_equal_to\": 0\n              }\n            },\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": null\n        },\n        {\n          \"name\": \"epoch\",\n          \"display\": \"Epoch\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"numericality\",\n              \"options\": {\n                \"only_integer\": true,\n                \"greater_than_or_equal_to\": 0\n              }\n            },\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": null\n        },\n        {\n          \"name\": \"signature\",\n          \"display\": \"Signature\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            },\n            {\n              \"type\": \"hex\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": null\n        }\n      ]\n    },\n    {\n      \"name\": \"unstaking_msg_expired\",\n      \"inputs\": []\n    }\n  ],\n  \"data\": {\n    \"validator_index\": null,\n    \"epoch\": null,\n    \"signature\": null,\n    \"estimated_principal_return_at\": null\n  },\n  \"network_code\": \"ethereum\",\n  \"chain_code\": \"goerli\",\n  \"created_at\": \"2023-02-23T05:16:02.187Z\",\n  \"updated_at\": \"2023-02-23T05:16:02.187Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Unstaking Data",
+					"id": "201d0abc-b607-445f-b90c-fd9bb7e80a80",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"broadcast_unstaking_msg\",\n    \"inputs\": {\n        \"epoch\": \"158149\",\n        \"validator_index\": \"398094\",\n        \"signature\": \"0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethStakingFlowId}}/next",
+						"description": "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Parameters\n\n- `name` &mdash; `string` Name of the action to execute (required).\n- `inputs` &mdash; `object` (required).\n  - `funding_account_address` &mdash; `string` The wallet from which the ETH will originate. (required).\n  - `validator_pub_key` &mdash; `string` The public key of the validator to which the ETH will be deposited. (required).\n  - `withdrawal_credentials` &mdash; `string` The withdrawal address for the given validator. (required).\n  - `signature` &mdash; `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pub_key` is known by the signer. (required).\n  - `deposit_data_root` &mdash; `string` Uniquely identifies the set of deposits made so far. (required).\n  - `amount` &mdash; `number` Number of tokens you want to delegate. (required).\n  - `gas_price` &mdash; `string` Adjust the gas price (optional).\n  - `gas_limit` &mdash; `string` Adjust the gas limit (optional).\n\n### Response\n\n- `id` &mdash; `string` ID of the flow.\n- `state` &mdash; `string` The current state of the flow.\n- `actions` &mdash; `array` It includes the `name` & `inputs` of all next possible actions.\n - `refresh_deposit_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n - `sign_deposit_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.\n- `data` &mdash; `object` Staking flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "be7123f8-7236-4ec4-92ee-2986caeb1992",
+							"name": "Submit Unstaking Data",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"broadcast_unstaking_msg\",\n    \"inputs\": {\n        \"epoch\": \"158149\",\n        \"validator_index\": \"398094\",\n        \"signature\": \"0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethStakingFlowId}}/next"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659\",\n  \"operation\": \"unstaking\",\n  \"state\": \"broadcasting\",\n  \"actions\": [\n    {\n      \"name\": \"wait\",\n      \"estimated_state_change_at\": \"2023-02-24T11:36:45.451Z\",\n      \"inputs\": []\n    }\n  ],\n  \"data\": {\n    \"validator_index\": 398094,\n    \"epoch\": 158149,\n    \"signature\": \"0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3\",\n    \"estimated_principal_return_at\": null\n  },\n  \"network_code\": \"ethereum\",\n  \"chain_code\": \"goerli\",\n  \"created_at\": \"2023-02-23T05:16:02.187Z\",\n  \"updated_at\": \"2023-02-24T11:28:44.565Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Flow Status",
+					"id": "73c0403d-f23f-4234-9c7d-5f04ca67b4ed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethStakingFlowId}}",
+						"description": "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n\n### Response\n\n- `id` &mdash; `string` ID of the flow.\n- `state` &mdash; `string` The current state of the flow.\n - `aggregated_deposit_tx_broadcasting` &mdash; Transaction broadcasting to the network.\n - `activating` &mdash; Transaction has been confirmed and stake is now activating.\n - `active` &mdash; Stake is successfully active and earning rewards.\n- `actions` &mdash; `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` &mdash; `object` Staking flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "782dc477-4040-46ee-aa5a-0a23dce0f849",
+							"name": "Get Flow Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethStakingFlowId}}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								""
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659\",\n  \"operation\": \"unstaking\",\n  \"state\": \"unstaked\",\n  \"actions\": [],\n  \"data\": {\n    \"validator_index\": 398094,\n    \"epoch\": 158149,\n    \"signature\": \"0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3\",\n    \"estimated_principal_return_at\": \"2023-02-25T14:16:36.302Z\"\n  },\n  \"network_code\": \"ethereum\",\n  \"chain_code\": \"goerli\",\n  \"created_at\": \"2023-02-23T05:16:02.187Z\",\n  \"updated_at\": \"2023-02-25T14:18:36.302Z\"\n}"
 						}
 					]
 				}
@@ -5836,48 +5961,48 @@
 	],
 	"variable": [
 		{
-			"id": "fecd19ab-264d-4416-a95e-be3764c2946f",
+			"id": "60e2fda1-2266-4f77-b0a4-069d5e77d239",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "718af181-c7a0-4247-90b0-e22a2e6af92a",
+			"id": "f365fa04-5f2b-4d1d-ace8-ab1303acfea3",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "fdf41cf5-7a04-43cd-b764-7296c0ba47cf",
+			"id": "e7f23412-0926-405a-8ff7-6a3c1dd3a37d",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "46bae6ce-b0bd-4d2c-947a-3a07909ee487",
+			"id": "c088f365-c1c2-4463-8991-7de75210c4e3",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "437d9908-860d-42d4-af5e-37417ddd8677",
+			"id": "81f8c04a-d390-4390-af38-6b0e533f959f",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "af9ffb24-0cc2-4172-aaa9-26d07b3b5f04",
+			"id": "2e353238-0a4e-415f-a735-5ef0c3a97300",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "9ce0bb94-fe98-4d6e-93b3-53788ded9a76",
+			"id": "9521ab1b-9a87-4252-be85-3466a04a7d3b",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "cb5ed29c-a1c3-49e9-846e-86ed027d4267",
+			"id": "e60b5257-4735-4223-8e8a-fa126338cad7",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "polygon-slate.datahub.figment.io"
 		},
 		{
-			"id": "55c9c341-e5ef-472d-89bd-fc8d65200540",
+			"id": "7b151ccb-b29c-402f-8ad6-90e897c221fe",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
