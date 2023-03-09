@@ -182,6 +182,529 @@
 			"id": "b936828b-9c00-4ecf-a0f7-9ef1319d5123"
 		},
 		{
+			"name": "Cardano",
+			"item": [
+				{
+					"name": "Create New Delegation Flow",
+					"id": "f00ce203-5d8f-4008-a571-716d1c18b0f5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"flow\": {\n        \"network_code\": \"cardano\",\n        \"chain_code\": \"preprod\",\n        \"operation\": \"staking\",\n        \"version\": \"v1\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "a8725db9-361b-45a1-806f-5265316f9a74",
+							"name": "Create New Delegation Flow",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"1c993340-0f63-4516-855a-b71dcd2715de\",\n    \"operation\": \"staking\",\n    \"state\": \"initialized\",\n    \"actions\": [\n        {\n            \"name\": \"assign_staking_data\",\n            \"inputs\": [\n                {\n                    \"name\": \"delegator_address\",\n                    \"display\": \"Delegator Address\",\n                    \"description\": \"\",\n                    \"type\": \"string\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                },\n                {\n                    \"name\": \"validator_address\",\n                    \"display\": \"Validator Address\",\n                    \"description\": \"\",\n                    \"type\": \"string\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                }\n            ]\n        }\n    ],\n    \"data\": {\n        \"delegator_address\": null,\n        \"validator_address\": null,\n        \"registered\": null,\n        \"register_transaction\": null,\n        \"delegate_transaction\": null\n    },\n    \"network_code\": \"cardano\",\n    \"chain_code\": \"preprod\",\n    \"created_at\": \"2023-02-17T23:15:19.309Z\",\n    \"updated_at\": \"2023-02-17T23:15:19.309Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Assign Staking Data",
+					"id": "5cbb612e-2c09-47c9-9f47-d097db922f63",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"assign_staking_data\",\n  \"inputs\": {\n    \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n    \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "7c8203a9-a210-48ad-9ae2-86b6e3c41e19",
+							"name": "Assign Staking Data",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"6f995c8a-08b7-43ff-9275-0ef8fc94bc26\",\n    \"operation\": \"staking\",\n    \"state\": \"register_tx_signature\",\n    \"actions\": [\n        {\n            \"name\": \"refresh_register_tx\",\n            \"inputs\": []\n        },\n        {\n            \"name\": \"sign_register_tx\",\n            \"inputs\": [\n                {\n                    \"name\": \"transaction_payload\",\n                    \"display\": \"Transaction Payload\",\n                    \"description\": \"\",\n                    \"type\": \"signed_transaction\",\n                    \"validations\": [\n                        {\n                            \"type\": \"sign_payload\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null,\n                    \"signers\": [\n                        \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\"\n                    ],\n                    \"transaction_payload\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\"\n                },\n                {\n                    \"name\": \"signatures\",\n                    \"display\": \"Signatures\",\n                    \"description\": \"\",\n                    \"type\": \"array_of_signatures\",\n                    \"validations\": [],\n                    \"array\": true,\n                    \"default_value\": null,\n                    \"element_type\": \"signature_data\",\n                    \"signers\": [\n                        \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\"\n                    ],\n                    \"transaction_payload\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n                    \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n                    \"inputs\": [\n                        {\n                            \"name\": \"account_address\",\n                            \"display\": \"Account Address\",\n                            \"description\": \"\",\n                            \"type\": \"string\",\n                            \"validations\": [\n                                {\n                                    \"type\": \"presence\",\n                                    \"options\": {}\n                                }\n                            ],\n                            \"array\": false,\n                            \"default_value\": null\n                        },\n                        {\n                            \"name\": \"signature\",\n                            \"display\": \"Signature\",\n                            \"description\": \"\",\n                            \"type\": \"string\",\n                            \"validations\": [\n                                {\n                                    \"type\": \"presence\",\n                                    \"options\": {}\n                                }\n                            ],\n                            \"array\": false,\n                            \"default_value\": null\n                        }\n                    ]\n                }\n            ]\n        },\n        {\n            \"name\": \"confirm_register_tx_by_hash\",\n            \"inputs\": [\n                {\n                    \"name\": \"hash\",\n                    \"display\": \"Hash\",\n                    \"description\": \"\",\n                    \"type\": \"string\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                },\n                {\n                    \"name\": \"block_number\",\n                    \"display\": \"Block Number\",\n                    \"description\": \"\",\n                    \"type\": \"integer\",\n                    \"validations\": [],\n                    \"array\": false,\n                    \"default_value\": null\n                }\n            ]\n        }\n    ],\n    \"data\": {\n        \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n        \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\",\n        \"registered\": null,\n        \"register_transaction\": {\n            \"raw\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n            \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n            \"signed\": null,\n            \"hash\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n            \"status\": null,\n            \"error\": null,\n            \"signatures\": null,\n            \"block_time\": null\n        },\n        \"delegate_transaction\": null\n    },\n    \"network_code\": \"cardano\",\n    \"chain_code\": \"preprod\",\n    \"created_at\": \"2023-02-24T17:06:06.083Z\",\n    \"updated_at\": \"2023-02-24T17:06:46.928Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Registration Data",
+					"id": "218ba1f7-3257-42f8-81ae-122edac21e33",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"create_register_tx\",\n  \"inputs\": {\n    \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n    \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "05c0d1bc-bf50-442e-906d-824b327132d7",
+							"name": "Submit Registration Data",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"6f995c8a-08b7-43ff-9275-0ef8fc94bc26\",\n    \"operation\": \"staking\",\n    \"state\": \"register_tx_signature\",\n    \"actions\": [\n        {\n            \"name\": \"refresh_register_tx\",\n            \"inputs\": []\n        },\n        {\n            \"name\": \"sign_register_tx\",\n            \"inputs\": [\n                {\n                    \"name\": \"transaction_payload\",\n                    \"display\": \"Transaction Payload\",\n                    \"description\": \"\",\n                    \"type\": \"signed_transaction\",\n                    \"validations\": [\n                        {\n                            \"type\": \"sign_payload\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null,\n                    \"signers\": [\n                        \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\"\n                    ],\n                    \"transaction_payload\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\"\n                },\n                {\n                    \"name\": \"signatures\",\n                    \"display\": \"Signatures\",\n                    \"description\": \"\",\n                    \"type\": \"array_of_signatures\",\n                    \"validations\": [],\n                    \"array\": true,\n                    \"default_value\": null,\n                    \"element_type\": \"signature_data\",\n                    \"signers\": [\n                        \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\"\n                    ],\n                    \"transaction_payload\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n                    \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n                    \"inputs\": [\n                        {\n                            \"name\": \"account_address\",\n                            \"display\": \"Account Address\",\n                            \"description\": \"\",\n                            \"type\": \"string\",\n                            \"validations\": [\n                                {\n                                    \"type\": \"presence\",\n                                    \"options\": {}\n                                }\n                            ],\n                            \"array\": false,\n                            \"default_value\": null\n                        },\n                        {\n                            \"name\": \"signature\",\n                            \"display\": \"Signature\",\n                            \"description\": \"\",\n                            \"type\": \"string\",\n                            \"validations\": [\n                                {\n                                    \"type\": \"presence\",\n                                    \"options\": {}\n                                }\n                            ],\n                            \"array\": false,\n                            \"default_value\": null\n                        }\n                    ]\n                }\n            ]\n        },\n        {\n            \"name\": \"confirm_register_tx_by_hash\",\n            \"inputs\": [\n                {\n                    \"name\": \"hash\",\n                    \"display\": \"Hash\",\n                    \"description\": \"\",\n                    \"type\": \"string\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                },\n                {\n                    \"name\": \"block_number\",\n                    \"display\": \"Block Number\",\n                    \"description\": \"\",\n                    \"type\": \"integer\",\n                    \"validations\": [],\n                    \"array\": false,\n                    \"default_value\": null\n                }\n            ]\n        }\n    ],\n    \"data\": {\n        \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n        \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\",\n        \"registered\": null,\n        \"register_transaction\": {\n            \"raw\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n            \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n            \"signed\": null,\n            \"hash\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n            \"status\": null,\n            \"error\": null,\n            \"signatures\": null,\n            \"block_time\": null\n        },\n        \"delegate_transaction\": null\n    },\n    \"network_code\": \"cardano\",\n    \"chain_code\": \"preprod\",\n    \"created_at\": \"2023-02-24T17:06:06.083Z\",\n    \"updated_at\": \"2023-02-24T17:06:46.928Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Delegation Data",
+					"id": "55d33cca-a802-49cb-84d9-26815442fd48",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"create_delegate_tx\",\n  \"inputs\": {\n    \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n    \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "3d9b400b-b984-4f7c-a854-88101fb1c5fb",
+							"name": "Assign Delegation Data",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"6f995c8a-08b7-43ff-9275-0ef8fc94bc26\",\n    \"operation\": \"staking\",\n    \"state\": \"register_tx_signature\",\n    \"actions\": [\n        {\n            \"name\": \"refresh_register_tx\",\n            \"inputs\": []\n        },\n        {\n            \"name\": \"sign_register_tx\",\n            \"inputs\": [\n                {\n                    \"name\": \"transaction_payload\",\n                    \"display\": \"Transaction Payload\",\n                    \"description\": \"\",\n                    \"type\": \"signed_transaction\",\n                    \"validations\": [\n                        {\n                            \"type\": \"sign_payload\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null,\n                    \"signers\": [\n                        \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\"\n                    ],\n                    \"transaction_payload\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\"\n                },\n                {\n                    \"name\": \"signatures\",\n                    \"display\": \"Signatures\",\n                    \"description\": \"\",\n                    \"type\": \"array_of_signatures\",\n                    \"validations\": [],\n                    \"array\": true,\n                    \"default_value\": null,\n                    \"element_type\": \"signature_data\",\n                    \"signers\": [\n                        \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\"\n                    ],\n                    \"transaction_payload\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n                    \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n                    \"inputs\": [\n                        {\n                            \"name\": \"account_address\",\n                            \"display\": \"Account Address\",\n                            \"description\": \"\",\n                            \"type\": \"string\",\n                            \"validations\": [\n                                {\n                                    \"type\": \"presence\",\n                                    \"options\": {}\n                                }\n                            ],\n                            \"array\": false,\n                            \"default_value\": null\n                        },\n                        {\n                            \"name\": \"signature\",\n                            \"display\": \"Signature\",\n                            \"description\": \"\",\n                            \"type\": \"string\",\n                            \"validations\": [\n                                {\n                                    \"type\": \"presence\",\n                                    \"options\": {}\n                                }\n                            ],\n                            \"array\": false,\n                            \"default_value\": null\n                        }\n                    ]\n                }\n            ]\n        },\n        {\n            \"name\": \"confirm_register_tx_by_hash\",\n            \"inputs\": [\n                {\n                    \"name\": \"hash\",\n                    \"display\": \"Hash\",\n                    \"description\": \"\",\n                    \"type\": \"string\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                },\n                {\n                    \"name\": \"block_number\",\n                    \"display\": \"Block Number\",\n                    \"description\": \"\",\n                    \"type\": \"integer\",\n                    \"validations\": [],\n                    \"array\": false,\n                    \"default_value\": null\n                }\n            ]\n        }\n    ],\n    \"data\": {\n        \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n        \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\",\n        \"registered\": null,\n        \"register_transaction\": {\n            \"raw\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n            \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n            \"signed\": null,\n            \"hash\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n            \"status\": null,\n            \"error\": null,\n            \"signatures\": null,\n            \"block_time\": null\n        },\n        \"delegate_transaction\": null\n    },\n    \"network_code\": \"cardano\",\n    \"chain_code\": \"preprod\",\n    \"created_at\": \"2023-02-24T17:06:06.083Z\",\n    \"updated_at\": \"2023-02-24T17:06:46.928Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Signed Registration Transaction for Broadcast",
+					"id": "ceda42aa-d8bd-4f4b-9746-770b1c261d32",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"sign_register_tx\",\n  \"inputs\": {\n    \"transaction_payload\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a10081825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558403adfc52b66d1ceaba7372563d0572ea66c41c40973848a66044768ec81d41ddaf36149d38617db8f02f6c5a0c351d10a8b134e512aed2ca75bcb7b155c298807f5f6\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "5ee2835d-4fdc-4529-8758-1a06669f33e2",
+							"name": "Submit Signed Registration Transaction for Broadcast",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"d74242d9-ed4f-4bb4-8970-2ca9592e09a6\",\n    \"operation\": \"staking\",\n    \"state\": \"register_tx_broadcasting\",\n    \"actions\": [\n        {\n            \"name\": \"wait\",\n            \"estimated_state_change_at\": \"2023-02-24T19:17:49.235Z\",\n            \"inputs\": []\n        }\n    ],\n    \"data\": {\n        \"delegator_address\": \"addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd\",\n        \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\",\n        \"registered\": null,\n        \"register_transaction\": {\n            \"raw\": \"84a4008182582053187f758033185dc5dbf7ec680f9dc1bc822185cc1e717ecdb338766cd0a63c00018182583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05d4d107021a00028b79048182008200581ce3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c7a0f5f6\",\n            \"signing_payload\": \"e382ce19b8e07a2ba498c0afc6290dcf96bfd156f5aab2710278b3ead082a899\",\n            \"signed\": \"84a4008182582053187f758033185dc5dbf7ec680f9dc1bc822185cc1e717ecdb338766cd0a63c00018182583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05d4d107021a00028b79048182008200581ce3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c7a10081825820fd3d08c3218598a7bcbed603c94b56c8685e5f6ce37cf5070eb009bd8bc6c1c55840f3b29915fdad71bdacf8f6c08553cad8d79a83afb466e470374ae3fc0a5e262e664300165ef01a779b31d390d283c98beb27a61eb4d16a071aede0976d44c407f5f6\",\n            \"hash\": \"e382ce19b8e07a2ba498c0afc6290dcf96bfd156f5aab2710278b3ead082a899\",\n            \"status\": \"confirmed\",\n            \"error\": null,\n            \"signatures\": [\n                {\n                    \"account_address\": \"addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd\",\n                    \"signature\": \"\"\n                }\n            ],\n            \"block_time\": \"2023-02-24T18:40:18.000Z\"\n        },\n        \"delegate_transaction\": {\n            \"raw\": null,\n            \"signing_payload\": null,\n            \"signed\": null,\n            \"hash\": null,\n            \"status\": null,\n            \"error\": null,\n            \"signatures\": [\n                {\n                    \"account_address\": \"addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd\",\n                    \"signature\": \"\"\n                }\n            ],\n            \"block_time\": null\n        }\n    },\n    \"network_code\": \"cardano\",\n    \"chain_code\": \"preprod\",\n    \"created_at\": \"2023-02-24T18:00:38.185Z\",\n    \"updated_at\": \"2023-02-24T19:16:48.150Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Signed Delegate Transaction for Broadcast",
+					"id": "dd9f4ab2-a144-419b-85ed-d14cd4e6a6ca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"sign_delegate_tx\",\n  \"inputs\": {\n    \"transaction_payload\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca10082825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558401b5c035fa577f743dcc5f0b500d9a3c621aa17297d7a5824671be13c35f764c5e70ccd5d1cb26cb942d5f967214f0f8e1a5853b1c18e7fc6ac90b714a579ab0a8258208e1bdf6b1776a3cac2686e14130029b4544b9f004faa67992b107001b67dd993584027152598680a9e251bec230aca563f34aaf6e8403b630a395b2b62d35b873bc7121d4c026e3cff32c44194202003c3fc350753548645946baf61e65cbbd31003f5f6\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "061e2726-f2ad-4563-a142-3a4f3ebddee9",
+							"name": "Submit Signed Delegate Transaction for Broadcast",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"6f995c8a-08b7-43ff-9275-0ef8fc94bc26\",\n    \"operation\": \"staking\",\n    \"state\": \"delegate_tx_broadcasting\",\n    \"actions\": [\n        {\n            \"name\": \"wait\",\n            \"estimated_state_change_at\": \"2023-02-24T17:13:41.756Z\",\n            \"inputs\": []\n        }\n    ],\n    \"data\": {\n        \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n        \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\",\n        \"registered\": null,\n        \"register_transaction\": {\n            \"raw\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n            \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n            \"signed\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a10081825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558403adfc52b66d1ceaba7372563d0572ea66c41c40973848a66044768ec81d41ddaf36149d38617db8f02f6c5a0c351d10a8b134e512aed2ca75bcb7b155c298807f5f6\",\n            \"hash\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n            \"status\": \"confirmed\",\n            \"error\": null,\n            \"signatures\": [\n                {\n                    \"account_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n                    \"signature\": \"\"\n                }\n            ],\n            \"block_time\": \"2023-02-24T17:09:47.000Z\"\n        },\n        \"delegate_transaction\": {\n            \"raw\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca0f5f6\",\n            \"signing_payload\": \"689c8172693b66d5a649d1bb8e7df8b5a83c828022910602c1e7815b88c1597a\",\n            \"signed\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca10082825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558401b5c035fa577f743dcc5f0b500d9a3c621aa17297d7a5824671be13c35f764c5e70ccd5d1cb26cb942d5f967214f0f8e1a5853b1c18e7fc6ac90b714a579ab0a8258208e1bdf6b1776a3cac2686e14130029b4544b9f004faa67992b107001b67dd993584027152598680a9e251bec230aca563f34aaf6e8403b630a395b2b62d35b873bc7121d4c026e3cff32c44194202003c3fc350753548645946baf61e65cbbd31003f5f6\",\n            \"hash\": \"689c8172693b66d5a649d1bb8e7df8b5a83c828022910602c1e7815b88c1597a\",\n            \"status\": null,\n            \"error\": null,\n            \"signatures\": [\n                {\n                    \"account_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n                    \"signature\": \"\"\n                }\n            ],\n            \"block_time\": null\n        }\n    },\n    \"network_code\": \"cardano\",\n    \"chain_code\": \"preprod\",\n    \"created_at\": \"2023-02-24T17:06:06.083Z\",\n    \"updated_at\": \"2023-02-24T17:12:40.672Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Flow Status",
+					"id": "612ea973-4b41-4ea6-bed4-771b6a22dea3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}"
+					},
+					"response": [
+						{
+							"id": "f95811c8-da9d-41f3-b30c-6810e74487a8",
+							"name": "Get Flow Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"6f995c8a-08b7-43ff-9275-0ef8fc94bc26\",\n  \"operation\": \"staking\",\n  \"state\": \"completed\",\n  \"actions\": [],\n  \"data\": {\n    \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n    \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\",\n    \"registered\": null,\n    \"register_transaction\": {\n      \"raw\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n      \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n      \"signed\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a10081825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558403adfc52b66d1ceaba7372563d0572ea66c41c40973848a66044768ec81d41ddaf36149d38617db8f02f6c5a0c351d10a8b134e512aed2ca75bcb7b155c298807f5f6\",\n      \"hash\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": \"2023-02-24T17:09:47.000Z\"\n    },\n    \"delegate_transaction\": {\n      \"raw\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca0f5f6\",\n      \"signing_payload\": \"689c8172693b66d5a649d1bb8e7df8b5a83c828022910602c1e7815b88c1597a\",\n      \"signed\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca10082825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558401b5c035fa577f743dcc5f0b500d9a3c621aa17297d7a5824671be13c35f764c5e70ccd5d1cb26cb942d5f967214f0f8e1a5853b1c18e7fc6ac90b714a579ab0a8258208e1bdf6b1776a3cac2686e14130029b4544b9f004faa67992b107001b67dd993584027152598680a9e251bec230aca563f34aaf6e8403b630a395b2b62d35b873bc7121d4c026e3cff32c44194202003c3fc350753548645946baf61e65cbbd31003f5f6\",\n      \"hash\": \"689c8172693b66d5a649d1bb8e7df8b5a83c828022910602c1e7815b88c1597a\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": \"2023-02-24T17:13:01.000Z\"\n    }\n  },\n  \"network_code\": \"cardano\",\n  \"chain_code\": \"preprod\",\n  \"created_at\": \"2023-02-24T17:06:06.083Z\",\n  \"updated_at\": \"2023-02-24T17:13:21.307Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create New Transfer Flow",
+					"id": "1003780a-7b54-468e-8e84-80c94a8f5a3a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"flow\": {\n        \"network_code\": \"cardano\",\n        \"chain_code\": \"preprod\",\n        \"operation\": \"transfer\",\n        \"version\": \"v1\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "6fadd4a3-c121-47c8-a8c2-e104d47a8e55",
+							"name": "Create New Transfer Flow",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"55fcfcdd-b1f5-460c-bce9-8b8864461315\",\n    \"operation\": \"transfer\",\n    \"state\": \"initialized\",\n    \"actions\": [\n        {\n            \"name\": \"create_transfer_tx\",\n            \"inputs\": [\n                {\n                    \"name\": \"from_account_address\",\n                    \"display\": \"From Account Address\",\n                    \"description\": \"\",\n                    \"type\": \"string\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                },\n                {\n                    \"name\": \"to_account_address\",\n                    \"display\": \"To Account Address\",\n                    \"description\": \"\",\n                    \"type\": \"string\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                },\n                {\n                    \"name\": \"amount\",\n                    \"display\": \"Amount\",\n                    \"description\": \"\",\n                    \"type\": \"decimal\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        },\n                        {\n                            \"type\": \"numericality\",\n                            \"options\": {\n                                \"greater_than\": 0\n                            }\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                }\n            ]\n        }\n    ],\n    \"data\": {\n        \"from_account_address\": null,\n        \"to_account_address\": null,\n        \"amount\": null,\n        \"transfer_transaction\": null\n    },\n    \"network_code\": \"cardano\",\n    \"chain_code\": \"preprod\",\n    \"created_at\": \"2023-03-07T19:18:01.189Z\",\n    \"updated_at\": \"2023-03-07T19:18:01.189Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Transfer Data",
+					"id": "aa4580e0-3971-40e8-b1cd-c60caa842f79",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"create_transfer_tx\",\n  \"inputs\": {\n    \"from_account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n    \"to_account_address\": \"addr_test1qpr0vyprum2feg2340lmtx0gs3ye0qwnsagwqfhy5pfd5glrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rsvy9lvz\",\n    \"amount\": 10.0\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}/next",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "58249226-666d-404b-8ada-dd0d1317cbf7",
+							"name": "Submit Transfer Data",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"55fcfcdd-b1f5-460c-bce9-8b8864461315\",\n  \"operation\": \"transfer\",\n  \"state\": \"transfer_tx_signature\",\n  \"actions\": [\n    {\n      \"name\": \"refresh_transfer_tx\",\n      \"inputs\": [\n        {\n          \"name\": \"from_account_address\",\n          \"display\": \"From Account Address\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": \"addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd\"\n        },\n        {\n          \"name\": \"to_account_address\",\n          \"display\": \"To Account Address\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": \"addr_test1qzsv3unnn5gwnqzccf4gk9mmnh5nmfcyjcckhzxjfpv59q9xfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsc945zx\"\n        },\n        {\n          \"name\": \"amount\",\n          \"display\": \"Amount\",\n          \"description\": \"\",\n          \"type\": \"decimal\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            },\n            {\n              \"type\": \"numericality\",\n              \"options\": {\n                \"greater_than\": 0\n              }\n            }\n          ],\n          \"array\": false,\n          \"default_value\": \"10.0\"\n        }\n      ]\n    },\n    {\n      \"name\": \"sign_transfer_tx\",\n      \"inputs\": [\n        {\n          \"name\": \"transaction_payload\",\n          \"display\": \"Transaction Payload\",\n          \"description\": \"\",\n          \"type\": \"signed_transaction\",\n          \"validations\": [],\n          \"array\": false,\n          \"default_value\": null,\n          \"signers\": [\n            \"addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd\"\n          ],\n          \"transaction_payload\": \"84a30081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018282583900a0c8f2739d10e98058c26a8b177b9de93da70496316b88d248594280a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871a0098968082583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05370815021a00029075a0f5f6\"\n        },\n        {\n          \"name\": \"signatures\",\n          \"display\": \"Signatures\",\n          \"description\": \"\",\n          \"type\": \"array_of_signatures\",\n          \"validations\": [],\n          \"array\": true,\n          \"default_value\": null,\n          \"element_type\": \"signature_data\",\n          \"signers\": [\n            \"addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd\"\n          ],\n          \"transaction_payload\": \"84a30081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018282583900a0c8f2739d10e98058c26a8b177b9de93da70496316b88d248594280a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871a0098968082583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05370815021a00029075a0f5f6\",\n          \"signing_payload\": \"b097030f88413f546c2188e1f2ab9e6407f653a18153a501f1d05b062538be6e\",\n          \"inputs\": [\n            {\n              \"name\": \"account_address\",\n              \"display\": \"Account Address\",\n              \"description\": \"\",\n              \"type\": \"string\",\n              \"validations\": [\n                {\n                  \"type\": \"presence\",\n                  \"options\": {}\n                }\n              ],\n              \"array\": false,\n              \"default_value\": null\n            },\n            {\n              \"name\": \"signature\",\n              \"display\": \"Signature\",\n              \"description\": \"\",\n              \"type\": \"string\",\n              \"validations\": [\n                {\n                  \"type\": \"presence\",\n                  \"options\": {}\n                }\n              ],\n              \"array\": false,\n              \"default_value\": null\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"confirm_transfer_tx_by_hash\",\n      \"inputs\": [\n        {\n          \"name\": \"hash\",\n          \"display\": \"Hash\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": null\n        },\n        {\n          \"name\": \"block_number\",\n          \"display\": \"Block Number\",\n          \"description\": \"\",\n          \"type\": \"integer\",\n          \"validations\": [],\n          \"array\": false,\n          \"default_value\": null\n        }\n      ]\n    }\n  ],\n  \"data\": {\n    \"from_account_address\": \"addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd\",\n    \"to_account_address\": \"addr_test1qzsv3unnn5gwnqzccf4gk9mmnh5nmfcyjcckhzxjfpv59q9xfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsc945zx\",\n    \"amount\": \"10.0\",\n    \"transfer_transaction\": {\n      \"raw\": \"84a30081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018282583900a0c8f2739d10e98058c26a8b177b9de93da70496316b88d248594280a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871a0098968082583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05370815021a00029075a0f5f6\",\n      \"signing_payload\": \"b097030f88413f546c2188e1f2ab9e6407f653a18153a501f1d05b062538be6e\",\n      \"signed\": null,\n      \"hash\": null,\n      \"status\": null,\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": null\n    }\n  },\n  \"network_code\": \"cardano\",\n  \"chain_code\": \"preprod\",\n  \"created_at\": \"2023-03-07T20:48:36.827Z\",\n  \"updated_at\": \"2023-03-07T20:50:34.377Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Signed Transfer Transaction for Broadcast",
+					"id": "c5fb565d-efde-4ce0-9906-5731f6a21436",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"sign_transfer_tx\",\n  \"inputs\": {\n    \"transaction_payload\": \"84a30081825820a4cf432a8f3f0fe44ffdd9775ae55b2bd419c4652fb96cdeaaa27c6e0f83ea5f0001828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3affa30b021a00029075a10081825820002d9a48169c6d508699b7aaaa360cc38cb1f3b771444451d38cd0f901ac139d5840285bbda669d5e3805d0e81596271546f070be66c55eb30a03c2b98892b57cb99b9eb2ad4c08181d1d2ca7d84dca876bfad6756d1be68eaa99df127fe5c2aa403f5f6\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}/next",
+						"description": "To initiate the delegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `avalanche`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate a delegation transaction to stake ADA.\n        - `delegator_address` — The delegating address, where ADA is being staked from.\n        - `validator_address` — Cardano validator address or staking pool address.\n- `data` — `object` Delegation flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "fb47608d-ed74-49b7-a125-b367779eb002",
+							"name": "Submit Signed Transfer Transaction for Broadcast",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"55fcfcdd-b1f5-460c-bce9-8b8864461315\",\n  \"operation\": \"transfer\",\n  \"state\": \"transfer_tx_broadcasting\",\n  \"actions\": [\n    {\n      \"name\": \"wait\",\n      \"estimated_state_change_at\": \"2023-03-07T21:36:20.230Z\",\n      \"inputs\": [\n\n      ]\n    }\n  ],\n  \"data\": {\n    \"from_account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n    \"to_account_address\": \"addr_test1qpr0vyprum2feg2340lmtx0gs3ye0qwnsagwqfhy5pfd5glrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rsvy9lvz\",\n    \"amount\": \"10.0\",\n    \"transfer_transaction\": {\n      \"raw\": \"84a30081825820701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f70101828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3a647c16021a00029075a0f5f6\",\n      \"signing_payload\": \"2800f50ddc0a4ddf1a50b93015d47d2201926310c29aa7e1645ea429d7ba61cf\",\n      \"signed\": \"84a30081825820701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f70101828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3a647c16021a00029075a10081825820002d9a48169c6d508699b7aaaa360cc38cb1f3b771444451d38cd0f901ac139d5840b37def2a690fbf3f8cd3aadb2d9507d428772e1b2415366761584010bccead1e75369532df49bf265aeac6684fd4decba93eb8f6a87fa98dbdf01bc78b890001f5f6\",\n      \"hash\": \"2800f50ddc0a4ddf1a50b93015d47d2201926310c29aa7e1645ea429d7ba61cf\",\n      \"status\": null,\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": null\n    }\n  },\n  \"network_code\": \"cardano\",\n  \"chain_code\": \"preprod\",\n  \"created_at\": \"2023-03-07T21:34:06.674Z\",\n  \"updated_at\": \"2023-03-07T21:35:19.456Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Flow Status",
+					"id": "bb4d18ab-8418-4c4e-98d1-815b00730a7f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}"
+					},
+					"response": [
+						{
+							"id": "24e219c0-7846-4dee-b2e5-3e6643ce8eed",
+							"name": "Get Flow Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"ee282781-781a-4acc-a438-384f7b51e533\",\n  \"operation\": \"transfer\",\n  \"state\": \"completed\",\n  \"actions\": [],\n  \"data\": {\n    \"from_account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n    \"to_account_address\": \"addr_test1qpr0vyprum2feg2340lmtx0gs3ye0qwnsagwqfhy5pfd5glrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rsvy9lvz\",\n    \"amount\": \"10.0\",\n    \"transfer_transaction\": {\n      \"raw\": \"84a30081825820701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f70101828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3a647c16021a00029075a0f5f6\",\n      \"signing_payload\": \"2800f50ddc0a4ddf1a50b93015d47d2201926310c29aa7e1645ea429d7ba61cf\",\n      \"signed\": \"84a30081825820701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f70101828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3a647c16021a00029075a10081825820002d9a48169c6d508699b7aaaa360cc38cb1f3b771444451d38cd0f901ac139d5840b37def2a690fbf3f8cd3aadb2d9507d428772e1b2415366761584010bccead1e75369532df49bf265aeac6684fd4decba93eb8f6a87fa98dbdf01bc78b890001f5f6\",\n      \"hash\": \"2800f50ddc0a4ddf1a50b93015d47d2201926310c29aa7e1645ea429d7ba61cf\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": \"2023-03-07T21:35:21.000Z\"\n    }\n  },\n  \"network_code\": \"cardano\",\n  \"chain_code\": \"preprod\",\n  \"created_at\": \"2023-03-07T21:34:06.674Z\",\n  \"updated_at\": \"2023-03-07T21:36:00.156Z\"\n}"
+						}
+					]
+				}
+			],
+			"id": "40c393ae-139c-459f-9462-26870bb88548"
+		},
+		{
 			"name": "Cosmos",
 			"item": [
 				{
@@ -5313,48 +5836,48 @@
 	],
 	"variable": [
 		{
-			"id": "ff3f035a-7985-4afd-b93f-5efb6b7ddc7d",
+			"id": "fecd19ab-264d-4416-a95e-be3764c2946f",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "b99b0392-e6f6-4770-b06c-c2c6390e6127",
+			"id": "718af181-c7a0-4247-90b0-e22a2e6af92a",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "7f27252b-eae4-4b9d-bbca-19a971cdae43",
+			"id": "fdf41cf5-7a04-43cd-b764-7296c0ba47cf",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "c3a3c149-d7c4-4ded-a0ab-2a66f3a93262",
+			"id": "46bae6ce-b0bd-4d2c-947a-3a07909ee487",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "818ab474-d1e2-43a7-802c-3b476e5221d3",
+			"id": "437d9908-860d-42d4-af5e-37417ddd8677",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "733165c8-3851-43d3-87fe-db6b174827c1",
+			"id": "af9ffb24-0cc2-4172-aaa9-26d07b3b5f04",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "c96f34c5-de5c-44ae-a405-d6316ff9b758",
+			"id": "9ce0bb94-fe98-4d6e-93b3-53788ded9a76",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "650fdacb-c45e-4b46-a513-9ecf42e5757b",
+			"id": "cb5ed29c-a1c3-49e9-846e-86ed027d4267",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "polygon-slate.datahub.figment.io"
 		},
 		{
-			"id": "cd1e7bc7-623e-402c-93d5-656275c62b53",
+			"id": "55c9c341-e5ef-472d-89bd-fc8d65200540",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
