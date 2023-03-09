@@ -5874,7 +5874,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1529885d-b791-4409-93a9-3721b3fd58ce",
+				"id": "a6ab8897-6cfd-4645-bc05-b31eb691c487",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -5884,7 +5884,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "0de7a8b1-1195-4d8c-a499-1fb71fbdc96f",
+				"id": "8070c181-d1bd-492c-9468-8d56136442fd",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -5894,42 +5894,48 @@
 	],
 	"variable": [
 		{
-			"id": "d44b9d8d-bb8a-4b5b-8e33-38689c4eda7b",
+			"id": "b74c9708-1de4-4eca-89bf-07f71ff84bb7",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "b5661201-900f-4d64-a2a2-f54a9b149009",
+			"id": "9adad15b-c943-4afb-a851-7c0ff1ae7f58",
 			"key": "ATOM_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "f72d1cdf-875f-4cf8-9ea6-f3231460da8f",
+			"id": "2390a4da-dc41-4f22-84d8-9573e8ad0cfc",
+			"key": "CARDANO_STAKING_HOST",
+			"value": "cardano-slate.datahub.figment.io",
+			"type": "string"
+		},
+		{
+			"id": "34928f5e-13b3-47ee-8fe7-e6df64e2bdb3",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "b6910422-c9a2-46c5-8fbe-a00611777ac9",
+			"id": "13d41b81-581b-4dc2-b67b-a5e67627186d",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "48cbfed2-61ca-4099-9733-4cfc2d4f5dc2",
+			"id": "3c573e0f-a220-4c35-8c9e-0be00a035e9f",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "459aea78-1684-4dfa-875c-47963460e592",
+			"id": "a32abae7-7d73-478f-a0cf-1add6598880b",
 			"key": "MATIC_STAKING_HOST",
 			"value": "polygon-slate.datahub.figment.io"
 		},
 		{
-			"id": "a545469c-43c9-4a65-bf7f-12227dff21f2",
+			"id": "9b8429c4-f45c-4b00-b980-eb74aaafb8b5",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "eb560e6f-c452-4090-bf7b-d249f2a6e418",
+			"id": "b7ee3e2a-5297-4311-9f9c-7423d2022587",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
