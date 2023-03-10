@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useHistory } from "@docusaurus/router";
 
-export default function ChangeNetwork({ network, networks, methods, service }) {
+export default function ChangeNetwork({ service, network, methods, networks }) {
   const location = useLocation();
   const history = useHistory();
 

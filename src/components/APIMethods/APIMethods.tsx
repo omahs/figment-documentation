@@ -39,7 +39,7 @@ function APIMethod({
     name.startsWith("SOL");
 
   if (isRewards && isByEpoch) {
-    const { start, end } = rewardRanges[network]();
+    const { start, end } = rewardRanges[network];
     request.body = {
       ...(request.body as object),
       start,

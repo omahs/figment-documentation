@@ -144,11 +144,11 @@ pagination_prev: ${prev}
 pagination_next: ${next}
 collapsed: true
 collapsible: true
-${hide_toc ? `hide_table_of_contents: ${hide_toc}` : ""}
 ${desc ? `description: ${desc}` : ""}
 ${image ? `image: ${image}` : ""}
 ${keywords ? `keywords: ${keywords}` : ""}
 ${slug ? `slug: ${slug}` : ""}
+${hide_toc ? `hide_table_of_contents: ${hide_toc}` : ""}
 ---\n
 ${body}`;
 }
@@ -399,19 +399,19 @@ function createMarkdown(services, variables) {
               index === 0
                 ? `<FixBreadCrumbs network='${network}' service={{ link: '/api-reference/${toDashCase(
                     service
-                  )}', label: '${toTitleCase(service)}' }} />`
+                  )}', label: '${toTitleCase(service)}' }} />\n\n`
                 : ""
-            }\n\n` +
+            }` +
             `<ApiReferenceNav\n  service="${toDashCase(
               service
             )}"\n  network="${toDashCase(
               network
-            )}"\n  methods={${JSON.stringify(
-              methods.map((m) => ({ name: m.name, method: m.request.method })),
+            )}"\n  networks={${JSON.stringify(
+              networksList,
               null,
               2
-            )}}\n  networks={${JSON.stringify(
-              networksList,
+            )}}\n  methods={${JSON.stringify(
+              methods.map((m) => ({ name: m.name })),
               null,
               2
             )}}\n/>\n\n` +
@@ -420,17 +420,19 @@ function createMarkdown(services, variables) {
             )}"\n  network="${toTitleCase(network)}"\n  url="${
               methods[0].request.url
             }"\n  route="${routeEndpoint}"\n/>\n\n` +
-            `<APIMethods\n  service="${toDashCase(
-              service
-            )}"\n  methods={${JSON.stringify(
+            `<APIMethods\n  methods={${JSON.stringify(
               methods,
               null,
               2
-            )}}\n  networks={${JSON.stringify(
+            )}}\n  service="${toDashCase(
+              service
+            )}"\n  networks={${JSON.stringify(
               networksList,
               null,
               2
-            )}}\n  proxy="${process.env.PROXY_HOST}"\n/>`,
+            )}}\n  network="${toDashCase(network)}"\n  proxy="${
+              process.env.PROXY_HOST
+            }"\n/>`,
         }),
         "utf-8"
       );
