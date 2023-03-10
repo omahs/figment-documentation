@@ -33,7 +33,10 @@ export default function ChangeNetwork({ network, networks, methods, service }) {
         }}
       >
         {methods.map((m) => (
-          <option key={`${m.name}--m-hash`} value={m.name.toLowerCase()}>
+          <option
+            key={`${m.name}-${m.method}--m-hash`}
+            value={m.name.toLowerCase()}
+          >
             {m.name}
           </option>
         ))}

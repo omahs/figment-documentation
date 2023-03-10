@@ -149,7 +149,7 @@ ${desc ? `description: ${desc}` : ""}
 ${image ? `image: ${image}` : ""}
 ${keywords ? `keywords: ${keywords}` : ""}
 ${slug ? `slug: ${slug}` : ""}
----
+---\n
 ${body}`;
 }
 
@@ -402,27 +402,35 @@ function createMarkdown(services, variables) {
                   )}', label: '${toTitleCase(service)}' }} />`
                 : ""
             }\n\n` +
-            `<ApiReferenceNav service="${toDashCase(
+            `<ApiReferenceNav\n  service="${toDashCase(
               service
-            )}" methods={${JSON.stringify(
-              methods.map((m) => ({ name: m.name }))
-            )}} networks={${JSON.stringify(
-              networksList
-            )}} network="${toDashCase(network)}" />\n\n` +
-            `<MakingCalls url="${
+            )}"\n  network="${toDashCase(
+              network
+            )}"\n  methods={${JSON.stringify(
+              methods.map((m) => ({ name: m.name, method: m.request.method })),
+              null,
+              2
+            )}}\n  networks={${JSON.stringify(
+              networksList,
+              null,
+              2
+            )}}\n/>\n\n` +
+            `<MakingCalls\n  service="${toTitleCase(
+              service
+            )}"\n  network="${toTitleCase(network)}"\n  url="${
               methods[0].request.url
-            }" network="${toTitleCase(network)}" service="${toTitleCase(
+            }"\n  route="${routeEndpoint}"\n/>\n\n` +
+            `<APIMethods\n  service="${toDashCase(
               service
-            )}" 
-              route="${routeEndpoint}"
-            />\n\n` +
-            `<APIMethods methods={${JSON.stringify(
-              methods
-            )}} service="${toDashCase(service)}" networks={${JSON.stringify(
-              networksList
-            )}} network="${toDashCase(network)}" proxy="${
-              process.env.PROXY_HOST
-            }" />`,
+            )}"\n  methods={${JSON.stringify(
+              methods,
+              null,
+              2
+            )}}\n  networks={${JSON.stringify(
+              networksList,
+              null,
+              2
+            )}}\n  proxy="${process.env.PROXY_HOST}"\n/>`,
         }),
         "utf-8"
       );

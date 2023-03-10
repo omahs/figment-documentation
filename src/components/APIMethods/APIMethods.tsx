@@ -64,7 +64,12 @@ function APIMethod({
         className={styles.heading}
         data-method={request.method}
       >
-        <Link to={`#${name.toLowerCase()}`}>{name}</Link>
+        <Link to={`#${name.toLowerCase()}`}>
+          {name === "POST /eth2_staking/positions" ||
+          name === "GET /eth2_staking/positions"
+            ? "/eth2_staking/positions"
+            : name}
+        </Link>
       </h2>
 
       <ReactMarkdown>{description}</ReactMarkdown>
