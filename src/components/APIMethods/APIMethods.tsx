@@ -68,6 +68,10 @@ function APIMethod({
           {name === "POST /eth2_staking/positions" ||
           name === "GET /eth2_staking/positions"
             ? "/eth2_staking/positions"
+            : name === "POST /api/v1/blockfrost_projects" ||
+              name === "GET /api/v1/blockfrost_projects" ||
+              name === "DELETE /api/v1/blockfrost_projects"
+            ? "/api/v1/blockfrost_projects"
             : name}
         </Link>
       </h2>
