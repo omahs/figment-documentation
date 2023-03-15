@@ -203,7 +203,7 @@
 							}
 						},
 						"url": "https://{{CARDANO_STAKING_HOST}}/api/v1/blockfrost_projects",
-						"description": "Add a Blockfrost project ID to your account.\n\n### Parameters\n\n- `project_id` — `string` Your Blockfrost Project ID. Refer to [blockfrost.io](https://blockfrost.io/) for more information and to sign up for a Project ID.\n- `project_id` — `string` The Cardano chain used by this Blockfrost project, acceptable values are either `mainnet` or `preprod`.\n    \n### Response\n\n- `id` — `number` The related project ID number given to the submitted credentials by the Staking API\n- `chain_code` — `string` The chain code applicable to the Blockfrost Project ID\n- `project_id` — `string` Your Blockfrost Project ID\n- `object` — `string` \"blockfrost_project\"\n- `created` — `timestamp` A timestamp for when the Blockfrost Project ID was registered with the Staking API.\n    \n### Notes\n\n- Only one Blockfrost Project ID is required per account."
+						"description": "Add a Blockfrost project ID to your account.\n\n### Parameters\n\n- `project_id` — `string` Your Blockfrost Project ID. Refer to [blockfrost.io](https://blockfrost.io/) for more information and to sign up for a Project ID.\n- `chain_code` — `string` The Cardano chain used by this Blockfrost project, acceptable values are either `mainnet` or `preprod`.\n    \n\n### Response\n\n- `id` — `number` The related project ID number given to the submitted credentials by the Staking API\n- `chain_code` — `string` The chain code applicable to the Blockfrost Project ID\n- `project_id` — `string` Your Blockfrost Project ID\n- `object` — `string` \"blockfrost_project\"\n- `created` — `timestamp` A timestamp for when the Blockfrost Project ID was registered with the Staking API.\n    \n\n### Notes\n\n- Only one Blockfrost Project ID is required per account."
 					},
 					"response": [
 						{
@@ -6024,48 +6024,48 @@
 	],
 	"variable": [
 		{
-			"id": "898bb7c5-383e-4061-951b-2a33f0e43311",
+			"id": "65a61736-4ab5-44cc-854b-8ccb0dfb1545",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "50e41a32-3309-41f5-9a93-74e5149eed39",
+			"id": "27eeda66-4d47-443b-8ebb-95ca0f575479",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "a9373ccb-17b2-4545-a727-deba9b2d2aa1",
+			"id": "c257cf15-f1ee-48b0-ae8b-ad1a93aa4b5b",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "3aeee671-cdfc-424d-a45d-050c16231c59",
+			"id": "a03f9eaa-6971-4e18-8a12-e2f09303bb6c",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "6c86caf3-e874-49eb-a7f9-0111036e7b85",
+			"id": "891e09be-642d-4e4a-b74a-fdc1d630090a",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "eef500a2-db7e-4d58-acd4-fa7e3bf6cef4",
+			"id": "891dd346-32a7-4471-9957-f64f498e2307",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "46cf67d8-6da5-45b9-9040-3983395b30a7",
+			"id": "9da1ab9b-e7ab-438b-b479-b68723e84386",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "cb86fdc9-e728-4804-a645-c4cfeeb03a46",
+			"id": "586bd122-ebc0-487c-a766-f6b69fd51a21",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "polygon-slate.datahub.figment.io"
 		},
 		{
-			"id": "38cee23e-a87f-442a-ae23-27e3387fdc96",
+			"id": "5a361f34-5863-47df-b7a9-56df3b593ab3",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
