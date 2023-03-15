@@ -292,7 +292,7 @@ function referenceTable(_services, variables) {
         ...columns[0]
           .filter((n) => n != "Protocol")
           .map((n) => {
-            if (service.service === "node-api") {
+            if (service.service === "node-api" && n !== "Cardano") {
               return "✓";
             }
             if (
