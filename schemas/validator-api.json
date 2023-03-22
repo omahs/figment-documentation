@@ -313,7 +313,7 @@
 							}
 						},
 						"url": "https://{{ETH_HOST}}/apikey/{{API_KEY}}/api/v1/prime/eth2_staking/provision",
-						"description": "Provision a new validator with passed attributes.\n\n### Parameters\n\n- `external_user_id` — `string` — A customer user ID (required).\n- `external_user_email` — `string` — A customer email address (required).\n- `withdrawal_address` — `string` — An Ethereum address (required).\n- `validators_count` — `integer` — A number of validators (required).\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`), or mainnet (`mainnet`) (required).\n    \n\n### Response\n\n#### Status `200`, `201`\n\n- `staked_eth_amount` — `integer` — An amount of staked ETH.\n- `eth1_withdrawal_address` — `string` — An Ethereum address.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`) or mainnet (`mainnet`).\n- `success` — `boolean` — The response code of a successful result can be either `200` or `201`.\n    \n\n#### Status `422`\n\nAn error status `422` is returned under the following conditions:\n\n- If `/provision` is called while validators are in the process of being provisioned, the error message is \"**We are currently fulfilling a previous request, please retry your request in a few minutes**\"\n- If `/provision` is called with a `validators_count` that exceeds the number of remaining un-funded validators, the error message is \"**You currently have n/100 unfunded validators, you are able to create no more validators.**\"\n\n### Notes\n\n- Each withdrawal address has a maximum of 100 un-funded validators that can be provisioned at any time.\n- Specifying a `validators_count` greater than the number of existing un-funded validators for a given `withdrawal_address` will cause the request to fail.\n    - For example, if withdrawal address `0x123` has zero existing, un-funded validators, then the maximum value of `validators_count` is 100. However, if withdrawal address `0x123` has 30 existing, un-funded validators, the maximum value for `validators_count` is 70.\n- Once you have deposited to your provisioned validators, you can expect _up to_ a 25 minute wait until the `validator_count` limit has been reset to acknowledge the deposit.\n    \n\n### Webhook configuration\n\nUser can be notified once a new validator is provisioned. Configure a webhook URL and webhook API key under Prime / ETH Staking in the Prime Dashboard. The configured API key will be sent as an `Authorization` header.\n\n#### Note\n\nValidator API webhooks can only be configured from the Prime dashboard.\n\n### Webhook response format\n\n``` json\n{\n  \"action\": \"\",\n  \"data\": {\n    \"id\": \"\",\n    \"withdrawal_address\": \"\",\n    \"validators_count\": 0\n  }\n}\n\n```\n\n- `action` — `string`\n- `data` — `object`\n    - `id` — `string`\n    - `withdrawal_address` — `string`\n    - `validators_count` — `number`"
+						"description": "Provision a new validator with passed attributes.\n\n### Parameters\n\n- `external_user_id` — `string` — A customer user ID (optional).\n- `external_user_email` — `string` — A customer email address (optional).\n- `withdrawal_address` — `string` — An Ethereum address (required).\n- `validators_count` — `integer` — A number of validators (required).\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`), or mainnet (`mainnet`) (required).\n    \n\n### Response\n\n#### Status `200`, `201`\n\n- `staked_eth_amount` — `integer` — An amount of staked ETH.\n- `eth1_withdrawal_address` — `string` — An Ethereum address.\n- `eth2_network_name` — `string` — A network name, denoting testnet (`goerli`) or mainnet (`mainnet`).\n- `success` — `boolean` — The response code of a successful result can be either `200` or `201`.\n    \n\n#### Status `422`\n\nAn error status `422` is returned under the following conditions:\n\n- If `/provision` is called while validators are in the process of being provisioned, the error message is \"**We are currently fulfilling a previous request, please retry your request in a few minutes**\"\n- If `/provision` is called with a `validators_count` that exceeds the number of remaining un-funded validators, the error message is \"**You currently have n/100 unfunded validators, you are able to create no more validators.**\"\n    \n\n### Notes\n\n- Each withdrawal address has a maximum of 100 un-funded validators that can be provisioned at any time.\n- Specifying a `validators_count` greater than the number of existing un-funded validators for a given `withdrawal_address` will cause the request to fail.\n    - For example, if withdrawal address `0x123` has zero existing, un-funded validators, then the maximum value of `validators_count` is 100. However, if withdrawal address `0x123` has 30 existing, un-funded validators, the maximum value for `validators_count` is 70.\n- Once you have deposited to your provisioned validators, you can expect _up to_ a 25 minute wait until the `validator_count` limit has been reset to acknowledge the deposit.\n    \n\n### Webhook configuration\n\nUser can be notified once a new validator is provisioned. Configure a webhook URL and webhook API key under Prime / ETH Staking in the Prime Dashboard. The configured API key will be sent as an `Authorization` header.\n\n#### Note\n\nValidator API webhooks can only be configured from the Prime dashboard.\n\n### Webhook response format\n\n``` json\n{\n  \"action\": \"\",\n  \"data\": {\n    \"id\": \"\",\n    \"withdrawal_address\": \"\",\n    \"validators_count\": 0\n  }\n}\n\n```\n\n- `action` — `string`\n- `data` — `object`\n    - `id` — `string`\n    - `withdrawal_address` — `string`\n    - `validators_count` — `number`"
 					},
 					"response": [
 						{
@@ -682,19 +682,19 @@
 	],
 	"variable": [
 		{
-			"id": "6ad3f24d-5765-44d4-82f4-52849fe1015d",
+			"id": "a7bf4126-ae86-4286-9aca-a71d62af4f3d",
 			"key": "ETH_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "437a1b87-487f-4a3f-a8eb-6bb071b8870d",
+			"id": "7e34522d-60a2-4705-bb8b-a1d8f66c9be7",
 			"key": "DOT_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "166bf939-7a13-4871-9c6e-ecc6163d038f",
+			"id": "d3b9bb08-0342-446a-bc45-d4128af1cdab",
 			"key": "INTERACTIVE",
 			"value": "false",
 			"type": "string"

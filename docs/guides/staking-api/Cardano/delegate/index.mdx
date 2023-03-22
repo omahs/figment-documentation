@@ -2,6 +2,7 @@
 title: Delegate
 slug: /guides/staking-api/cardano/delegate
 pagination_prev: null
+sidebar_position: 1
 ---
 
 import Link from "@docusaurus/Link";
@@ -30,6 +31,16 @@ Cardano has no unbonding period, any delegated balance is free to be transferred
 Delegation on Cardano differs from other networks, in that the entire balance of the delegator address is delegated, rather than a portion of the balance. Delegating more ADA is just a matter of transferring funds into the delegating wallet, the balance of which will be delegated without further action.
 
 Undelegating ADA only requires transferring that amount out of the delegating wallet.
+
+:::
+
+#### Blockfrost Project IDs
+
+To use Cardano with the Staking API, you must first add a [Blockfrost Project ID](https://blockfrost.dev/docs/overview/getting-started#creating-first-project) to your account using the `/blockfrost_projects` endpoint, which is detailed in the [API Reference](https://docs.figment.io/api-reference/staking-api/cardano#post%20/api/v1/blockfrost_projects).
+
+:::caution important
+
+Blockfrost Project IDs are a secret. Treat them with caution, following the same security [best practices](https://docs.figment.io/guides/manage-and-secure-api-keys#api-key-best-practices) as with an API key.
 
 :::
 
