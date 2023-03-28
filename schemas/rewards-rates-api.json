@@ -26690,7 +26690,7 @@
 						"method": "GET",
 						"header": [],
 						"url": "https://{{SOL_REWARDS_HOST}}/apikey/{{API_KEY}}/rates",
-						"description": "This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\nWe aggregate all rewards received by all validators and divide this by the aggregated balances of all validators at the beginning of the period.\n\nIt includes all rewards, on both consensus and execution layers.\n\n### Query Parameters\n\n- `figment` _(optional)_: if `true` is passed we will return the reward rate for Figment validators only. If omitted or any other value is passed we will return the reward rate of the network as a whole.\n    \n\n### Response\n\n- `date` - Specific date associated with `value` (staking reward rates).\n- `value` - Staking reward rates, in %."
+						"description": "This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe aggregate all rewards received by all validators and divide this by the aggregated balances of all validators at the beginning of the period.\n\nIt includes all rewards, on both consensus and execution layers.\n\n### Query Parameters\n\n- `figment` _(optional)_: if `true` is passed we will return the reward rate for Figment validators only. If omitted or any other value is passed we will return the reward rate of the network as a whole.\n    \n\n### Response\n\n- `date` - Specific date associated with `value` (staking reward rates).\n- `value` - Staking reward rates, in %."
 					},
 					"response": [
 						{
@@ -26804,17 +26804,17 @@
 	],
 	"variable": [
 		{
-			"id": "31970d3d-b7c6-4add-ab39-09aec8c47389",
+			"id": "9485e9b6-1eaa-42bf-864e-5a4a9c41952b",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "69162d4d-ec73-44de-a98d-60e35fe7a39c",
+			"id": "d18272dd-4c97-4ee4-9ac6-20390aec6b19",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "51772544-4484-4b10-a227-32867ab62193",
+			"id": "8b3fcdaa-be88-47f7-97c8-56878505845d",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
