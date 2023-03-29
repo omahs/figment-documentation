@@ -6004,7 +6004,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "d808f201-6d18-4060-ae23-3c8b8e545059",
+				"id": "0a5fdfd6-930d-451c-97c7-c24de142836f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -6014,7 +6014,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "3c76f643-5433-473d-84af-5897c2602bd5",
+				"id": "dbefe518-1443-4291-a845-c7d953537b93",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -6024,48 +6024,48 @@
 	],
 	"variable": [
 		{
-			"id": "0e059203-0b27-40ac-bb7f-5e72d3d07211",
+			"id": "83103c94-7562-4ce1-a9b0-8447c1322730",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "7861cd78-99e8-4b20-877f-1a04366890ea",
+			"id": "d1b43f7a-1b14-466d-908b-e84e88078c87",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "985dfb7e-63cb-48f3-a776-9bafb1fcddd9",
+			"id": "442127dd-8cab-400e-988b-ad79655ed246",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "b52ea5d0-380c-4cd5-a48f-69a8c6f8e78e",
+			"id": "6b501fe6-2b7a-4d13-a264-c56ffbc83df6",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "4937dd3c-8b88-4d0d-9d3b-39c9838c389f",
+			"id": "0d9bccd8-9095-4d61-b084-1951e1a72e48",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "f2fcaacb-ae40-4853-8cfe-83554bc121ff",
+			"id": "36924c92-2c39-4b62-aead-80dc8c4b13b4",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "6a6eaabb-1e73-41ba-8db2-d25907b80b3f",
+			"id": "932d0049-6261-45d3-98e7-05c0d3b0f2af",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "14a13534-93ca-43fc-9c39-53630617ffeb",
+			"id": "d88262cb-4bc9-49d0-848d-8c08b71fa674",
 			"key": "POLYGON_STAKING_HOST",
-			"value": "polygon-slate.datahub.figment.io"
+			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "f54d13bb-837f-43df-a063-b76dbed51e32",
+			"id": "c508051e-9327-4b72-9ed5-d054a57bcd93",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}

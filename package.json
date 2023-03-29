@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "upgrade-docusaurus": "yarn upgrade @docusaurus/core@latest @docusaurus/plugin-ideal-image@latest @docusaurus/preset-classic@latest @docusaurus/remark-plugin-npm2yarn@latest @docusaurus/module-type-aliases@latest",
     "docusaurus": "docusaurus",
     "start": "node generate.js && docusaurus start",
     "build": "node generate.js && docusaurus build",
@@ -22,10 +23,10 @@
     }
   },
   "dependencies": {
-    "@docusaurus/core": "^2.0.1",
-    "@docusaurus/plugin-ideal-image": "^2.0.1",
-    "@docusaurus/preset-classic": "^2.0.1",
-    "@docusaurus/remark-plugin-npm2yarn": "^2.0.1",
+    "@docusaurus/core": "^2.3.1",
+    "@docusaurus/plugin-ideal-image": "^2.3.1",
+    "@docusaurus/preset-classic": "^2.3.1",
+    "@docusaurus/remark-plugin-npm2yarn": "^2.3.1",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mdx-js/react": "^1.6.22",
@@ -42,7 +43,7 @@
     "react-textarea-autosize": "^8.3.4"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^2.0.1",
+    "@docusaurus/module-type-aliases": "^2.3.1",
     "@tsconfig/docusaurus": "^1.0.6",
     "@types/mdx": "^2.0.2",
     "@types/react": "^18.0.15",
