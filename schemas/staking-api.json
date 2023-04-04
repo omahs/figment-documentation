@@ -293,6 +293,51 @@
 					"response": []
 				},
 				{
+					"name": "Get Flow Status",
+					"id": "612ea973-4b41-4ea6-bed4-771b6a22dea3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}",
+						"description": "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `delegate_tx_broadcasting` — Transaction has been broadcast and is waiting for confirmation.\n    - `completed` — Transaction has been confirmed and the transfer is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Transfer flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "f95811c8-da9d-41f3-b30c-6810e74487a8",
+							"name": "Get Flow Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"6f995c8a-08b7-43ff-9275-0ef8fc94bc26\",\n  \"operation\": \"staking\",\n  \"state\": \"completed\",\n  \"actions\": [],\n  \"data\": {\n    \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n    \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\",\n    \"registered\": null,\n    \"register_transaction\": {\n      \"raw\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n      \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n      \"signed\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a10081825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558403adfc52b66d1ceaba7372563d0572ea66c41c40973848a66044768ec81d41ddaf36149d38617db8f02f6c5a0c351d10a8b134e512aed2ca75bcb7b155c298807f5f6\",\n      \"hash\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": \"2023-02-24T17:09:47.000Z\"\n    },\n    \"delegate_transaction\": {\n      \"raw\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca0f5f6\",\n      \"signing_payload\": \"689c8172693b66d5a649d1bb8e7df8b5a83c828022910602c1e7815b88c1597a\",\n      \"signed\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca10082825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558401b5c035fa577f743dcc5f0b500d9a3c621aa17297d7a5824671be13c35f764c5e70ccd5d1cb26cb942d5f967214f0f8e1a5853b1c18e7fc6ac90b714a579ab0a8258208e1bdf6b1776a3cac2686e14130029b4544b9f004faa67992b107001b67dd993584027152598680a9e251bec230aca563f34aaf6e8403b630a395b2b62d35b873bc7121d4c026e3cff32c44194202003c3fc350753548645946baf61e65cbbd31003f5f6\",\n      \"hash\": \"689c8172693b66d5a649d1bb8e7df8b5a83c828022910602c1e7815b88c1597a\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": \"2023-02-24T17:13:01.000Z\"\n    }\n  },\n  \"network_code\": \"cardano\",\n  \"chain_code\": \"preprod\",\n  \"created_at\": \"2023-02-24T17:06:06.083Z\",\n  \"updated_at\": \"2023-02-24T17:13:21.307Z\"\n}"
+						}
+					]
+				},
+				{
 					"name": "Create New Delegation Flow",
 					"id": "f00ce203-5d8f-4008-a571-716d1c18b0f5",
 					"protocolProfileBehavior": {
@@ -528,51 +573,6 @@
 					]
 				},
 				{
-					"name": "Get Flow Status",
-					"id": "612ea973-4b41-4ea6-bed4-771b6a22dea3",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}",
-						"description": "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `delegate_tx_broadcasting` — Transaction has been broadcast and is waiting for confirmation.\n    - `completed` — Transaction has been confirmed and the transfer is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Transfer flow & transaction data."
-					},
-					"response": [
-						{
-							"id": "f95811c8-da9d-41f3-b30c-6810e74487a8",
-							"name": "Get Flow Status",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}"
-							},
-							"_postman_previewlanguage": "json",
-							"header": null,
-							"cookie": [],
-							"responseTime": null,
-							"body": "{\n  \"id\": \"6f995c8a-08b7-43ff-9275-0ef8fc94bc26\",\n  \"operation\": \"staking\",\n  \"state\": \"completed\",\n  \"actions\": [],\n  \"data\": {\n    \"delegator_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n    \"validator_address\": \"pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222\",\n    \"registered\": null,\n    \"register_transaction\": {\n      \"raw\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a0f5f6\",\n      \"signing_payload\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n      \"signed\": \"84a40081825820dac094796df4319dba24ecb71d109a274f7f4b96ada5eb2b5282f47027b0707700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253db9117021a00028c29048182008200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87a10081825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558403adfc52b66d1ceaba7372563d0572ea66c41c40973848a66044768ec81d41ddaf36149d38617db8f02f6c5a0c351d10a8b134e512aed2ca75bcb7b155c298807f5f6\",\n      \"hash\": \"33f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e997\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": \"2023-02-24T17:09:47.000Z\"\n    },\n    \"delegate_transaction\": {\n      \"raw\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca0f5f6\",\n      \"signing_payload\": \"689c8172693b66d5a649d1bb8e7df8b5a83c828022910602c1e7815b88c1597a\",\n      \"signed\": \"84a4008182582033f750583301f5b298e7a4d9d42cd950be86ecd018f8df37e4fb58640d39e99700018182583900dd0276d1f55c2db7b6cc10777ce37a73cc657d59b8011e0ac40021f5a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871b0000000253d8ee6a021a0002a2ad048183028200581ca64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b87581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca10082825820e64c0674e648699f8fa225632bfa1402d09dc3aa2e1f2b523702d2faac9d67d558401b5c035fa577f743dcc5f0b500d9a3c621aa17297d7a5824671be13c35f764c5e70ccd5d1cb26cb942d5f967214f0f8e1a5853b1c18e7fc6ac90b714a579ab0a8258208e1bdf6b1776a3cac2686e14130029b4544b9f004faa67992b107001b67dd993584027152598680a9e251bec230aca563f34aaf6e8403b630a395b2b62d35b873bc7121d4c026e3cff32c44194202003c3fc350753548645946baf61e65cbbd31003f5f6\",\n      \"hash\": \"689c8172693b66d5a649d1bb8e7df8b5a83c828022910602c1e7815b88c1597a\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qrwsyak374wzmdakesg8wl8r0feucetatxuqz8s2csqzradxfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsu6ae9x\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": \"2023-02-24T17:13:01.000Z\"\n    }\n  },\n  \"network_code\": \"cardano\",\n  \"chain_code\": \"preprod\",\n  \"created_at\": \"2023-02-24T17:06:06.083Z\",\n  \"updated_at\": \"2023-02-24T17:13:21.307Z\"\n}"
-						}
-					]
-				},
-				{
 					"name": "Create New Transfer Flow",
 					"id": "1003780a-7b54-468e-8e84-80c94a8f5a3a",
 					"protocolProfileBehavior": {
@@ -716,51 +716,6 @@
 							"cookie": [],
 							"responseTime": null,
 							"body": "{\n  \"id\": \"55fcfcdd-b1f5-460c-bce9-8b8864461315\",\n  \"operation\": \"transfer\",\n  \"state\": \"transfer_tx_broadcasting\",\n  \"actions\": [\n    {\n      \"name\": \"wait\",\n      \"estimated_state_change_at\": \"2023-03-07T21:36:20.230Z\",\n      \"inputs\": [\n\n      ]\n    }\n  ],\n  \"data\": {\n    \"from_account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n    \"to_account_address\": \"addr_test1qpr0vyprum2feg2340lmtx0gs3ye0qwnsagwqfhy5pfd5glrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rsvy9lvz\",\n    \"amount\": \"10.0\",\n    \"transfer_transaction\": {\n      \"raw\": \"84a30081825820701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f70101828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3a647c16021a00029075a0f5f6\",\n      \"signing_payload\": \"2800f50ddc0a4ddf1a50b93015d47d2201926310c29aa7e1645ea429d7ba61cf\",\n      \"signed\": \"84a30081825820701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f70101828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3a647c16021a00029075a10081825820002d9a48169c6d508699b7aaaa360cc38cb1f3b771444451d38cd0f901ac139d5840b37def2a690fbf3f8cd3aadb2d9507d428772e1b2415366761584010bccead1e75369532df49bf265aeac6684fd4decba93eb8f6a87fa98dbdf01bc78b890001f5f6\",\n      \"hash\": \"2800f50ddc0a4ddf1a50b93015d47d2201926310c29aa7e1645ea429d7ba61cf\",\n      \"status\": null,\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": null\n    }\n  },\n  \"network_code\": \"cardano\",\n  \"chain_code\": \"preprod\",\n  \"created_at\": \"2023-03-07T21:34:06.674Z\",\n  \"updated_at\": \"2023-03-07T21:35:19.456Z\"\n}"
-						}
-					]
-				},
-				{
-					"name": "Get Flow Status",
-					"id": "bb4d18ab-8418-4c4e-98d1-815b00730a7f",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}",
-						"description": "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `transfer_tx_broadcasting` — Transaction has been broadcast and is waiting for confirmation.\n    - `completed` — Transaction has been confirmed and the transfer is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Transfer flow & transaction data."
-					},
-					"response": [
-						{
-							"id": "24e219c0-7846-4dee-b2e5-3e6643ce8eed",
-							"name": "Get Flow Status",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "https://{{CARDANO_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cardanoStakingFlowId}}"
-							},
-							"_postman_previewlanguage": "json",
-							"header": null,
-							"cookie": [],
-							"responseTime": null,
-							"body": "{\n  \"id\": \"ee282781-781a-4acc-a438-384f7b51e533\",\n  \"operation\": \"transfer\",\n  \"state\": \"completed\",\n  \"actions\": [],\n  \"data\": {\n    \"from_account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n    \"to_account_address\": \"addr_test1qpr0vyprum2feg2340lmtx0gs3ye0qwnsagwqfhy5pfd5glrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rsvy9lvz\",\n    \"amount\": \"10.0\",\n    \"transfer_transaction\": {\n      \"raw\": \"84a30081825820701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f70101828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3a647c16021a00029075a0f5f6\",\n      \"signing_payload\": \"2800f50ddc0a4ddf1a50b93015d47d2201926310c29aa7e1645ea429d7ba61cf\",\n      \"signed\": \"84a30081825820701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f70101828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3a647c16021a00029075a10081825820002d9a48169c6d508699b7aaaa360cc38cb1f3b771444451d38cd0f901ac139d5840b37def2a690fbf3f8cd3aadb2d9507d428772e1b2415366761584010bccead1e75369532df49bf265aeac6684fd4decba93eb8f6a87fa98dbdf01bc78b890001f5f6\",\n      \"hash\": \"2800f50ddc0a4ddf1a50b93015d47d2201926310c29aa7e1645ea429d7ba61cf\",\n      \"status\": \"confirmed\",\n      \"error\": null,\n      \"signatures\": [\n        {\n          \"account_address\": \"addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8\",\n          \"signature\": \"\"\n        }\n      ],\n      \"block_time\": \"2023-03-07T21:35:21.000Z\"\n    }\n  },\n  \"network_code\": \"cardano\",\n  \"chain_code\": \"preprod\",\n  \"created_at\": \"2023-03-07T21:34:06.674Z\",\n  \"updated_at\": \"2023-03-07T21:36:00.156Z\"\n}"
 						}
 					]
 				}
@@ -2100,7 +2055,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"flow\": {\n        \"network_code\": \"ethereum\",\n        \"chain_code\": \"goerli\",\n        \"operation\": \"staking\",\n        \"version\": \"v1\"\n    }\n}",
+							"raw": "{\n    \"flow\": {\n        \"network_code\": \"ethereum\",\n        \"chain_code\": \"goerli\",\n        \"operation\": \"unstaking\",\n        \"version\": \"v1\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6024,48 +5979,48 @@
 	],
 	"variable": [
 		{
-			"id": "83103c94-7562-4ce1-a9b0-8447c1322730",
+			"id": "8b539d07-de71-48c9-8624-5c48db721399",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "d1b43f7a-1b14-466d-908b-e84e88078c87",
+			"id": "7de9b760-ea14-4645-937f-2d7236ffc422",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "442127dd-8cab-400e-988b-ad79655ed246",
+			"id": "b2f9a617-3ddc-4741-8631-2677b66ef0a6",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "6b501fe6-2b7a-4d13-a264-c56ffbc83df6",
+			"id": "b71259ee-cc54-4cdb-ad7a-50df6ebfde4c",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "0d9bccd8-9095-4d61-b084-1951e1a72e48",
+			"id": "00d24001-0adb-43fe-a140-dc868fd2fc1e",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "36924c92-2c39-4b62-aead-80dc8c4b13b4",
+			"id": "5fcccf22-7478-46c6-b0a6-9784c53628cf",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "932d0049-6261-45d3-98e7-05c0d3b0f2af",
+			"id": "3402a7f1-501b-498a-adea-aa1b30df586c",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "d88262cb-4bc9-49d0-848d-8c08b71fa674",
+			"id": "5114d834-c66c-4323-be19-13719277e88c",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "c508051e-9327-4b72-9ed5-d054a57bcd93",
+			"id": "d88c6fc1-a209-4a3a-85c0-f17d20982517",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
