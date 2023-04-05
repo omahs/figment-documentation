@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import BackToTopButton from "@theme/BackToTopButton";
-import rewardRanges from "../../utilities/reward-ranges";
+import { days, polkadot, near, solana } from "../../utilities/reward-ranges";
 
 import { RequestObject, ResponseObject } from "@site/types/src";
 import { CodeExample } from "./components";
@@ -31,22 +31,40 @@ function APIMethod({
   endpoint,
 }: Props) {
   const isRewards = endpoint.includes("rewards-api");
-  const isByDay = ["by day", "account", "address"].find((n) =>
-    name.includes(n)
-  );
+  const isByDay = ["by day", "address"].find((n) => name.includes(n));
   const isByEpoch =
     ["by epoch", "by era"].find((n) => name.includes(n)) ||
     name.startsWith("SOL");
 
-  if (isRewards && isByEpoch) {
-    const { start, end } = rewardRanges[network];
+  if (isRewards && isByDay) {
+    const { start, end } = days();
     request.body = {
       ...(request.body as object),
       start,
       end,
     };
-  } else if (isRewards && isByDay) {
-    const { start, end } = rewardRanges.days();
+  }
+
+  if (isRewards && isByEpoch && network === "near") {
+    const { start, end } = near();
+    request.body = {
+      ...(request.body as object),
+      start,
+      end,
+    };
+  }
+
+  if (isRewards && isByEpoch && network === "solana") {
+    const { start, end } = solana();
+    request.body = {
+      ...(request.body as object),
+      start,
+      end,
+    };
+  }
+
+  if (isRewards && isByEpoch && network === "polkadot") {
+    const { start, end } = polkadot();
     request.body = {
       ...(request.body as object),
       start,
