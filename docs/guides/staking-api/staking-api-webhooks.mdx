@@ -217,7 +217,7 @@ The event type format follows the pattern **`<network_code>.<operation>.<action>
 
 - `ethereum.staking.*` &mdash; Wildcard for all staking events
 
-- `ethereum.staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+- `ethereum.staking.delegation.activating` &rarr; `ethereum.staking.delegation.active`
 
 - `ethereum.staking.deposit_tx.confirmed`
 
@@ -228,9 +228,20 @@ The event type format follows the pattern **`<network_code>.<operation>.<action>
 
 - `ethereum.aggregated_staking.*` &mdash; Wildcard for all aggregated staking events
 
-- `ethereum.aggregated_staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+- `ethereum.aggregated_staking.delegation.activating` &rarr; `ethereum.staking.delegation.active`
 
 - `ethereum.aggregated_staking.aggregated_deposit_tx.confirmed`
+
+</details>
+
+<details>
+<summary>Unstaking</summary>
+
+- `ethereum.unstaking.*` &mdash; Wildcard for all staking events
+
+- `ethereum.unstaking.delegation.deactivating` &rarr; `ethereum.unstaking.delegation.inactive`
+
+- `ethereum.unstaking.withdrawal_tx.confirmed`
 
 </details>
 
