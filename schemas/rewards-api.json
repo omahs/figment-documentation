@@ -1246,7 +1246,98 @@
 						},
 						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals"
 					},
-					"response": []
+					"response": [
+						{
+							"id": "8ba71a15-ee74-4813-a259-42b25a4c009f",
+							"name": "ETH Withdrawals (by validator address)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"validator_addresses\": [\n        \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n        \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\"\n    ], \n    \"start\": \"2021-01-05\",\n    \"end\": \"2021-01-05\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Apr 2023 01:42:44 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "821"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "16"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1994"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1994"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649999166"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"index\": 3151238,\n            \"validator_public_key\": \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\",\n            \"validator_index\": 63905,\n            \"withdrawal_address\": \"0x13da6583b4e567af24ae6b07ea057f251a38139e\",\n            \"full_withdrawal\": true,\n            \"slot\": 251284,\n            \"epoch\": 7852,\n            \"timestamp\": \"2021-01-05T09:36:48Z\",\n            \"amount_text\": \"32\",\n            \"currency\": \"ETH\",\n            \"amount_numeric\": 32000000000,\n            \"exp\": 9\n        },\n        {\n            \"index\": 3151231,\n            \"validator_public_key\": \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n            \"validator_index\": 63886,\n            \"withdrawal_address\": \"0x13da6583b4e567af24ae6b07ea057f251a38139e\",\n            \"full_withdrawal\": true,\n            \"slot\": 251283,\n            \"epoch\": 7852,\n            \"timestamp\": \"2021-01-05T09:36:36Z\",\n            \"amount_text\": \"32\",\n            \"currency\": \"ETH\",\n            \"amount_numeric\": 32000000000,\n            \"exp\": 9\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "ETH Withdrawals (by withdrawal address)",
@@ -1389,47 +1480,47 @@
 	],
 	"variable": [
 		{
-			"id": "3c9f46f7-5d3e-4853-8af1-c45f3061555f",
+			"id": "b6bad69c-4ad3-4e6c-87f3-b71b2a8dd9a6",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "84e6364f-41ef-4da5-83d7-c3b935f18e2d",
+			"id": "7ddeabfc-260a-46a2-af7e-817f1af218f6",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "7c011092-15f7-4470-8185-0bced6ef0910",
+			"id": "c9c01373-7235-4366-84f1-99645cc3f722",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "6c1e11e0-caf1-4ff3-8c10-1be4c2a562de",
+			"id": "c29d4c66-0a3d-4f5c-9064-88c84be13bb7",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "e7865ac9-27a1-43dc-8a0a-daba28aa975d",
+			"id": "e56466fe-5b1a-4518-990b-1b3f2d6adb7c",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "6735d1b7-2088-4b7e-9096-995114237cb4",
+			"id": "34ea83b1-f546-408d-af90-00036b8e20b8",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "5f69c2dc-c027-41b4-ac18-79d140da9775",
+			"id": "5c593827-b743-457b-8cb3-9218c91b1852",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "540d66e5-6825-4947-8a1a-bd81c0c1cd5b",
+			"id": "ce5bdcda-87b0-40e8-8f2c-0fc2fa4a2173",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "81ab28d6-c699-4f47-a94e-bf993e996c06",
+			"id": "dd268e2e-7cf2-4a82-b95b-0f10e687278d",
 			"key": "epoch-start-date",
 			"value": ""
 		}
