@@ -1225,6 +1225,18 @@
 							"body": "{\n    \"data\": [\n        {\n            \"accounts\": [\n                \"0x8cc1e20644cefd72737768a4d501288437705ddb52411f95567e29319dcdd609bd15b4c80ca0f3ff7d320d9868ee0c02\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013666 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13666000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0x8cc1e20644cefd72737768a4d501288437705ddb52411f95567e29319dcdd609bd15b4c80ca0f3ff7d320d9868ee0c02\"\n                }\n            ],\n            \"period\": \"164726\",\n            \"validator\": \"0x8cc1e20644cefd72737768a4d501288437705ddb52411f95567e29319dcdd609bd15b4c80ca0f3ff7d320d9868ee0c02\",\n            \"timestamp\": \"2022-12-03T14:46:24Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0x8cc1e20644cefd72737768a4d501288437705ddb52411f95567e29319dcdd609bd15b4c80ca0f3ff7d320d9868ee0c02\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013569 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13569000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0x8cc1e20644cefd72737768a4d501288437705ddb52411f95567e29319dcdd609bd15b4c80ca0f3ff7d320d9868ee0c02\"\n                }\n            ],\n            \"period\": \"164727\",\n            \"validator\": \"0x8cc1e20644cefd72737768a4d501288437705ddb52411f95567e29319dcdd609bd15b4c80ca0f3ff7d320d9868ee0c02\",\n            \"timestamp\": \"2022-12-03T14:52:48Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0x8e0776a9c0c895ba1b6d136d7d47fb142287b56d5d70ef6c05e18e19ba60425324f8d9c2ac5113984b348b79ca20502e\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013666 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13666000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0x8e0776a9c0c895ba1b6d136d7d47fb142287b56d5d70ef6c05e18e19ba60425324f8d9c2ac5113984b348b79ca20502e\"\n                }\n            ],\n            \"period\": \"164726\",\n            \"validator\": \"0x8e0776a9c0c895ba1b6d136d7d47fb142287b56d5d70ef6c05e18e19ba60425324f8d9c2ac5113984b348b79ca20502e\",\n            \"timestamp\": \"2022-12-03T14:46:24Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0x8e0776a9c0c895ba1b6d136d7d47fb142287b56d5d70ef6c05e18e19ba60425324f8d9c2ac5113984b348b79ca20502e\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013569 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13569000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0x8e0776a9c0c895ba1b6d136d7d47fb142287b56d5d70ef6c05e18e19ba60425324f8d9c2ac5113984b348b79ca20502e\"\n                }\n            ],\n            \"period\": \"164727\",\n            \"validator\": \"0x8e0776a9c0c895ba1b6d136d7d47fb142287b56d5d70ef6c05e18e19ba60425324f8d9c2ac5113984b348b79ca20502e\",\n            \"timestamp\": \"2022-12-03T14:52:48Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0x9008570e9ecc3779030df0d70b6819247432a7e70ea6ef494652f920692a2ccd4aafb9feb570659ddaa29c5a0d29994b\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013666 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13666000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0x9008570e9ecc3779030df0d70b6819247432a7e70ea6ef494652f920692a2ccd4aafb9feb570659ddaa29c5a0d29994b\"\n                }\n            ],\n            \"period\": \"164726\",\n            \"validator\": \"0x9008570e9ecc3779030df0d70b6819247432a7e70ea6ef494652f920692a2ccd4aafb9feb570659ddaa29c5a0d29994b\",\n            \"timestamp\": \"2022-12-03T14:46:24Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0x9008570e9ecc3779030df0d70b6819247432a7e70ea6ef494652f920692a2ccd4aafb9feb570659ddaa29c5a0d29994b\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000010136 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 10136000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0x9008570e9ecc3779030df0d70b6819247432a7e70ea6ef494652f920692a2ccd4aafb9feb570659ddaa29c5a0d29994b\"\n                }\n            ],\n            \"period\": \"164727\",\n            \"validator\": \"0x9008570e9ecc3779030df0d70b6819247432a7e70ea6ef494652f920692a2ccd4aafb9feb570659ddaa29c5a0d29994b\",\n            \"timestamp\": \"2022-12-03T14:52:48Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0xa2ce5e3fdb77aca2c2559d18f7adb31955f7ec6d547bb2098803cb277399965a3124327a115ef97709285245667b48e0\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013666 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13666000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0xa2ce5e3fdb77aca2c2559d18f7adb31955f7ec6d547bb2098803cb277399965a3124327a115ef97709285245667b48e0\"\n                }\n            ],\n            \"period\": \"164726\",\n            \"validator\": \"0xa2ce5e3fdb77aca2c2559d18f7adb31955f7ec6d547bb2098803cb277399965a3124327a115ef97709285245667b48e0\",\n            \"timestamp\": \"2022-12-03T14:46:24Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0xa2ce5e3fdb77aca2c2559d18f7adb31955f7ec6d547bb2098803cb277399965a3124327a115ef97709285245667b48e0\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013569 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13569000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0xa2ce5e3fdb77aca2c2559d18f7adb31955f7ec6d547bb2098803cb277399965a3124327a115ef97709285245667b48e0\"\n                }\n            ],\n            \"period\": \"164727\",\n            \"validator\": \"0xa2ce5e3fdb77aca2c2559d18f7adb31955f7ec6d547bb2098803cb277399965a3124327a115ef97709285245667b48e0\",\n            \"timestamp\": \"2022-12-03T14:52:48Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0xa2ee5d468ef53d82368d9026e321ab2c6d47f44c33b7b9f62369bf6dcf37fb0208f95dd6b485325ce1bbf5fec7ad45bb\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013666 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13666000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0xa2ee5d468ef53d82368d9026e321ab2c6d47f44c33b7b9f62369bf6dcf37fb0208f95dd6b485325ce1bbf5fec7ad45bb\"\n                }\n            ],\n            \"period\": \"164726\",\n            \"validator\": \"0xa2ee5d468ef53d82368d9026e321ab2c6d47f44c33b7b9f62369bf6dcf37fb0208f95dd6b485325ce1bbf5fec7ad45bb\",\n            \"timestamp\": \"2022-12-03T14:46:24Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0xa2ee5d468ef53d82368d9026e321ab2c6d47f44c33b7b9f62369bf6dcf37fb0208f95dd6b485325ce1bbf5fec7ad45bb\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013569 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13569000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0xa2ee5d468ef53d82368d9026e321ab2c6d47f44c33b7b9f62369bf6dcf37fb0208f95dd6b485325ce1bbf5fec7ad45bb\"\n                }\n            ],\n            \"period\": \"164727\",\n            \"validator\": \"0xa2ee5d468ef53d82368d9026e321ab2c6d47f44c33b7b9f62369bf6dcf37fb0208f95dd6b485325ce1bbf5fec7ad45bb\",\n            \"timestamp\": \"2022-12-03T14:52:48Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0xac3ed947685ae451f813e6a5d3938881f583ee71aba6770c6fc19e86273bffd876dd64db2f217521671fe658dfd86aec\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000010231 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 10231000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0xac3ed947685ae451f813e6a5d3938881f583ee71aba6770c6fc19e86273bffd876dd64db2f217521671fe658dfd86aec\"\n                }\n            ],\n            \"period\": \"164726\",\n            \"validator\": \"0xac3ed947685ae451f813e6a5d3938881f583ee71aba6770c6fc19e86273bffd876dd64db2f217521671fe658dfd86aec\",\n            \"timestamp\": \"2022-12-03T14:46:24Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        },\n        {\n            \"accounts\": [\n                \"0xac3ed947685ae451f813e6a5d3938881f583ee71aba6770c6fc19e86273bffd876dd64db2f217521671fe658dfd86aec\"\n            ],\n            \"chain_id\": \"mainnet\",\n            \"rewards\": [\n                {\n                    \"text\": \"0.000013569 ETH\",\n                    \"currency\": \"ETH\",\n                    \"numeric\": 13569000000000,\n                    \"exp\": 18,\n                    \"type\": \"staking\",\n                    \"recipient\": \"0xac3ed947685ae451f813e6a5d3938881f583ee71aba6770c6fc19e86273bffd876dd64db2f217521671fe658dfd86aec\"\n                }\n            ],\n            \"period\": \"164727\",\n            \"validator\": \"0xac3ed947685ae451f813e6a5d3938881f583ee71aba6770c6fc19e86273bffd876dd64db2f217521671fe658dfd86aec\",\n            \"timestamp\": \"2022-12-03T14:52:48Z\",\n            \"withdrawal_credentials\": \"0x010000000000000000000000ed488e6cc4b030eb5bfdde3227c3d5da2b9040e8\"\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\",\n        \"period_unit\": \"epoch\"\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "New Request",
+					"id": "538b6994-701c-43ef-b507-55170ea224fa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "c8594856-7151-4247-b205-e696c9ad12c8"
@@ -1254,47 +1266,47 @@
 	],
 	"variable": [
 		{
-			"id": "c7caa597-33d0-4362-8c10-f63645115663",
+			"id": "d9985abe-7565-4b15-9cb9-b7f15e501842",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "4c88ccb9-129d-420b-8ea8-4bb137612ba9",
+			"id": "30fb24ad-259b-4e09-87e4-677336c0aac3",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "aa7e8219-e051-445c-8e0d-a8761493298d",
+			"id": "f1077c97-1e79-4158-824c-09bf170015fc",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "f3ba0b63-7743-4b59-8577-5a7ff71a246c",
+			"id": "c5b255af-21bb-4e68-85b6-6b10ed7e8878",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "ebb79a4a-99c3-49eb-9725-44a71a215aca",
+			"id": "49f25e30-a267-4aa4-9dcf-b27a1c2a2c9c",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "fcc33b36-030e-45c2-bd55-06208ec8a82e",
+			"id": "ecba7722-43e9-4d9b-872e-4d0dea95c5f3",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "e21ae90f-be5d-45e4-b6a3-beeda7cb10e9",
+			"id": "24b723b7-cde3-464a-9040-a46b46031417",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "6ae96607-f1f1-407d-a7f3-2137a6bdd72a",
+			"id": "0e52b238-56d9-4797-a8ee-8fd23dcac1c4",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "d72b5195-f9f2-43b6-855b-cc9b26676248",
+			"id": "23e8625f-8af2-484c-bb07-a509d346ee9e",
 			"key": "epoch-start-date",
 			"value": ""
 		}
