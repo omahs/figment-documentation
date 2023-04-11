@@ -1237,7 +1237,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"validator_addresses\": [\n        \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n        \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\",\n        \"0x9004b1f04e75ddb74d6c551816b8ac90329ce525744c3b4877dbbe3c5b0516363cfc95b4e64856f2e35737215d860171\",\n        \"0xb2072fc6fc4568e79ab4b4ed32d9e6aa634eaa06772908468b6a7ca278307c617e454226475f9daad0993f110e4d28d7\"\n    ], \n    \"start\": \"2021-01-05\",\n    \"end\": \"2021-01-05\"\n}",
+							"raw": "{\n    \"validator_addresses\": [\n        \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n        \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\"\n    ], \n    \"start\": \"2021-01-05\",\n    \"end\": \"2021-01-05\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1480,47 +1480,47 @@
 	],
 	"variable": [
 		{
-			"id": "b6bad69c-4ad3-4e6c-87f3-b71b2a8dd9a6",
+			"id": "eec45cc1-e234-47a1-8352-39f67f45971b",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "7ddeabfc-260a-46a2-af7e-817f1af218f6",
+			"id": "646d9f57-5b0d-4b83-a676-57934c6def04",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "c9c01373-7235-4366-84f1-99645cc3f722",
+			"id": "de3b51b7-d57b-44be-9f95-753f22e3fb28",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "c29d4c66-0a3d-4f5c-9064-88c84be13bb7",
+			"id": "68ea2d4a-8551-40f2-a4fe-7deedb418e3a",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "e56466fe-5b1a-4518-990b-1b3f2d6adb7c",
+			"id": "e2a13ac1-40d7-418a-ba24-c5c73863de7e",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "34ea83b1-f546-408d-af90-00036b8e20b8",
+			"id": "367545f0-1e5b-4893-9538-ba0cd9ccb223",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "5c593827-b743-457b-8cb3-9218c91b1852",
+			"id": "d5dd45bc-7319-4d99-8cb2-95f53fb9af55",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "ce5bdcda-87b0-40e8-8f2c-0fc2fa4a2173",
+			"id": "2dca8930-cf92-427c-8033-ba9130c46cb7",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "dd268e2e-7cf2-4a82-b95b-0f10e687278d",
+			"id": "33d81d12-a417-4392-a84c-4c2f193a60f6",
 			"key": "epoch-start-date",
 			"value": ""
 		}
