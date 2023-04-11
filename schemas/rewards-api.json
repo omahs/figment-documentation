@@ -1244,7 +1244,8 @@
 								}
 							}
 						},
-						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals"
+						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals",
+						"description": "Returns gross validator rewards\n\n### Request\n\n- `validator_addresses` takes an array of validator public keys\n- `withdrawal_addresses` takes an array of withdrawal addresses.\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\"). _Required._\n    \n\n### Response\n\n- `index` the unique index of the withdrawal on chain (from round robin process)\n- `validator_public_key`: the public key of the validator\n- `validator_index`: the index of the validator\n- `withdrawal_address`: the withdrawal address of the validator\n- `amount_text`: the withdrawal amount (as text)\n- `currency`: \"ETH\"\n- `amount_numeric`: the withdrawal amount (as an integer) - needs `exp` below\n- `exp`: the exponent used to calculate the final ETH amount\n- `full_withdrawal` Boolean indicating whether the validator exited or not\n- `slot` The consensus layer slot at which the withdrawal occurred\n- `epoch` The execution layer block in which the transaction was included\n- `timestamp`. The timestamp of the end of the epoch"
 					},
 					"response": [
 						{
@@ -1480,47 +1481,47 @@
 	],
 	"variable": [
 		{
-			"id": "eec45cc1-e234-47a1-8352-39f67f45971b",
+			"id": "bbfbd7ab-d0d7-49e3-9d67-f83d12cb19b7",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "646d9f57-5b0d-4b83-a676-57934c6def04",
+			"id": "7d037a8e-b22e-4329-b90f-99cad79d4f9d",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "de3b51b7-d57b-44be-9f95-753f22e3fb28",
+			"id": "276931c6-98be-4a06-8cd0-4e174c796b87",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "68ea2d4a-8551-40f2-a4fe-7deedb418e3a",
+			"id": "c1c9a7f9-44ba-4827-8599-0926481170aa",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "e2a13ac1-40d7-418a-ba24-c5c73863de7e",
+			"id": "3a344d10-5f52-4dfa-8913-b93d09bb083f",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "367545f0-1e5b-4893-9538-ba0cd9ccb223",
+			"id": "ed15d42f-172e-4386-ac0b-a7020e9ed490",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "d5dd45bc-7319-4d99-8cb2-95f53fb9af55",
+			"id": "3aa61580-d0cd-4642-839d-4252a12d4a6b",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "2dca8930-cf92-427c-8033-ba9130c46cb7",
+			"id": "e7ea2e94-865a-4757-8366-fd47d24017c2",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "33d81d12-a417-4392-a84c-4c2f193a60f6",
+			"id": "71d52549-c2ea-4b47-8b65-6c8506cf571c",
 			"key": "epoch-start-date",
 			"value": ""
 		}
