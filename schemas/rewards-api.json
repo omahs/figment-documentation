@@ -131,7 +131,7 @@
 							}
 						},
 						"url": "https://{{SOL_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns rewards (and balances) for all **stake accounts**. The response payload is broken down by epoch and by stake account. The **net rewards** are shown, meaning after the on-chain validator commission has been subtracted.\n\n### Body\n\n- `accounts` is an array of **stake account** addresses _(required)_\n- `start` and `end` can be either epochs (numbers) or timestamps (strings formatted like \"YYYY-MM-DD\") _(required)_\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`: here it will be `epoch`\n- `data` is an array of objects - one for each epoch - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `system_account` returns the system account that stake account was created from\n    - `accounts` returns the stake account that received the rewards\n    - `period` is the epoch number\n    - `timestamp` is the timestamp at the end of the epoch\n    - `rewards` is an array of objects containing `numeric`, `exp`, `currency`, and `text`. The formula to compute the rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n    - `balances` is an array of objects containing `numeric`, `exp`, `currency`, and `text`.\n\n### Limitations\n\n- The API returns rewards for Figment validators only.\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n    \n\n### FAQ\n\n- Read more about [stake accounts](https://docs.solana.com/staking/stake-accounts) on the Solana Docs."
+						"description": "Returns rewards (and balances) for all **stake accounts**. The response payload is broken down by epoch and by stake account. The **net rewards** are shown, meaning after the on-chain validator commission has been subtracted.\n\n### Request\n\n- `accounts` is an array of **stake account** addresses _(required)_\n- `start` and `end` can be either epochs (numbers) or timestamps (strings formatted like \"YYYY-MM-DD\") _(required)_\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`: here it will be `epoch`\n- `data` is an array of objects - one for each epoch - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `system_account` returns the system account that stake account was created from\n    - `accounts` returns the stake account that received the rewards\n    - `period` is the epoch number\n    - `timestamp` is the timestamp at the end of the epoch\n    - `rewards` is an array of objects containing `numeric`, `exp`, `currency`, and `text`. The formula to compute the rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n    - `balances` is an array of objects containing `numeric`, `exp`, `currency`, and `text`.\n\n### Limitations\n\n- The API returns rewards for Figment validators only.\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n    \n\n### FAQ\n\n- Read more about [stake accounts](https://docs.solana.com/staking/stake-accounts) on the Solana Docs."
 					},
 					"response": [
 						{
@@ -349,7 +349,7 @@
 							}
 						},
 						"url": "https://{{SOL_REWARDS_HOST}}/v2/rewards/apikey/{{API_KEY}}/",
-						"description": "Returns rewards (and balances) for all **stake accounts** created from the provided system account. The response payload is broken down by epoch and by staking account. The **net rewards** are shown, meaning after the on-chain validator commission has been subtracted.\n\n### Body\n\n- `addresses` is an array of **system account** addresses _(required)_\n- `start` and `end` can be either epochs (numbers) or timestamps (strings formatted like \"YYYY-MM-DD\") _(required)_\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`: here it will be `epoch`\n- `data` is an array of objects - one for each epoch and stake account - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `accounts` returns the stake account that received the rewards\n    - `system_account` returns the system account the stake account was created from\n    - `period` is the epoch number\n    - `timestamp` is the timestamp at the end of the epoch\n    - `rewards` is an array of objects containing `numeric`, `exp`, `currency`, and `text`. The formula to compute the rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n    \n\n### FAQ\n\n- Read more about [stake accounts](https://docs.solana.com/staking/stake-accounts) on the Solana Docs."
+						"description": "Returns rewards (and balances) for all **stake accounts** created from the provided system account. The response payload is broken down by epoch and by staking account. The **net rewards** are shown, meaning after the on-chain validator commission has been subtracted.\n\n### Request\n\n- `addresses` is an array of **system account** addresses _(required)_\n- `start` and `end` can be either epochs (numbers) or timestamps (strings formatted like \"YYYY-MM-DD\") _(required)_\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`: here it will be `epoch`\n- `data` is an array of objects - one for each epoch and stake account - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `accounts` returns the stake account that received the rewards\n    - `system_account` returns the system account the stake account was created from\n    - `period` is the epoch number\n    - `timestamp` is the timestamp at the end of the epoch\n    - `rewards` is an array of objects containing `numeric`, `exp`, `currency`, and `text`. The formula to compute the rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n    \n\n### FAQ\n\n- Read more about [stake accounts](https://docs.solana.com/staking/stake-accounts) on the Solana Docs."
 					},
 					"response": [
 						{
@@ -555,7 +555,7 @@
 							}
 						},
 						"url": "https://{{NEAR_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Body\n\n- `accounts` takes in an array of delegator accounts addresses (required)\n- `start` and `end` are epoch numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`\n- `data` is an array of objects - one for each epoch - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `period` is the epoch number\n    - `timestamp` is the timestamp of the end of the epoch\n    - `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+						"description": "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Request\n\n- `accounts` takes in an array of delegator accounts addresses (required)\n- `start` and `end` are epoch numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`\n- `data` is an array of objects - one for each epoch - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `period` is the epoch number\n    - `timestamp` is the timestamp of the end of the epoch\n    - `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
 					},
 					"response": [
 						{
@@ -761,7 +761,7 @@
 							}
 						},
 						"url": "https://{{DOT_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Body\n\n- `accounts` takes in an array of stash accounts addresses (required)\n- `start` and `end` are era numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`\n- `data` is an array of objects - one for each era - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `period` is the era number\n    - `timestamp` is the timestamp of the end of the era\n    - `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^-exp`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+						"description": "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Request\n\n- `accounts` takes in an array of stash accounts addresses (required)\n- `start` and `end` are era numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`\n- `data` is an array of objects - one for each era - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `period` is the era number\n    - `timestamp` is the timestamp of the end of the era\n    - `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^-exp`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
 					},
 					"response": [
 						{
@@ -884,7 +884,7 @@
 							}
 						},
 						"url": "https://{{AVAX_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns net rewards grouped by day\n\n### Body\n\n- `accounts` takes an array of addresses. (required)\n- `start` and `end` are timestamps (in the format YYYY-MM-DD) (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`: `daily` here\n- `data` is an array of objects - one for each period - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `timestamp` is the timestamp of the day's start (midnight UTC)\n    - `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n\n### Limitations\n\n- This API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
+						"description": "Returns net rewards grouped by day\n\n### Request\n\n- `accounts` takes an array of addresses. (required)\n- `start` and `end` are timestamps (in the format YYYY-MM-DD) (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`: `daily` here\n- `data` is an array of objects - one for each period - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `timestamp` is the timestamp of the day's start (midnight UTC)\n    - `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n\n### Limitations\n\n- This API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses."
 					},
 					"response": [
 						{
@@ -1004,7 +1004,7 @@
 							}
 						},
 						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns gross validator rewards\n\n### Body\n\n- `accounts` takes an array of validator's public addresses. 50 max. _Required._\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\"). _Required._\n- `aggregation` allows you to get rewards by epoch (default if nothing is passed) or by day (if `daily` is passed).\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data` : `epoch` or `daily`\n- `data` is an array of objects, one for each period and accounts, containing:\n    - `validator` is the validator that distributed the rewards\n    - `period` is the epoch number (only present when no aggregation is requested)\n    - `timestamp` is the timestamp of the end of the period\n    - `rewards` is an array of objects.\n        - The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n        - `type` is either `staking` (for consensus layer rewards) or `tips` (for execution layer rewards).\n        - `recipient` is the address of the rewards recipient.\n    - `balances` is an array of objects containing `numeric`, `exp`, `currency`, and `text`. It returns the validator's current balance\n\n#### MEV fields\n\nWhen a reward is of type `tips` we attach extra metadata for `data.rewards`\n\n- `sender` is the \"from\" address of the tips transaction\n- `tx_hash` is the transaction identifier for the tips payout\n- `slot` is the consensus layer slot at which the block proposal occurred\n- `block` is the execution layer block in which the transaction was included\n- `is_mev` indicates if the block was built with MEV\n- `mev_service` specifies which service built the MEV block\n    \n\nThere can be multiple `type=tips` objects per period: one per proposed blocks. We don't aggregate them in one object because they could have different recipient addresses. `type=staking` only have one object: we aggregate all subtypes (block proposals, attestations, sync committees, slashing)\n\n### Limitations\n\n- This API serves data for the last 7 days for epoch and 60 days for daily aggregation\n- This API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n    \n\n### FAQ\n\n- **Reward Types:** `staking` type rewards are the net aggregation of all consensus layer rewards: block proposal, attestation, sync committee and slashing. There is one staking bucket per period. `tips` type rewards are the effective amount received by the fee recipient of the proposed block on the execution layer. There can be multiple buckets per period (one per block proposed)\n- **Negative Rewards:** In theory, there could be a negative rewards amount for a day. But slashing events are rare. Current negative amounts would more likely be caused by repeatedly missing attestations and/or sync committee votes."
+						"description": "Returns gross validator rewards.\n\n### Request\n\n- `accounts` takes an array of validator's public addresses. 50 max. _Required._\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\"). _Required._\n- `aggregation` allows you to get rewards by epoch (default if nothing is passed) or by day (if `daily` is passed).\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data` : `epoch` or `daily`\n- `data` is an array of objects, one for each period and accounts, containing:\n    - `validator` is the validator that distributed the rewards\n    - `period` is the epoch number (only present when no aggregation is requested)\n    - `timestamp` is the timestamp of the end of the period\n    - `rewards` is an array of objects.\n        - The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n        - `type` is either `staking` (for consensus layer rewards) or `tips` (for execution layer rewards).\n        - `recipient` is the address of the rewards recipient.\n    - `balances` is an array of objects containing `numeric`, `exp`, `currency`, and `text`. It returns the validator's current balance\n\n#### MEV fields\n\nWhen a reward is of type `tips` we attach extra metadata for `data.rewards`\n\n- `sender` is the \"from\" address of the tips transaction\n- `tx_hash` is the transaction identifier for the tips payout\n- `slot` is the consensus layer slot at which the block proposal occurred\n- `block` is the execution layer block in which the transaction was included\n- `is_mev` indicates if the block was built with MEV\n- `mev_service` specifies which service built the MEV block\n    \n\nThere can be multiple `type=tips` objects per period: one per proposed blocks. We don't aggregate them in one object because they could have different recipient addresses. `type=staking` only have one object: we aggregate all subtypes (block proposals, attestations, sync committees, slashing)\n\n### Limitations\n\n- This API serves data for the last 7 days for epoch and 60 days for daily aggregation\n- This API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n    \n\n### FAQ\n\n- **Reward Types:** `staking` type rewards are the net aggregation of all consensus layer rewards: block proposal, attestation, sync committee and slashing. There is one staking bucket per period. `tips` type rewards are the effective amount received by the fee recipient of the proposed block on the execution layer. There can be multiple buckets per period (one per block proposed)\n- **Negative Rewards:** In theory, there could be a negative rewards amount for a day. But slashing events are rare. Current negative amounts would more likely be caused by repeatedly missing attestations and/or sync committee votes."
 					},
 					"response": [
 						{
@@ -1131,7 +1131,7 @@
 							}
 						},
 						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
-						"description": "Returns gross validator rewards\n\n### Body\n\n- `addresses` takes an array of withdrawal addresses. _Required._\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\"). _Required._\n- `aggregation` allows you to get rewards by epoch (default if nothing is passed) or by day (if `daily` is passed).\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data` : `epoch` or `daily`\n- `data` is an array of objects, one for each period and address, containing:\n    - `validator` is the validator that distributed the rewards\n    - `accounts` is an array containing the validator address that received the rewards\n    - `withdrawal_credentials` of the validator entity\n    - `period` is the epoch number (only present when no aggregation is requested)\n    - `timestamp` is the timestamp of the end of the period\n    - `rewards` is an array of objects.\n        - The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n        - `type` is either `staking` (for consensus layer rewards) or `tips` (for execution layer rewards).\n        - `recipient` is the address of the rewards recipient.\n    - `balances` is an array of objects containing `numeric`, `exp`, `currency`, and `text`. It returns the validator's current balance\n\n#### MEV fields\n\nWhen a reward is of type `tips` we attach extra metadata for `data.rewards`\n\n- `sender` is the \"from\" address of the tips transaction\n- `tx_hash` is the transaction identifier for the tips payout\n- `slot` is the consensus layer slot at which the block proposal occurred\n- `block` is the execution layer block in which the transaction was included\n- `is_mev` indicates if the block was built with MEV\n- `mev_service` specifies which service built the MEV block\n    \n\nThere can be multiple `type=tips` objects per period: one per proposed blocks. We don't aggregate them in one object because they could have different recipient addresses. `type=staking` only have one object: we aggregate all subtypes (block proposals, attestations, sync committees, slashing)\n\n### Limitations\n\n- This API serves data for the last 7 days for epoch and 60 days for daily aggregation\n- This API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n    \n\n### FAQ\n\n- **Reward Types:** `staking` type rewards are the net aggregation of all consensus layer rewards: block proposal, attestation, sync committee and slashing. There is one staking bucket per period. `tips` type rewards are the effective amount received by the fee recipient of the proposed block on the execution layer. There can be multiple buckets per period (one per block proposed)\n- **Negative Rewards:** In theory, there could be a negative rewards amount for a day. But slashing events are rare. Current negative amounts would more likely be caused by repeatedly missing attestations and/or sync committee votes."
+						"description": "Returns gross validator rewards.\n\n### Request\n\n- `addresses` takes an array of withdrawal addresses. _Required._\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\"). _Required._\n- `aggregation` allows you to get rewards by epoch (default if nothing is passed) or by day (if `daily` is passed).\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data` : `epoch` or `daily`\n- `data` is an array of objects, one for each period and address, containing:\n    - `validator` is the validator that distributed the rewards\n    - `accounts` is an array containing the validator address that received the rewards\n    - `withdrawal_credentials` of the validator entity\n    - `period` is the epoch number (only present when no aggregation is requested)\n    - `timestamp` is the timestamp of the end of the period\n    - `rewards` is an array of objects.\n        - The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n        - `type` is either `staking` (for consensus layer rewards) or `tips` (for execution layer rewards).\n        - `recipient` is the address of the rewards recipient.\n    - `balances` is an array of objects containing `numeric`, `exp`, `currency`, and `text`. It returns the validator's current balance\n\n#### MEV fields\n\nWhen a reward is of type `tips` we attach extra metadata for `data.rewards`\n\n- `sender` is the \"from\" address of the tips transaction\n- `tx_hash` is the transaction identifier for the tips payout\n- `slot` is the consensus layer slot at which the block proposal occurred\n- `block` is the execution layer block in which the transaction was included\n- `is_mev` indicates if the block was built with MEV\n- `mev_service` specifies which service built the MEV block\n    \n\nThere can be multiple `type=tips` objects per period: one per proposed blocks. We don't aggregate them in one object because they could have different recipient addresses. `type=staking` only have one object: we aggregate all subtypes (block proposals, attestations, sync committees, slashing)\n\n### Limitations\n\n- This API serves data for the last 7 days for epoch and 60 days for daily aggregation\n- This API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.\n    \n\n### FAQ\n\n- **Reward Types:** `staking` type rewards are the net aggregation of all consensus layer rewards: block proposal, attestation, sync committee and slashing. There is one staking bucket per period. `tips` type rewards are the effective amount received by the fee recipient of the proposed block on the execution layer. There can be multiple buckets per period (one per block proposed)\n- **Negative Rewards:** In theory, there could be a negative rewards amount for a day. But slashing events are rare. Current negative amounts would more likely be caused by repeatedly missing attestations and/or sync committee votes."
 					},
 					"response": [
 						{
@@ -1245,9 +1245,100 @@
 							}
 						},
 						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals",
-						"description": "## Request\n\n- `validator_addresses` takes an array of validator public keys\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\")\n    \n\n## Response\n\n- `index` the unique index of the withdrawal on chain (from round robin process)\n- `validator_public_key` is the public key of the validator\n- `validator_index` is the index of the validator\n- `withdrawal_address` is the withdrawal address of the validator\n- `amount_text` is the withdrawal amount (as text)\n- `currency` is \"ETH\"\n- `amount_numeric`is the withdrawal amount (as an integer) - needs `exp` below\n- `exp` is the exponent used to calculate the final ETH amount\n- `full_withdrawal` is a boolean indicating whether the validator exited or not\n- `slot` is the consensus layer slot at which the withdrawal occurred\n- `epoch` is the execution layer block in which the transaction was included\n- `timestamp` is the timestamp of the end of the epoch"
+						"description": "Returns Ethereum validator withdrawal information.\n\n## Request\n\n- `validator_addresses` takes an array of validator public keys\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\")\n    \n\n## Response\n\n- `index` the unique index of the withdrawal on chain (from round robin process)\n- `validator_public_key` is the public key of the validator\n- `validator_index` is the index of the validator\n- `withdrawal_address` is the withdrawal address of the validator\n- `amount_text` is the withdrawal amount (as text)\n- `currency` is \"ETH\"\n- `amount_numeric`is the withdrawal amount (as an integer) - needs `exp` below\n- `exp` is the exponent used to calculate the final ETH amount\n- `full_withdrawal` is a boolean indicating whether the validator exited or not\n- `slot` is the consensus layer slot at which the withdrawal occurred\n- `epoch` is the execution layer block in which the transaction was included\n- `timestamp` is the timestamp of the end of the epoch"
 					},
-					"response": []
+					"response": [
+						{
+							"id": "66cbc98d-277b-4ee2-b5ff-2087d5b0b551",
+							"name": "ETH Withdrawals (by validator address)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"validator_addresses\": [\n        \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n        \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\"\n    ], \n    \"start\": 7840,\n    \"end\": 7860\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Apr 2023 22:23:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "821"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1999"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1999"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "58"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649999066"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"index\": 3151238,\n            \"validator_public_key\": \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\",\n            \"validator_index\": 63905,\n            \"withdrawal_address\": \"0x13da6583b4e567af24ae6b07ea057f251a38139e\",\n            \"full_withdrawal\": true,\n            \"slot\": 251284,\n            \"epoch\": 7852,\n            \"timestamp\": \"2021-01-05T09:36:48Z\",\n            \"amount_text\": \"32\",\n            \"currency\": \"ETH\",\n            \"amount_numeric\": 32000000000,\n            \"exp\": 9\n        },\n        {\n            \"index\": 3151231,\n            \"validator_public_key\": \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n            \"validator_index\": 63886,\n            \"withdrawal_address\": \"0x13da6583b4e567af24ae6b07ea057f251a38139e\",\n            \"full_withdrawal\": true,\n            \"slot\": 251283,\n            \"epoch\": 7852,\n            \"timestamp\": \"2021-01-05T09:36:36Z\",\n            \"amount_text\": \"32\",\n            \"currency\": \"ETH\",\n            \"amount_numeric\": 32000000000,\n            \"exp\": 9\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "ETH Withdrawals (by withdrawal address)",
@@ -1268,9 +1359,100 @@
 							}
 						},
 						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals",
-						"description": "## Request\n\n- `withdrawal_addresses` takes an array of withdrawal addresses\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\")\n    \n\n## Response\n\n- `index` the unique index of the withdrawal on chain (from round robin process)\n- `validator_public_key` is the public key of the validator\n- `validator_index` is the index of the validator\n- `withdrawal_address` is the withdrawal address of the validator\n- `amount_text` is the withdrawal amount (as text)\n- `currency` is \"ETH\"\n- `amount_numeric` is the withdrawal amount (as an integer) - needs `exp` below\n- `exp` is the exponent used to calculate the final ETH amount\n- `full_withdrawal` is a boolean indicating whether the validator exited or not\n- `slot` is the consensus layer slot at which the withdrawal occurred\n- `epoch` is the execution layer block in which the transaction was included\n- `timestamp` is the timestamp of the end of the epoch"
+						"description": "Returns Ethereum validator withdrawal information.\n\n## Request\n\n- `withdrawal_addresses` takes an array of withdrawal addresses\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\")\n    \n\n## Response\n\n- `index` the unique index of the withdrawal on chain (from round robin process)\n- `validator_public_key` is the public key of the validator\n- `validator_index` is the index of the validator\n- `withdrawal_address` is the withdrawal address of the validator\n- `amount_text` is the withdrawal amount (as text)\n- `currency` is \"ETH\"\n- `amount_numeric` is the withdrawal amount (as an integer) - needs `exp` below\n- `exp` is the exponent used to calculate the final ETH amount\n- `full_withdrawal` is a boolean indicating whether the validator exited or not\n- `slot` is the consensus layer slot at which the withdrawal occurred\n- `epoch` is the execution layer block in which the transaction was included\n- `timestamp` is the timestamp of the end of the epoch"
 					},
-					"response": []
+					"response": [
+						{
+							"id": "e109ee6e-fd56-49f2-b8cf-b86f0fd2ac01",
+							"name": "ETH Withdrawals (by withdrawal address)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"withdrawal_addresses\" : [\n        \"0x010000000000000000000000536d380a267684eb445032c3c492e01da3c5bafc\",\n        \"0x2b43f331b7d9d2889de336d3c1d2444fd9d482ba\"\n    ],\n    \"start\": 7840,\n    \"end\": 7860\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 11 Apr 2023 22:23:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Minute",
+									"value": "1998"
+								},
+								{
+									"key": "X-RateLimit-Limit-Minute",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "43"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "2000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "1998"
+								},
+								{
+									"key": "X-Quota-Limit-Second",
+									"value": "8000"
+								},
+								{
+									"key": "Quota-Remaining",
+									"value": "7999"
+								},
+								{
+									"key": "X-Quota-Remaining-Month",
+									"value": "649999065"
+								},
+								{
+									"key": "X-Quota-Limit-Month",
+									"value": "650000000"
+								},
+								{
+									"key": "Quota-Reset",
+									"value": "1"
+								},
+								{
+									"key": "Quota-Limit",
+									"value": "8000"
+								},
+								{
+									"key": "X-Quota-Remaining-Second",
+									"value": "7999"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"data\": [\n        {\n            \"index\": 3150495,\n            \"validator_public_key\": \"0xb9a5b7fae184c0172943ef3a3a6c6d02172ffe74b61e01a4018ca7ea0d6c01a9d37183996416364af28a950040d0524c\",\n            \"validator_index\": 63048,\n            \"withdrawal_address\": \"0x2b43f331b7d9d2889de336d3c1d2444fd9d482ba\",\n            \"full_withdrawal\": false,\n            \"slot\": 251234,\n            \"epoch\": 7851,\n            \"timestamp\": \"2021-01-05T09:26:48Z\",\n            \"amount_text\": \"0.000277936\",\n            \"currency\": \"ETH\",\n            \"amount_numeric\": 277936,\n            \"exp\": 9\n        },\n        {\n            \"index\": 3150494,\n            \"validator_public_key\": \"0xa053a07168cb5df6d900d6af9de26936d9b1c5e9368eacfa12e71dd4546e3ff1d59d1d8c6a7f59442693870c54589c9f\",\n            \"validator_index\": 63045,\n            \"withdrawal_address\": \"0x536d380a267684eb445032c3c492e01da3c5bafc\",\n            \"full_withdrawal\": false,\n            \"slot\": 251234,\n            \"epoch\": 7851,\n            \"timestamp\": \"2021-01-05T09:26:48Z\",\n            \"amount_text\": \"0.000230992\",\n            \"currency\": \"ETH\",\n            \"amount_numeric\": 230992,\n            \"exp\": 9\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\"\n    }\n}"
+						}
+					]
 				}
 			],
 			"id": "c8594856-7151-4247-b205-e696c9ad12c8"
@@ -1300,47 +1482,47 @@
 	],
 	"variable": [
 		{
-			"id": "e1105714-b3eb-4425-8727-73f4d0070f69",
+			"id": "92de0c51-bf36-4ada-802e-7841cb1a3bee",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "da261918-788f-475e-8a4f-971f082d5fca",
+			"id": "cb0305ca-8289-41eb-bacd-27fdd4cef8a8",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "a4fbafe4-55e0-4fbd-adc7-d22eb002d695",
+			"id": "1cc0582b-8329-475f-b490-d34e7d1815d6",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "ab334b55-1599-462b-8f2f-6d754105611f",
+			"id": "222d2ec4-1b73-42dc-a4a6-f1cf200cf59c",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "e9e21a4e-9e27-43a6-ab64-33df744ed91e",
+			"id": "bf7e1858-934d-4199-bfe5-e4f8869699be",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "c0c504bd-b1b9-477f-8cbb-6a05af0c8bdc",
+			"id": "78c4b35a-89c9-4fd5-be70-1c748ff16fe3",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "4a8f68f3-b4a3-40d4-925d-338c515ab82f",
+			"id": "95dabb8e-6f2a-4a3b-8fb1-31d6e6ae6828",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "c136bf59-242a-4512-b163-be9fe7b42d1a",
+			"id": "1aa3a6c8-a391-4f1a-829b-69ed9df23e19",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "4be3d326-c8ab-4dc7-9232-bcd84ba66edc",
+			"id": "c6d563b6-401d-4892-913f-55e5c04db59b",
 			"key": "epoch-start-date",
 			"value": ""
 		}
