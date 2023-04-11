@@ -1227,120 +1227,6 @@
 					]
 				},
 				{
-					"name": "ETH Withdrawals (by validator address)",
-					"id": "538b6994-701c-43ef-b507-55170ea224fa",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"validator_addresses\": [\n        \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n        \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\"\n    ], \n    \"start\": \"2021-01-05\",\n    \"end\": \"2021-01-05\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals",
-						"description": "Returns gross validator rewards\n\n### Request\n\n- `validator_addresses` takes an array of validator public keys\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\"). _Required._\n    \n\n### Response\n\n- `index` the unique index of the withdrawal on chain (from round robin process)\n- `validator_public_key`: the public key of the validator\n- `validator_index`: the index of the validator\n- `withdrawal_address`: the withdrawal address of the validator\n- `amount_text`: the withdrawal amount (as text)\n- `currency`: \"ETH\"\n- `amount_numeric`: the withdrawal amount (as an integer) - needs `exp` below\n- `exp`: the exponent used to calculate the final ETH amount\n- `full_withdrawal` Boolean indicating whether the validator exited or not\n- `slot` The consensus layer slot at which the withdrawal occurred\n- `epoch` The execution layer block in which the transaction was included\n- `timestamp`. The timestamp of the end of the epoch"
-					},
-					"response": [
-						{
-							"id": "8ba71a15-ee74-4813-a259-42b25a4c009f",
-							"name": "ETH Withdrawals (by validator address)",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"validator_addresses\": [\n        \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n        \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\"\n    ], \n    \"start\": \"2021-01-05\",\n    \"end\": \"2021-01-05\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals"
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Tue, 11 Apr 2023 01:42:44 GMT"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Content-Length",
-									"value": "821"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-RateLimit-Limit-Minute",
-									"value": "2000"
-								},
-								{
-									"key": "RateLimit-Reset",
-									"value": "16"
-								},
-								{
-									"key": "RateLimit-Limit",
-									"value": "2000"
-								},
-								{
-									"key": "RateLimit-Remaining",
-									"value": "1994"
-								},
-								{
-									"key": "X-RateLimit-Remaining-Minute",
-									"value": "1994"
-								},
-								{
-									"key": "Quota-Remaining",
-									"value": "7999"
-								},
-								{
-									"key": "X-Quota-Remaining-Month",
-									"value": "649999166"
-								},
-								{
-									"key": "X-Quota-Limit-Month",
-									"value": "650000000"
-								},
-								{
-									"key": "Quota-Reset",
-									"value": "1"
-								},
-								{
-									"key": "X-Quota-Remaining-Second",
-									"value": "7999"
-								},
-								{
-									"key": "X-Quota-Limit-Second",
-									"value": "8000"
-								},
-								{
-									"key": "Quota-Limit",
-									"value": "8000"
-								}
-							],
-							"cookie": [],
-							"responseTime": null,
-							"body": "{\n    \"data\": [\n        {\n            \"index\": 3151238,\n            \"validator_public_key\": \"0x86556ae9c606d2da8c23b6fad6be999b318e7fc2384847f19a80ffce12a1705c19162b5c425b924b5334ad876231ef49\",\n            \"validator_index\": 63905,\n            \"withdrawal_address\": \"0x13da6583b4e567af24ae6b07ea057f251a38139e\",\n            \"full_withdrawal\": true,\n            \"slot\": 251284,\n            \"epoch\": 7852,\n            \"timestamp\": \"2021-01-05T09:36:48Z\",\n            \"amount_text\": \"32\",\n            \"currency\": \"ETH\",\n            \"amount_numeric\": 32000000000,\n            \"exp\": 9\n        },\n        {\n            \"index\": 3151231,\n            \"validator_public_key\": \"0xa335249a6ea599870a5bb30f686635fe2b8d41abc8935b29a7a0a0239c7deb8d0c0df501d21ba8c67c7b9b29bb25f4ba\",\n            \"validator_index\": 63886,\n            \"withdrawal_address\": \"0x13da6583b4e567af24ae6b07ea057f251a38139e\",\n            \"full_withdrawal\": true,\n            \"slot\": 251283,\n            \"epoch\": 7852,\n            \"timestamp\": \"2021-01-05T09:36:36Z\",\n            \"amount_text\": \"32\",\n            \"currency\": \"ETH\",\n            \"amount_numeric\": 32000000000,\n            \"exp\": 9\n        }\n    ],\n    \"meta\": {\n        \"network\": \"ethereum\"\n    }\n}"
-						}
-					]
-				},
-				{
 					"name": "ETH Withdrawals (by withdrawal address)",
 					"id": "924a9842-37c8-40e2-a4df-8212cccc0715",
 					"protocolProfileBehavior": {
@@ -1482,47 +1368,47 @@
 	],
 	"variable": [
 		{
-			"id": "85eacaa9-94b9-4bfc-a18c-1a3f28b9170c",
+			"id": "216fca2e-ed1b-47e9-9460-898c1ee9e8b7",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "80894c87-920b-4fe3-aa43-7f7712c9c9b7",
+			"id": "265f1eba-0cc5-4534-974d-ac1379b6ddce",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "3fec89d5-e6bf-4e2e-a6e0-b9588e35ac9c",
+			"id": "2564165c-7749-48b1-9eeb-92f1af1b145f",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "f258e466-6ce1-4114-92de-5c86f3e3a4bf",
+			"id": "bf5eb554-00d5-45e4-859f-56b9c88e0538",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "79a67eba-de2b-4f8e-851a-7abd19792d07",
+			"id": "68a4da61-30ac-4fb7-a6e0-d91bfe582959",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "f7ad3364-c761-44c7-9d82-4dd4cf3883de",
+			"id": "26836cc2-b62c-4890-ba2d-a378394c0a3a",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "d6accf5d-e3d7-44d1-adef-7e3c79bcdc5d",
+			"id": "c0c7af24-18a0-43c8-a085-72e8f80304f8",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "6b2c5a4a-0732-495a-80a7-e6333e280b74",
+			"id": "79883bc0-63c3-442f-99fb-d402bba0aa1f",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "bb6b8f67-0889-4bd3-b3ba-3826ec51dc5a",
+			"id": "ffb67211-4497-45e3-a955-3c0f62a1a165",
 			"key": "epoch-start-date",
 			"value": ""
 		}
