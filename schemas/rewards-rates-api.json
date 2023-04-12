@@ -9,7 +9,7 @@
 			"name": "Ethereum",
 			"item": [
 				{
-					"name": "ETH Reward Rates",
+					"name": "ETH Reward Rates Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -16895,7 +16895,7 @@
 							}
 						}
 					],
-					"id": "5248b9c6-a802-422c-8d89-2a3aa1792fd4",
+					"id": "9a6a6349-87d2-4df6-9a9d-0150e35a4930",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -16931,7 +16931,7 @@
 					},
 					"response": [
 						{
-							"id": "98d241df-1979-4f21-865c-07a1816e579e",
+							"id": "6eee6ae9-0891-489e-9baa-30ff03061dca",
 							"name": "Reward Rates",
 							"originalRequest": {
 								"method": "GET",
@@ -26682,7 +26682,7 @@
 							}
 						}
 					],
-					"id": "c708c71a-e4d2-451b-9f3e-c146e09c20b3",
+					"id": "b2fb8b67-a973-4f29-98b4-e6f31715b21a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -26694,7 +26694,7 @@
 					},
 					"response": [
 						{
-							"id": "f8ea308a-a959-4754-8432-4b73870d9bea",
+							"id": "6b35c10d-dcfd-4a8c-a27f-28c23cdbc0c3",
 							"name": "Reward Rates",
 							"originalRequest": {
 								"method": "GET",
@@ -26804,17 +26804,17 @@
 	],
 	"variable": [
 		{
-			"id": "9485e9b6-1eaa-42bf-864e-5a4a9c41952b",
+			"id": "6f78ec18-091f-4a0f-bd67-409ef534fd0b",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "d18272dd-4c97-4ee4-9ac6-20390aec6b19",
+			"id": "f07d2318-6814-467f-8ea3-517f2ca85770",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "8b3fcdaa-be88-47f7-97c8-56878505845d",
+			"id": "a61bcc02-7b49-43bf-bcd9-4c84aa08e25c",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
