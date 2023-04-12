@@ -58,6 +58,7 @@ function processMethod(method, vars) {
   query = query ? query.replace(/^\/+/, "") : query;
   query = query?.replace(/\/$/g, "");
   query = query?.replace(/v2\/rewards$/, "");
+  query = query?.replace(/v2\/withdrawals$/, "");
   query = query?.replace(/rates$/, "");
 
   url = url.split("{{API_KEY}}")[0] + "{{API_KEY}}" + "/";
