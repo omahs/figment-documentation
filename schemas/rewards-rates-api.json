@@ -9,7 +9,7 @@
 			"name": "Ethereum",
 			"item": [
 				{
-					"name": "ETH Reward Rates Copy",
+					"name": "ETH Reward Rates",
 					"event": [
 						{
 							"listen": "test",
@@ -26804,17 +26804,17 @@
 	],
 	"variable": [
 		{
-			"id": "6f78ec18-091f-4a0f-bd67-409ef534fd0b",
+			"id": "20521bd8-9c6b-426a-aac7-8066d43cecf6",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "f07d2318-6814-467f-8ea3-517f2ca85770",
+			"id": "bd59bed7-307b-4bfc-bf69-13a202f36033",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "a61bcc02-7b49-43bf-bcd9-4c84aa08e25c",
+			"id": "6f53b50c-1cb3-46a5-80de-965ac1deb110",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
