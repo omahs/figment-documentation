@@ -26804,17 +26804,17 @@
 	],
 	"variable": [
 		{
-			"id": "d8a3e177-a247-45d8-8c56-6cbebad5a365",
+			"id": "cdda2a9d-8542-4a27-aea6-443a23543fc6",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "35d02916-0d06-440a-86c2-038437b72ea3",
+			"id": "3acb9472-0314-4f14-bc63-38b184d33cd4",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "ae02cacc-f694-46fd-a289-b8a6924c5999",
+			"id": "638ab90b-9ee0-4745-a6db-20da7464df75",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
