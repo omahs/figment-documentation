@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"external_user_id\": \"user_id\",\n  \"external_user_email\": \"user@company.com\",\n  \"withdrawal_address\": \"0x01000000000000000000000003777debd25dcdbc4cdb56178906ac0ecac94019\",\n  \"validators_count\": 1,\n  \"eth2_network_name\": \"goerli\"\n}",
+							"raw": "{\n  \"external_user_id\": \"user_id\",\n  \"external_user_email\": \"user@company.com\",\n  \"withdrawal_address\": \"0xE40F80618324C814cD444434670a44ba4583aE38\",\n  \"validators_count\": 1,\n  \"eth2_network_name\": \"goerli\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -71,7 +71,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://{{ETH_HOST}}/apikey/{{API_KEY}}/api/v1/prime/eth2_staking/positions?withdrawal_address=0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf&page[size]=10&page[number]=1&fundable_positions_only=false",
+							"raw": "https://{{ETH_HOST}}/apikey/{{API_KEY}}/api/v1/prime/eth2_staking/positions?withdrawal_address=0xE40F80618324C814cD444434670a44ba4583aE38&page[size]=10&page[number]=1&fundable_positions_only=false",
 							"protocol": "https",
 							"host": [
 								"{{ETH_HOST}}"
@@ -88,7 +88,7 @@
 							"query": [
 								{
 									"key": "withdrawal_address",
-									"value": "0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf"
+									"value": "0xE40F80618324C814cD444434670a44ba4583aE38"
 								},
 								{
 									"key": "page[size]",
@@ -258,7 +258,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"funding_address\": \"0xBe000000000000000000000000000000000000b9\",\n    \"withdrawal_address\": \"0x01000000000000000000000003777debd25dcdbc4cdb56178906ac0ecac94019\",\n    \"validators_count\": 1,\n    \"eth2_network_name\": \"mainnet\"\n}",
+							"raw": "{\n    \"funding_address\": \"0xBe000000000000000000000000000000000000b9\",\n    \"withdrawal_address\": \"0xE40F80618324C814cD444434670a44ba4583aE38\",\n    \"validators_count\": 1,\n    \"eth2_network_name\": \"mainnet\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -678,19 +678,19 @@
 	],
 	"variable": [
 		{
-			"id": "fe3a7a96-de12-4200-aeba-7fac76184c6b",
+			"id": "1c2f8e7c-4567-47a3-ac3b-18f31e2124d9",
 			"key": "ETH_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "e5ad2596-f1bc-49a6-af42-0de0a059cdc5",
+			"id": "270c34a9-8e10-4027-96fa-bf6db3e8d544",
 			"key": "DOT_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "1584766c-4043-4d8f-b8f6-eabae5c47d05",
+			"id": "518e07bb-9aae-42e9-9564-7cbe33f8e232",
 			"key": "INTERACTIVE",
 			"value": "false",
 			"type": "string"
