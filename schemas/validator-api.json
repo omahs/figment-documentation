@@ -305,7 +305,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"external_user_id\": \"user_id\",\n  \"external_user_email\": \"user@company.com\",\n  \"withdrawal_address\": \"0x01000000000000000000000003777debd25dcdbc4cdb56178906ac0ecac94019\",\n  \"validators_count\": 1,\n  \"eth2_network_name\": \"goerli\"\n}",
+							"raw": "{\n  \"external_user_id\": \"user_id\",\n  \"external_user_email\": \"user@company.com\",\n  \"withdrawal_address\": \"0xE40F80618324C814cD444434670a44ba4583aE38\",\n  \"validators_count\": 1,\n  \"eth2_network_name\": \"goerli\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -682,19 +682,19 @@
 	],
 	"variable": [
 		{
-			"id": "cc8f3b7f-41fa-4cd6-8f88-204109b8ed07",
+			"id": "d24f4732-e83b-484f-b25e-9ce3cd3c9007",
 			"key": "ETH_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "c01b5b89-7422-47bd-8d80-4ec11f6b4952",
+			"id": "cc26046f-6e27-472d-87b8-631ddb4976e7",
 			"key": "DOT_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "7e8f8568-c4d4-4b5f-85f2-272eeab79b7e",
+			"id": "2b0aee42-c90e-452c-882b-999919cbf1ac",
 			"key": "INTERACTIVE",
 			"value": "false",
 			"type": "string"
