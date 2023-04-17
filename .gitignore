@@ -12,6 +12,13 @@ node_modules
 
 # Artifacts
 .docusaurus
+docs/api-reference/*
+docs/staking/index.mdx
+docs/staking/02_Networks/*
+docs/rewards/*
+docs/network-data/*
+docs/network-data/rewards-rates/*
+docs/validators/*
 build
 partials/transaction-search-parameters
 .env
@@ -20,4 +27,3 @@ partials/transaction-search-parameters
 corstests.js
 cors_failed.txt
 
-docs/test/*
