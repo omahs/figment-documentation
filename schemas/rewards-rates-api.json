@@ -16927,7 +16927,7 @@
 								}
 							]
 						},
-						"description": "This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe first compute daily rates by aggregating all rewards (on both consensus and execution layers) received by all validators within a 24h period (from midnight UTC to midnight UTC) and divide this by the aggregated balances of all validators at the beginning of this 24h period. We then annualize this rate without compounding.\n\n### Query Parameters\n\n- `figment` _(optional)_: if `true` is passed we will return the reward rate for Figment validators only. If omitted or any other value is passed we will return the reward rate of the network as a whole.\n    \n\n### Response\n\nAn array of following objects:\n\n- `date`: timestamp for the day in format \"YYYY-MM-DD\"\n- `value`: the total annualized reward rate for that day - in %\n- `staking`: the piece due to consensus layer rewards (inflation) - in %\n- `tips`: the piece due to execution layer rewards (transaction fees) - in %"
+						"description": "This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe first compute daily rates by aggregating all rewards (on both consensus and execution layers) received by all validators within a 24h period (from midnight UTC to midnight UTC) and divide this by the aggregated balances of all validators at the beginning of this 24h period. We then annualize this rate without compounding.\n\n### Request\n\n- `figment` _(optional)_: if `true` is passed we will return the reward rate for Figment validators only. If omitted or any other value is passed we will return the reward rate of the network as a whole.\n    \n\n### Response\n\nAn array of following objects:\n\n- `date`: timestamp for the day in format \"YYYY-MM-DD\"\n- `value`: the total annualized reward rate for that day - in %\n- `staking`: the piece due to consensus layer rewards (inflation) - in %\n- `tips`: the piece due to execution layer rewards (transaction fees) - in %"
 					},
 					"response": [
 						{
@@ -26690,7 +26690,7 @@
 						"method": "GET",
 						"header": [],
 						"url": "https://{{SOL_REWARDS_HOST}}/apikey/{{API_KEY}}/rates",
-						"description": "This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe aggregate all rewards received by all validators and divide this by the aggregated balances of all validators at the beginning of the period.\n\nIt includes all rewards, on both consensus and execution layers.\n\n### Query Parameters\n\n- `figment` _(optional)_: if `true` is passed we will return the reward rate for Figment validators only. If omitted or any other value is passed we will return the reward rate of the network as a whole.\n    \n\n### Response\n\n- `date` - Specific date associated with `value` (staking reward rates).\n- `value` - Staking reward rates, in %."
+						"description": "This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe aggregate all rewards received by all validators and divide this by the aggregated balances of all validators at the beginning of the period.\n\nIt includes all rewards, on both consensus and execution layers.\n\n### Request\n\n- `figment` _(optional)_: if `true` is passed we will return the reward rate for Figment validators only. If omitted or any other value is passed we will return the reward rate of the network as a whole.\n    \n\n### Response\n\n- `date` - Specific date associated with `value` (staking reward rates).\n- `value` - Staking reward rates, in %."
 					},
 					"response": [
 						{
@@ -26804,17 +26804,17 @@
 	],
 	"variable": [
 		{
-			"id": "cdda2a9d-8542-4a27-aea6-443a23543fc6",
+			"id": "6d38fcc3-2c6b-4c5e-adb4-e6c590d9471c",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "3acb9472-0314-4f14-bc63-38b184d33cd4",
+			"id": "af74badb-9ceb-4137-ab86-d884d5222562",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "638ab90b-9ee0-4745-a6db-20da7464df75",
+			"id": "c1f96dbf-6c69-44b0-8423-c30edc2e3183",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
