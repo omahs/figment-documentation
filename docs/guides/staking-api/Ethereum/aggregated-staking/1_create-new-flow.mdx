@@ -32,32 +32,37 @@ curl -X POST 'https://eth-slate.datahub.figment.io/api/v1/flows' \
 ### Response
 
 - `id` &mdash; `string` ID of the newly created flow.
+- `operation` &mdash; `string` The Staking API operation being performed by this flow.
 - `state` &mdash; `string` The current state of the flow.
 
 The response indicates one possible action:
 
-- `create_aggregated_deposit_tx` &mdash; Use this action to generate a aggregated deposit transaction to stake your ETH.
+- `assign_staking_data` &mdash; Use this action to generate aggregated deposit transaction to stake your ETH.
 
-The `create_aggregated_deposit_tx` action indicates seven fields for data collection:
+The `assign_staking_data` action indicates eleven fields for data collection but to go with option 1 (On-demand ETH staking) you only need three -`funding_account_address`, `withdrawal_address` and `amount`, optionally if you want to go with option 2 (Bring your validators) you'll only need `funding_account_address` and `deposits` data:
 
-- `funding_account_address` &mdash; The wallet from which the ETH will originate.
+- `funding_account_address` &mdash; The wallet from which the ETH will originate
 - `deposits` &mdash; Array of validator deposit data:
   - `validator_pub_key` &mdash; The public key of the validator to which the ETH will be deposited.
   - `withdrawal_credentials` &mdash; The withdrawal address for the given validator.
   - `signature` &mdash; A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer.
   - `deposit_data_root` &mdash; Uniquely identifies the set of deposits made so far.
+  - `genesis_fork_version` &mdash; The fork version of Ethereum you used as an input to create `signature`.
 - `gas_limit` &mdash; Adjust the gas limit.
 - `gas_price` &mdash; Adjust the gas price.
+- `withdrawal_address` &mdash; The withdrawal address into which you want to receive your ETH after withdrawal.
+- `amount` &mdash; The amount of ETH you want to stake. It must be a multiple of 32.
 
 #### Sample Response
 
-```json {2-3,6,9,27,58,76,94,112,132,150}
+```json {2-4,7,10,189,198}
 {
-  "id": "336d0a12-4902-4b18-9219-3f0ed2ffcac7",
+  "id": "7d0c5354-72f0-4bac-bc29-b7384d0321a8",
+  "operation": "aggregated_staking",
   "state": "initialized",
   "actions": [
     {
-      "name": "create_aggregated_deposit_tx",
+      "name": "assign_staking_data",
       "inputs": [
         {
           "name": "funding_account_address",
@@ -86,7 +91,7 @@ The `create_aggregated_deposit_tx` action indicates seven fields for data collec
             {
               "type": "array",
               "options": {
-                "allow_empty": false,
+                "allow_empty": true,
                 "allow_duplicates": false
               }
             },
@@ -179,6 +184,20 @@ The `create_aggregated_deposit_tx` action indicates seven fields for data collec
               ],
               "array": false,
               "default_value": null
+            },
+            {
+              "name": "genesis_fork_version",
+              "display": "Genesis Fork Version",
+              "description": "",
+              "type": "hex",
+              "validations": [
+                {
+                  "type": "acceptable_genesis_fork_version",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
             }
           ]
         },
@@ -223,6 +242,24 @@ The `create_aggregated_deposit_tx` action indicates seven fields for data collec
           ],
           "array": false,
           "default_value": null
+        },
+        {
+          "name": "withdrawal_address",
+          "display": "Withdrawal Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
         }
       ]
     }
@@ -230,14 +267,17 @@ The `create_aggregated_deposit_tx` action indicates seven fields for data collec
   "data": {
     "deposits": [],
     "funding_account_address": null,
+    "withdrawal_address": null,
+    "amount": null,
+    "validators_to_provision": null,
     "gas_price": null,
     "gas_limit": null,
-    "aggregated_deposit_transaction": null,
-    "estimated_active_at": null
+    "estimated_active_at": null,
+    "transactions": []
   },
   "network_code": "ethereum",
   "chain_code": "goerli",
-  "created_at": "2022-12-20T13:20:08.057Z",
-  "updated_at": "2022-12-20T13:20:08.057Z"
+  "created_at": "2023-04-06T06:37:06.055Z",
+  "updated_at": "2023-04-06T06:37:06.055Z"
 }
 ```

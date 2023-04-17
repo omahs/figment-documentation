@@ -5,19 +5,33 @@ sidebar_position: 3
 ---
 
 import Link from "@docusaurus/Link";
-import img1 from "@site/static/img/staking/workflows/v1/ethereum/Workflows::V1::Ethereum::AggregatedStakingFlow_workflow.png";
+import img1 from "@site/static/img/staking/workflows/v1/ethereum/Workflows::V1::Ethereum::AggregatedStakingFlowUpdated_workflow.png";
 
 ## Introduction
 
 The Ethereum Aggregated Staking flow allows you to stake ETH tokens to multiple validators at once in just a few steps.
 
-To stake ETH with aggregated staking flow, you will need:
+Aggregated staking flow allows you to stake ETH in two ways:
+
+### Option 1 (On-demand ETH staking)
+
+It's the recommended way to stake ETH using the Staking API. To stake ETH as per this method you will need:
 
 - `funding_account_address` &mdash; The wallet from which the ETH will originate
-- `validator_pub_key` &mdash; The public key of the validator to which the ETH will be deposited
-- `withdrawal_credentials` &mdash; The withdrawal address for the given validator
-- `signature` &mdash; A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer
-- `deposit_data_root` &mdash; Uniquely identifies the set of deposits made so far
+- `withdrawal_address` &mdash; The withdrawal address into which you want to receive your ETH after withdrawal.
+- `amount` &mdash; The amount of ETH you want to stake. It must be a multiple of 32.
+
+### Option 2 (Bring your validators)
+
+It's the optional way to stake ETH using the Staking API in which you have to manually input the deposits data. To stake ETH as per this method you will need:
+
+- `funding_account_address` &mdash; The wallet from which the ETH will originate
+- `deposits` &mdash; Array of validator deposit data:
+  - `validator_pub_key` &mdash; The public key of the validator to which the ETH will be deposited
+  - `withdrawal_credentials` &mdash; The withdrawal address for the given validator
+  - `signature` &mdash; A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer
+  - `deposit_data_root` &mdash; Uniquely identifies the set of deposits made so far
+  - `genesis_fork_version` &mdash; The fork version of Ethereum you used as an input to create `signature`.
 - `gas_limit` &mdash; Adjust the gas limit
 - `gas_price` &mdash; Adjust the gas price
 
