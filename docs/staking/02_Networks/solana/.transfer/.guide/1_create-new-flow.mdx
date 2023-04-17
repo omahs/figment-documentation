@@ -1,0 +1,131 @@
+---
+title: Create New Transfer Flow
+slug: /staking/solana/transfer/create-new-flow
+---
+
+To initiate the transfer process with Staking API, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `solana`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`) (required).
+  - `operation` `string` The operation to perform (ex. `transfer`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://solana-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "solana",
+    "chain_code": "devnet",
+    "operation": "transfer",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible `action`:
+
+- `create_transfer_tx` &mdash; Use this action to generate a transfer transaction to move SOL between accounts.
+
+The `create_transfer_tx` action indicates four fields for data collection:
+
+- `funding_account_pubkey` &mdash; The public key of the wallet which will pay the transaction fee.
+- `from_account_pubkey` &mdash; The wallet that SOL will be originating from.
+- `to_account_pubkey` &mdash; The withdrawal address for the given validator.
+- `amount` &mdash; The amount of SOL to be transferred to the account. This field should be in full SOL, not in lamports (ie. if you want to transfer 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs.
+
+#### Sample Response
+
+```json {3,4,7,10,19,33,47}
+{
+  "id": "6b8502c2-77b3-4541-a742-62ff337f0d15",
+  "operation": "transfer",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_transfer_tx",
+      "inputs": [
+        {
+          "name": "funding_account_pubkey",
+          "display": "Funding Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "from_account_pubkey",
+          "display": "From Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "to_account_pubkey",
+          "display": "To Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in SOL",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "from_account_pubkey": null,
+    "to_account_pubkey": null,
+    "amount": null,
+    "funding_account_pubkey": null,
+    "transfer_transaction": null
+  },
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-02-28T09:32:03.904Z",
+  "updated_at": "2023-02-28T09:32:03.904Z"
+}
+```
+
+:::info
+
+Learn more about lamports here: https://docs.solana.com/terminology#lamport
+
+:::

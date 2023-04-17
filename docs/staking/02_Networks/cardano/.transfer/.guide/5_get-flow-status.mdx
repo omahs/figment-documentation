@@ -1,0 +1,66 @@
+---
+title: Get Flow Status
+slug: /staking/cardano/transfer/get-flow-status-transferred
+---
+
+To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.
+
+### Parameters
+
+- None
+
+#### Sample cURL Request
+
+```bash
+curl -X GET 'https://cardano-slate.datahub.figment.io/api/v1/flows/55fcfcdd-b1f5-460c-bce9-8b8864461315' \
+-H 'Authorization: <api_key>'
+```
+
+### Response
+
+- `state` &mdash; `string` The current state of the flow.
+
+:::info note
+
+The `state` field will update from `transfer_tx_broadcasting` to `completed`.
+
+:::
+
+#### Sample Response
+
+```json {4}
+{
+  "id": "55fcfcdd-b1f5-460c-bce9-8b8864461315",
+  "operation": "transfer",
+  "state": "completed",
+  "actions": [],
+  "data": {
+    "from_account_address": "addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8",
+    "to_account_address": "addr_test1qpr0vyprum2feg2340lmtx0gs3ye0qwnsagwqfhy5pfd5glrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rsvy9lvz",
+    "amount": "10.0",
+    "transfer_transaction": {
+      "raw": "84a30081825820a4cf432a8f3f0fe44ffdd9775ae55b2bd419c4652fb96cdeaaa27c6e0f83ea5f0001828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3affa30b021a00029075a0f5f6",
+      "signing_payload": "701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f7",
+      "signed": "84a30081825820a4cf432a8f3f0fe44ffdd9775ae55b2bd419c4652fb96cdeaaa27c6e0f83ea5f0001828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3affa30b021a00029075a10081825820002d9a48169c6d508699b7aaaa360cc38cb1f3b771444451d38cd0f901ac139d5840285bbda669d5e3805d0e81596271546f070be66c55eb30a03c2b98892b57cb99b9eb2ad4c08181d1d2ca7d84dca876bfad6756d1be68eaa99df127fe5c2aa403f5f6",
+      "hash": "701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f7",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [
+        {
+          "account_address": "addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8",
+          "signature": ""
+        }
+      ],
+      "block_time": "2023-03-07T20:58:16.000Z"
+    }
+  },
+  "network_code": "cardano",
+  "chain_code": "preprod",
+  "created_at": "2023-03-07T20:56:38.877Z",
+  "updated_at": "2023-03-07T20:58:47.887Z"
+}
+```
+
+### Token Transfer Flow Complete
+
+Congratulations, you have successfully transferred your ATOM tokens!

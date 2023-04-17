@@ -54,6 +54,7 @@
   color: #000;
 }
 
+/* TODO: Styling Update: padding? */
 [data-theme="light"] .Actions button:hover {
   display: flex;
   gap: 3px;
@@ -131,4 +132,9 @@
 .Code {
   text-align: left;
   counter-reset: line;
+}
+
+.LiveEditor {
+  margin-top: 100px;
+  width: 100%;
 }

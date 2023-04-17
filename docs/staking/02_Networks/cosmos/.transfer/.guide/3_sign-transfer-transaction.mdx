@@ -1,0 +1,28 @@
+---
+title: Sign the Transfer Transaction
+slug: /staking/cosmos/transfer/sign-transfer-transaction
+---
+
+Sign the transfer transaction using the `transaction_payload` you received in response to submitting the transfer data.
+
+Locate the `transaction_payload` in the response from the previous step. It will look something like this:
+
+```json
+"transaction_payload": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e62616e6b2e763162657461312e4d736753656e64222c2276616c7565223a7b2266726f6d41646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c22746f41646472657373223a22636f736d6f73317678686c6c61736b306e796e683230687479666b706b66746879376b333339356b7a38793363222c22616d6f756e74223a5b7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d5d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2231393637222c2264656e6f6d223a227561746f6d227d5d2c22676173223a223738363535227d2c226d656d6f223a22227d"
+```
+
+:::caution important
+
+Always confirm the details of the transaction before signing the payload.
+
+Figment has a tool for signing and decoding Staking API payloads, see the guide [Signing Transactions with Figment's npm Package](/guides/staking-api/figment-signing-transactions) to continue.
+
+:::
+
+Transactions can also be signed using the [Cosmos CLI](https://docs.cosmos.network/main/run-node/txs.html) or [Fireblocks](/guides/staking-api/fireblocks-signing-transactions).
+
+Sign the transaction and move on to the next step. A signed transaction payload for Cosmos will look something like this:
+
+```text
+0a92010a8f010a1c2f636f736d6f732e62616e6b2e763162657461312e4d736753656e64126f0a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c122d636f736d6f73317678686c6c61736b306e796e683230687479666b706b66746879376b333339356b7a387933631a0f0a057561746f6d120631303030303012670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2102db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe23512040a020801180a12130a0d0a057561746f6d12043139363710bfe6041a408c4cc00ff79d497f98baa639ae673d84d21cda8d82109a93857c7d99cb016881297c6fe2d3b4a9e7328e7f242cb3f0f5abff668a8bde09b7fb8c051c4d287d87
+```

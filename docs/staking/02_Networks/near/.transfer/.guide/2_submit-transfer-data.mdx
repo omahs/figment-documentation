@@ -1,0 +1,248 @@
+---
+title: Submit Transfer Data
+slug: /staking/near/transfer/submit-transfer-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute, such as `create_transfer_tx`.
+- `inputs` &mdash; `object`
+  - `from_account_pubkey` &mdash; `string` The account that will sign the transaction (required).
+  - `from_account_address` &mdash; `string` The address which NEAR will be transferred from (required).
+  - `to_account_address` &mdash; `string` The address to which NEAR will be transferred (required).
+  - `amount` &mdash; `number` The amount of NEAR to be transferred (required).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X PUT 'https://near-slate.datahub.figment.io/api/v1/flows/5f0962d5-fba0-453c-bf35-0dad79624b59/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "create_transfer_tx",
+  "inputs": {
+    "from_account_address": "slate-demo.testnet",
+    "from_account_pubkey": "ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY",
+    "to_account_address": "pizza.testnet",
+    "amount": 50.0
+  }
+}'
+```
+
+### Response
+
+Note that in this response you can find the unsigned, serialized transaction in `data[create_deposit_transaction][raw]`.
+
+The response indicates three possible `actions` :
+
+- `refresh_deposit_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
+- `sign_deposit_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_transfer_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
+
+We will choose `sign_deposit_tx`, which indicates one input to collect:
+
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
+
+#### Sample Response
+
+```json
+{
+  "id": "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+  "state": "transfer_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_transfer_tx",
+      "inputs": [
+        {
+          "name": "from_account_pubkey",
+          "display": "From Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV"
+        },
+        {
+          "name": "from_account_address",
+          "display": "From Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet"
+        },
+        {
+          "name": "to_account_address",
+          "display": "To Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "slate-demo.testnet"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in NEAR",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "50.0"
+        }
+      ]
+    },
+    {
+      "name": "sign_transfer_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": ["ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV"],
+          "transaction_payload": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV"],
+          "transaction_payload": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+          "signing_payload": "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+          "inputs": {
+            "input_klass": "Workflows::Signature",
+            "input_instance": {
+              "account_address": null,
+              "signature": null
+            },
+            "flow": {
+              "workflow_state": "transfer_tx_signature",
+              "id": 3810,
+              "customer_id": 40,
+              "chain_id": 7,
+              "data": {
+                "from_account_pubkey": "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                "from_account_address": "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+                "to_account_address": "slate-demo.testnet",
+                "amount": "50.0",
+                "transfer_transaction": {
+                  "raw": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+                  "signing_payload": "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+                  "signed": null,
+                  "hash": "A64WEYru3xv7jQsCDn9JV4RYK4frvNWtfAUUMYQmcVLn",
+                  "status": null,
+                  "error": null,
+                  "signatures": null
+                }
+              },
+              "created_at": "2023-02-27T18:35:44.613Z",
+              "updated_at": "2023-02-27T18:40:29.791Z",
+              "id_public": "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+              "supported_operation_id": 19
+            },
+            "flow_attributes": {},
+            "empty_input": {
+              "account_address": null,
+              "signature": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "confirm_transfer_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "from_account_pubkey": "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+    "from_account_address": "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+    "to_account_address": "slate-demo.testnet",
+    "amount": "50.0",
+    "transfer_transaction": {
+      "raw": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+      "signing_payload": "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+      "signed": null,
+      "hash": "A64WEYru3xv7jQsCDn9JV4RYK4frvNWtfAUUMYQmcVLn",
+      "status": null,
+      "error": null,
+      "signatures": null
+    }
+  },
+  "network_code": "near",
+  "chain_code": "testnet",
+  "created_at": "2023-02-27T18:35:44.613Z",
+  "updated_at": "2023-02-27T18:40:29.791Z"
+}
+```
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

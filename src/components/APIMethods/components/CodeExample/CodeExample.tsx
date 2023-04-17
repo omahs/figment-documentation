@@ -22,27 +22,36 @@ interface Props {
   endpoint: string;
 }
 
+function formatResult(json: {}) {
+  return JSON.stringify(json, null, 2);
+}
+
+function formatRequest(body) {
+  if (typeof body === "string") return body;
+  return JSON.stringify(body, null, 2);
+}
+
 export default function CodeExample({
   req,
   res,
   interactive,
   endpoint,
 }: Props) {
-  const [reqBody, setReqBody] = useState<string>(formatRequest(req.body));
-  const [queryString, setQueryString] = useState<string>(req.query);
-  const [resBody, setResBody] = useState<string>(formatResult(res.body));
+  const [reqBody, setReqBody] = useState<string>(formatRequest(req?.body));
+  const [queryString, setQueryString] = useState<string>(req?.query);
+  const [resBody, setResBody] = useState<string>(formatResult(res?.body));
   const [isPartial, setIsPartial] = useState<boolean>(false);
 
   const graphql =
-    typeof req.body === "string" && req.body.indexOf("query") == 0;
+    typeof req?.body === "string" && req?.body.indexOf("query") == 0;
 
   const { data, error, loading, fetchData } = useFetch<ResponseBody>(endpoint, {
-    method: req.method,
+    method: req?.method,
     headers: {
-      ...req.headers,
+      ...req?.headers,
       "Content-Type": graphql ? "application/graphql" : "application/json",
     },
-    body: formatRequest(req.body),
+    body: formatRequest(req?.body),
   });
 
   const [status, setStatus] = useState<ResponseStatus | null>(null);
@@ -62,9 +71,9 @@ export default function CodeExample({
 
   const handleOnValueChange = (value: string) => {
     if (!interactive) return;
-    if (["GET", "DELETE"].indexOf(req.method) > -1) {
+    if (["GET", "DELETE"].indexOf(req?.method) > -1) {
       setQueryString(value);
-    } else if (req.method === "POST") setReqBody(value);
+    } else if (req?.method === "POST") setReqBody(value);
   };
 
   const actions = [
@@ -74,15 +83,16 @@ export default function CodeExample({
           onClick: async () => {
             const apiData = await fetchData(queryString, { body: reqBody });
             setIsPartial(false);
+            console.log(apiData?.data);
             if (
               endpoint.includes("rewards") &&
-              apiData.data &&
-              apiData.data.length > 10
+              apiData?.data &&
+              apiData?.data.length > 10
             ) {
               console.clear();
-              console.log(apiData.data);
+              console.log(apiData?.data);
               setIsPartial(true);
-              const data = apiData.data.slice(0, 10);
+              const data = apiData?.data.slice(0, 10);
               apiData.data = [...data];
             }
             if (apiData) setResBody(formatResult(apiData));
@@ -106,9 +116,9 @@ export default function CodeExample({
           title: "Reset",
           onClick: () => {
             setStatus(null);
-            setQueryString(req.query);
-            setReqBody(formatRequest(req.body));
-            setResBody(formatResult(res.body));
+            setQueryString(req?.query);
+            setReqBody(formatRequest(req?.body));
+            setResBody(formatResult(res?.body));
           },
           Component: <RefreshFilled />,
         }
@@ -122,33 +132,22 @@ export default function CodeExample({
   return (
     <>
       <CodeEditor
-        header={
-          ["GET", "DELETE"].indexOf(req.method) > -1
-            ? `Request Query ${interactive ? "(try it)" : ""}`
-            : `Request Body ${interactive ? "(try it)" : ""}`
-        }
+        header={`Request ${interactive ? "(try it)" : ""}`}
         actions={actions}
         disabled={!interactive}
         onValueChange={handleOnValueChange}
       >
-        {["GET", "DELETE"].indexOf(req.method) > -1 ? queryString : reqBody}
+        {["GET", "DELETE"].indexOf(req?.method) > -1 ? queryString : reqBody}
       </CodeEditor>
 
       <CodeBlock
         title={status ? responseTitle : "Example Response"}
         language="json"
+        showLineNumbers={false}
+        className={status ? "" : styles.LiveResponse}
       >
         {error ? `${error}` : resBody}
       </CodeBlock>
     </>
   );
-}
-
-function formatResult(json: {}) {
-  return JSON.stringify(json, null, 2);
-}
-
-function formatRequest(body) {
-  if (typeof body === "string") return body;
-  return JSON.stringify(body, null, 2);
 }

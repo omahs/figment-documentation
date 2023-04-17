@@ -1,0 +1,43 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/polkadot/Workflows::V1::Polkadot::TransferFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Transfer
+
+Transferring DOT is a simple process. We will collect:
+
+- The address from which DOT is transferred.
+- The account that will sign the transaction.
+- The address to which DOT is transferred.
+- Amount of DOT to be transferred.
+
+In the following steps, we will illustrate how to transfer DOT with the Staking API.
+
+### Flow Diagram
+
+Below is a complete diagram for the Polkadot Transfer flow:
+
+<img src={img1} alt="Polkadot Transfer Flow Diagram" className="inline-image" />
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="polkadot"
+  folders={undefined}
+  path="docs/staking/02_networks/polkadot/index.mdx"
+  methods={[
+    {
+      name: "Create a New Transfer Flow",
+    },
+    {
+      name: "Submit Transfer Data",
+    },
+    {
+      name: "Submit Signed Transfer Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

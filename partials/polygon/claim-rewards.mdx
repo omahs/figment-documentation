@@ -1,0 +1,68 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/polygon/Workflows::V1::Polygon::ClaimRewardsFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Claim Rewards
+
+Claiming MATIC rewards is a simple process. We will collect:
+
+- The address from which MATIC is delegated
+- The Validator contract to which they are delegated
+- Optionally, the gas limit & gas price to be paid for the claim transaction
+
+:::caution important
+
+The amount of MATIC rewards must be greater than 1.0 MATIC before a Claim Rewards transaction is possible using the Staking API.
+
+Attempts to create a Claim Rewards transaction for a given delegator address when the pending reward balance is below 1.0 MATIC will result in the following validation error:
+
+```json
+{
+  "code": "invalid",
+  "message": "Request could not be processed due to validation errors!",
+  "errors": {
+    "delegator_address": [
+      {
+        "code": "reward amount has to be greater than 1.0 MATIC",
+        "message": "reward amount has to be greater than 1.0 MATIC",
+        "context": {}
+      }
+    ]
+  }
+}
+```
+
+:::
+
+### Flow Diagram
+
+Below is a complete diagram for the Polygon Claim Rewards flow:
+
+<img
+  src={img1}
+  alt="Polygon Claim Rewards Flow Diagram"
+  className="inline-image"
+/>
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="polygon"
+  folders={undefined}
+  path="docs/staking/02_networks/polygon/index.mdx"
+  methods={[
+    {
+      name: "Create New Claim Rewards Flow",
+    },
+    {
+      name: "Submit Claim Rewards Data",
+    },
+    {
+      name: "Submit a Signed Claim Rewards Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

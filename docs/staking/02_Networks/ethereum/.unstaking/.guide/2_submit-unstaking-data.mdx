@@ -1,0 +1,177 @@
+---
+title: Submit Unstaking Data
+slug: /staking/ethereum/unstaking/submit-unstaking-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+:::info note
+
+For more information about the upcoming Shanghai/Capella upgrade and the different types of ETH withdrawals, refer to Figment&apos;s [Ethereum Withdrawals: A Comprehensive FAQ](https://www.figment.io/resources/ethereum-withdrawals-a-comprehensive-faq-guide) and the Ethereum Foundation&apos;s [ETH Withdrawals FAQ](https://notes.ethereum.org/@launchpad/withdrawals-faq).
+
+:::
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object` (required).
+  - `epoch` &mdash; `number` &mdash; Earliest epoch when a voluntary exit can be processed for the given validator. This value must be for a past or current epoch, not a future epoch (required).
+  - `validator_index` &mdash; `number` &mdash; Index of the validator to exit (required).
+  - `signature` &mdash; `hexadecimal` &mdash; BLS signature of the `VoluntaryExit` message by the validator's signing key (required). See below for details.
+
+:::caution important
+
+The `validator_index` number is assigned to validators when they join the beacon chain. A validator index and its public key are two ways of referring to the same validator.
+Validator information is publicly available on beacon chain explorers, such as [https://beaconscan.com/validators](https://beaconscan.com/validators) or [https://beaconcha.in/validators](https://beaconcha.in/validators).
+
+The `signature` parameter is a BLS signature of the `VoluntaryExit` message by the validator&quot;s signing key.
+
+A complete `VoluntaryExit` is a JSON object which includes a `message` and a `signature` of that message:
+
+```json
+{
+  "message": {
+    "epoch": 158149,
+    "validator_index": 398094
+  },
+  "signature": "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3"
+}
+```
+
+:::
+
+#### Sample cURL Request
+
+```bash
+curl -X POST 'https://eth-slate.datahub.figment.io/api/v1/flows/5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659/next' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <API-KEY>' \
+--data '{
+    "name": "broadcast_unstaking_msg",
+    "inputs": {
+        "epoch": "158149",
+        "validator_index": "398094",
+        "signature": "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3"
+    }
+}'
+```
+
+### Successful Response
+
+- The flow state becomes `broadcasting` when the unstaking message is awaiting confirmation on-chain, providing an `estimated_state_change_at` timestamp.
+- When the unstaking message has been confirmed, the flow state becomes `exiting` while the validator is in the exit queue, then `withdrawing` while the validator is in the withdrawal queue, and finally `unstaked`.
+
+:::info note
+
+The progression from `broadcasting` to `unstaked` is tracked asynchronously by the Staking API, without any user interaction required.
+
+Due to how Ethereum computes exit epochs, the Staking API observes a 6 epoch waiting period from when the request is made to exit until the exit begins.
+
+:::
+
+#### Sample Response `broadcasting`
+
+```json {4,8}
+{
+  "id": "5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659",
+  "operation": "unstaking",
+  "state": "broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-24T11:36:45.451Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "validator_index": 398094,
+    "epoch": 158149,
+    "signature": "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3",
+    "estimated_principal_return_at": null
+  },
+  "network_code": "ethereum",
+  "chain_code": "goerli",
+  "created_at": "2023-02-23T05:16:02.187Z",
+  "updated_at": "2023-02-24T11:28:44.565Z"
+}
+```
+
+- `estimated_principal_return_at` &mdash; A timestamp tracking when the unstaked ETH will be available at the withdrawal address.
+
+#### Sample Response `exiting`
+
+```json {4,16}
+{
+  "id": "5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659",
+  "operation": "unstaking",
+  "state": "exiting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": null,
+      "inputs": []
+    }
+  ],
+  "data": {
+    "validator_index": 398094,
+    "epoch": 158149,
+    "signature": "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3",
+    "estimated_principal_return_at": "2023-02-25T14:16:36.302Z"
+  },
+  "network_code": "ethereum",
+  "chain_code": "goerli",
+  "created_at": "2023-02-23T05:16:02.187Z",
+  "updated_at": "2023-02-24T11:55:48.325Z"
+}
+```
+
+#### Sample Response `withdrawing`
+
+```json {4,16}
+{
+  "id": "5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659",
+  "operation": "unstaking",
+  "state": "withdrawing",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-25T14:16:36.302Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "validator_index": 398094,
+    "epoch": 158149,
+    "signature": "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3",
+    "estimated_principal_return_at": "2023-02-25T14:16:36.302Z"
+  },
+  "network_code": "ethereum",
+  "chain_code": "goerli",
+  "created_at": "2023-02-23T05:16:02.187Z",
+  "updated_at": "2023-02-24T13:01:55.668Z"
+}
+```
+
+### Failed Response
+
+- If at any point, the broadcast or exit transaction become expired &mdash; the flow state will become `failed`. Refer to the [Unstaking Flow Diagram](/staking/ethereum/unstaking#flow-diagram) for a visual representation.
+
+#### Sample Response `failed`
+
+```json {3}
+{
+  "id": "4b227ed3-f19d-4cb6-98d8-c7a1bcccc707",
+  "state": "failed",
+  "actions": [],
+  "data": {
+    "validator_index": 419790,
+    "epoch": 156304,
+    "signature": "0x8934e63a9089781cfdb83542cd86e3801907c3e08866483e1b93c0b038377070145421786f478d1eed675261125862cc024b023cf19eccf4e9232ca2bf7b96720404ff5531508eb4349d25854bc27a9f59b40018b7b14f367559094289e54416",
+    "estimated_principal_return_at": "2023-02-17T14:17:26.340Z"
+  },
+  "network_code": "ethereum",
+  "chain_code": "goerli",
+  "created_at": "2023-02-17T12:43:15.484Z",
+  "updated_at": "2023-02-17T14:04:38.345Z"
+}
+```

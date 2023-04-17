@@ -1,0 +1,1284 @@
+---
+title: Staking - Ethereum
+sidebar_position: 1
+pagination_prev: null
+pagination_next: null
+collapsed: true
+collapsible: true
+description: Staking API - Ethereum
+image: img/logo.svg
+keywords: [Staking API, Ethereum]
+
+hide_table_of_contents: true
+sidebar_label: Staking
+---
+
+import { APIMethods } from "@site/src/components";
+
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+import EthereumStaking from "@site/partials/ethereum/staking.mdx";
+
+<EthereumStaking />
+
+## API Reference
+
+<APIReferenceNav
+  service="staking-api"
+  network="ethereum"
+  folders={undefined}
+  path="docs/staking/networks/ethereum/staking/index.mdx"
+  methods={[
+    {
+      name: "Create New Staking Flow",
+    },
+    {
+      name: "Submit Deposit Data",
+    },
+    {
+      name: "Submit Signed Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Create New Aggregated Staking Flow",
+    },
+    {
+      name: "Submit Aggregated Staking Data",
+    },
+    {
+      name: "Submit Signed Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Create New Unstaking Flow",
+    },
+    {
+      name: "Submit Unstaking Data",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>
+
+<APIMethods
+  service="staking-api"
+  network="ethereum"
+  proxy=""
+  host="eth-slate.datahub.figment.io/api/v1/flows"
+  methods={[
+    {
+      name: "Create New Staking Flow",
+      content:
+        "To initiate the staking process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `ethereum`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `goerli`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_deposit_tx` — Use this action to generate a deposit transaction to stake your ETH.\n        - `funding_account_address` — The wallet ETH will be originating from.\n        - `validator_pub_key` — The public key of the validator that the ETH is to be deposited to.\n        - `withdraw_credentials` — The withdrawal address for the given validator.\n        - `signature` — A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer.\n        - `deposit_data_root` — Uniquely identifies the set of deposits made so far.\n        - `gas_limit` — Adjust the gas limit.\n        - `gas_price` — Adjust the gas price.\n- `data` — `object` Staking flow & transaction data.\n    - `amount` — Defaults to 32.0 ETH",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "ethereum",
+            chain_code: "goerli",
+            operation: "staking",
+            version: "v1",
+          },
+        },
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Staking Flow",
+        body: {
+          id: "a11ff244-18b9-470e-b018-d0f3614e75a5",
+          operation: "staking",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_deposit_tx",
+              inputs: [
+                {
+                  name: "funding_account_address",
+                  display: "Funding Account Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "hex",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "validator_pub_key",
+                  display: "Validator Pub Key",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "hex",
+                      options: {},
+                    },
+                    {
+                      type: "unfunded_validator",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "withdrawal_credentials",
+                  display: "Withdrawal Credentials",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "hex",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "signature",
+                  display: "Signature",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "hex",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "deposit_data_root",
+                  display: "Deposit Data Root",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "hex",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "gas_limit",
+                  display: "Gas Limit",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "numericality",
+                      options: {
+                        allow_blank: true,
+                        only_integer: true,
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "gas_price",
+                  display: "Gas Price",
+                  description: "in GWEI",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "numericality",
+                      options: {
+                        allow_blank: true,
+                        greater_than: 0,
+                      },
+                    },
+                    {
+                      type: "precision",
+                      options: {
+                        allow_blank: true,
+                        max: 9,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            funding_account_address: null,
+            validator_pub_key: null,
+            withdrawal_credentials: null,
+            signature: null,
+            deposit_data_root: null,
+            amount: "32.0",
+            gas_price: null,
+            gas_limit: null,
+            estimated_active_at: null,
+            transactions: [],
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2023-03-14T20:32:52.388Z",
+          updated_at: "2023-03-14T20:32:52.388Z",
+        },
+      },
+    },
+    {
+      name: "Submit Deposit Data",
+      content:
+        "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object` (required).\n    - `funding_account_address` — `string` The wallet from which the ETH will originate. (required).\n    - `validator_pub_key` — `string` The public key of the validator to which the ETH will be deposited. (required).\n    - `withdrawal_credentials` — `string` The withdrawal address for the given validator. (required).\n    - `signature` — `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pub_key` is known by the signer. (required).\n    - `deposit_data_root` — `string` Uniquely identifies the set of deposits made so far (required).\n    - `amount` — `number` Number of tokens you want to delegate. (required).\n    - `gas_price` — `string` Adjust the gas price (optional).\n    - `gas_limit` — `string` Adjust the gas limit (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_deposit_tx` — If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_deposit_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_deposit_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Staking flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_deposit_tx",
+          inputs: {
+            funding_account_address:
+              "0xD0D77667f64CAd06a4789497065F2aaF1636Ee31",
+            validator_pub_key:
+              "a379ce0e862828fd80d5d60494645fcc1ba17a5e2c3560f63c05c65e98d3e2246e5fe9f2a9299c62b5c36bd77899f946",
+            withdrawal_credentials:
+              "010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85",
+            signature:
+              "b51d5e8b6cee6870f997c7870362ac3e552677c1fb817d51ee7a5567485b71e9c3f8c1cd699dfa322c2d87c3fadfaf370ee19c551d1982eab74b82c055393580c751eb68647fec7f0a8723c593fec3505e4855721c74239a9bb91b1e4be998cd",
+            deposit_data_root:
+              "8167c5820c06d6a8808bd4e44c01ed0a3a1b2cfbb2934ff58707c7d650b188da",
+          },
+        },
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{ethStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Deposit Data",
+        body: {
+          id: "a11ff244-18b9-470e-b018-d0f3614e75a5",
+          operation: "staking",
+          state: "deposit_tx_signature",
+          actions: [
+            {
+              name: "refresh_deposit_tx",
+              inputs: [],
+            },
+            {
+              name: "sign_deposit_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                  signers: ["0xD0D77667f64CAd06a4789497065F2aaF1636Ee31"],
+                  transaction_payload:
+                    "0x02f901d7054e8459682f008502072e61b682c55e94ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000001208167c5820c06d6a8808bd4e44c01ed0a3a1b2cfbb2934ff58707c7d650b188da0000000000000000000000000000000000000000000000000000000000000030a379ce0e862828fd80d5d60494645fcc1ba17a5e2c3560f63c05c65e98d3e2246e5fe9f2a9299c62b5c36bd77899f946000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed850000000000000000000000000000000000000000000000000000000000000060b51d5e8b6cee6870f997c7870362ac3e552677c1fb817d51ee7a5567485b71e9c3f8c1cd699dfa322c2d87c3fadfaf370ee19c551d1982eab74b82c055393580c751eb68647fec7f0a8723c593fec3505e4855721c74239a9bb91b1e4be998cdc0",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["0xD0D77667f64CAd06a4789497065F2aaF1636Ee31"],
+                  transaction_payload:
+                    "0x02f901d7054e8459682f008502072e61b682c55e94ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000001208167c5820c06d6a8808bd4e44c01ed0a3a1b2cfbb2934ff58707c7d650b188da0000000000000000000000000000000000000000000000000000000000000030a379ce0e862828fd80d5d60494645fcc1ba17a5e2c3560f63c05c65e98d3e2246e5fe9f2a9299c62b5c36bd77899f946000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed850000000000000000000000000000000000000000000000000000000000000060b51d5e8b6cee6870f997c7870362ac3e552677c1fb817d51ee7a5567485b71e9c3f8c1cd699dfa322c2d87c3fadfaf370ee19c551d1982eab74b82c055393580c751eb68647fec7f0a8723c593fec3505e4855721c74239a9bb91b1e4be998cdc0",
+                  signing_payload:
+                    "0x5beb0495b1cf5028fe16ce5b79b9348c054564161cee4883d1d00633ad9b6025",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_deposit_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            estimated_active_at: null,
+            transactions: [
+              {
+                code: "deposit",
+                amount: "32.0",
+                raw: "0x02f901d7054e8459682f008502072e61b682c55e94ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000001208167c5820c06d6a8808bd4e44c01ed0a3a1b2cfbb2934ff58707c7d650b188da0000000000000000000000000000000000000000000000000000000000000030a379ce0e862828fd80d5d60494645fcc1ba17a5e2c3560f63c05c65e98d3e2246e5fe9f2a9299c62b5c36bd77899f946000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed850000000000000000000000000000000000000000000000000000000000000060b51d5e8b6cee6870f997c7870362ac3e552677c1fb817d51ee7a5567485b71e9c3f8c1cd699dfa322c2d87c3fadfaf370ee19c551d1982eab74b82c055393580c751eb68647fec7f0a8723c593fec3505e4855721c74239a9bb91b1e4be998cdc0",
+                signing_payload:
+                  "0x5beb0495b1cf5028fe16ce5b79b9348c054564161cee4883d1d00633ad9b6025",
+                signed: null,
+                hash: null,
+                status: null,
+                error: null,
+                signatures: null,
+                block_time: null,
+                inputs: {
+                  funding_account_address:
+                    "0xD0D77667f64CAd06a4789497065F2aaF1636Ee31",
+                  validator_pub_key:
+                    "0xa379ce0e862828fd80d5d60494645fcc1ba17a5e2c3560f63c05c65e98d3e2246e5fe9f2a9299c62b5c36bd77899f946",
+                  withdrawal_credentials:
+                    "0x010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85",
+                  signature:
+                    "0xb51d5e8b6cee6870f997c7870362ac3e552677c1fb817d51ee7a5567485b71e9c3f8c1cd699dfa322c2d87c3fadfaf370ee19c551d1982eab74b82c055393580c751eb68647fec7f0a8723c593fec3505e4855721c74239a9bb91b1e4be998cd",
+                  deposit_data_root:
+                    "0x8167c5820c06d6a8808bd4e44c01ed0a3a1b2cfbb2934ff58707c7d650b188da",
+                  gas_price: null,
+                  gas_limit: null,
+                  amount: "32.0",
+                },
+              },
+            ],
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2023-03-14T20:32:52.388Z",
+          updated_at: "2023-03-14T21:19:14.960Z",
+        },
+      },
+    },
+    {
+      name: "Submit Signed Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the Ethereum network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `deposit_tx_broadcasting` — Transaction has been broadcast and confirmed.\n    - `deposited` — Transaction has been confirmed.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Staking flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_deposit_tx",
+          inputs: {
+            transaction_payload:
+              "0x02f9021905808459682f008459682f1c82dc9e94ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120021db2ee51da4e420dac8310928e2c3c25b7f8b5056dc792a206e680a48308230000000000000000000000000000000000000000000000000000000000000030a0b60b10bdae3bdc526586163bc83a928f14c9bcb8244816f23395692a7cd613e0f3ea23aa295ae0467dc65002c95640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc94dbfac39af945c8186a6b3fc738c5ce97b010000000000000000000000000000000000000000000000000000000000000006088cce9fcadc43c58db4d5c0e7101cb27537be0a37b1e2fb2c096e72aee14b3bce20fca87ff11f92744abc71a221a9ceb11f52e1cfae59af00e7e42f83d482901223a100f88b532e19bc776786cd4baaddb6ec4290fdedfc3ebefcbf44fe7e413c080a0a0a59a1a2c4e03582ad842293a2dd2ee17f4f9f71f46a06ea59447eee9a71a20a00545743e3159ff27ae44e6fdaa2f434e033438d661cccf9f5ba202ea64e25d64",
+          },
+        },
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{ethStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Signed Transaction for Broadcast",
+        body: {
+          id: "8307b0d1-fc17-45b1-b540-2d9c31578d99",
+          state: "deposit_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2022-10-07T17:26:08.237Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            funding_account_address:
+              "0x387462761F706AA7c1DA71FBA1c545724928b67b",
+            validator_pub_key:
+              "0xa0b60b10bdae3bdc526586163bc83a928f14c9bcb8244816f23395692a7cd613e0f3ea23aa295ae0467dc65002c95640",
+            withdrawal_credentials:
+              "0x010000000000000000000000dc94dbfac39af945c8186a6b3fc738c5ce97b010",
+            signature:
+              "0x88cce9fcadc43c58db4d5c0e7101cb27537be0a37b1e2fb2c096e72aee14b3bce20fca87ff11f92744abc71a221a9ceb11f52e1cfae59af00e7e42f83d482901223a100f88b532e19bc776786cd4baaddb6ec4290fdedfc3ebefcbf44fe7e413",
+            deposit_data_root:
+              "0x021db2ee51da4e420dac8310928e2c3c25b7f8b5056dc792a206e680a4830823",
+            amount: "32.0",
+            gas_price: null,
+            gas_limit: null,
+            deposit_transaction: {
+              raw: "0x02f901d605808459682f008459682f1c82dc9e94ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120021db2ee51da4e420dac8310928e2c3c25b7f8b5056dc792a206e680a48308230000000000000000000000000000000000000000000000000000000000000030a0b60b10bdae3bdc526586163bc83a928f14c9bcb8244816f23395692a7cd613e0f3ea23aa295ae0467dc65002c95640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc94dbfac39af945c8186a6b3fc738c5ce97b010000000000000000000000000000000000000000000000000000000000000006088cce9fcadc43c58db4d5c0e7101cb27537be0a37b1e2fb2c096e72aee14b3bce20fca87ff11f92744abc71a221a9ceb11f52e1cfae59af00e7e42f83d482901223a100f88b532e19bc776786cd4baaddb6ec4290fdedfc3ebefcbf44fe7e413c0",
+              signing_payload: null,
+              signed:
+                "0x02f9021905808459682f008459682f1c82dc9e94ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120021db2ee51da4e420dac8310928e2c3c25b7f8b5056dc792a206e680a48308230000000000000000000000000000000000000000000000000000000000000030a0b60b10bdae3bdc526586163bc83a928f14c9bcb8244816f23395692a7cd613e0f3ea23aa295ae0467dc65002c95640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc94dbfac39af945c8186a6b3fc738c5ce97b010000000000000000000000000000000000000000000000000000000000000006088cce9fcadc43c58db4d5c0e7101cb27537be0a37b1e2fb2c096e72aee14b3bce20fca87ff11f92744abc71a221a9ceb11f52e1cfae59af00e7e42f83d482901223a100f88b532e19bc776786cd4baaddb6ec4290fdedfc3ebefcbf44fe7e413c080a0a0a59a1a2c4e03582ad842293a2dd2ee17f4f9f71f46a06ea59447eee9a71a20a00545743e3159ff27ae44e6fdaa2f434e033438d661cccf9f5ba202ea64e25d64",
+              hash: "0x6acc6aa30c09ba30a4cc4ece382b6956cf23e0c80ea518b030c9185588ea40a6",
+              status: "broadcast",
+              error: null,
+              signatures: null,
+            },
+          },
+          network_code: "ethereum",
+          chain_code: "goerli-prater",
+          created_at: "2022-10-06T23:40:33.826Z",
+          updated_at: "2022-10-07T17:24:17.339Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `deposit_tx_broadcasting` — Transaction is broadcasting and not confirmed yet.\n    - `deposited` — Transaction has been confirmed and stake deposited.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Staking flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{ethStakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "ad904171-5051-40dd-bfba-d9c710174881",
+          operation: "staking",
+          state: "deposited",
+          actions: [],
+          data: {
+            funding_account_address:
+              "0x387462761F706AA7c1DA71FBA1c545724928b67b",
+            validator_pub_key:
+              "0xa0b60b10bdae3bdc526586163bc83a928f14c9bcb8244816f23395692a7cd613e0f3ea23aa295ae0467dc65002c95640",
+            withdrawal_credentials:
+              "0x010000000000000000000000dc94dbfac39af945c8186a6b3fc738c5ce97b010",
+            signature:
+              "0x88cce9fcadc43c58db4d5c0e7101cb27537be0a37b1e2fb2c096e72aee14b3bce20fca87ff11f92744abc71a221a9ceb11f52e1cfae59af00e7e42f83d482901223a100f88b532e19bc776786cd4baaddb6ec4290fdedfc3ebefcbf44fe7e413",
+            deposit_data_root:
+              "0x021db2ee51da4e420dac8310928e2c3c25b7f8b5056dc792a206e680a4830823",
+            amount: "32.0",
+            gas_price: null,
+            gas_limit: null,
+            deposit_transaction: {
+              raw: "0x02f901d605808459682f008459682f1c82dc9e94ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120021db2ee51da4e420dac8310928e2c3c25b7f8b5056dc792a206e680a48308230000000000000000000000000000000000000000000000000000000000000030a0b60b10bdae3bdc526586163bc83a928f14c9bcb8244816f23395692a7cd613e0f3ea23aa295ae0467dc65002c95640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc94dbfac39af945c8186a6b3fc738c5ce97b010000000000000000000000000000000000000000000000000000000000000006088cce9fcadc43c58db4d5c0e7101cb27537be0a37b1e2fb2c096e72aee14b3bce20fca87ff11f92744abc71a221a9ceb11f52e1cfae59af00e7e42f83d482901223a100f88b532e19bc776786cd4baaddb6ec4290fdedfc3ebefcbf44fe7e413c0",
+              signing_payload: null,
+              signed:
+                "0x02f9021905808459682f008459682f1c82dc9e94ff50ed3d0ec03ac01d4c79aad74928bff48a7b2b8901bc16d674ec800000b901a422895118000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120021db2ee51da4e420dac8310928e2c3c25b7f8b5056dc792a206e680a48308230000000000000000000000000000000000000000000000000000000000000030a0b60b10bdae3bdc526586163bc83a928f14c9bcb8244816f23395692a7cd613e0f3ea23aa295ae0467dc65002c95640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc94dbfac39af945c8186a6b3fc738c5ce97b010000000000000000000000000000000000000000000000000000000000000006088cce9fcadc43c58db4d5c0e7101cb27537be0a37b1e2fb2c096e72aee14b3bce20fca87ff11f92744abc71a221a9ceb11f52e1cfae59af00e7e42f83d482901223a100f88b532e19bc776786cd4baaddb6ec4290fdedfc3ebefcbf44fe7e413c080a0a0a59a1a2c4e03582ad842293a2dd2ee17f4f9f71f46a06ea59447eee9a71a20a00545743e3159ff27ae44e6fdaa2f434e033438d661cccf9f5ba202ea64e25d64",
+              hash: "0x6acc6aa30c09ba30a4cc4ece382b6956cf23e0c80ea518b030c9185588ea40a6",
+              status: "broadcast",
+              error: null,
+              signatures: null,
+            },
+          },
+          network_code: "ethereum",
+          chain_code: "goerli-prater",
+          created_at: "2022-04-26T18:23:46.702Z",
+          updated_at: "2022-04-27T22:24:47.738Z",
+        },
+      },
+    },
+    {
+      name: "Create New Aggregated Staking Flow",
+      content:
+        "To initiate the aggregated staking process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `ethereum`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `goerli`) (required).\n    - `operation` — `string` The operation to perform (ex. `aggregated_staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_aggregated_deposit_tx` — Use this action to generate an aggregated deposit transaction to stake your ETH.\n        - `funding_account_address` — The wallet from which the ETH will originate.\n        - `deposits` — Array of validator deposit data:\n            - `validator_pub_key` — The public key of the validator to which the ETH will be deposited.\n            - `withdrawal_credentials` — The withdrawal address for the given validator.\n            - `signature` — A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer.\n            - `deposit_data_root` — Uniquely identifies the set of deposits made so far.\n        - `gas_limit` — Adjust the gas limit.\n        - `gas_price` — Adjust the gas price.\n- `data` — `object` Aggregated staking flow & transaction data.",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "ethereum",
+            chain_code: "goerli",
+            operation: "aggregated_staking",
+            version: "v1",
+          },
+        },
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Aggregated Staking Flow",
+        body: {
+          id: "b2d87fd3-6446-4bde-95ad-ecb7ed75b185",
+          operation: "aggregated_staking",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_aggregated_deposit_tx",
+              inputs: [
+                {
+                  name: "funding_account_address",
+                  display: "Funding Account Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "hex",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "deposits",
+                  display: "Deposits",
+                  description: "",
+                  type: "array_of_validator_deposit_data",
+                  validations: [
+                    {
+                      type: "array",
+                      options: {
+                        allow_empty: false,
+                        allow_duplicates: false,
+                      },
+                    },
+                    {
+                      type: "length",
+                      options: {
+                        maximum: 100,
+                        message:
+                          "cannot fund more than 100 validators in single transaction",
+                      },
+                    },
+                    {
+                      type: "array_of_objects",
+                      options: {
+                        merge_array_errors: true,
+                      },
+                    },
+                  ],
+                  array: true,
+                  default_value: null,
+                  element_type: "validator_deposit_data",
+                  inputs: [
+                    {
+                      name: "validator_pub_key",
+                      display: "Validator Pub Key",
+                      description: "",
+                      type: "hex",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                        {
+                          type: "hex",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "withdrawal_credentials",
+                      display: "Withdrawal Credentials",
+                      description: "",
+                      type: "hex",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                        {
+                          type: "hex",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "hex",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                        {
+                          type: "hex",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "deposit_data_root",
+                      display: "Deposit Data Root",
+                      description: "",
+                      type: "hex",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                        {
+                          type: "hex",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+                {
+                  name: "gas_limit",
+                  display: "Gas Limit",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "numericality",
+                      options: {
+                        allow_blank: true,
+                        only_integer: true,
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "gas_price",
+                  display: "Gas Price",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "numericality",
+                      options: {
+                        allow_blank: true,
+                        greater_than: 0,
+                      },
+                    },
+                    {
+                      type: "precision",
+                      options: {
+                        allow_blank: true,
+                        max: 9,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            deposits: [],
+            funding_account_address: null,
+            gas_price: null,
+            gas_limit: null,
+            estimated_active_at: null,
+            transactions: [],
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2023-03-14T12:53:08.782Z",
+          updated_at: "2023-03-14T12:53:08.782Z",
+        },
+      },
+    },
+    {
+      name: "Submit Aggregated Staking Data",
+      content:
+        "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object` (required).\n    - `funding_account_address` — `string` The wallet from which the ETH will originate (required).\n    - `deposits` — Array of validator deposit data:\n        - `validator_pub_key` — `string` The public key of the validator to which the ETH will be deposited (required).\n        - `withdrawal_credentials` — `string` The withdrawal address for the given validator (required).\n        - `signature` — `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pub_key` is known by the signer. (required).\n        - `deposit_data_root` — `string` Uniquely identifies the set of deposits made so far (required).\n    - `gas_price` — `string` Adjust the gas price (optional).\n    - `gas_limit` — `string` Adjust the gas limit (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_aggregated_deposit_tx` — If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_aggregated_deposit_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_aggregated_deposit_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Aggregated staking flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_aggregated_deposit_tx",
+          inputs: {
+            funding_account_address:
+              "0xB458D87418e6020260C92e18b11b64F1ed6fFF30",
+            deposits: [
+              {
+                signature:
+                  "0xa5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064",
+                deposit_data_root:
+                  "0x67b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8",
+                validator_pub_key:
+                  "0x8d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d33",
+                withdrawal_credentials:
+                  "0x010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85",
+              },
+            ],
+          },
+        },
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{ethAggregatedStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Aggregated Staking Data",
+        body: {
+          id: "55d5fcb4-9334-46f2-bc07-739737755b46",
+          operation: "aggregated_staking",
+          state: "aggregated_deposit_tx_signature",
+          actions: [
+            {
+              name: "refresh_aggregated_deposit_tx",
+              inputs: [],
+            },
+            {
+              name: "sign_aggregated_deposit_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                  signers: ["0xD0D77667f64CAd06a4789497065F2aaF1636Ee31"],
+                  transaction_payload:
+                    "0x02f902d8054e8459682f008501e7c6031e83010b66943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["0xD0D77667f64CAd06a4789497065F2aaF1636Ee31"],
+                  transaction_payload:
+                    "0x02f902d8054e8459682f008501e7c6031e83010b66943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0",
+                  signing_payload:
+                    "0x09d1516ac312b850c49b267eb2687134f2b25e3a13228cdd9183b0a96a52af0c",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_aggregated_deposit_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            estimated_active_at: null,
+            transactions: [
+              {
+                code: "aggregated_deposit",
+                amount: "32.0",
+                raw: "0x02f902d8054e8459682f008501e7c6031e83010b66943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0",
+                signing_payload:
+                  "0x09d1516ac312b850c49b267eb2687134f2b25e3a13228cdd9183b0a96a52af0c",
+                signed: null,
+                hash: null,
+                status: null,
+                error: null,
+                signatures: null,
+                block_time: null,
+                inputs: {
+                  funding_account_address:
+                    "0xD0D77667f64CAd06a4789497065F2aaF1636Ee31",
+                  gas_price: null,
+                  gas_limit: null,
+                  deposits: [
+                    {
+                      validator_pub_key:
+                        "0x8d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d33",
+                      withdrawal_credentials:
+                        "0x010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85",
+                      signature:
+                        "0xa5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064",
+                      deposit_data_root:
+                        "0x67b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8",
+                    },
+                  ],
+                  amount: "32.0",
+                },
+              },
+            ],
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2023-03-14T21:21:45.804Z",
+          updated_at: "2023-03-14T21:23:31.379Z",
+        },
+      },
+    },
+    {
+      name: "Submit Signed Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the Ethereum network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `aggregated_deposit_tx_broadcasting` — Transaction broadcasting to the network.\n    - `activating` — Transaction has been confirmed and stake is now activating.\n    - `active` — Stake is successfully active and earning rewards.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Aggregated staking flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_aggregated_deposit_tx",
+          inputs: {
+            transaction_payload:
+              "0x02f9031a05808459682f0084598ab15683011706943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c001a01c6536f2d69dddb7b10c653e7f7055a63fc870fcf7597c6f80d89a9a5234d238a015a74ac864235652dd0dace203aeae3343f44c4fb4d6328b61bad2719d7141dd",
+          },
+        },
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{ethAggregatedStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Signed Transaction for Broadcast",
+        body: {
+          id: "336d0a12-4902-4b18-9219-3f0ed2ffcac7",
+          state: "aggregated_deposit_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2022-12-20T14:00:36.269Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            deposits: [
+              {
+                validator_pub_key:
+                  "0x8d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d33",
+                withdrawal_credentials:
+                  "0x010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85",
+                signature:
+                  "0xa5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064",
+                deposit_data_root:
+                  "0x67b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8",
+              },
+            ],
+            funding_account_address:
+              "0xB458D87418e6020260C92e18b11b64F1ed6fFF30",
+            gas_price: null,
+            gas_limit: null,
+            aggregated_deposit_transaction: {
+              raw: "0x02f902d705808459682f0084598ab15683011706943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0",
+              signing_payload:
+                "0x13ac527a761599ba44d47eb3957d63257b835b3e1be410e5578f91bef55e298b",
+              signed:
+                "0x02f9031a05808459682f0084598ab15683011706943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c001a01c6536f2d69dddb7b10c653e7f7055a63fc870fcf7597c6f80d89a9a5234d238a015a74ac864235652dd0dace203aeae3343f44c4fb4d6328b61bad2719d7141dd",
+              hash: "0x26b0c13f0ecce4049dd7d9ac885d6898e3bceafca25304aee51fc3cd39cb1460",
+              status: null,
+              error: null,
+              signatures: [
+                {
+                  account_address: "0xB458D87418e6020260C92e18b11b64F1ed6fFF30",
+                  signature: "",
+                },
+              ],
+            },
+            estimated_active_at: null,
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2022-12-20T13:20:08.057Z",
+          updated_at: "2022-12-20T13:59:35.263Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `aggregated_deposit_tx_broadcasting` — Transaction broadcasting to the network.\n    - `activating` — Transaction has been confirmed and stake is now activating.\n    - `active` — Stake is successfully active and earning rewards.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Staking flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{ethAggregatedStakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "336d0a12-4902-4b18-9219-3f0ed2ffcac7",
+          state: "active",
+          actions: [],
+          data: {
+            deposits: [
+              {
+                validator_pub_key:
+                  "0x8d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d33",
+                withdrawal_credentials:
+                  "0x010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85",
+                signature:
+                  "0xa5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064",
+                deposit_data_root:
+                  "0x67b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8",
+              },
+            ],
+            funding_account_address:
+              "0xB458D87418e6020260C92e18b11b64F1ed6fFF30",
+            gas_price: null,
+            gas_limit: null,
+            aggregated_deposit_transaction: {
+              raw: "0x02f902d705808459682f0084598ab15683011706943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0",
+              signing_payload:
+                "0x13ac527a761599ba44d47eb3957d63257b835b3e1be410e5578f91bef55e298b",
+              signed:
+                "0x02f9031a05808459682f0084598ab15683011706943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c001a01c6536f2d69dddb7b10c653e7f7055a63fc870fcf7597c6f80d89a9a5234d238a015a74ac864235652dd0dace203aeae3343f44c4fb4d6328b61bad2719d7141dd",
+              hash: "0x26b0c13f0ecce4049dd7d9ac885d6898e3bceafca25304aee51fc3cd39cb1460",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address: "0xB458D87418e6020260C92e18b11b64F1ed6fFF30",
+                  signature: "",
+                },
+              ],
+            },
+            estimated_active_at: "2022-12-20T21:59:53.300Z",
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2022-12-20T13:20:08.057Z",
+          updated_at: "2022-12-20T23:52:43.307Z",
+        },
+      },
+    },
+    {
+      name: "Create New Unstaking Flow",
+      content:
+        "To initiate the unstaking process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `ethereum`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `goerli`) (required).\n    - `operation` — `string` The operation to perform (ex. `unstaking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `broadcast_unstaking_msg` — Use this action to broadcast a transaction to unstake your ETH.\n        - `validator_index` —  The validator from which the ETH will be unstaked.\n        - `epoch` - The Ethereum epoch number during which the ETH will be unstaked.\n        - `signature` — A BLS proof of possession, i.e. a proof that the private key corresponding to the validator_index is known by the signer.\n    - `unstaking_msg_expired` — Use this action to indicate that the unstaking message has expired. This action has no inputs.\n- `data` — `object` Staking flow & transaction data.",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "ethereum",
+            chain_code: "goerli",
+            operation: "unstaking",
+            version: "v1",
+          },
+        },
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Unstaking Flow",
+        body: {
+          id: "96d16e6f-4984-4a8e-9018-9e4a7da54dfe",
+          operation: "unstaking",
+          state: "initialized",
+          actions: [
+            {
+              name: "broadcast_unstaking_msg",
+              inputs: [
+                {
+                  name: "validator_index",
+                  display: "Validator Index",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "numericality",
+                      options: {
+                        only_integer: true,
+                        greater_than_or_equal_to: 0,
+                      },
+                    },
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "epoch",
+                  display: "Epoch",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "numericality",
+                      options: {
+                        only_integer: true,
+                        greater_than_or_equal_to: 0,
+                      },
+                    },
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "signature",
+                  display: "Signature",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "hex",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+            {
+              name: "unstaking_msg_expired",
+              inputs: [],
+            },
+          ],
+          data: {
+            validator_index: null,
+            epoch: null,
+            signature: null,
+            estimated_principal_return_at: null,
+            transactions: [],
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2023-03-10T15:19:51.359Z",
+          updated_at: "2023-03-10T15:19:51.359Z",
+        },
+      },
+    },
+    {
+      name: "Submit Unstaking Data",
+      content:
+        "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object` (required).\n    - `epoch` — `string` Earliest epoch when a voluntary exit can be processed for the given validator. This value must be for a past or current epoch, not a future epoch (required).\n    - `validator_index` — `number` Index of the validator to exit (required).\n    - `signature` — `hexadecimal` A BLS signature of the `VoluntaryExit` message by the validator's signing key (required).\n  \n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `wait` — Provides an `estimated_state_change_at` timestamp. This action has no inputs.\n- `data` — `object` Staking flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "broadcast_unstaking_msg",
+          inputs: {
+            epoch: "158149",
+            validator_index: "398094",
+            signature:
+              "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3",
+          },
+        },
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{ethStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Unstaking Data",
+        body: {
+          id: "5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659",
+          operation: "unstaking",
+          state: "broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-02-24T11:36:45.451Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            validator_index: 398094,
+            epoch: 158149,
+            signature:
+              "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3",
+            estimated_principal_return_at: null,
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2023-02-23T05:16:02.187Z",
+          updated_at: "2023-02-24T11:28:44.565Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `broadcasting` — Transaction broadcasting to the network.\n    - `exiting` — Exit transaction has been confirmed and validator is in exit queue.\n    - `withdrawing` — Validator has exited the active set and stake will be returned to the withdrawal address.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Staking flow & transaction data.\n    - `estimated_principal_return_at` — A timestamp tracking when the unstaked ETH will be available at the withdrawal address.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://eth-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{ethStakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659",
+          operation: "unstaking",
+          state: "unstaked",
+          actions: [],
+          data: {
+            validator_index: 398094,
+            epoch: 158149,
+            signature:
+              "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3",
+            estimated_principal_return_at: "2023-02-25T14:16:36.302Z",
+          },
+          network_code: "ethereum",
+          chain_code: "goerli",
+          created_at: "2023-02-23T05:16:02.187Z",
+          updated_at: "2023-02-25T14:18:36.302Z",
+        },
+      },
+    },
+  ]}
+/>

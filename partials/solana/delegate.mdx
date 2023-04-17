@@ -1,0 +1,53 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/solana/Workflows::V1::Solana::StakingFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Delegate
+
+There are two ways of delegating SOL:
+
+- Using an existing stake account that is in an inactive state
+- Generating a new stake account and funding it with SOL
+
+In the following guide we will illustrate how to create a new stake account.
+
+:::info note
+
+If you already have a stake account, you may reuse it.
+
+:::
+
+### Flow Diagram
+
+Below is a complete diagram for the Solana Delegation flow:
+
+<img src={img1} alt="Solana Delegation Flow Diagram" className="inline-image" />
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="solana"
+  folders={undefined}
+  path="docs/staking/02_networks/solana/index.mdx"
+  methods={[
+    {
+      name: "Create New Delegation Flow",
+    },
+    {
+      name: "Create New Staking Account",
+    },
+    {
+      name: "Submit a Signed Stake Account Transaction for Broadcast",
+    },
+    {
+      name: "Submit Validator Address",
+    },
+    {
+      name: "Submit a Signed Delegate Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

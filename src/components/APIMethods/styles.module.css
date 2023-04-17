@@ -168,33 +168,39 @@
   display: flex;
   gap: 10px;
   padding: 0;
+  vertical-align: baseline;
 }
 
 .heading > code {
   padding: 0 5px;
 }
 
-[data-method="POST"]::before {
-  background-color: rgb(72, 202, 144);
-}
-[data-method="GET"]::before {
-  background-color: rgb(97, 174, 255);
-}
-[data-method="PUT"]::before {
-  background-color: rgb(255, 174, 0);
-}
-[data-method="DELETE"]::before {
-  background-color: rgb(244, 67, 67);
+.heading::before {
+  display: inline-block;
+  content: attr(data-method);
+  border-radius: var(--ifm-code-border-radius);
+  font-family: "Helvetica";
+  /* font-size: var(--ifm-code-font-size); */
+  font-size: 1.15rem;
+  padding: 4px var(--ifm-code-padding-horizontal);
+  /* vertical-align: middle; */
 }
 
-.heading::before {
-  content: attr(data-method);
-  border: 0.1rem solid rgba(0, 0, 0, 0.1);
-  border-radius: var(--ifm-code-border-radius);
-  font-family: var(--ifm-font-family-monospace);
-  font-size: var(--ifm-code-font-size);
-  padding: var(--ifm-code-padding-vertical) var(--ifm-code-padding-horizontal);
-  vertical-align: middle;
+[data-method="POST"]::before {
+  color: rgb(72, 202, 144);
+  margin-top: 1px;
+}
+[data-method="GET"]::before {
+  color: rgb(97, 174, 255);
+  margin-top: 1px;
+}
+[data-method="PUT"]::before {
+  color: rgb(255, 174, 0);
+  margin-top: 1px;
+}
+[data-method="DELETE"]::before {
+  color: rgb(244, 67, 67);
+  margin-top: 1px;
 }
 
 .test,
@@ -231,4 +237,8 @@
 
 .anchor:hover {
   opacity: 1;
+}
+
+.hostURL {
+  width: 95%;
 }

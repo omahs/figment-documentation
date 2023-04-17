@@ -1,0 +1,56 @@
+---
+title: Errors
+sidebar_position: 3
+pagination_prev: null
+pagination_next: null
+hide_table_of_contents: true
+---
+
+Figment uses conventional HTTP response codes to indicate the success or failure of an API request.
+
+In general: Codes in the <code>2xx</code> range indicate success. Codes in the <code>4xx</code> range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a staking transaction failed, etc.). Codes in the <code>5xx</code> range indicate an error with Figment's servers.
+
+## HTTP Response Status Codes
+
+| Code    | Message               | Meaning                                                                                                                                                     |
+| :------ | :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **200** | OK                    | The request succeeded.                                                                                                                                      |
+| **400** | Bad Request           | The server cannot or will not process the request due to some client error like incorrect request syntax.                                                   |
+| **401** | Unauthorized          | The client must authenticate itself to get the request response, this can occur due to an incorrect API Key or Auth token.                                  |
+| **403** | Forbidden             | The client doesn't have access rights to the content/service.                                                                                               |
+| **404** | Not Found             | The server can not find the requested resource. Coming from an API, it can also mean that the endpoint is correct but the requested resource doesn't exist. |
+| **405** | Method Not Allowed    | The request method is known by the server but is not supported by the target resource.                                                                      |
+| **408** | Request Timeout       | A timeout means the server shut down the connection.                                                                                                        |
+| **429** | Too Many Requests     | The user has exceeded their quota or sent too many requests in a given timeframe, and is subject to rate limiting.                                          |
+| **500** | Internal Server Error | The server has encountered a situation it does not know how to handle.                                                                                      |
+| **501** | Not Implemented       | The request method is not supported by the server and cannot be handled.                                                                                    |
+| **502** | Bad Gateway           | This error response means that the server, while acting as a gateway, tried to handle the request and got an invalid response.                              |
+| **503** | Service Unavailable   | The server is not ready to handle the request. Common causes are a server that is down for maintenance or that is overloaded.                               |
+| **504** | Gateway Timeout       | This error response is given when the server is acting as a gateway and cannot get a response in time.                                                      |
+
+---
+
+## JSON-RPC Error Codes
+
+:::info
+
+Error result fields will contain the following information:
+
+1. `code` - A Number that indicates the error type that occurred, (ex. `-32600`).
+2. `message` - A String providing a short description of the error.
+3. `data` - A Primitive or Structured value that contains additional information about the error. This may be omitted.
+
+:::
+
+### Common JSON-RPC Error Codes
+
+For more details about the JSON-RPC error codes and a full reference, please see the official [JSON-RPC docs](https://www.jsonrpc.org/specification).
+
+| Code                     | Message          | Meaning                                                                                               |
+| :----------------------- | :--------------- | :---------------------------------------------------------------------------------------------------- |
+| **-32700**               | Parse error      | Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text. |
+| **-32600**               | Invalid Request  | The JSON sent is not a valid Request object.                                                          |
+| **-32601**               | Method not found | The method does not exist / is not available.                                                         |
+| **-32602**               | Invalid params   | Invalid method parameter(s).                                                                          |
+| **-32603**               | Internal error   | Internal JSON-RPC error.                                                                              |
+| **-32000** to **-32099** | Server error     | Reserved for implementation-defined server-errors.                                                    |

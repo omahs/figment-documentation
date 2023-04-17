@@ -1,32 +1,63 @@
-/* make links bold when active */
+/* line height for the side nav */
+.menu__link {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* side-nav color & size */
+[data-theme="light"] .menu {
+  background: var(--side-nav-bg);
+  width: var(--doc-sidebar-width);
+  height: 100vh !important;
+}
+
+[data-theme="dark"] .menu {
+  background: var(--side-nav-bg);
+  width: var(--doc-sidebar-width);
+  height: 100vh !important;
+}
+
+.theme-doc-sidebar-container {
+  width: var(--doc-sidebar-width);
+  background: var(--side-nav-bg);
+  border-right: 1px solid black;
+}
+
+/* only make links bold when active */
 .menu__link,
 .navbar-sidebar__back {
   color: var(--side-nav-color);
+  font-weight: normal;
 }
+
 .menu__link:hover {
-  color: var(--side-nav-color--active);
+  color: #0b703f;
 }
 
 .menu__link--active {
   font-weight: bold;
-  color: var(--side-nav-color--active);
-}
-
-/* fix font-sizes */
-.menu__list .menu__link {
-  font-size: 1.33333rem;
-}
-
-.menu__list .menu__list .menu__link {
-  color: var(--side-nav-sublist-color);
-  font-size: 1rem;
+  color: #0b703f;
 }
 
 .menu__list .menu__list .menu__link.menu__link--active {
-  color: var(--side-nav-color);
+  font-weight: bold;
 }
 
-/* fix menu caret size */
+/* prevent menu items from overflowing the container */
+.menu__list-item {
+  margin-right: 12px;
+}
+
+/* menu caret button - clean-btn also impacts the colormode toggle */
+[data-theme]
+  .clean-btn:not(.toggleButton_src-theme-ColorModeToggle-styles-module):not(
+    .overlayHeaderButton_src-components-APIMethods-components-CodeExample-styles-module
+  ):not(.theme-back-to-top-button) {
+  width: 1.25rem;
+  padding: 0;
+}
+
+/* menu caret */
 [data-theme] .clean-btn.menu__caret {
   width: 1.25rem;
   padding: 0;
@@ -36,7 +67,10 @@
   padding-left: 1.75rem;
 }
 
-/* fix menu caret position */
+/* .menu__link--sublist {
+  padding-left: 1.5rem;
+} */
+
 .menu__list-item-collapsible a {
   order: 1;
 }
@@ -50,7 +84,34 @@
   left: 0;
 }
 
-/* fix menu carets colors */
+/* TODO: align link items and categories accounting for removed caret */
+.menu__list-item-collapsible {
+  margin-left: -20px !important;
+}
+
+.menu__list-item-collapsible:is(.menu__list-item-collapsible--active) {
+  font-weight: bold;
+}
+
+/* hide menu carets */
+[data-theme] .menu__link--sublist-caret::after,
+[data-theme] .clean-btn.menu__caret::before {
+  background: transparent;
+  display: none;
+}
+
+[data-theme] .menu__link--sublist-caret::after,
+[data-theme] .menu__link--active + .clean-btn.menu__caret::before {
+  background: transparent;
+  display: none;
+}
+/* end hide menu carets */
+
+/* display menu carets */
+/* [data-theme] .clean-btn.menu__caret {
+  margin-left: 15px;
+ }
+ 
 [data-theme] .menu__link--sublist-caret::after,
 [data-theme] .clean-btn.menu__caret::before {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="rgba(0,0,0,0.6)" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>')
@@ -61,28 +122,78 @@
 [data-theme] .menu__link--active + .clean-btn.menu__caret::before {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="rgba(0,0,0,0.99)" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>')
     50% / 1.25rem 1.25rem;
-}
+} */
+/* end display menu carets */
 
-/* identify current link */
-.menu__link--active:not(.menu__list-item-collapsible):not(.menu__link--sublist)::before {
+/* identify current link, using ::after to place arrow to the right of the link */
+/* .menu__link--active:not(.menu__list-item-collapsible):not(
+    .menu__link--sublist
+  ):is(.menu__link--active)::after {
   content: "";
   display: inline-block;
-  background-color: #6894ad;
+  background: var(--arrowSVG);
+  height: 0.5rem;
+  width: 0.1rem;
+  min-height: 1rem;
+  min-width: 1rem;
+  border-radius: 0.25rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+} */
+
+/* TODO: Make arrow appear to the right of the list item */
+/* li > div > a.menu__link--active::after {
+  content: "";
+  display: inline-block;
+  background: var(--arrowSVG);
   height: 0.5rem;
   width: 0.5rem;
-  min-height: 0.5rem;
-  min-width: 0.5rem;
+  min-height: 1rem;
+  min-width: 1rem;
   border-radius: 0.25rem;
-  margin-right: 0.7rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+} */
+
+/* side-nav should not move when scrolling */
+.theme-doc-sidebar-menu {
+  position: fixed;
+  width: var(--doc-sidebar-width);
+  margin-top: 1rem;
 }
 
-/* fix menu color*/
-.menu {
-  background: var(--side-nav-bg);
+/* impacts the thin border of the sidenav */
+.theme-doc-sidebar-item-category {
+  background-color: var(--side-nav-bg);
 }
 
 .theme-doc-sidebar-item-category-level-1:not(.menu__list-item--collapsed) {
-  background-color: var(--side-nav-open-category-bg);
+  background-color: var(--side-nav-bg);
+  margin-bottom: 0.75rem;
+}
+
+/* nested categories - :not(:first-child) allows bold on selected category */
+div > a.menu__link--sublist:not(:first-child) {
+  font-weight: normal;
+}
+
+/* nested categories */
+.theme-doc-sidebar-item-link-level-1 > a.menu__link--active {
+  font-weight: bold;
+}
+
+/* nested categories should not be bold unless active */
+li.theme-doc-sidebar-item-link-level-2 > a.menu__link {
+  font-weight: normal;
+}
+
+li.theme-doc-sidebar-item-category-level-2.menu__list-item {
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+}
+
+li.theme-doc-sidebar-item-link-level-4 > a.menu__link--active {
+  font-weight: normal;
 }
 
 .menu__link:hover,
@@ -93,12 +204,22 @@
   background: transparent;
 }
 
-/* remove background color on active links */
+/* background color on active links */
+/* impacts the thin border of the sidenav */
 .menu__link--active:not(.menu__link--sublist) {
-  background-color: transparent;
+  background-color: var(--side-nav-bg);
 }
 
-/* fix sublist indents */
+/* menu item indents below categories */
 .menu__list ul li {
-  margin-left: 24px;
+  margin-left: 0.3rem;
+  overflow: hidden;
 }
+
+div.navbar__logo > b.navbar__title {
+  color: black;
+}
+
+/* .sidebarViewport_src-theme-DocPage-Layout-Sidebar-styles-module {
+  width: var(--doc-sidebar-width);
+} */

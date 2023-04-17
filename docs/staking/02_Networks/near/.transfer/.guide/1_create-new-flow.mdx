@@ -1,0 +1,135 @@
+---
+title: Create New Transfer Flow
+slug: /staking/near/transfer/create-new-flow
+---
+
+To initiate the transfer process, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `near`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`) (required).
+  - `operation` &mdash; `string` The operation to perform (ex. `transfer`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://near-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "near",
+    "chain_code": "testnet",
+    "operation": "transfer",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible action:
+
+- `create_transfer_tx`
+
+The `create_transfer_tx` action indicates four fields for data collection:
+
+- `from_account_pubkey` &mdash; The account that will sign the transaction.
+- `from_account_address` &mdash; The address from which NEAR will be transferred.
+- `to_account_address` &mdash; The address to which NEAR will be transferred.
+- `amount` &mdash; The amount of NEAR to be transferred.
+
+#### Sample Response
+
+```json {2-3,6,9,23,37,51}
+{
+  "id": "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_transfer_tx",
+      "inputs": [
+        {
+          "name": "from_account_pubkey",
+          "display": "From Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "from_account_address",
+          "display": "From Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "to_account_address",
+          "display": "To Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in NEAR",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "from_account_pubkey": null,
+    "from_account_address": null,
+    "to_account_address": null,
+    "amount": null,
+    "transfer_transaction": null
+  },
+  "network_code": "near",
+  "chain_code": "testnet",
+  "created_at": "2023-02-27T18:35:44.613Z",
+  "updated_at": "2023-02-27T18:35:44.613Z"
+}
+```

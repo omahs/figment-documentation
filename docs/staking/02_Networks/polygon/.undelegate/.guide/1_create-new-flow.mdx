@@ -1,0 +1,211 @@
+---
+title: Create New Undelegation Flow
+slug: /staking/polygon/undelegate/create-new-flow
+---
+
+To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `polygon`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`) (required).
+  - `operation` `string` The operation to perform (ex. `unstaking`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://polygon-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "polygon",
+    "chain_code": "testnet",
+    "operation": "unstaking",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible `action`:
+
+- `create_unbond_tx`
+
+The `create_unbond_tx` action indicates seven fields for data collection:
+
+- `delegator_address` &mdash; The delegator address (required).
+- `validator_address` &mdash; The validator contract address from which MATIC will be undelegated (required).
+- `amount` &mdash; The amount of MATIC to be undelegated (required).
+- `max_shares_to_burn` &mdash; The maximum number of shares of the delegation to be burned. If the exchange rate results in more shares being burned, the transaction will fail (optional).
+- `max_slippage_percentage` &mdash; The maximum slippage you are willing to accept (optional).
+- `gas_limit` &mdash; Adjust gas limit for the transaction (optional).
+- `gas_price` &mdash; Adjust gas price for the transaction (optional).
+
+#### Sample Response
+
+```json {3-4,7,10,24,38,58,76,95,113}
+{
+  "id": "b46668f2-d6f3-4980-b3ca-c4957bbffd25",
+  "operation": "unstaking",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_unbond_tx",
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in MATIC",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "max_shares_to_burn",
+          "display": "Max Shares To Burn",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_nil": true,
+                "only_integer": true,
+                "greater_than_or_equal_to": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "max_slippage_percentage",
+          "display": "Max Slippage Percentage",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_nil": true,
+                "only_integer": true,
+                "greater_than_or_equal_to": 0,
+                "less_than_or_equal_to": 100
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_limit",
+          "display": "Gas Limit",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_blank": true,
+                "only_integer": true,
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_price",
+          "display": "Gas Price",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_blank": true,
+                "greater_than": 0
+              }
+            },
+            {
+              "type": "precision",
+              "options": {
+                "allow_blank": true,
+                "max": 9
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "delegator_address": null,
+    "validator_address": null,
+    "amount": null,
+    "max_shares_to_burn": null,
+    "max_slippage_percentage": null,
+    "exchange_rate": null,
+    "exchange_rate_precision": null,
+    "unbond_transaction": null,
+    "claim_transaction": null,
+    "estimated_unbonded_at": null,
+    "unbond_checkpoint": null,
+    "unbond_nonce": null
+  },
+  "network_code": "polygon",
+  "chain_code": "testnet",
+  "created_at": "2023-03-02T19:55:55.101Z",
+  "updated_at": "2023-03-02T19:55:55.101Z"
+}
+```

@@ -1,0 +1,199 @@
+---
+title: Submit Aggregated Staking Data
+slug: /staking/ethereum/aggregated-staking/submit-aggregated-staking-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object` (required).
+  - `funding_account_address` &mdash; `string` The wallet from which the ETH will originate (required).
+  - `deposits` &mdash; Array of validator deposit data:
+    - `validator_pub_key` &mdash; `string` The public key of the validator to which the ETH will be deposited (required).
+    - `withdrawal_credentials` &mdash; `string` The withdrawal address for the given validator (required).
+    - `signature` &mdash; `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pub_key` is known by the signer. (required).
+    - `deposit_data_root` &mdash; `string` Uniquely identifies the set of deposits made so far (required).
+  - `gas_price` &mdash; `string` Adjust the gas price (optional).
+  - `gas_limit` &mdash; `string` Adjust the gas limit (optional).
+
+#### Sample cURL Request
+
+```bash {5-16}
+curl -X PUT 'https://eth-slate.datahub.figment.io/api/v1/flows/336d0a12-4902-4b18-9219-3f0ed2ffcac7/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "create_aggregated_deposit_tx",
+  "inputs": {
+  "funding_account_address": "0xB458D87418e6020260C92e18b11b64F1ed6fFF30",
+  "deposits": [
+      {
+        "signature": "0xa5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064",
+        "deposit_data_root": "0x67b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8",
+        "validator_pub_key": "0x8d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d33",
+        "withdrawal_credentials": "0x010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85"
+      }
+    ]
+  }
+}'
+```
+
+### Response
+
+Note that in this response you can find the unsigned, serialized transaction in `data[aggregated_deposit_transaction][raw]`.
+
+The response indicates two possible `actions` :
+
+- `refresh_aggregated_deposit_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
+- `sign_aggregated_deposit_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_aggregated_deposit_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.
+
+We will choose `sign_aggregated_deposit_tx`, which indicates one input to collect:
+
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
+
+#### Sample Response
+
+```json {3-4,7,11,14,22,70,73}
+{
+  "id": "55d5fcb4-9334-46f2-bc07-739737755b46",
+  "operation": "aggregated_staking",
+  "state": "aggregated_deposit_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_aggregated_deposit_tx",
+      "inputs": []
+    },
+    {
+      "name": "sign_aggregated_deposit_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [],
+          "array": false,
+          "default_value": null,
+          "signers": ["0xD0D77667f64CAd06a4789497065F2aaF1636Ee31"],
+          "transaction_payload": "0x02f902d8054e8459682f008501e7c6031e83010b66943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["0xD0D77667f64CAd06a4789497065F2aaF1636Ee31"],
+          "transaction_payload": "0x02f902d8054e8459682f008501e7c6031e83010b66943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0",
+          "signing_payload": "0x09d1516ac312b850c49b267eb2687134f2b25e3a13228cdd9183b0a96a52af0c",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_aggregated_deposit_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "estimated_active_at": null,
+    "transactions": [
+      {
+        "code": "aggregated_deposit",
+        "amount": "32.0",
+        "raw": "0x02f902d8054e8459682f008501e7c6031e83010b66943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000308d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d3300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000060a5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064000000000000000000000000000000000000000000000000000000000000000167b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8c0",
+        "signing_payload": "0x09d1516ac312b850c49b267eb2687134f2b25e3a13228cdd9183b0a96a52af0c",
+        "signed": null,
+        "hash": null,
+        "status": null,
+        "error": null,
+        "signatures": null,
+        "block_time": null,
+        "inputs": {
+          "funding_account_address": "0xD0D77667f64CAd06a4789497065F2aaF1636Ee31",
+          "gas_price": null,
+          "gas_limit": null,
+          "deposits": [
+            {
+              "validator_pub_key": "0x8d161816dbcf2c85f053701818c688530a31ebeb1d677ccd261e2fd4aed20863885d092ec0df3698178d435d71912d33",
+              "withdrawal_credentials": "0x010000000000000000000000dc780aac63683d9bd1e5be8dd8453d03f802ed85",
+              "signature": "0xa5c28fa1507168ad64e00b4f81bb2b985f47d6129ce2d566e0103c5862acb807fd29915f106d82256c77e4dc6c6164ff12a8c76b21afe3eb693337d7885cccc38346092ded912988e26667ae17acff790fc24f8abc2d01fa05b604f9ef778064",
+              "deposit_data_root": "0x67b2a367dfbb04d8f5ccf9e27619901289197f6e9aa558a7e0d855e6c13b36c8"
+            }
+          ],
+          "amount": "32.0"
+        }
+      }
+    ]
+  },
+  "network_code": "ethereum",
+  "chain_code": "goerli",
+  "created_at": "2023-03-14T21:21:45.804Z",
+  "updated_at": "2023-03-14T21:23:31.379Z"
+}
+```
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

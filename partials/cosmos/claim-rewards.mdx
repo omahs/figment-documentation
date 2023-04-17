@@ -1,0 +1,50 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/cosmos/Workflows::V1::Cosmos::ClaimRewardsFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Claim Rewards
+
+The Cosmos claim rewards flow allows you to withdraw your staking rewards in a very easy way.
+
+To claim rewards paid in ATOM tokens, you will need:
+
+- The `delegator_address` from which ATOM was delegated, which will sign the transaction.
+- The `validator_addresses` from which you want to withdraw the staking rewards.
+- An optional `memo`.
+- An optional `gas_limit` and `gas_price` in ATOM.
+- The `pubkey` (public key) of the `delegator_address`.
+
+Follow the steps in this guide for the details on this process.
+
+### Flow Diagram
+
+Below is a complete diagram for the Cosmos Claim Rewards flow:
+
+<img
+  src={img1}
+  alt="Cosmos Claim Rewards Flow Diagram"
+  className="inline-image"
+/>
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="cosmos"
+  folders={undefined}
+  path="docs/staking/02_networks/cosmos/index.mdx"
+  methods={[
+    {
+      name: "Create a New Claim Rewards Flow",
+    },
+    {
+      name: "Submit Claim Rewards Data",
+    },
+    {
+      name: "Submit Signed Claim Rewards Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

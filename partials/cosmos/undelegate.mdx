@@ -1,0 +1,51 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/cosmos/Workflows::V1::Cosmos::UnstakingFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Undelegate
+
+The Cosmos Undelegate flow allows you to unstake your ATOM tokens from the validator. With the Staking API, you can unstake your ATOM tokens within a few steps.
+
+To unstake ATOM tokens, you will need:
+
+- The `delegator_address` from which ATOM was delegated, which will sign the transaction.
+- The `validator_address` from which ATOM is being undelegated.
+- The `amount` of ATOM to be undelegated.
+- An optional `memo`.
+- An optional `gas_limit` and `gas_price` in ATOM.
+- The `pubkey` (public key) of the `delegator_address`.
+
+Follow the steps in this section for the details on this process.
+
+### Flow Diagram
+
+Below is a complete diagram for the Cosmos Undelegation flow:
+
+<img
+  src={img1}
+  alt="Cosmos Undelegation Flow Diagram"
+  className="inline-image"
+/>
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="cosmos"
+  folders={undefined}
+  path="docs/staking/02_networks/cosmos/index.mdx"
+  methods={[
+    {
+      name: "Create a New Undelegate Flow",
+    },
+    {
+      name: "Submit Undelegate Data",
+    },
+    {
+      name: "Submit Signed Undelegate Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

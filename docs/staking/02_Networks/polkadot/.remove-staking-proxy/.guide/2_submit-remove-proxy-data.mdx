@@ -1,0 +1,203 @@
+---
+title: Submit Remove Proxy Data
+slug: /staking/polkadot/remove-staking-proxy/submit-proxy-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `proxy_account_address` &mdash; `string` The address from which you want to remove proxy rights (required).
+  - `proxied_account_address` &mdash; `string` The account whose rights will be proxied (required).
+
+### Sample cURL Request
+
+```bash {5-9}
+curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/b2e0c44a-e1cd-4772-9e71-eaddacc6c7f4/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "create_remove_proxy_tx",
+  "inputs": {
+    "proxy_account_address": "5HDojdfR1Vm9dnDYEB4JQyxgcgH3aHHeWgE9jqarBkChULRJ",
+    "proxied_account_address": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG"
+  }
+}'
+```
+
+### Response
+
+The response indicates three possible `actions` :
+
+- `refresh_remove_proxy_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
+- `sign_remove_proxy_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_remove_proxy_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
+
+We will choose `sign_remove_proxy_tx`, which indicates one input to collect:
+
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
+
+#### Sample Response
+
+```json {4,7,10,24,40,43,56,104,107,121,136}
+{
+  "id": "b2e0c44a-e1cd-4772-9e71-eaddacc6c7f4",
+  "operation": "remove_proxy",
+  "state": "remove_proxy_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_remove_proxy_tx",
+      "inputs": [
+        {
+          "name": "proxy_account_address",
+          "display": "Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5HDojdfR1Vm9dnDYEB4JQyxgcgH3aHHeWgE9jqarBkChULRJ"
+        },
+        {
+          "name": "proxied_account_address",
+          "display": "Proxied Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG"
+        }
+      ]
+    },
+    {
+      "name": "sign_remove_proxy_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": ["5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG"],
+          "transaction_payload": "0x000c000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e00000000000000000000000000000000000000000000000000000000000000000000000000160200e41e2a54397e0657cb58d978d0f2a9201a84b3d953a83780df5795a1006ecf7d02000000001c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG"],
+          "transaction_payload": "0x000c000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e00000000000000000000000000000000000000000000000000000000000000000000000000160200e41e2a54397e0657cb58d978d0f2a9201a84b3d953a83780df5795a1006ecf7d02000000001c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+          "signing_payload": "0x160200e41e2a54397e0657cb58d978d0f2a9201a84b3d953a83780df5795a1006ecf7d0200000000000c00a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_remove_proxy_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "proxy_account_address": "5HDojdfR1Vm9dnDYEB4JQyxgcgH3aHHeWgE9jqarBkChULRJ",
+    "proxied_account_address": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+    "remove_proxy_transaction": {
+      "raw": "0x000c000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e00000000000000000000000000000000000000000000000000000000000000000000000000160200e41e2a54397e0657cb58d978d0f2a9201a84b3d953a83780df5795a1006ecf7d02000000001c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x160200e41e2a54397e0657cb58d978d0f2a9201a84b3d953a83780df5795a1006ecf7d0200000000000c00a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": null,
+      "hash": null,
+      "status": null,
+      "error": null,
+      "signatures": null,
+      "block_time": null,
+      "block_number": null,
+      "proxy": null
+    }
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T19:31:21.057Z",
+  "updated_at": "2023-02-28T19:34:08.157Z"
+}
+```
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

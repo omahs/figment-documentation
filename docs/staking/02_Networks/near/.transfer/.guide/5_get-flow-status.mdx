@@ -1,0 +1,60 @@
+---
+title: Get Flow Status
+slug: /staking/near/transfer/get-flow-status-transferred
+---
+
+To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.
+
+### Parameters
+
+- None
+
+#### Sample cURL Request
+
+```bash
+curl -X GET 'https://near-slate.datahub.figment.io/api/v1/flows/5f0962d5-fba0-453c-bf35-0dad79624b59' \
+-H 'Authorization: <api_key>'
+```
+
+### Response
+
+- `state` &mdash; `string` The current state of the flow.
+
+:::info note
+
+The `state` field will update from `transfer_tx_broadcasting` to `transferred`.
+
+:::
+
+#### Sample Response
+
+```json {3}
+{
+  "id": "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+  "state": "transfered",
+  "actions": [],
+  "data": {
+    "from_account_pubkey": "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+    "from_account_address": "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+    "to_account_address": "slate-demo.testnet",
+    "amount": "50.0",
+    "transfer_transaction": {
+      "raw": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+      "signing_payload": "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+      "signed": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b2900000000000069cab19548fcac9253ef66fde2853aa46611ac42aeae30d4109fae9a026de1ba67a4c55fe576a019898e8a1b817c93d02779dfd1be63fde390e0bf576cb67404",
+      "hash": "A64WEYru3xv7jQsCDn9JV4RYK4frvNWtfAUUMYQmcVLn",
+      "status": "confirmed",
+      "error": null,
+      "signatures": []
+    }
+  },
+  "network_code": "near",
+  "chain_code": "testnet",
+  "created_at": "2023-02-27T18:35:44.613Z",
+  "updated_at": "2023-02-27T18:44:24.567Z"
+}
+```
+
+### Token Transfer Flow Complete
+
+Congratulations, you have successfully transferred your tokens!

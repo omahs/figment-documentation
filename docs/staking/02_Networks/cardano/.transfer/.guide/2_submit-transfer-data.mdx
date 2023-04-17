@@ -1,0 +1,231 @@
+---
+title: Submit Transfer Data
+slug: /staking/cardano/transfer/submit-transfer-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `from_account_address` &mdash; `string` The address from which ADA will be transferred (required).
+  - `to_account_address` &mdash; `string` The address to which ADA will be transferred (required).
+  - `amount` &mdash; `number` The amount of ADA to be transferred (required).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X PUT 'https://cardano-slate.datahub.figment.io/api/v1/flows/87c3dd5f-bcbe-7934-92bd-1da47d5aca7e/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "create_transfer_tx",
+  "inputs": {
+    "from_account_address": "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd",
+    "to_account_address": "addr_test1qzsv3unnn5gwnqzccf4gk9mmnh5nmfcyjcckhzxjfpv59q9xfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsc945zx",
+    "amount": 10.0
+  }
+}'
+```
+
+### Response
+
+Note that in this step, the Staking API will check that your account balance is greater than or equal to the amount you've submitted for transfer.
+Expect an error response if that is not the case.
+
+The response indicates three possible `actions`:
+
+- `refresh_transfer_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
+- `sign_transfer_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_transfer_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
+
+We will choose `sign_transfer_tx`, which indicates one input to collect:
+
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
+
+#### Sample Response
+
+```json {4,7,10,25,40,63,66,78,132,135}
+{
+  "id": "55fcfcdd-b1f5-460c-bce9-8b8864461315",
+  "operation": "transfer",
+  "state": "transfer_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_transfer_tx",
+      "inputs": [
+        {
+          "name": "from_account_address",
+          "display": "From Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd"
+        },
+        {
+          "name": "to_account_address",
+          "display": "To Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "addr_test1qzsv3unnn5gwnqzccf4gk9mmnh5nmfcyjcckhzxjfpv59q9xfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsc945zx"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "10.0"
+        }
+      ]
+    },
+    {
+      "name": "sign_transfer_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [],
+          "array": false,
+          "default_value": null,
+          "signers": [
+            "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd"
+          ],
+          "transaction_payload": "84a30081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018282583900a0c8f2739d10e98058c26a8b177b9de93da70496316b88d248594280a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871a0098968082583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05370815021a00029075a0f5f6"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": [
+            "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd"
+          ],
+          "transaction_payload": "84a30081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018282583900a0c8f2739d10e98058c26a8b177b9de93da70496316b88d248594280a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871a0098968082583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05370815021a00029075a0f5f6",
+          "signing_payload": "b097030f88413f546c2188e1f2ab9e6407f653a18153a501f1d05b062538be6e",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_transfer_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "from_account_address": "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd",
+    "to_account_address": "addr_test1qzsv3unnn5gwnqzccf4gk9mmnh5nmfcyjcckhzxjfpv59q9xfu7p7cvhrg6eh374ps852jxq7qzgfjwgknn36ggkdwrsc945zx",
+    "amount": "10.0",
+    "transfer_transaction": {
+      "raw": "84a30081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018282583900a0c8f2739d10e98058c26a8b177b9de93da70496316b88d248594280a64f3c1f61971a359bc7d50c0f4548c0f00484c9c8b4e71d21166b871a0098968082583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05370815021a00029075a0f5f6",
+      "signing_payload": "b097030f88413f546c2188e1f2ab9e6407f653a18153a501f1d05b062538be6e",
+      "signed": null,
+      "hash": null,
+      "status": null,
+      "error": null,
+      "signatures": [
+        {
+          "account_address": "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd",
+          "signature": ""
+        }
+      ],
+      "block_time": null
+    }
+  },
+  "network_code": "cardano",
+  "chain_code": "preprod",
+  "created_at": "2023-03-07T20:48:36.827Z",
+  "updated_at": "2023-03-07T20:50:34.377Z"
+}
+```
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

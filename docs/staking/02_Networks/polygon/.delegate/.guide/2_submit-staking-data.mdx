@@ -1,0 +1,386 @@
+---
+title: Submit Staking Data
+slug: /staking/polygon/delegate/submit-staking-data
+---
+
+After creating a new staking flow, submit the staking account data. Collect the required inputs. Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `delegator_address` &mdash; `string` The delegating address (required).
+  - `validator_address` &mdash; `string` The address of the validator smart contract to which you want to delegate your tokens (required).
+  - `amount` &mdash; `number` &mdash; The amount of MATIC to be delegated (required).
+  - `minimum_shares_to_mint` &mdash; `string` The minimum number of shares of the delegation pool to be minted. If the exchange rate results in fewer shares being minted, the transaction will fail (optional).
+  - `max_slippage_percentage` &mdash; `number` The maximum slippage you are willing to accept (optional).
+
+### Sample cURL Request
+
+```bash {5-10}
+curl -X PUT 'https://polygon-slate.datahub.figment.io/api/v1/flows/536921d0-d0f3-4887-8177-69c855cbcce3/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "assign_staking_data",
+  "inputs": {
+    "delegator_address": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed",
+    "validator_address": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66",
+    "amount": "1"
+  }
+}'
+```
+
+### Response
+
+The response indicates two possible `actions`:
+
+- `create_allowance_tx` &mdash; If an allowance transaction is needed to cover the `amount` specified in the staking data, it will be created by the Staking API.
+- `assign_staking_data` &mdash; Used to assign new staking data, if needed. Otherwise, previously provided defaults will be used.
+
+**OR**
+
+- `create_delegate_tx` &mdash; If no further allowance is needed for the amount you intend to delegate using the delegator address, you can proceed with the delegate transaction.
+- `assign_staking_data` &mdash; Used to assign new staking data, if needed. Otherwise, previously provided defaults will be used.
+
+Assuming that an allowance is needed, we will proceed with `create_allowance_tx` which indicates two optional inputs to collect:
+
+- `gas_limit` &mdash; The gas limit for the transaction.
+- `gas_price` &mdash; The highest gas price you will pay for the transaction.
+
+#### Sample Response `create_allowance_tx`
+
+```json {4,7,10,28,54}
+{
+  "id": "536921d0-d0f3-4887-8177-69c855cbcce3",
+  "operation": "staking",
+  "state": "create_allowance_tx",
+  "actions": [
+    {
+      "name": "create_allowance_tx",
+      "inputs": [
+        {
+          "name": "gas_limit",
+          "display": "Gas Limit",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_blank": true,
+                "only_integer": true,
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_price",
+          "display": "Gas Price",
+          "description": "in GWEI",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_blank": true,
+                "greater_than": 0
+              }
+            },
+            {
+              "type": "precision",
+              "options": {
+                "allow_blank": true,
+                "max": 9
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "assign_staking_data",
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed"
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in MATIC",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        },
+        {
+          "name": "minimum_shares_to_mint",
+          "display": "Minimum Shares To Mint",
+          "description": "",
+          "type": "integer",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_nil": true,
+                "greater_than_or_equal_to": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": 0
+        },
+        {
+          "name": "max_slippage_percentage",
+          "display": "Max Slippage Percentage",
+          "description": "",
+          "type": "integer",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_nil": true,
+                "only_integer": true,
+                "less_than_or_equal_to": 100,
+                "greater_than_or_equal_to": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "delegator_address": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed",
+    "validator_address": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66",
+    "amount": "1.0",
+    "minimum_shares_to_mint": 0,
+    "max_slippage_percentage": null,
+    "exchange_rate": null,
+    "exchange_rate_precision": null,
+    "allowance_transaction": null,
+    "delegate_transaction": null
+  },
+  "network_code": "polygon",
+  "chain_code": "testnet",
+  "created_at": "2023-03-02T18:23:42.248Z",
+  "updated_at": "2023-03-02T18:24:18.140Z"
+}
+```
+
+#### Sample Response `create_delegate_tx`
+
+```json {4}
+{
+  "id": "536921d0-d0f3-4887-8177-69c855cbcce3",
+  "operation": "staking",
+  "state": "create_delegate_tx",
+  "actions": [
+    {
+      "name": "create_delegate_tx",
+      "inputs": [
+        {
+          "name": "gas_limit",
+          "display": "Gas Limit",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_blank": true,
+                "only_integer": true,
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_price",
+          "display": "Gas Price",
+          "description": "in GWEI",
+          "type": "string",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_blank": true,
+                "greater_than": 0
+              }
+            },
+            {
+              "type": "precision",
+              "options": {
+                "allow_blank": true,
+                "max": 9
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "assign_staking_data",
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed"
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in MATIC",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        },
+        {
+          "name": "minimum_shares_to_mint",
+          "display": "Minimum Shares To Mint",
+          "description": "",
+          "type": "integer",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_nil": true,
+                "greater_than_or_equal_to": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": 0
+        },
+        {
+          "name": "max_slippage_percentage",
+          "display": "Max Slippage Percentage",
+          "description": "",
+          "type": "integer",
+          "validations": [
+            {
+              "type": "numericality",
+              "options": {
+                "allow_nil": true,
+                "only_integer": true,
+                "less_than_or_equal_to": 100,
+                "greater_than_or_equal_to": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "delegator_address": "0x6BeA1177Ff310983f84D4Fc77b7467a3bD5626ed",
+    "validator_address": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66",
+    "amount": "1.0",
+    "minimum_shares_to_mint": 0,
+    "max_slippage_percentage": null,
+    "exchange_rate": null,
+    "exchange_rate_precision": null,
+    "allowance_transaction": {
+      "raw": "0x02f86d05808459682f00850eaa6fba0e82b58394499d11e0b6eac7c0593d8fb292dcbbf815fb29ae80b844095ea7b300000000000000000000000000200ea4ee292e253e6ca07dba5edc07c8aa37a3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc0",
+      "signing_payload": "0xd0c61a6d5d143d80f9f1455ec289275a096c65d4bfb89afb981857835c0106a6",
+      "signed": "0x02f8b005808459682f00850eaa6fba0e82b58394499d11e0b6eac7c0593d8fb292dcbbf815fb29ae80b844095ea7b300000000000000000000000000200ea4ee292e253e6ca07dba5edc07c8aa37a3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc001a0a9cac4be7a0c56d6ed520814958b94d4385b1ac7d791485f85c6c58fa53e0d8aa002f14d836c1b5090b12ef16566056abd57e6fce013a759e444d925b8951633ea",
+      "hash": "0x754e90f50c9b656e469baea0b18bb8221b58170b0fb57556b62d51c60d494af9",
+      "status": null,
+      "error": null,
+      "signatures": [],
+      "block_time": null,
+      "gas_limit": null,
+      "gas_price": null
+    },
+    "delegate_transaction": null
+  },
+  "network_code": "polygon",
+  "chain_code": "testnet",
+  "created_at": "2023-03-02T18:23:42.248Z",
+  "updated_at": "2023-03-02T18:44:17.076Z"
+}
+```

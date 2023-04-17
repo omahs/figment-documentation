@@ -1,0 +1,149 @@
+---
+title: Rewards - NEAR
+sidebar_position: 2
+pagination_prev: null
+pagination_next: null
+collapsed: true
+collapsible: true
+description: Rewards API - NEAR
+image: img/logo.svg
+keywords: [Rewards API, NEAR]
+
+hide_table_of_contents: true
+sidebar_label: NEAR
+---
+
+<!--- This file was generated at build time, any modifications will be lost on next build --->
+
+import { APIMethods } from "@site/src/components";
+
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+<APIReferenceNav
+  service="rewards-api"
+  network="near"
+  networks={[
+    {
+      label: "Avalanche",
+      value: "avalanche",
+    },
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "NEAR",
+      value: "near",
+    },
+    {
+      label: "Polkadot",
+      value: "polkadot",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  methods={[
+    {
+      name: "Rewards by epoch",
+    },
+  ]}
+/>
+
+<APIMethods
+  methods={[
+    {
+      name: "Rewards by epoch",
+      content:
+        "Returns net delegator rewards (post-on-chain validator commission) by epoch\n\n### Request\n\n- `accounts` takes in an array of delegator accounts addresses (required)\n- `start` and `end` are epoch numbers, both inclusive (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`\n- `data` is an array of objects - one for each epoch - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `period` is the epoch number\n    - `timestamp` is the timestamp of the end of the epoch\n    - `rewards` is an array of objects with four components: `numeric`, `exp`, and `currency`. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)`(`text` is the string version of this)\n\n### Limitations\n\n- The API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.",
+      request: {
+        auth: {
+          type: "noauth",
+        },
+        method: "POST",
+        header: [],
+        body: {
+          accounts: ["figment.near"],
+          start: 75743490,
+          end: 75743491,
+        },
+        url: "https://near-rewards.datahub.figment.io",
+        headers: {
+          Authorization: "e68ac2d1e2f6671a96e6a88115a3f734",
+        },
+        query: "",
+      },
+      interactive: true,
+      response: {
+        name: "by epoch",
+        status: "OK",
+        code: 200,
+        body: {
+          data: [
+            {
+              accounts: ["figment.near"],
+              chain_id: "mainnet",
+              rewards: [
+                {
+                  text: "221.415622439422952523250579 NEAR",
+                  currency: "NEAR",
+                  numeric: 2.2141562243942295e26,
+                  exp: 24,
+                },
+              ],
+              period: "75743490",
+              validator: "figment.poolv1.near",
+              timestamp: "2022-10-08T13:33:18.784283459Z",
+            },
+            {
+              accounts: ["figment.near"],
+              chain_id: "mainnet",
+              rewards: [
+                {
+                  text: "0 NEAR",
+                  currency: "NEAR",
+                  numeric: 0,
+                  exp: 24,
+                },
+              ],
+              period: "75743490",
+              validator: "ledgerbyfigment.poolv1.near",
+              timestamp: "2022-10-08T13:33:18.784283459Z",
+            },
+          ],
+          meta: {
+            network: "near",
+            period_unit: "epoch",
+          },
+        },
+      },
+    },
+  ]}
+  service="rewards-api"
+  networks={[
+    {
+      label: "Avalanche",
+      value: "avalanche",
+    },
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "NEAR",
+      value: "near",
+    },
+    {
+      label: "Polkadot",
+      value: "polkadot",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  network="near"
+  proxy="https://api-service-proxy-development.figment-secops.workers.dev"
+  host="near-rewards.datahub.figment.io/v2/rewards"
+/>

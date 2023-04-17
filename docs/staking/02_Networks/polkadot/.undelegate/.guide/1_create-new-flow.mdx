@@ -1,0 +1,209 @@
+---
+title: Create New Undelegation Flow
+slug: /staking/polkadot/undelegate/create-new-flow
+---
+
+To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.
+
+:::info
+
+**If chilling is required** before unbonding, the Staking API will indicate that you must create a chill transaction. Proceed to [Create Chill Transaction](/staking/polkadot/undelegate/create-unbond-transaction).
+
+**If no chilling is required**, you will be presented with an action to create the unbond transaction. Proceed to [Create Unbond Transaction](/staking/polkadot/undelegate/create-unbond-transaction).
+
+If you want to skip the unbonding process as well, proceed to [Create Withdrawal Transaction](/staking/polkadot/undelegate/create-withdraw-transaction).
+
+From a newly initialized flow you can either jump right to `create_withdraw_tx` or perform `assign_unstaking_data`.
+
+If you assign the unstaking data, you may need to create, sign, and broadcast a chill transaction, followed by an unbonding transaction.
+
+After unbonding, you can either be done with the flow, or if there is a balance to withdraw, you can create, sign, and broadcast the withdraw transaction.
+
+:::
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `polkadot`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `westend`) (required).
+  - `operation` `string` The operation to perform (ex. `unstaking`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://polkadot-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "polkadot",
+    "chain_code": "westend",
+    "operation": "unstaking",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates two possible `actions`:
+
+- `assign_unstaking_data` &mdash; Use this action if you want to unbond. Chill first if needed. Optionally used to withdraw.
+- `create_withdraw_tx` &mdash; Use this action if you want to withdraw _without_ unbonding.
+
+The `assign_unstaking_data` action indicates five fields for data collection:
+
+- `stash_account_address` &mdash; The wallet DOT is bonded to.
+- `controller_account_address` &mdash; The account that controls the staking/unstaking actions. This is the account that will sign transactions.
+- `controller_proxy_account_address` (optional) — A proxy account that can sign on behalf of the controller account.
+- `amount` &mdash; The amount of DOT to be unbonded from the controller. This field should be in full DOT, not in Planck (i.e., if you want to stake 5 DOT, return `"amount": 5.0`). The Staking API will translate the amount to Plancks so you do not have to worry about the conversion factor.
+- `maximum` &mdash; This Boolean indicates if all bonded funds should be unbonded.
+
+#### Sample Response
+
+```json {2-4,7,10,24,38,47,70,81,84,98,112}
+{
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "assign_unstaking_data",
+      "inputs": [
+        {
+          "name": "stash_account_address",
+          "display": "Stash Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "controller_account_address",
+          "display": "Controller Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "controller_proxy_account_address",
+          "display": "Controller Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in DOT",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {
+                "unless": "maximum"
+              }
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "unless": "maximum",
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "maximum",
+          "display": "Maximum",
+          "description": "",
+          "type": "boolean",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "create_withdraw_tx",
+      "inputs": [
+        {
+          "name": "stash_account_address",
+          "display": "Stash Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "controller_account_address",
+          "display": "Controller Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "controller_proxy_account_address",
+          "display": "Controller Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "controller_account_address": null,
+    "controller_proxy_account_address": null,
+    "stash_account_address": null,
+    "amount": null,
+    "maximum": null,
+    "chill_transaction": null,
+    "estimated_chilled_at": null,
+    "unbond_transaction": null,
+    "unbonding_era": null,
+    "estimated_unbonded_at": null,
+    "withdraw_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:04:29.799Z"
+}
+```

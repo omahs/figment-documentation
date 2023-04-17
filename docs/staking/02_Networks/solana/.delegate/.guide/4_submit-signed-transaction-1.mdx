@@ -1,0 +1,95 @@
+---
+title: Submit a Signed Stake Account Transaction for Broadcast
+slug: /staking/solana/delegate/submit-signed-stake-account-transaction
+---
+
+After creating a new staking flow, submit the staking account data.
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `transaction_payload` &mdash; Signed transaction payload from the previous step's response.
+
+#### Sample cURL Request
+
+```bash {5-8}
+curl -X PUT 'https://solana-slate.datahub.figment.io/api/v1/flows/e2285668-f6ab-4b77-9e96-edbcca63cd24/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+    "name": "sign_stake_account_tx",
+    "inputs": {
+        "transaction_payload": "0238e01c7c328cf82967071dda5d3eefb445bca087b967955c3ffd53a2a3ea0999a0aca1dddcb556a9df7e1316460e3f10cfa66c7ad90b685eacf39ab4f816500609a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534"
+    }
+}'
+```
+
+:::warning important
+
+The transaction signing window on Solana is sometimes less than 90 seconds.
+
+If you encounter an error `"Transaction simulation failed: Blockhash not found"`, refresh the transaction, sign the payload again and submit it in < 90 seconds.
+
+:::
+
+### Response
+
+With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned `state` will be either:
+
+- `stake_account_tx_broadcasting` &mdash; Transaction has been broadcast but not confirmed.
+- `stake_account` &mdash; Transaction broadcasted and confirmed.
+
+Upon transaction finalization, the stake account will be ready for the next step — the delegation transaction.
+
+#### Sample Response
+
+```json {4,7-8}
+{
+  "id": "e2285668-f6ab-4b77-9e96-edbcca63cd24",
+  "operation": "staking",
+  "state": "stake_account_tx_broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-28T07:56:33.558Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "stake_account_pubkey": "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+    "create_stake_account_transaction": {
+      "raw": "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+      "signing_payload": "02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+      "signed": "0238e01c7c328cf82967071dda5d3eefb445bca087b967955c3ffd53a2a3ea0999a0aca1dddcb556a9df7e1316460e3f10cfa66c7ad90b685eacf39ab4f816500609a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+      "hash": "28xHAnmmVY6A2wfwe4v1LeoeS3qPBYL4haajmswwfVZ4JVsobeTCzoksVjZjgzzKtbJpCnraCquUwTiYRvkXpoKb",
+      "status": null,
+      "error": null,
+      "signatures": [
+        {
+          "account_address": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+          "signature": ""
+        }
+      ],
+      "block_time": null
+    },
+    "funding_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "stake_authority_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "withdraw_authority_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "amount": "4.0",
+    "validator_address": null,
+    "delegate_transaction": null,
+    "delegation_active_amount": null,
+    "delegation_inactive_amount": null,
+    "delegation_status": null,
+    "delegation_status_error": null,
+    "estimated_active_at": null
+  },
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-02-28T07:04:33.714Z",
+  "updated_at": "2023-02-28T07:55:32.689Z"
+}
+```

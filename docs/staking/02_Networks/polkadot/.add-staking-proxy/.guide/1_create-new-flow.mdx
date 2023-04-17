@@ -1,0 +1,98 @@
+---
+title: Create New Add Staking Proxy Flow
+slug: /staking/polkadot/add-staking-proxy/create-new-flow
+---
+
+To add a staking proxy, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `polkadot`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `westend`) (required).
+  - `operation` `string` The operation to perform (ex. `add_proxy`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://polkadot-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "polkadot",
+    "chain_code": "westend",
+    "operation": "add_proxy",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible `action`:
+
+- `create_add_proxy_tx` &mdash; Use this action to generate an add proxy transaction.
+
+The `create_add_proxy_tx` action indicates two fields for data collection:
+
+- `proxy_account_address` &mdash; The address to which you want to grant proxy rights.
+- `proxied_account_address` &mdash; The account whose rights will be proxied.
+
+#### Sample Response
+
+```json {2-4,7,10,24}
+{
+  "id": "5d2a7dc6-0f7c-41a5-bbb6-fb27b2e16a9b",
+  "operation": "add_proxy",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_add_proxy_tx",
+      "inputs": [
+        {
+          "name": "proxy_account_address",
+          "display": "Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "proxied_account_address",
+          "display": "Proxied Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "proxy_account_address": null,
+    "proxied_account_address": null,
+    "add_proxy_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T19:11:38.281Z",
+  "updated_at": "2023-02-28T19:11:38.281Z"
+}
+```

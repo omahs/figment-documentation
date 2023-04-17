@@ -1,0 +1,2042 @@
+---
+title: Staking - NEAR
+sidebar_position: 3
+pagination_prev: null
+pagination_next: null
+collapsed: true
+collapsible: true
+description: Staking API - NEAR
+image: img/logo.svg
+keywords: [Staking API, NEAR]
+
+hide_table_of_contents: true
+sidebar_label: Transfer
+---
+
+import { APIMethods } from "@site/src/components";
+
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+import NearTransfer from "@site/partials/near/transfer.mdx";
+
+<NearTransfer />
+
+## API Reference
+
+<APIReferenceNav
+  service="staking-api"
+  network="near"
+  folders={undefined}
+  path="docs/staking/networks/near/transfer/index.mdx"
+  methods={[
+    {
+      name: "Create New Delegation Flow",
+    },
+    {
+      name: "Submit Delegate Data",
+    },
+    {
+      name: "Submit Signed Delegate Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Create New Undelegation Flow",
+    },
+    {
+      name: "Submit Undelegate Data",
+    },
+    {
+      name: "Submit Signed Undelegate Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Submit Withdraw Data",
+    },
+    {
+      name: "Submit a Signed Withdraw Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Create New Transfer Flow",
+    },
+    {
+      name: "Submit Transfer Data",
+    },
+    {
+      name: "Submit Signed Transfer Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>
+
+<APIMethods
+  service="staking-api"
+  network="near"
+  proxy=""
+  host="near-slate.datahub.figment.io/api/v1/flows"
+  methods={[
+    {
+      name: "Create New Delegation Flow",
+      content:
+        "To initiate the staking process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `near`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `mainnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_delegate_tx` — Use this action to generate a delegation transaction to stake NEAR.\n        - `validator_address` — Figment validator address.\n        - `delegator_address` — The delegating address.\n        - `delegator_pubkey` — The public key of the signing account. Must start with `ed25519:`.\n        - `amount` — The amount of NEAR to be delegated.\n        - `max_gas` — Adjust if you wish to limit the possible transaction fee.\n- `data` — `object` Delegation flow & transaction data.",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "near",
+            chain_code: "testnet",
+            operation: "staking",
+            version: "v1",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Delegation Flow",
+        body: {
+          id: "aeb7503c-27c8-4184-8537-8f4a77f694a9",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_delegate_tx",
+              inputs: [
+                {
+                  name: "delegator_address",
+                  display: "Delegator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "account_balance",
+                      options: {
+                        on: "with_on_chain_validations",
+                        greater_than_or_equal_to: null,
+                      },
+                    },
+                  ],
+                },
+                {
+                  name: "delegator_pubkey",
+                  display: "Delegator Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                },
+                {
+                  name: "validator_address",
+                  display: "Validator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "is_validator",
+                      options: {
+                        on: "with_on_chain_validations",
+                      },
+                    },
+                  ],
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "numericality",
+                      options: {
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                },
+                {
+                  name: "max_gas",
+                  display: "Max Gas",
+                  description: "",
+                  type: "decimal",
+                  validations: [],
+                },
+              ],
+            },
+          ],
+          data: {
+            delegator_address: null,
+            delegator_pubkey: null,
+            validator_address: null,
+            amount: null,
+            max_gas: null,
+            delegate_transaction: null,
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2022-09-26T15:24:43.720Z",
+          updated_at: "2022-09-26T15:24:43.720Z",
+        },
+      },
+    },
+    {
+      name: "Submit Delegate Data",
+      content:
+        "After creating a new staking flow, submit the staking account data. Collect the required inputs. Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `delegator_address` — `string` The delegating address (required).\n    - `delegator_pubkey` — `string` The public key of the signing account (required).\n    - `validator_address` — `string` Address of the validator you want to delegate your tokens to (required).\n    - `amount` — `number` — The amount of NEAR to be delegated (required).\n    - `max_gas` — `string` Adjust if you wish to limit the possible transaction fee (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_delegate_tx` — If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_delegate_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n- `data` — `object` Delegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_delegate_tx",
+          inputs: {
+            delegator_address: "slate-demo.testnet",
+            delegator_pubkey:
+              "ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY",
+            validator_address: "01node.pool.f863973.m0",
+            amount: "25",
+            max_gas: null,
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Delegate Data",
+        body: {
+          id: "11cbb22a-3505-4d9d-aa82-61a9d865dfdd",
+          state: "delegate_tx_signature",
+          actions: [
+            {
+              name: "refresh_delegate_tx",
+              inputs: [
+                {
+                  name: "delegator_address",
+                  display: "Delegator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value:
+                    "136df0c876f120f3b823754f57dee6064c18a9f9560081d3.testnet",
+                },
+                {
+                  name: "delegator_pubkey",
+                  display: "Delegator Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value:
+                    "ed25519:46c3btaWiBB2DCieDnQffBN4DixAHU69qYWqNzCBBgsQ",
+                },
+                {
+                  name: "validator_address",
+                  display: "Validator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "legends.pool.f863973.m0",
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in NEAR",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "numericality",
+                      options: {
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: "10.0",
+                },
+                {
+                  name: "max_gas",
+                  display: "Max Gas",
+                  description: "in NEAR",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "numericality",
+                      options: {
+                        allow_nil: true,
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+            {
+              name: "sign_delegate_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: [
+                    "ed25519:46c3btaWiBB2DCieDnQffBN4DixAHU69qYWqNzCBBgsQ",
+                  ],
+                  transaction_payload:
+                    "380000003133366466306338373666313230663362383233373534663537646565363036346331386139663935363030383164332e746573746e6574002e0297153490ddde81b8f300b1a96598bc13e5c8c2f0b61d8eaf27ff40db20b741c1d946ab690000170000006c6567656e64732e706f6f6c2e663836333937332e6d3013c8809bd8dc4670762fff3fc5988e682c51f63a60013cba9d8ae6a78722f61d0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: [
+                    "ed25519:46c3btaWiBB2DCieDnQffBN4DixAHU69qYWqNzCBBgsQ",
+                  ],
+                  transaction_payload:
+                    "380000003133366466306338373666313230663362383233373534663537646565363036346331386139663935363030383164332e746573746e6574002e0297153490ddde81b8f300b1a96598bc13e5c8c2f0b61d8eaf27ff40db20b741c1d946ab690000170000006c6567656e64732e706f6f6c2e663836333937332e6d3013c8809bd8dc4670762fff3fc5988e682c51f63a60013cba9d8ae6a78722f61d0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000",
+                  signing_payload:
+                    "dd74125fef57262cbe445e13cceb5073873605aa0e6019ce7502c51a3e3cd8bf",
+                  inputs: {
+                    input_klass: "Workflows::Signature",
+                    input_instance: {
+                      account_address: null,
+                      signature: null,
+                    },
+                    flow: {
+                      workflow_state: "delegate_tx_signature",
+                      id: 3803,
+                      customer_id: 40,
+                      chain_id: 7,
+                      data: {
+                        delegator_address:
+                          "136df0c876f120f3b823754f57dee6064c18a9f9560081d3.testnet",
+                        delegator_pubkey:
+                          "ed25519:46c3btaWiBB2DCieDnQffBN4DixAHU69qYWqNzCBBgsQ",
+                        validator_address: "legends.pool.f863973.m0",
+                        amount: "10.0",
+                        max_gas: null,
+                        delegate_transaction: {
+                          raw: "380000003133366466306338373666313230663362383233373534663537646565363036346331386139663935363030383164332e746573746e6574002e0297153490ddde81b8f300b1a96598bc13e5c8c2f0b61d8eaf27ff40db20b741c1d946ab690000170000006c6567656e64732e706f6f6c2e663836333937332e6d3013c8809bd8dc4670762fff3fc5988e682c51f63a60013cba9d8ae6a78722f61d0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000",
+                          signing_payload:
+                            "dd74125fef57262cbe445e13cceb5073873605aa0e6019ce7502c51a3e3cd8bf",
+                          signed: null,
+                          hash: "FuTkq5oYo9t8rUoGphpcuE1sEcJzYBU7QQbgY2Ah8L1U",
+                          status: null,
+                          error: null,
+                          signatures: null,
+                        },
+                      },
+                      created_at: "2023-02-24T22:48:42.104Z",
+                      updated_at: "2023-02-24T22:48:53.366Z",
+                      id_public: "11cbb22a-3505-4d9d-aa82-61a9d865dfdd",
+                      supported_operation_id: 20,
+                    },
+                    flow_attributes: {},
+                    empty_input: {
+                      account_address: null,
+                      signature: null,
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              name: "confirm_delegate_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            delegator_address:
+              "136df0c876f120f3b823754f57dee6064c18a9f9560081d3.testnet",
+            delegator_pubkey:
+              "ed25519:46c3btaWiBB2DCieDnQffBN4DixAHU69qYWqNzCBBgsQ",
+            validator_address: "legends.pool.f863973.m0",
+            amount: "10.0",
+            max_gas: null,
+            delegate_transaction: {
+              raw: "380000003133366466306338373666313230663362383233373534663537646565363036346331386139663935363030383164332e746573746e6574002e0297153490ddde81b8f300b1a96598bc13e5c8c2f0b61d8eaf27ff40db20b741c1d946ab690000170000006c6567656e64732e706f6f6c2e663836333937332e6d3013c8809bd8dc4670762fff3fc5988e682c51f63a60013cba9d8ae6a78722f61d0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000",
+              signing_payload:
+                "dd74125fef57262cbe445e13cceb5073873605aa0e6019ce7502c51a3e3cd8bf",
+              signed: null,
+              hash: "FuTkq5oYo9t8rUoGphpcuE1sEcJzYBU7QQbgY2Ah8L1U",
+              status: null,
+              error: null,
+              signatures: null,
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-24T22:48:42.104Z",
+          updated_at: "2023-02-24T22:48:53.366Z",
+        },
+      },
+    },
+    {
+      name: "Submit Signed Delegate Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the Ethereum network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `delegate_tx_broadcasting` — Transaction has been broadcast and is confirming.\n    - `delegated` — Transaction has been confirmed and the delegation is active.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Delegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_delegate_tx",
+          inputs: {
+            transaction_payload:
+              "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3904cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d309ab9d36f31580c94fcf7eace07f4a286a6f69cdd3caef0efed5d78930df546880100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b0000000000b9340332b7f4ad14000000000000cd7538bc1db22a72cbaa19f54e9df00b9444863c74eefd5897d2ebbb7a52e7f8042d675c09d40684b7f7dd17feb73ecd09f6ae08c33e7f82450b438694f5430e",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Signed Delegate Transaction for Broadcast",
+        body: {
+          id: "549db585-874f-4b5d-b1a2-67b7d9a3df15",
+          state: "delegate_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-02-27T17:48:51.908Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            delegator_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            delegator_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            validator_address: "legends.pool.f863973.m0",
+            amount: "10.0",
+            max_gas: null,
+            delegate_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000",
+              signing_payload:
+                "c9f587150ebf9aa0d8c20510a71574a094224c636a1d40e9c80e13f7d0ed04ea",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000007a3f50c131f084dc733fc56e16c888fc7f42a0e49000e8948065e1663d1f57849788b40dfbabdc1e6734d78f6fe4e7803372a251fb9c9473ca443575102b1303",
+              hash: "EbN6QPxd81V8CGViBFMtTjoqnoPV5bH34kyiV5vu9XvH",
+              status: null,
+              error: null,
+              signatures: [],
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:46:45.944Z",
+          updated_at: "2023-02-27T17:47:51.535Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `delegate_tx_broadcasting` — Transaction has been broadcast and is confirming.\n    - `delegated` — Transaction has been confirmed and the delegation is active.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Delegation flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearStakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "549db585-874f-4b5d-b1a2-67b7d9a3df15",
+          state: "delegated",
+          actions: [],
+          data: {
+            delegator_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            delegator_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            validator_address: "legends.pool.f863973.m0",
+            amount: "10.0",
+            max_gas: null,
+            delegate_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000",
+              signing_payload:
+                "c9f587150ebf9aa0d8c20510a71574a094224c636a1d40e9c80e13f7d0ed04ea",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000007a3f50c131f084dc733fc56e16c888fc7f42a0e49000e8948065e1663d1f57849788b40dfbabdc1e6734d78f6fe4e7803372a251fb9c9473ca443575102b1303",
+              hash: "EbN6QPxd81V8CGViBFMtTjoqnoPV5bH34kyiV5vu9XvH",
+              status: "confirmed",
+              error: null,
+              signatures: [],
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:46:45.944Z",
+          updated_at: "2023-02-27T17:48:05.958Z",
+        },
+      },
+    },
+    {
+      name: "Create New Undelegation Flow",
+      content:
+        "To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `near`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` `string` The operation to perform (ex. `unstaking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_undelegate_tx` — Use this action to generate an undelegation transaction to unstake NEAR.\n        - `delegator_address` — The delegator address.\n        - `delegator_pubkey` — The public key of the signing account.\n        - `validator_address` — Validator address from which NEAR will be undelegated.\n        - `undelegate_amount` — The amount of NEAR to be undelegated.\n        - `undelegate_maximum` — Set to `true`if you wish to unbond the full delegated balance without needing to know the exact delegated balance.\n        - `max_gas` — Adjust if you wish to limit the possible transaction fee.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "near",
+            chain_code: "testnet",
+            operation: "unstaking",
+            version: "v1",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Undelegation Flow",
+        body: {
+          id: "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_withdraw_tx",
+              inputs: [
+                {
+                  name: "delegator_address",
+                  display: "Delegator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "delegator_pubkey",
+                  display: "Delegator Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "validator_address",
+                  display: "Validator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "withdraw_amount",
+                  display: "Withdraw Amount",
+                  description: "",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {
+                        unless: "withdraw_maximum",
+                      },
+                    },
+                    {
+                      type: "numericality",
+                      options: {
+                        unless: "withdraw_maximum",
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "withdraw_maximum",
+                  display: "Withdraw Maximum",
+                  description: "",
+                  type: "boolean",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "max_gas",
+                  display: "Max Gas",
+                  description: "in NEAR",
+                  type: "decimal",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+            {
+              name: "create_undelegate_tx",
+              inputs: [
+                {
+                  name: "delegator_address",
+                  display: "Delegator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "delegator_pubkey",
+                  display: "Delegator Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "validator_address",
+                  display: "Validator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "undelegate_amount",
+                  display: "Undelegate Amount",
+                  description: "",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {
+                        unless: "undelegate_maximum",
+                      },
+                    },
+                    {
+                      type: "numericality",
+                      options: {
+                        unless: "undelegate_maximum",
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "undelegate_maximum",
+                  display: "Undelegate Maximum",
+                  description: "",
+                  type: "boolean",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "max_gas",
+                  display: "Max Gas",
+                  description: "in NEAR",
+                  type: "decimal",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            delegator_address: null,
+            delegator_pubkey: null,
+            validator_address: null,
+            max_gas: null,
+            undelegate_amount: null,
+            undelegate_maximum: null,
+            undelegate_transaction: null,
+            estimated_inactive_at: null,
+            withdraw_amount: null,
+            withdraw_maximum: null,
+            withdraw_transaction: null,
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:51:08.550Z",
+          updated_at: "2023-02-27T17:51:08.550Z",
+        },
+      },
+    },
+    {
+      name: "Submit Undelegate Data",
+      content:
+        "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `delegator_address` — `string` The delegator address (required).\n    - `delegator_pubkey` — `string` The pubkey of the signing account (required).\n    - `validator_address` — `string` Validator address from which NEAR will be undelegated (required).\n    - `undelegate_amount` — `number` The amount of NEAR to be undelegated (required).\n    - `undelegate_maximum` — `boolean` Set to `true` if you wish to unbond the full delegated balance without needing to know the exact delegated balance (optional).\n    - `max_gas` — `null` Adjust if you wish to limit the possible transaction fee (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_undelegate_tx` — If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_undelegate_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_undelegate_tx",
+          inputs: {
+            validator_address: "01node.pool.f863973.m0",
+            delegator_address: "slate-demo.testnet",
+            delegator_pubkey:
+              "ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY",
+            undelegate_amount: "25",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearUnstakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Undelegate Data",
+        body: {
+          id: "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+          state: "undelegate_tx_signature",
+          actions: [
+            {
+              name: "refresh_undelegate_tx",
+              inputs: [
+                {
+                  name: "delegator_address",
+                  display: "Delegator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value:
+                    "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+                },
+                {
+                  name: "delegator_pubkey",
+                  display: "Delegator Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value:
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                },
+                {
+                  name: "validator_address",
+                  display: "Validator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "legends.pool.f863973.m0",
+                },
+                {
+                  name: "undelegate_amount",
+                  display: "Undelegate Amount",
+                  description: "",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {
+                        unless: "undelegate_maximum",
+                      },
+                    },
+                    {
+                      type: "numericality",
+                      options: {
+                        unless: "undelegate_maximum",
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: "5.0",
+                },
+                {
+                  name: "undelegate_maximum",
+                  display: "Undelegate Maximum",
+                  description: "",
+                  type: "boolean",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "max_gas",
+                  display: "Max Gas",
+                  description: "in NEAR",
+                  type: "decimal",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+            {
+              name: "sign_undelegate_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: [
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                  ],
+                  transaction_payload:
+                    "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: [
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                  ],
+                  transaction_payload:
+                    "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+                  signing_payload:
+                    "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+                  inputs: {
+                    input_klass: "Workflows::Signature",
+                    input_instance: {
+                      account_address: null,
+                      signature: null,
+                    },
+                    flow: {
+                      workflow_state: "undelegate_tx_signature",
+                      id: 3808,
+                      customer_id: 40,
+                      chain_id: 7,
+                      data: {
+                        delegator_address:
+                          "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+                        delegator_pubkey:
+                          "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                        validator_address: "legends.pool.f863973.m0",
+                        max_gas: null,
+                        undelegate_amount: "5.0",
+                        undelegate_maximum: null,
+                        undelegate_transaction: {
+                          raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+                          signing_payload:
+                            "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+                          signed: null,
+                          hash: "CWc9R6SdHVwVHj1rhYiwBgK2sqkVdbBj1wG4QniUXwqT",
+                          status: null,
+                          error: null,
+                          signatures: null,
+                        },
+                        estimated_inactive_at: null,
+                        withdraw_amount: null,
+                        withdraw_maximum: null,
+                        withdraw_transaction: null,
+                      },
+                      created_at: "2023-02-27T17:51:08.550Z",
+                      updated_at: "2023-02-27T18:01:39.469Z",
+                      id_public: "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+                      supported_operation_id: 31,
+                    },
+                    flow_attributes: {},
+                    empty_input: {
+                      account_address: null,
+                      signature: null,
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              name: "confirm_undelegate_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            delegator_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            delegator_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            validator_address: "legends.pool.f863973.m0",
+            max_gas: null,
+            undelegate_amount: "5.0",
+            undelegate_maximum: null,
+            undelegate_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+              signed: null,
+              hash: "CWc9R6SdHVwVHj1rhYiwBgK2sqkVdbBj1wG4QniUXwqT",
+              status: null,
+              error: null,
+              signatures: null,
+            },
+            estimated_inactive_at: null,
+            withdraw_amount: null,
+            withdraw_maximum: null,
+            withdraw_transaction: null,
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:51:08.550Z",
+          updated_at: "2023-02-27T18:01:39.469Z",
+        },
+      },
+    },
+    {
+      name: "Submit Signed Undelegate Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the NEAR network\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `undelegate_tx_broadcasting` — Transaction has been broadcast and is waiting confirmation.\n    - `cool_down` — Transaction has been confirmed and the delegation is unbonding.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_undelegate_tx",
+          inputs: {
+            transaction_payload:
+              "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3905cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d308e0f6b6bb5b283186516419e2d4c06a47f7d55b456b83947fb5f8fb815957df6010000000207000000756e7374616b65270000007b22616d6f756e74223a223235303030303030303030303030303030303030303030303030227d00e057eb481b00000000000000000000000000000000000000d27fe1cabf4535e130002217b79d743941e22110d0b3b3f446aba92d3416eb5774efb6aa925af5ebc78e459218de9ae0baeee7de0e4fad77d299ace7fcf80107",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearUnstakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Signed Undelegate Transaction for Broadcast",
+        body: {
+          id: "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+          state: "undelegate_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-02-27T18:30:37.767Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            delegator_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            delegator_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            validator_address: "legends.pool.f863973.m0",
+            max_gas: null,
+            undelegate_amount: "5.0",
+            undelegate_maximum: null,
+            undelegate_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000006be83dd7cd920e48058cad0e8962b5abff1641ec07f0b5dd9e6f218e6f0d783b2f799113d87da39febaabda95e0bfdce07fabfc6583af55525b6a9ef6f9dfb01 ",
+              hash: "CWc9R6SdHVwVHj1rhYiwBgK2sqkVdbBj1wG4QniUXwqT",
+              status: null,
+              error: null,
+              signatures: [],
+            },
+            estimated_inactive_at: null,
+            withdraw_amount: null,
+            withdraw_maximum: null,
+            withdraw_transaction: null,
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:51:08.550Z",
+          updated_at: "2023-02-27T18:29:37.321Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `undelegate_tx_broadcasting` — Transaction has been broadcast and is waiting for confirmation.\n    - `cool_down` — Transaction has been confirmed and the delegation is unbonding.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearUnstakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+          state: "cool_down",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-03-01T18:29:48.741Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            delegator_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            delegator_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            validator_address: "legends.pool.f863973.m0",
+            max_gas: null,
+            undelegate_amount: "5.0",
+            undelegate_maximum: null,
+            undelegate_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000006be83dd7cd920e48058cad0e8962b5abff1641ec07f0b5dd9e6f218e6f0d783b2f799113d87da39febaabda95e0bfdce07fabfc6583af55525b6a9ef6f9dfb01 ",
+              hash: "CWc9R6SdHVwVHj1rhYiwBgK2sqkVdbBj1wG4QniUXwqT",
+              status: "confirmed",
+              error: null,
+              signatures: [],
+            },
+            estimated_inactive_at: "2023-03-01T18:29:48.741Z",
+            withdraw_amount: null,
+            withdraw_maximum: null,
+            withdraw_transaction: null,
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:51:08.550Z",
+          updated_at: "2023-02-27T18:29:48.743Z",
+        },
+      },
+    },
+    {
+      name: "Submit Withdraw Data",
+      content:
+        "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `delegator_address` — `string` The delegator address (required).\n    - `delegator_pubkey` — `string` The pubkey of the signing account (required).\n    - `validator_address` — `string` Validator address from which NEAR will be undelegated (required).\n    - `withdraw_amount` — `number` The amount of NEAR to be withdrawn (required).\n    - `withdraw_maximum` — `boolean` Set to `true` if you wish to withdraw the full available balance without needing to know the exact available balance. (optional).\n    - `max_gas` — `number` Adjust if you wish to limit the possible transaction fee (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_withdraw_tx` — If you need to get a fresh version of the transaction payload (i.e., if the nonce needs to be updated)\n    - `sign_withdraw_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_withdraw_tx",
+          inputs: {
+            validator_address: "01node.pool.f863973.m0",
+            delegator_address: "slate-demo.testnet",
+            delegator_pubkey:
+              "ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY",
+            withdraw_amount: "25",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearUnstakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Withdraw Data",
+        body: {
+          id: "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+          operation: "unstaking",
+          state: "withdraw_tx_signature",
+          actions: [
+            {
+              name: "refresh_withdraw_tx",
+              inputs: [
+                {
+                  name: "delegator_address",
+                  display: "Delegator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value:
+                    "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+                },
+                {
+                  name: "delegator_pubkey",
+                  display: "Delegator Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value:
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                },
+                {
+                  name: "validator_address",
+                  display: "Validator Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "legends.pool.f863973.m0",
+                },
+                {
+                  name: "withdraw_amount",
+                  display: "Withdraw Amount",
+                  description: "",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {
+                        unless: "withdraw_maximum",
+                      },
+                    },
+                    {
+                      type: "numericality",
+                      options: {
+                        unless: "withdraw_maximum",
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: "5.0",
+                },
+                {
+                  name: "withdraw_maximum",
+                  display: "Withdraw Maximum",
+                  description: "",
+                  type: "boolean",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "max_gas",
+                  display: "Max Gas",
+                  description: "in NEAR",
+                  type: "decimal",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+            {
+              name: "sign_withdraw_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: [
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                  ],
+                  transaction_payload:
+                    "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: [
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                  ],
+                  transaction_payload:
+                    "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+                  signing_payload:
+                    "3d86e4c351bc002fd7fbdb0686cc872393c87ffe3a4470cb010857bc739d6784",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_withdraw_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            delegator_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            delegator_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            validator_address: "legends.pool.f863973.m0",
+            max_gas: null,
+            undelegate_amount: "5.0",
+            undelegate_maximum: null,
+            undelegate_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000006be83dd7cd920e48058cad0e8962b5abff1641ec07f0b5dd9e6f218e6f0d783b2f799113d87da39febaabda95e0bfdce07fabfc6583af55525b6a9ef6f9dfb01 ",
+              hash: "CWc9R6SdHVwVHj1rhYiwBgK2sqkVdbBj1wG4QniUXwqT",
+              status: "confirmed",
+              error: null,
+              signatures: [],
+              block_time: null,
+            },
+            estimated_inactive_at: "2023-03-01T18:29:48.741Z",
+            withdraw_amount: "5.0",
+            withdraw_maximum: null,
+            withdraw_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "3d86e4c351bc002fd7fbdb0686cc872393c87ffe3a4470cb010857bc739d6784",
+              signed: null,
+              hash: "59BAsPfQtJEzaNJghq6HYDhTBupTUvm63FRNdXG447vb",
+              status: null,
+              error: null,
+              signatures: null,
+              block_time: null,
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:51:08.550Z",
+          updated_at: "2023-03-01T18:14:38.809Z",
+        },
+      },
+    },
+    {
+      name: "Submit a Signed Withdraw Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` (as always!) and the Staking API will broadcast the transaction to the NEAR network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — `string` Signed transaction payload from the previous step's response (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `withdraw_tx_broadcasting` — Transaction has been broadcast and is waiting for confirmation.\n    - `withdrawn` — Transaction has been confirmed and the withdrawal is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_withdraw_tx",
+          inputs: {
+            transaction_payload:
+              "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3907cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d3084edd29289b3a590be582317bb0061016a8df058b7c29a0278f5b82f86c283010100000002080000007769746864726177270000007b22616d6f756e74223a223235303030303030303030303030303030303030303030303030227d00e057eb481b00000000000000000000000000000000000000235397dfd3f0b7ce06a4fe11395e36ce40d12610eae07dcc1dc1d962b38fa9592cdc22f6c9164b0155967a773c369719f71d76b84185ec13c39381343c63cf0b",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearUnstakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit a Signed Withdraw Transaction for Broadcast",
+        body: {
+          id: "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+          operation: "unstaking",
+          state: "withdraw_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-03-01T18:23:50.088Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            delegator_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            delegator_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            validator_address: "legends.pool.f863973.m0",
+            max_gas: null,
+            undelegate_amount: "5.0",
+            undelegate_maximum: null,
+            undelegate_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000006be83dd7cd920e48058cad0e8962b5abff1641ec07f0b5dd9e6f218e6f0d783b2f799113d87da39febaabda95e0bfdce07fabfc6583af55525b6a9ef6f9dfb01 ",
+              hash: "CWc9R6SdHVwVHj1rhYiwBgK2sqkVdbBj1wG4QniUXwqT",
+              status: "confirmed",
+              error: null,
+              signatures: [],
+              block_time: null,
+            },
+            estimated_inactive_at: "2023-03-01T18:29:48.741Z",
+            withdraw_amount: "5.0",
+            withdraw_maximum: null,
+            withdraw_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "3d86e4c351bc002fd7fbdb0686cc872393c87ffe3a4470cb010857bc739d6784",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000002a6cea608a947eabef4ae001074c91d02ce9ba57247d741d927fa342513b585f243b3cb6a326922cadbd528a6b5e1b2b4ad5f7e1791dc3e5623f01d1e0917c0c",
+              hash: "59BAsPfQtJEzaNJghq6HYDhTBupTUvm63FRNdXG447vb",
+              status: null,
+              error: null,
+              signatures: [],
+              block_time: null,
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:51:08.550Z",
+          updated_at: "2023-03-01T18:22:49.608Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n\n### Response\n\n- `id` &mdash; `string` ID of the flow.\n- `state` &mdash; `string` The current state of the flow.\n - `withdraw_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting for confirmation.\n - `withdrawn` &mdash; Transaction has been confirmed and the withdrawal is complete.\n- `actions` &mdash; `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` &mdash; `object` Undelegation flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearUnstakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+          operation: "unstaking",
+          state: "withdrawn",
+          actions: [],
+          data: {
+            delegator_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            delegator_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            validator_address: "legends.pool.f863973.m0",
+            max_gas: null,
+            undelegate_amount: "5.0",
+            undelegate_maximum: null,
+            undelegate_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "ab06236a0916604347fbbfc0c803d374fd28e6eb69f2edce3c2e6ac23e1f0452",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa422e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30f95da7beed58598a6e813c1303a2374028fe6cfe76f467ee656899c7400c640d010000000207000000756e7374616b65260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000006be83dd7cd920e48058cad0e8962b5abff1641ec07f0b5dd9e6f218e6f0d783b2f799113d87da39febaabda95e0bfdce07fabfc6583af55525b6a9ef6f9dfb01 ",
+              hash: "CWc9R6SdHVwVHj1rhYiwBgK2sqkVdbBj1wG4QniUXwqT",
+              status: "confirmed",
+              error: null,
+              signatures: [],
+              block_time: null,
+            },
+            estimated_inactive_at: "2023-03-01T18:29:48.741Z",
+            withdraw_amount: "5.0",
+            withdraw_maximum: null,
+            withdraw_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000",
+              signing_payload:
+                "3d86e4c351bc002fd7fbdb0686cc872393c87ffe3a4470cb010857bc739d6784",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa442e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d30d7d1c76dbf0debe82e9e8c6a11ecb54be99e1d288ca1993e5071a2c68cdfaeed0100000002080000007769746864726177260000007b22616d6f756e74223a2235303030303030303030303030303030303030303030303030227d00e057eb481b000000000000000000000000000000000000002a6cea608a947eabef4ae001074c91d02ce9ba57247d741d927fa342513b585f243b3cb6a326922cadbd528a6b5e1b2b4ad5f7e1791dc3e5623f01d1e0917c0c",
+              hash: "59BAsPfQtJEzaNJghq6HYDhTBupTUvm63FRNdXG447vb",
+              status: "confirmed",
+              error: null,
+              signatures: [],
+              block_time: "2023-03-01T18:22:50.630Z",
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T17:51:08.550Z",
+          updated_at: "2023-03-01T18:23:01.589Z",
+        },
+      },
+    },
+    {
+      name: "Create New Transfer Flow",
+      content:
+        "To initiate the transfer process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `near`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` — `string` The operation to perform (ex. `transfer`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_transfer_tx` — Use this action to transfer NEAR.\n        - `from_account_address` — The address from which NEAR will be transferred.\n        - `from_account_pubkey` — The account that will sign the transaction.\n        - `to_account_address` — The address to which NEAR will be transferred.\n        - `amount` — The amount of NEAR to be transferred.\n- `data` — `object` Transfer flow & transaction data.",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "near",
+            chain_code: "testnet",
+            operation: "transfer",
+            version: "v1",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Transfer Flow",
+        body: {
+          id: "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_transfer_tx",
+              inputs: [
+                {
+                  name: "from_account_pubkey",
+                  display: "From Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "from_account_address",
+                  display: "From Account Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "to_account_address",
+                  display: "To Account Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in NEAR",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "numericality",
+                      options: {
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            from_account_pubkey: null,
+            from_account_address: null,
+            to_account_address: null,
+            amount: null,
+            transfer_transaction: null,
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T18:35:44.613Z",
+          updated_at: "2023-02-27T18:35:44.613Z",
+        },
+      },
+    },
+    {
+      name: "Submit Transfer Data",
+      content:
+        "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute - `create_transfer_tx`.\n- `inputs` — `object`\n    - `from_account_pubkey` — `string` The account that will sign the transaction (required).\n    - `from_account_address` — `string` the address which NEAR will be transferred from (required).\n    - `to_account_address` — `string` The address to which NEAR will be transferred (required).\n    - `amount` — `number` The amount of NEAR to be transferred (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_deposit_tx` — If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_deposit_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n- `data` — `object` Transfer flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_transfer_tx",
+          inputs: {
+            from_account_address: "slate-demo.testnet",
+            from_account_pubkey:
+              "ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY",
+            to_account_address: "pizza.testnet",
+            amount: "10",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearTransferFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Transfer Data",
+        body: {
+          id: "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+          state: "transfer_tx_signature",
+          actions: [
+            {
+              name: "refresh_transfer_tx",
+              inputs: [
+                {
+                  name: "from_account_pubkey",
+                  display: "From Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value:
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                },
+                {
+                  name: "from_account_address",
+                  display: "From Account Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value:
+                    "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+                },
+                {
+                  name: "to_account_address",
+                  display: "To Account Address",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "slate-demo.testnet",
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in NEAR",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                    {
+                      type: "numericality",
+                      options: {
+                        greater_than: 0,
+                      },
+                    },
+                  ],
+                  array: false,
+                  default_value: "50.0",
+                },
+              ],
+            },
+            {
+              name: "sign_transfer_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: [
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                  ],
+                  transaction_payload:
+                    "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: [
+                    "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                  ],
+                  transaction_payload:
+                    "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+                  signing_payload:
+                    "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+                  inputs: {
+                    input_klass: "Workflows::Signature",
+                    input_instance: {
+                      account_address: null,
+                      signature: null,
+                    },
+                    flow: {
+                      workflow_state: "transfer_tx_signature",
+                      id: 3810,
+                      customer_id: 40,
+                      chain_id: 7,
+                      data: {
+                        from_account_pubkey:
+                          "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+                        from_account_address:
+                          "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+                        to_account_address: "slate-demo.testnet",
+                        amount: "50.0",
+                        transfer_transaction: {
+                          raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+                          signing_payload:
+                            "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+                          signed: null,
+                          hash: "A64WEYru3xv7jQsCDn9JV4RYK4frvNWtfAUUMYQmcVLn",
+                          status: null,
+                          error: null,
+                          signatures: null,
+                        },
+                      },
+                      created_at: "2023-02-27T18:35:44.613Z",
+                      updated_at: "2023-02-27T18:40:29.791Z",
+                      id_public: "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+                      supported_operation_id: 19,
+                    },
+                    flow_attributes: {},
+                    empty_input: {
+                      account_address: null,
+                      signature: null,
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              name: "confirm_transfer_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            from_account_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            from_account_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            to_account_address: "slate-demo.testnet",
+            amount: "50.0",
+            transfer_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+              signing_payload:
+                "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+              signed: null,
+              hash: "A64WEYru3xv7jQsCDn9JV4RYK4frvNWtfAUUMYQmcVLn",
+              status: null,
+              error: null,
+              signatures: null,
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T18:35:44.613Z",
+          updated_at: "2023-02-27T18:40:29.791Z",
+        },
+      },
+    },
+    {
+      name: "Submit Signed Transfer Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the NEAR network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `transfer_tx_broadcasting` — Transaction has been broadcast and is waiting confirmation.\n    - `transfered` — Transaction has been confirmed and the transfer is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Transfer flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_transfer_tx",
+          inputs: {
+            transaction_payload:
+              "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3906cc1038fc5700000d00000070697a7a612e746573746e657490121aa419ea5a902edec74ac78626fd251b8466f4c637f3ded5f0898014448001000000030000004a48011416954508000000000000e7a0bf4947796c6c2962084dccd3c97fa1b78de1fab4765ab3d2cadf3e6c90b6290d5aae0a79b7c0a5bc31120210591135a7604fcc12ecc4b3b34d7513e73a0b",
+          },
+        },
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearTransferFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Signed Transfer Transaction for Broadcast",
+        body: {
+          id: "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+          state: "transfer_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-02-27T18:45:13.315Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            from_account_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            from_account_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            to_account_address: "slate-demo.testnet",
+            amount: "50.0",
+            transfer_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+              signing_payload:
+                "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b2900000000000069cab19548fcac9253ef66fde2853aa46611ac42aeae30d4109fae9a026de1ba67a4c55fe576a019898e8a1b817c93d02779dfd1be63fde390e0bf576cb67404",
+              hash: "A64WEYru3xv7jQsCDn9JV4RYK4frvNWtfAUUMYQmcVLn",
+              status: null,
+              error: null,
+              signatures: [],
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T18:35:44.613Z",
+          updated_at: "2023-02-27T18:44:12.803Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `transfer_tx_broadcasting` — Transaction has been broadcast and is waiting confirmation.\n    - `transfered` — Transaction has been confirmed and the transfer is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Transfer flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://near-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{nearTransferFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+          state: "transfered",
+          actions: [],
+          data: {
+            from_account_pubkey:
+              "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+            from_account_address:
+              "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+            to_account_address: "slate-demo.testnet",
+            amount: "50.0",
+            transfer_transaction: {
+              raw: "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+              signing_payload:
+                "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+              signed:
+                "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b2900000000000069cab19548fcac9253ef66fde2853aa46611ac42aeae30d4109fae9a026de1ba67a4c55fe576a019898e8a1b817c93d02779dfd1be63fde390e0bf576cb67404",
+              hash: "A64WEYru3xv7jQsCDn9JV4RYK4frvNWtfAUUMYQmcVLn",
+              status: "confirmed",
+              error: null,
+              signatures: [],
+            },
+          },
+          network_code: "near",
+          chain_code: "testnet",
+          created_at: "2023-02-27T18:35:44.613Z",
+          updated_at: "2023-02-27T18:44:24.567Z",
+        },
+      },
+    },
+  ]}
+/>

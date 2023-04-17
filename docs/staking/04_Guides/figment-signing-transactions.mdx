@@ -1,0 +1,303 @@
+---
+title: Signing Transactions with Figment's npm Package
+slug: /staking/guides/figment-signing-transactions
+sidebar_position: 5
+pagination_prev: null
+pagination_next: null
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import Link from "@docusaurus/Link";
+
+Figment's npm package named **slate** simplifies the signing and payload decoding process for networks supported by the Staking API.
+This guide covers everything you will need to sign and decode Staking API transaction payloads.
+
+:::info note
+
+The latest version number of the package and how recently it was published are always available at the top of the page at <Link to="https://www.npmjs.com/package/@figmentio/slate">https://www.npmjs.com/package/@figmentio/slate</Link>
+
+:::
+
+## Installing the package
+
+```bash npm2yarn
+npm install @figmentio/slate
+```
+
+Check your `package.json` dependencies to confirm which version you’re using.
+
+```json
+"dependencies": {
+    ...
+    "@figmentio/slate": "^1.12.0",
+    ...
+}
+```
+
+## Usage
+
+In your code, require `@figmentio/slate`. The package exports two methods: `decode` and `sign`.
+
+```jsx
+const slate = require("@figmentio/slate");
+```
+
+### Sign
+
+This method takes five parameters:
+
+- `<network_code>`: The name of the network
+- `<version>`: The Staking API version number used to generate the transaction
+- `<transaction_payload>`: The raw, unsigned transaction payload returned by the Staking API
+- `["<signing_private_keys>"]`: An array of private keys used to sign the transaction payload
+- `{<options>}`: (_optional_) An object, containing any network-specific options. See <Link to="#signing-options">Signing Options</Link> below for details
+
+:::info note
+
+Because the format of private keys differs between networks, attempting to sign a payload with a private key from another network will fail.
+The private key used to sign the payload must match the delegator's public key or address.
+
+:::
+
+```js title="Code Example"
+await slate.sign(
+  "near",
+  "v1",
+  "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3907cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d30192fc3497d275b958dea9de8d901c456292125c060c1304318ae9582a7bff20f0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b000000000025a4000a8bca22040000000000",
+  ["ed25519:<private_key>"]
+);
+```
+
+```text title="Example Output: Signed Transaction Payload"
+12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3907cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d3084edd29289b3a590be582317bb0061016a8df058b7c29a0278f5b82f86c283010100000002080000007769746864726177270000007b22616d6f756e74223a223235303030303030303030303030303030303030303030303030227d00e057eb481b00000000000000000000000000000000000000235397dfd3f0b7ce06a4fe11395e36ce40d12610eae07dcc1dc1d962b38fa9592cdc22f6c9164b0155967a773c369719f71d76b84185ec13c39381343c63cf0b
+```
+
+:::info note
+
+The array of private keys `["<signing_private_keys>"]` only requires the private key of the delegator, however it can accommodate multiple private keys in cases where a multisig is used for delegation.
+
+Passing multiple private keys would look like `["<signing_private_key_1>", "<signing_private_key_2>"]`, etc.
+
+**Signing occurs entirely offline; private keys are never exposed during this process.**
+
+See the guide on <Link to="/guides/staking-api/fireblocks-signing-transactions">Signing Transactions with the Fireblocks API</Link> if you require a custodial signing solution.
+
+:::
+
+### Signing Options
+
+**Cosmos** and **Polkadot** are currently the only networks that require `options` to be passed when signing with `@figmentio/slate`.
+
+The `options` parameter is an optional fifth parameter to the `sign` method, which only needs to be included when a network requires additional options.
+
+#### Cosmos
+
+- `accountNumber` &mdash; This sequential number is generated when an account first receives funds on Cosmos. Account numbers can be determined by querying the Cosmos LCD for account details, or using the Cosmos CLI tool, `gaiad`.
+- `sequence` &mdash; This sequential number is incremented for each transaction an account has made and is also used to prevent replay attacks. The sequence is commonly referred to as a "nonce" which means "number, used once". Sequence numbers can also be found by querying the Cosmos LCD for account details.
+- `chainId` &mdash; <Link to="https://github.com/cosmos/chain-registry">Cosmos chain IDs</Link> refer to a specific chain in the Cosmos ecosystem, preventing transactions from one chain being applied to another. You must supply the appropriate `chainId` when signing a Cosmos transaction.
+  - The `chainId` value for Cosmos **mainnet** is currently `cosmoshub-4`
+  - The `chainId` value for Cosmos **testnet** is currently `theta-testnet-001`
+
+```js {2-4} title="Example sign method call for Cosmos, with options"
+slate.sign("cosmos", "v1", transaction_payload, ["<signing_private_key>"], {
+  accountNumber: "721397",
+  sequence: "3",
+  chainId: "theta-testnet-001",
+});
+```
+
+To view an account's `accountNumber` and `sequence`, perform a GET request to the Cosmos LCD endpoint <Link to="https://docs.figment.io/api-reference/node-api/cosmos-lcd/#%E2%80%8B/cosmos%E2%80%8B/auth%E2%80%8B/v1beta1%E2%80%8B/accounts%E2%80%8B/{address}"><code>/cosmos​/auth​/v1beta1​/accounts​/&#x7B;address&#x7D;</code></Link> with the account address you want to query:
+
+```json {9-10} title="Example response: GET /cosmos​/auth​/v1beta1​/accounts​/cosmos1nm0rrq86ucezaf8uj35pq9fpwr5r82cl8sc7p5"
+{
+  "account": {
+    "@type": "/cosmos.auth.v1beta1.BaseAccount",
+    "address": "cosmos1nm0rrq86ucezaf8uj35pq9fpwr5r82cl8sc7p5",
+    "pub_key": {
+      "@type": "/cosmos.crypto.secp256k1.PubKey",
+      "key": "ApEvbc+4QJiDoaaXG6v0K3A4zmPON8pu4uzCm4o142u/"
+    },
+    "account_number": "15652",
+    "sequence": "114429"
+  }
+}
+```
+
+#### Polkadot
+
+- `rpcUrl` &mdash; WebSocket URL of the Polkadot RPC endpoint. In most cases, this value should be the public RPC endpoint for the chain you are signing a transaction on. If running your own node, you can specify its RPC endpoint.
+  - For **Polkadot** mainnet, use `wss://rpc.polkadot.io`
+  - For **Westend** testnet, use `wss://westend-rpc.polkadot.io`
+
+```js {2} title="Example sign method call for Polkadot, with options"
+slate.sign("polkadot", "v1", transaction_payload, ["<signing_private_key>"], {
+  rpcUrl: "wss://westend-rpc.polkadot.io",
+});
+```
+
+### Decode
+
+The decode method takes six parameters:
+
+- `<network_code>`: The name of the network (ex. `near`)
+- `<operation>`: The operation the transaction is built to accomplish (ex. `staking`, [see below](/guides/staking-api/figment-signing-transactions#operations-and-transaction-types) for a complete list)
+- `<version>`: The Staking API version number used to generate the transaction (ex. `v1`)
+- `<transaction_type>`: The type of transaction being decoded (ex. `delegateTransaction`, [see below](/guides/staking-api/figment-signing-transactions#operations-and-transaction-types) for a complete list)
+- `<transaction_payload>`: The raw, unsigned transaction payload returned by the Staking API
+- `{<options>}`: (_optional_) An object, containing any network-specific options. See <Link to="#decode-options">Decode Options</Link> below for details
+
+```js title="Code Example"
+await slate.decode(
+  "near",
+  "staking",
+  "v1",
+  "delegateTransaction",
+  "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3907cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d30192fc3497d275b958dea9de8d901c456292125c060c1304318ae9582a7bff20f0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b000000000025a4000a8bca22040000000000"
+);
+```
+
+```json title="Example Output: Decoded Transaction Payload"
+{
+  "delegatorPubkey": "5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY",
+  "delegatorAddress": "slate-demo.testnet",
+  "validatorAddress": "01node.pool.f863973.m0",
+  "amount": "5"
+}
+```
+
+### Decode Options
+
+The options parameter is an optional sixth parameter to the `decode` method, which only needs to be included when a network requires additional options.
+
+#### Avalanche
+
+- `hrp` &mdash; The Human-Readable-Part of the `Bech32` encoded address must be passed when decoding Avalanche transaction payloads.
+  - For **mainnet** transactions, the value must be `avax`
+  - For **testnet** transactions, the value must be `fuji`
+
+```js title="Example decode method call for Avalanche testnet, with options"
+slate.decode(
+  "avalanche",
+  "staking",
+  "v1",
+  "delegateTransaction",
+  transaction_payload,
+  {
+    hrp: "fuji",
+  }
+);
+```
+
+:::info note
+
+There are two less commonly used `hrp` values: `local` and `custom` - however, these are not relevant to the Staking API.
+
+Specifically, the `hrp` is used by <Link to="https://github.com/ava-labs/avalanchejs/blob/13c8cb47a2497a9e32aac5a25f7e7cb88dea2873/src/utils/bintools.ts#L333">AvalancheJS</Link> `BinTools`.
+
+Read more about `Bech32` address encoding in the <Link to="https://support.avax.network/en/articles/4587392-what-is-bech32">Avalanche Knowledgebase</Link>.
+
+:::
+
+### Operations and Transaction Types
+
+These operations are used by the Staking API and the associated transaction types are used when decoding a transaction payload.
+
+<!--
+
+To ensure Tabs work with Markdown content, maintain the formatting below
+ - No whitespace between the Tabs and TabItem tags
+ - Linebreaks before & after Markdown content
+
+Example:
+
+<Tabs><TabItem value="unique-value" label="Label Text">
+
+## Markdown content
+
+</TabItem></Tabs>
+
+-->
+
+<Tabs><TabItem value="avax" label="Avalanche" default>
+
+- `staking`
+  - `delegateTransaction`
+
+</TabItem><TabItem value="atom" label="Cosmos" default>
+
+- `staking`
+  - `delegateTransaction`
+- `transfer`
+  - `transferTransaction`
+
+</TabItem><TabItem value="eth" label="Ethereum">
+
+- `staking`
+  - `depositTransaction`
+
+</TabItem><TabItem value="near" label="NEAR">
+
+- `staking`
+  - `delegateTransaction`
+- `unstaking`
+  - `undelegateTransaction`
+  - `withdrawTransaction`
+- `transfer`
+  - `transferTransaction`
+
+</TabItem><TabItem value="dot" label="Polkadot">
+
+- `staking`
+  - `bondingTransaction`
+  - `nominationTransaction`
+- `unstaking`
+  - `chillTransaction`
+  - `unbondTransaction`
+  - `withdrawTransaction`
+- `transfer`
+  - `transferTransaction`
+- `addProxy`
+  - `addProxyTransaction`
+- `removeProxy`
+  - `removeProxyTransaction`
+
+</TabItem><TabItem value="matic" label="Polygon">
+
+- `staking`
+  - `bondingTransaction`
+  - `nominationTransaction`
+- `unstaking`
+  - `chillTransaction`
+  - `unbondTransaction`
+  - `withdrawTransaction`
+- `claimRewards`
+  - `claimRewardsTransaction`
+
+</TabItem><TabItem value="sol" label="Solana">
+
+- `staking`
+  - `createStakeAccountTransaction`
+  - `delegateTransaction`
+- `unstaking`
+  - `deactivateTransaction`
+  - `withdrawTransaction`
+- `transfer`
+  - `transferTransaction`
+- `splitStakeAccount`
+  - `splitStakeAccountTransaction`
+
+</TabItem></Tabs>
+
+## References
+
+- <Link to="https://hub.cosmos.network/main/delegators/delegator-guide-cli.html#signing-transactions-from-an-offline-computer">
+    CosmosHub Docs
+  </Link>
+- <Link to="https://github.com/cosmos/chain-registry">
+    Cosmos Chain Registry
+  </Link>
+- <Link to="https://wiki.polkadot.network/docs/maintain-endpoints">
+    Polkadot Wiki
+  </Link>
+- <Link to="https://support.avax.network/en/">Avalanche Knowledgebase</Link>

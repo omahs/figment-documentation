@@ -1,0 +1,220 @@
+---
+title: Submit Split Stake Account Data
+slug: /staking/solana/split-stake-account/submit-split-stake-account-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `funding_account_pubkey` &mdash; The public key of the wallet which will pay the transaction fee (required).
+  - `source_stake_account_pubkey` &mdash; The existing stake account from which partial SOL balance will be split (required).
+  - `amount` &mdash; The amount of SOL to be transferred to the new stake account. This field should be in full SOL, not in lamports (i.e., if you want to fund the new stake account with 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs (required).
+
+### Sample cURL Request
+
+```bash {5-10}
+curl -X PUT 'https://solana-slate.datahub.figment.io/api/v1/flows/81a57270-89b2-46d9-83b0-2b6138b556cd/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "create_split_tx",
+    "inputs": {
+        "funding_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+        "source_stake_account_pubkey": "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+        "amount": 1.0
+    }
+}'
+```
+
+### Response
+
+The response indicates three possible `actions`:
+
+- `refresh_split_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).
+- `sign_split_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_split_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
+
+We will choose `sign_split_tx`, which indicates one input to collect:
+
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
+
+#### Sample Response
+
+```json {4,7,54,57,70,118,121}
+{
+  "id": "81a57270-89b2-46d9-83b0-2b6138b556cd",
+  "operation": "split_stake_account",
+  "state": "split_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_split_tx",
+      "inputs": [
+        {
+          "name": "funding_account_pubkey",
+          "display": "Funding Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"
+        },
+        {
+          "name": "source_stake_account_pubkey",
+          "display": "Source Stake Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in SOL",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        }
+      ]
+    },
+    {
+      "name": "sign_split_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+          "transaction_payload": "0200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+          "transaction_payload": "0200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+          "signing_payload": "02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_split_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "funding_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "source_stake_account_pubkey": "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+    "amount": "1.0",
+    "split_transaction": {
+      "raw": "0200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+      "signing_payload": "02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+      "signed": null,
+      "hash": null,
+      "status": null,
+      "error": null,
+      "signatures": null,
+      "block_time": null
+    },
+    "source_stake_authority_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "destination_stake_account_pubkey": "XD7o3qSrZr6GJJnZ1s4ks3yDsHuso4Z9pSXy5VPLNLG"
+  },
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-03-02T08:24:44.629Z",
+  "updated_at": "2023-03-02T08:26:08.885Z"
+}
+```
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

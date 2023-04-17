@@ -1,23 +1,55 @@
 /* 👇 Feedback button in navbar */
-.navbar .feedback_button_link button {
-  background: var(--top-nav-font-color);
-  font-weight: normal;
-  border-color: var(--top-nav-font-color);
-}
-
 .navbar [class*="toggle_node_modules"] button {
   background-color: transparent;
 }
 
-.navbar__title,
-.navbar__brand svg,
-.navbar-sidebar__close svg g {
-  color: var(--top-nav-font-color);
-  text-decoration: none;
+[data-theme="light"] .navbar [class*="toggle_node_modules"] button {
+  color: black;
 }
 
-.navbar-sidebar__close svg g {
-  stroke: var(--top-nav-font-color);
-  color: var(--top-nav-font-color) !important;
+[data-theme="dark"] .navbar [class*="toggle_node_modules"] button {
+  color: white;
+}
+
+.theme-doc-sidebar-container {
+  background-color: transparent;
+}
+
+.navbar__title,
+.navbar__brand svg {
+  color: var(--top-nav-font-color);
   text-decoration: none;
+  font-size: 1.2em;
+  margin-left: 8px;
+}
+
+/* 👇 Hide the top-nav */
+.navbar--fixed-top {
+  box-shadow: none;
+  border-right: 1px solid var(--ifm-toc-border-color);
+}
+
+/* top navbar */
+[data-theme="light"] .navbar--fixed-top {
+  /* display: none; */
+  width: var(--doc-sidebar-width);
+  background: var(--logo-nav-bg);
+}
+
+[data-theme="light"] .navbar__title {
+  color: black;
+}
+
+[data-theme="dark"] .navbar--fixed-top {
+  /* display: none; */
+  width: var(--doc-sidebar-width);
+  background: #16161a;
+}
+
+[data-theme="dark"] .navbar__title {
+  color: white;
+}
+
+.navbar__items.navbar__items--right {
+  display: none;
 }

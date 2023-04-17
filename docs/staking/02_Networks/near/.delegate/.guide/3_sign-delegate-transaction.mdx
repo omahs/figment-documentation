@@ -1,0 +1,28 @@
+---
+title: Sign the Delegate Transaction
+slug: /staking/near/delegate/sign-delegate-transaction
+---
+
+Sign the delegate transaction using the `transaction_payload` you received in response to submitting the delegate data.
+
+Locate the `transaction_payload` in the response from the previous step. It will look something like this:
+
+```json
+"transaction_payload": "12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3904cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d309ab9d36f31580c94fcf7eace07f4a286a6f69cdd3caef0efed5d78930df546880100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b0000000000b9340332b7f4ad140000000000"
+```
+
+:::caution important
+
+Always confirm the details of the transaction before signing the payload.
+
+Figment has a tool for signing and decoding Staking API payloads, see the guide [Signing Transactions with Figment's npm Package](/guides/staking-api/figment-signing-transactions) to continue.
+
+:::
+
+Transactions can also be signed using the [NearJS API](https://docs.near.org/integrator/create-transactions#create-sign--send-transaction) or [Fireblocks](/guides/staking-api/fireblocks-signing-transactions).
+
+Sign the transaction and move on to the next step. A signed transaction payload for NEAR will look something like this:
+
+```text
+12000000736c6174652d64656d6f2e746573746e657400415d57cdf21d28e35e0cfa864e895c18b4bc6a711642d38eb6762af81ec1cf3904cc1038fc5700001600000030316e6f64652e706f6f6c2e663836333937332e6d309ab9d36f31580c94fcf7eace07f4a286a6f69cdd3caef0efed5d78930df546880100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b0000000000b9340332b7f4ad14000000000000cd7538bc1db22a72cbaa19f54e9df00b9444863c74eefd5897d2ebbb7a52e7f8042d675c09d40684b7f7dd17feb73ecd09f6ae08c33e7f82450b438694f5430e
+```

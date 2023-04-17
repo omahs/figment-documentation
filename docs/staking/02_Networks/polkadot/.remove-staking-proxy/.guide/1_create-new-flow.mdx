@@ -1,0 +1,98 @@
+---
+title: Create New Flow To Remove Staking Proxy
+slug: /staking/polkadot/remove-staking-proxy/create-new-flow
+---
+
+To remove a staking proxy, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `polkadot`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `westend`) (required).
+  - `operation` `string` The operation to perform (ex. `remove_proxy`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://polkadot-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "polkadot",
+    "chain_code": "westend",
+    "operation": "remove_proxy",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible `actions`:
+
+- `create_remove_proxy_tx` &mdash; Use this action to generate a proxy removal transaction.
+
+The `create_remove_proxy_tx` action indicates two fields for data collection:
+
+- `proxy_account_address` &mdash; The address from which you want to remove proxy rights.
+- `proxied_account_address` &mdash; The account whose rights were being proxied.
+
+#### Sample Response
+
+```json {3-4,7,10,24}
+{
+  "id": "b2e0c44a-e1cd-4772-9e71-eaddacc6c7f4",
+  "operation": "remove_proxy",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_remove_proxy_tx",
+      "inputs": [
+        {
+          "name": "proxy_account_address",
+          "display": "Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "proxied_account_address",
+          "display": "Proxied Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "proxy_account_address": null,
+    "proxied_account_address": null,
+    "remove_proxy_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T19:31:21.057Z",
+  "updated_at": "2023-02-28T19:31:21.057Z"
+}
+```

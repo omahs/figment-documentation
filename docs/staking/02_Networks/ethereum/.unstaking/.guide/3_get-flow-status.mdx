@@ -1,0 +1,52 @@
+---
+title: Get Flow Status
+slug: /staking/ethereum/unstaking/get-flow-status-deposited
+---
+
+To get the current state of the unstaking/existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.
+
+### Parameters
+
+- None
+
+#### Sample cURL Request
+
+```bash
+curl -X GET 'https://eth-slate.datahub.figment.io/api/v1/flows/5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659' \
+-H 'Authorization: <api_key>'
+```
+
+### Response
+
+- `state` &mdash; `string` The current state of the flow.
+
+:::info note
+
+The `state` field will update from `broadcasting` to `exiting`, then `withdrawing` and finally `unstaked`.
+
+:::
+
+#### Sample Response
+
+```json {4}
+{
+  "id": "5d3fb8e0-bf2d-4fcc-9ff8-ed9d02d47659",
+  "operation": "unstaking",
+  "state": "unstaked",
+  "actions": [],
+  "data": {
+    "validator_index": 398094,
+    "epoch": 158149,
+    "signature": "0xa5ccd66f59898d3b655affe90ca328849c5993a54e4f63ed5447ce0f3bb6b5918bf72f06cbaec29af169abc433209eb30aa95d7ac1513c79887e2b552590119c32f350924e8f1dda2f2c1a5a68d801f3c150e8234493e0658031abdddcc9b2e3",
+    "estimated_principal_return_at": "2023-02-25T14:16:36.302Z"
+  },
+  "network_code": "ethereum",
+  "chain_code": "goerli",
+  "created_at": "2023-02-23T05:16:02.187Z",
+  "updated_at": "2023-02-25T14:18:36.302Z"
+}
+```
+
+### Unstaking Flow Complete
+
+Congratulations, your stake is now exited from the validator and withdrawn!

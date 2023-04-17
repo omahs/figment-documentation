@@ -3,4 +3,23 @@
   height: 20px;
   border-radius: 16px;
   border-color: transparent;
+  width: 20px;
+}
+
+/* TODO: Response styling - set min-height here and also clamp height to the spec */
+[data-theme] .LiveResponse {
+  /* background: #ff00ff; */
+  min-height: 148px;
+}
+
+pre {
+  /* background: #ff00ff; */
+  max-height: 710px;
+}
+
+.RightColumn {
+  width: 50%;
+  float: right;
+  clear: right;
+  background: #0ff;
 }

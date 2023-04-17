@@ -1,0 +1,149 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroTitle {
+  font-family: "Helvetica";
+  font-size: 48px;
+  font-weight: 600;
+  margin-top: 50px;
+}
+
+@media (max-width: 760px) {
+  .heroTitle {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 440px) {
+  .heroTitle {
+    font-size: 36px;
+  }
+}
+
+[data-theme="dark"] p {
+  color: #fff;
+}
+
+[data-theme="light"] p {
+  color: #4f566b;
+}
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.quickLinks,
+.products {
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.emoji {
+  font-size: 50px;
+  margin: 20px 0 30px;
+}
+
+[data-theme="light"] .quickLink,
+[data-theme="light"] .product {
+  text-align: left;
+  width: calc(33.33333% - 20px);
+  max-width: 360px;
+  padding: 20px;
+  border-radius: 4px;
+  border: solid 1px #eee;
+  box-shadow: 0px 8px 16px 0px rgba(15, 15, 15, 0.08);
+  cursor: pointer;
+}
+
+[data-theme="dark"] .quickLink,
+[data-theme="dark"] .product {
+  text-align: left;
+  width: calc(33.33333% - 20px);
+  max-width: 360px;
+  padding: 20px;
+  border-radius: 4px;
+  border: solid 1px #555;
+  box-shadow: 0px 8px 16px 0px rgba(200, 200, 200, 0.08);
+  cursor: pointer;
+}
+
+[data-theme="light"] .product:hover,
+[data-theme="light"] .quickLink:hover {
+  border: solid 1px #ccc;
+}
+
+[data-theme="dark"] .product:hover,
+[data-theme="dark"] .quickLink:hover {
+  border: solid 1px #888;
+}
+
+.hr {
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+.h2 {
+  margin-bottom: 30px;
+}
+
+[data-theme="dark"] .product,
+[data-theme="light"] .product {
+  width: calc(33% - 20px);
+  max-width: 600px;
+  flex-shrink: 0;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+[data-theme="dark"] a:visited .navbar__brand {
+  text-decoration-line: none;
+  color: #000;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 755px) {
+  [data-theme="dark"] .quickLinks,
+  .products [data-theme="light"] .quickLinks,
+  .products {
+    margin-top: 40px;
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: 100%;
+  }
+  [data-theme="dark"] .quickLink,
+  [data-theme="light"] .quickLink {
+    display: flex;
+    float: none;
+    width: 100% !important;
+    max-width: none !important;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+  [data-theme="dark"] .product,
+  [data-theme="light"] .product {
+    width: 100%;
+    max-width: 100%;
+    flex-shrink: 0;
+    margin-bottom: 40px;
+    flex-direction: column;
+  }
+}

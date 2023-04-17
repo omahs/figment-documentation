@@ -1,0 +1,472 @@
+---
+title: Bond More Transaction (Optional)
+slug: /staking/polkadot/delegate/create-bond-more-transaction
+---
+
+import Link from "@docusaurus/Link";
+
+Additional tokens can be bonded from your Stash account during the flow, before submitting validator addresses for nomination.
+
+Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step &mdash; signing and broadcasting the bond more transaction.
+The required input is an `amount` of DOT.
+
+- Use the `create_bond_more_tx` action when you need to bond extra tokens while the flow state is `bonding_complete`.
+
+- Use the `complete` action when the flow state is `bonding_complete` to advance the flow state directly to `delegated`.
+
+<details>
+  <summary>Click here to view example Staking API response</summary>
+
+```json {3,35,60} title="Example response after sucessful bonding transaction"
+{
+  "id": "2dd1fb5e-d089-4aca-81e9-fb52f2e245d1",
+  "state": "bonding_complete",
+  "actions": [
+    {
+      "name": "create_nomination_tx",
+      "inputs": [
+        {
+          "name": "validator_addresses",
+          "display": "Validator Addresses",
+          "description": "",
+          "type": "array_of_strings",
+          "validations": [
+            {
+              "type": "array",
+              "options": {
+                "allow_empty": false,
+                "allow_duplicates": false
+              }
+            },
+            {
+              "type": "length",
+              "options": {
+                "maximum": 16,
+                "message": "Cannot have more than 16 validators"
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "create_bond_more_tx",
+      "inputs": [
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in DOT",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        }
+      ]
+    },
+    {
+      "name": "complete",
+      "inputs": []
+    },
+    {
+      "name": "assign_stash_and_controller_account",
+      "inputs": [
+        {
+          "name": "controller_account_address",
+          "display": "Controller Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5EsUYYB1wj2MYkQF1Wrr4gQo8L2v5aRZWjZunxRjFXdUm81k"
+        },
+        {
+          "name": "controller_proxy_account_address",
+          "display": "Controller Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "stash_account_address",
+          "display": "Stash Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG"
+        },
+        {
+          "name": "stash_proxy_account_address",
+          "display": "Stash Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "controller_account_address": "5EsUYYB1wj2MYkQF1Wrr4gQo8L2v5aRZWjZunxRjFXdUm81k",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+    "stash_proxy_account_address": null,
+    "validator_addresses": null,
+    "reward_destination": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+    "amount": "1.0",
+    "bonding_transaction": {
+      "raw": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c5871651c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xc102840092460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c58716501f0890cf1144825f8e40321cf344105c6af1a17e62e2c73c5e9681037dce1c250843ace78df337737c23935fcdf9da1a67c911fb90fbe9541241b63e01edf9e840000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165",
+      "hash": "0x6a967111a86491612dae27bdc6dcbfcd01884c994737e54f0941afffe36f6649",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_number": 14742751,
+      "proxy": false
+    },
+    "nomination_transaction": null,
+    "bond_more_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-21T19:48:20.974Z",
+  "updated_at": "2023-02-21T19:57:45.608Z"
+}
+```
+
+</details>
+
+:::caution note
+
+Figment&apos;s Staking API avoids ambiguity by naming this action `bond_more`.
+The underlying [Polkadot extrinsic `bond_extra`](https://paritytech.github.io/substrate/master/pallet_staking/enum.Call.html#variant.bond_extra) belongs to the Staking module of Polkadot.
+
+[Examples of `bond_extra`](https://westend.subscan.io/extrinsic?module=staking&call=bond_extra) can be found on the Subscan block explorer.
+
+:::
+
+### Parameters
+
+- `name` &mdash; `string` The name of the action, `create_bond_more_tx` or `complete`
+- `inputs` &mdash; `object`
+  - `amount` &mdash; `number` The amount of DOT to bond using an additional bonding transaction (required).
+
+#### Sample cURL request
+
+```bash {5-8}
+curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/2dd1fb5e-d089-4aca-81e9-fb52f2e245d1/next' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <api_key>' \
+--data '{
+    "name": "create_bond_more_tx",
+    "inputs": {
+        "amount": 1.0
+    }
+}'
+```
+
+### Response
+
+With the bond more transaction created, the flow state becomes `bond_more_tx_signature`. Send the signed payload to the Staking API for broadcast to the network &mdash; or use the `confirm_bond_more_tx_by_hash`
+action if you have a completed Bond Extra extrinsic hash and block number. You can find examples of the <Link to="https://westend.subscan.io/extrinsic?module=staking&call=bond_extra">Bond Extra extrinsic</Link> on the Westend testnet
+
+As the transaction progresses towards confirmation, the returned state will be `bond_more_tx_broadcasting`, then back to `bonding_complete`.
+
+Upon transaction finalization, the bond will be complete and you can move on to the next step — the nomination transaction.
+
+#### Sample Response
+
+```json {3,6,31,34,47,119,122,136,167-177}
+{
+  "id": "2dd1fb5e-d089-4aca-81e9-fb52f2e245d1",
+  "state": "bond_more_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_bond_more_tx",
+      "inputs": [
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in DOT",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        }
+      ]
+    },
+    {
+      "name": "sign_bond_more_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": ["5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG"],
+          "transaction_payload": "0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG"],
+          "transaction_payload": "0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+          "signing_payload": "0x0601070010a5d4e8000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+          "inputs": {
+            "input_klass": "Workflows::Signature",
+            "input_instance": {
+              "account_address": null,
+              "signature": null
+            },
+            "flow": {
+              "workflow_state": "bond_more_tx_signature",
+              "id": 3770,
+              "customer_id": 40,
+              "chain_id": 8,
+              "data": {
+                "controller_account_address": "5EsUYYB1wj2MYkQF1Wrr4gQo8L2v5aRZWjZunxRjFXdUm81k",
+                "controller_proxy_account_address": null,
+                "stash_account_address": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+                "stash_proxy_account_address": null,
+                "validator_addresses": null,
+                "reward_destination": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+                "amount": "1.0",
+                "bonding_transaction": {
+                  "raw": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c5871651c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+                  "signing_payload": "0x0600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+                  "signed": "0xc102840092460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c58716501f0890cf1144825f8e40321cf344105c6af1a17e62e2c73c5e9681037dce1c250843ace78df337737c23935fcdf9da1a67c911fb90fbe9541241b63e01edf9e840000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165",
+                  "hash": "0x6a967111a86491612dae27bdc6dcbfcd01884c994737e54f0941afffe36f6649",
+                  "status": "confirmed",
+                  "error": null,
+                  "signatures": [],
+                  "block_number": 14742751,
+                  "proxy": false
+                },
+                "nomination_transaction": null,
+                "bond_more_transaction": {
+                  "raw": "0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+                  "signing_payload": "0x0601070010a5d4e8000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+                  "signed": null,
+                  "hash": null,
+                  "status": null,
+                  "error": null,
+                  "signatures": null,
+                  "block_number": null,
+                  "proxy": false
+                }
+              },
+              "created_at": "2023-02-21T19:48:20.974Z",
+              "updated_at": "2023-02-21T20:00:54.058Z",
+              "id_public": "2dd1fb5e-d089-4aca-81e9-fb52f2e245d1",
+              "supported_operation_id": 22
+            },
+            "flow_attributes": {},
+            "empty_input": {
+              "account_address": null,
+              "signature": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "confirm_bond_more_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "controller_account_address": "5EsUYYB1wj2MYkQF1Wrr4gQo8L2v5aRZWjZunxRjFXdUm81k",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+    "stash_proxy_account_address": null,
+    "validator_addresses": null,
+    "reward_destination": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+    "amount": "1.0",
+    "bonding_transaction": {
+      "raw": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c5871651c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xc102840092460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c58716501f0890cf1144825f8e40321cf344105c6af1a17e62e2c73c5e9681037dce1c250843ace78df337737c23935fcdf9da1a67c911fb90fbe9541241b63e01edf9e840000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165",
+      "hash": "0x6a967111a86491612dae27bdc6dcbfcd01884c994737e54f0941afffe36f6649",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_number": 14742751,
+      "proxy": false
+    },
+    "nomination_transaction": null,
+    "bond_more_transaction": {
+      "raw": "0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0601070010a5d4e8000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": null,
+      "hash": null,
+      "status": null,
+      "error": null,
+      "signatures": null,
+      "block_number": null,
+      "proxy": false
+    }
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-21T19:48:20.974Z",
+  "updated_at": "2023-02-21T20:00:54.058Z"
+}
+```
+
+### Submit Signed Bond More Transaction
+
+### Parameters
+
+- `name` &mdash; `string` The name of the action, `sign_bond_more_tx`
+- `inputs` &mdash; `object`
+  - `transaction_payload` &mdash; `string` The signed bond more transaction payload (required).
+
+#### Sample cURL request
+
+```bash {5-8}
+curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/2dd1fb5e-d089-4aca-81e9-fb52f2e245d1/next' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: <api_key>' \
+--data '{
+    "name": "sign_bond_more_tx",
+    "inputs": {
+        "transaction_payload": "0xc102840092460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c58716501f0890cf1144825f8e40321cf344105c6af1a17e62e2c73c5e9681037dce1c250843ace78df337737c23935fcdf9da1a67c911fb90fbe9541241b63e01edf9e840000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165"
+    }
+}'
+```
+
+### Response
+
+With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state
+will be either:
+
+- `bond_more_tx_broadcasting` — The transaction has been broadcasted and is waiting for confirmation.
+- `bonding_complete` — The transaction is complete and the extra bond is active.
+
+#### Sample Response
+
+```json {3,6,31-41}
+{
+  "id": "2dd1fb5e-d089-4aca-81e9-fb52f2e245d1",
+  "state": "bond_more_tx_broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-21T20:04:36.407Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "controller_account_address": "5EsUYYB1wj2MYkQF1Wrr4gQo8L2v5aRZWjZunxRjFXdUm81k",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+    "stash_proxy_account_address": null,
+    "validator_addresses": null,
+    "reward_destination": "5FNVfA6qhVJBKrG4KCo6CLzvcXVRRdiGpsYHbkzujMUG6JJG",
+    "amount": "1.0",
+    "bonding_transaction": {
+      "raw": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c5871651c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xc102840092460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c58716501f0890cf1144825f8e40321cf344105c6af1a17e62e2c73c5e9681037dce1c250843ace78df337737c23935fcdf9da1a67c911fb90fbe9541241b63e01edf9e840000000600007c242fcd1bb54e2a6af7791e7f2392ffe9e8069498c0fe841bcd87889c59121d070010a5d4e80392460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c587165",
+      "hash": "0x6a967111a86491612dae27bdc6dcbfcd01884c994737e54f0941afffe36f6649",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_number": 14742751,
+      "proxy": false
+    },
+    "nomination_transaction": null,
+    "bond_more_transaction": {
+      "raw": "0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000601070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0601070010a5d4e8000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xb901840092460dcf0b9ae6cabf654c1b33f02f52934d1ae262f8db733b470b631c58716501f0c9b3ad094bf8c044128dc3d38edcc04eea8329d84109e8cba4268554e1be3a4c3fd774c3286acbadc2e9f22827d1e7bc173da25742b41bd8916ff29969d0870004000601070010a5d4e8",
+      "hash": "0x0c43ec8166870642bc3e7e70213f9b22845a4cdb274524074a9d5aa27da89ca1",
+      "status": null,
+      "error": null,
+      "signatures": [],
+      "block_number": 14742812,
+      "proxy": false
+    }
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-21T19:48:20.974Z",
+  "updated_at": "2023-02-21T20:03:36.390Z"
+}
+```

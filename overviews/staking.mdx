@@ -1,0 +1,68 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflow_without_staking_api.png";
+import img2 from "@site/static/img/staking/workflow_with_staking_api.png";
+
+Figment's Staking API drastically increases the speed at which developers are able to add new custodial and staking functionalities for many Proof-of-Stake (PoS) assets.
+The Staking API abstracts away all network-specific work and allows API interaction in the exact same way, regardless of network or the type of action being taken.
+
+The Staking API gets you to market faster, by reducing research and discovery work by weeks and the engineering time by months.
+
+Using the Staking API's concepts of flows, actions, inputs and payloads, it is possible to build dynamic UIs to collect data and guide users through each workflow without the need to hard code specifics for a given network.
+
+#### Staking Workflow Without Staking API
+
+<img
+  src={img1}
+  alt="Staking Workflow Without Staking API"
+  className="inline-image"
+/>
+
+#### Staking Workflow With Staking API
+
+<img
+  src={img2}
+  alt="Staking Workflow With Staking API"
+  className="inline-image"
+/>
+
+## Staking API Core Concepts
+
+### Flows
+
+The Staking API is based around the concept of a Flow, a specific set of actions to be completed. For example, staking SOL on Solana is one Flow type, and un-staking NEAR is another.
+A Flow may have multiple steps but will not be considered complete until the delegation is active or the un-staking process is finished.
+
+### Actions
+
+At each step in the Flow, Staking API's response contains a JSON object with each possible action that can be taken. For example, the first step in staking on Solana requires SOL be held in a stake account. To achieve this, the API response received from the Staking API indicates two possible actions:
+
+- `assign_stake_account` to use an existing inactive account.
+- `create_stake_account` to create and fund a new account.
+
+### Inputs
+
+For each action, a number of inputs indicates what data needs to be collected and submitted to the Staking API in order to build a transaction.
+
+For example, a delegation transaction for Solana requires `validator_address`; the vote address of the validator to which the stake is delegated.
+Each input includes a display which can be used for human readable input field labels, as well as a description which can be used as a tool tip or other means of clarifying the value that is being collected.
+
+### Payloads
+
+For each step in a Flow where a transaction must be signed, the response from the Staking API includes a serialized transaction payload ready for signature. It is your responsibility to manage signing the transaction and submitting the signed Payload back to the Staking API for broadcasting to the network.
+
+### Webhooks
+
+The Staking API utilizes webhooks to notify users of completed actions, reducing the need for manual polling. Every network supported by the Staking API uses the same API endpoints to create, modify, list or delete webhooks when they are no longer needed.
+
+### Using the Staking API
+
+Now that you are familiar with the core concepts the Staking API uses to navigate complex flows on various PoS networks,
+you can take a deeper look at how they all work together in practice. Navigate to the API Reference for the network of your choosing on the left side navbar.
+
+### Decoding and Signing Transactions
+
+Figment has published an NPM package for decoding and signing Staking API transactions: https://www.npmjs.com/package/@figmentio/slate
+
+Learn how to use it with the guide <Link to="guides/figment-signing-transactions">Signing Transactions with Figment's NPM Package</Link>
+
+---

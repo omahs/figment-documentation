@@ -1,0 +1,120 @@
+---
+title: Create New Transfer Flow
+slug: /staking/polkadot/transfer/create-new-flow
+---
+
+To initiate the transfer process, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `polkadot`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `westend`) (required).
+  - `operation` `string` The operation to perform (ex. `transfer`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://polkadot-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "polkadot",
+    "chain_code": "westend",
+    "operation": "transfer",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible `actions`:
+
+- `create_transfer_tx` &mdash; Use this action to create a transfer transaction to send DOT between accounts.
+
+The `create_transfer_tx` action indicates three fields for data collection:
+
+- `from_account_address` &mdash; The address from which DOT will be transferred.
+- `to_account_address` &mdash; The address to which DOT will be transferred.
+- `amount` &mdash; The amount of DOT to be transferred.
+
+#### Sample Response
+
+```json {2-4,7,10,24,38}
+{
+  "id": "7d022b7b-b509-4abc-94f1-e1e16c32b0bc",
+  "operation": "transfer",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_transfer_tx",
+      "inputs": [
+        {
+          "name": "from_account_address",
+          "display": "From Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "to_account_address",
+          "display": "To Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in DOT",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "from_account_address": null,
+    "to_account_address": null,
+    "amount": null,
+    "transfer_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T19:41:47.212Z",
+  "updated_at": "2023-02-28T19:41:47.212Z"
+}
+```

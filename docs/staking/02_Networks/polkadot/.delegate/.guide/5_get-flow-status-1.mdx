@@ -1,0 +1,175 @@
+---
+title: Get Flow Status
+slug: /staking/polkadot/delegate/get-flow-status-bonding_complete
+---
+
+To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.
+
+### Parameters
+
+- None
+
+#### Sample cURL Request
+
+```bash
+curl -X GET 'https://polkadot-slate.datahub.figment.io/api/v1/flows/90a28f6e-09b4-4fe1-aeb4-c8e3720933ab' \
+-H 'Authorization: <api_key>'
+```
+
+### Response
+
+- `state` &mdash; `string` The current state of the flow.
+
+:::info note
+
+The `state` field will update from `bonding_tx_broadcasting` to `bonding_complete`.
+
+:::
+
+#### Sample Response
+
+```json {4}
+{
+  "id": "90a28f6e-09b4-4fe1-aeb4-c8e3720933ab",
+  "operation": "staking",
+  "state": "bonding_complete",
+  "actions": [
+    {
+      "name": "create_nomination_tx",
+      "inputs": [
+        {
+          "name": "validator_addresses",
+          "display": "Validator Addresses",
+          "description": "",
+          "type": "array_of_strings",
+          "validations": [
+            {
+              "type": "array",
+              "options": {
+                "allow_empty": false,
+                "allow_duplicates": false
+              }
+            },
+            {
+              "type": "length",
+              "options": {
+                "maximum": 16,
+                "message": "Cannot have more than 16 validators"
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "create_bond_more_tx",
+      "inputs": [
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in DOT",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": "1.0"
+        }
+      ]
+    },
+    {
+      "name": "complete",
+      "inputs": []
+    },
+    {
+      "name": "assign_stash_and_controller_account",
+      "inputs": [
+        {
+          "name": "controller_account_address",
+          "display": "Controller Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg"
+        },
+        {
+          "name": "controller_proxy_account_address",
+          "display": "Controller Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "stash_account_address",
+          "display": "Stash Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t"
+        },
+        {
+          "name": "stash_proxy_account_address",
+          "display": "Stash Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "stash_proxy_account_address": null,
+    "validator_addresses": null,
+    "reward_destination": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "amount": "1.0",
+    "bonding_transaction": {
+      "raw": "0x0000000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e00000000000000000000000000000000000000000000000000000000000000000000000000060000246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e679070010a5d4e803ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec7451c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x060000246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e679070010a5d4e803ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec745000000a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xc1028400ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec745017e6fb8557959f7c8806aee19a18b54f42336f0f7c814514f66d8fa788b32902722ea6dc1bfe66cf6e402b8f139137900e63e20e72951b780abd3a6d80e640f8b000000060000246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e679070010a5d4e803ece3c0004ffa0c55acd1bb2ec951f24d6b898fbafee6520dab3022fe12bec745",
+      "hash": "0xed90569932c9897bd0defbf763d8e9ab24fd849f9c627a5a50d6d622b3f37449",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_time": "2023-02-28T18:42:42.254Z",
+      "block_number": 14838035,
+      "proxy": false
+    },
+    "nomination_transaction": null,
+    "bond_more_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T17:41:14.880Z",
+  "updated_at": "2023-02-28T18:42:42.261Z"
+}
+```

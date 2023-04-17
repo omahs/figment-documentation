@@ -1,0 +1,133 @@
+---
+title: Rewards - Avalanche
+sidebar_position: 2
+pagination_prev: null
+pagination_next: null
+collapsed: true
+collapsible: true
+description: Rewards API - Avalanche
+image: img/logo.svg
+keywords: [Rewards API, Avalanche]
+
+hide_table_of_contents: true
+sidebar_label: Avalanche
+---
+
+<!--- This file was generated at build time, any modifications will be lost on next build --->
+
+import { APIMethods } from "@site/src/components";
+
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+<APIReferenceNav
+  service="rewards-api"
+  network="avalanche"
+  networks={[
+    {
+      label: "Avalanche",
+      value: "avalanche",
+    },
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "NEAR",
+      value: "near",
+    },
+    {
+      label: "Polkadot",
+      value: "polkadot",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  methods={[
+    {
+      name: "Rewards by day",
+    },
+  ]}
+/>
+
+<APIMethods
+  methods={[
+    {
+      name: "Rewards by day",
+      content:
+        "Returns net rewards grouped by day\n\n### Request\n\n- `accounts` takes an array of addresses. (required)\n- `start` and `end` are timestamps (in the format YYYY-MM-DD) (required)\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`\n\n- `meta`\n    - `network` is the name of the network queried\n    - `period_unit` is the unit of the `period` field under `data`: `daily` here\n- `data` is an array of objects - one for each period - containing:\n    - `validator` returns the validator that distributed the rewards\n    - `timestamp` is the timestamp of the day's start (midnight UTC)\n    - `rewards` is an array of objects. The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this).\n\n### Limitations\n\n- This API returns rewards for Figment validators only\n- Data is available approximately an hour after the end of the day or epoch. When requesting daily for the current day, the data will be available but obviously partially complete as the day progresses.",
+      request: {
+        auth: {
+          type: "noauth",
+        },
+        method: "POST",
+        header: [],
+        body: {
+          accounts: ["avax19zfygxaf59stehzedhxjesads0p5jdvfeedal0"],
+          start: "2022-12-01",
+          end: "2022-12-08",
+        },
+        url: "https://avalanche-rewards.datahub.figment.io",
+        headers: {
+          Authorization: "e68ac2d1e2f6671a96e6a88115a3f734",
+        },
+        query: "",
+      },
+      interactive: true,
+      response: {
+        name: "by day",
+        status: "OK",
+        code: 200,
+        body: {
+          data: [
+            {
+              accounts: ["avax1na8x8j4yk5cwad3kgy6c9t2h2tpj2p2jljk92u"],
+              chain_id: "P",
+              rewards: [
+                {
+                  text: "0.278488965 AVAX",
+                  currency: "AVAX",
+                  numeric: 278488965,
+                  exp: 9,
+                },
+              ],
+              validator: "NodeID-KcCxyypJ5m55f17fbuzkKqeotY64DScum",
+              timestamp: "2022-10-07T00:00:00Z",
+            },
+          ],
+          meta: {
+            network: "avalanche",
+            period_unit: "daily",
+          },
+        },
+      },
+    },
+  ]}
+  service="rewards-api"
+  networks={[
+    {
+      label: "Avalanche",
+      value: "avalanche",
+    },
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "NEAR",
+      value: "near",
+    },
+    {
+      label: "Polkadot",
+      value: "polkadot",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  network="avalanche"
+  proxy="https://api-service-proxy-development.figment-secops.workers.dev"
+  host="avalanche-rewards.datahub.figment.io/v2/rewards"
+/>

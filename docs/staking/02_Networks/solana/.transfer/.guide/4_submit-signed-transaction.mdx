@@ -1,0 +1,76 @@
+---
+title: Submit a Signed Transfer Transaction for Broadcast
+slug: /staking/solana/transfer/submit-signed-transfer-transaction
+---
+
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload.
+The Staking API will broadcast the transaction to the Solana network.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `transaction_payload` &mdash; Signed transaction payload from the previous step's response.
+
+#### Sample cURL Request
+
+```bash {5-8}
+curl -X PUT 'https://solana-slate.datahub.figment.io/api/v1/flows/6b8502c2-77b3-4541-a742-62ff337f0d15/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+    "name": "sign_transfer_tx",
+    "inputs": {
+      "transaction_payload": "01c9e6e53b2165b582192710482f23178d5c7a6d5666cc97f841e07cd983265033f73790fd6650b298ee908e5a42927a68212f6368029a4b9e4e5961e0ca24a70801000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000"
+    }
+}'
+```
+
+### Response
+
+With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be:
+
+- `transfer_tx_broadcasting` &mdash; Transaction has been broadcast and is awaiting confirmation.
+- `transferred` &mdash; Transaction has been confirmed and tokens have been transferred.
+
+#### Sample Response
+
+```json {4,7-8}
+{
+  "id": "6b8502c2-77b3-4541-a742-62ff337f0d15",
+  "operation": "transfer",
+  "state": "transfer_tx_broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-28T09:39:53.205Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "from_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "to_account_pubkey": "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
+    "amount": "1.0",
+    "funding_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "transfer_transaction": {
+      "raw": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+      "signing_payload": "01000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+      "signed": "01c9e6e53b2165b582192710482f23178d5c7a6d5666cc97f841e07cd983265033f73790fd6650b298ee908e5a42927a68212f6368029a4b9e4e5961e0ca24a70801000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+      "hash": "538M3ptZsiHeDaRWX6RnFeuCbJcUwfDSU8YzDRBJnPx1AEQvk3to7n1VEWQyCz87oqZpsLC8obvxJNQizMCQauHZ",
+      "status": null,
+      "error": null,
+      "signatures": [
+        {
+          "account_address": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+          "signature": ""
+        }
+      ],
+      "block_time": null
+    }
+  },
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-02-28T09:32:03.904Z",
+  "updated_at": "2023-02-28T09:38:52.469Z"
+}
+```

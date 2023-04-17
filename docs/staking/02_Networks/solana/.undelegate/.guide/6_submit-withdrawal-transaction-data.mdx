@@ -1,0 +1,265 @@
+---
+title: Submit Withdrawal Transaction Data
+slug: /staking/solana/undelegate/submit-withdrawal-transaction-data
+---
+
+After deactivation, we see there is one action — `create_withdraw_tx` &mdash; and three required fields for data collection:
+
+- `amount` &mdash; The number of SOL to be withdrawn. Partial withdrawal is possible.
+- `funding_account_pubkey` &mdash; The address of the account that will pay the transaction fee.
+- `recipient_pubkey` &mdash; The address of the wallet to which the withdrawn SOL will be sent.
+
+:::info important
+
+Note that the recipient of the withdrawal is _not_ the originating address by default!
+
+:::
+
+Once this data has been collected, submit it to the Staking API with a `PUT` request to `/api/v1/flows/[:flow_id]/next`.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `amount` &mdash; `string` The number of SOL to be withdrawn. Partial withdrawal is possible (required).
+  - `funding_account_pubkey` &mdash; `string` The address of the account that will pay the transaction fee (required).
+  - `recipient_pubkey` &mdash; `string` the number of SOL to be withdrawn. Partial withdrawal is possible (required).
+
+#### Sample cURL Request
+
+```bash {5-11}
+curl -X PUT 'https://solana-slate.datahub.figment.io/api/v1/flows/0e42073a-1f7d-4997-a4f0-cab1130a9521/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "create_withdraw_tx",
+  "inputs": {
+    "funding_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "recipient_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "amount": 5.9
+  }
+  }'
+```
+
+### Response
+
+Note that, in this response, you can find the unsigned, serialized transaction in `data[create_withdraw_transaction][raw]`.
+
+There are three possible `actions`:
+
+- `refresh_withdraw_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired)
+- `sign_withdraw_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_withdraw_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.
+
+We will choose `sign_withdraw_tx`, which indicates one input to collect:
+
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
+
+#### Sample Response
+
+```json {4,7,10,25,40,55,72,87,107,141}
+{
+  "id": "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+  "operation": "unstaking",
+  "state": "withdraw_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_withdraw_tx",
+      "inputs": [
+        {
+          "name": "stake_account_pubkey",
+          "display": "Stake Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x"
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in SOL",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5.9"
+        },
+        {
+          "name": "funding_account_pubkey",
+          "display": "Funding Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"
+        },
+        {
+          "name": "recipient_pubkey",
+          "display": "Recipient Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"
+        }
+      ]
+    },
+    {
+      "name": "sign_withdraw_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [],
+          "array": false,
+          "default_value": null,
+          "signers": ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+          "transaction_payload": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+          "transaction_payload": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+          "signing_payload": "01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_withdraw_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "funding_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "stake_account_pubkey": "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+    "stake_authority_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "withdraw_authority_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "deactivate_transaction": {
+      "raw": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+      "signing_payload": "01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+      "signed": "0108b202d6415b02cf9db966eccf11da492a79d343de947b7e0775168e938eb43fdb6263ffb6dec528bd71c0d753833afa7eec1ef1a1603e4bdc26f1c6d9f8420a01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+      "hash": "B5pqLyY3Wo8C3StMeqXSJZL8rxXLodr3sVvRqfeudGc87xNpiaB9GAcKVCBpBYpFeDk3SNUUFeZ8sejPPKNRCjj",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [
+        {
+          "account_address": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+          "signature": ""
+        }
+      ],
+      "block_time": "2023-03-02T08:30:46.000Z"
+    },
+    "delegation_active_amount": "0.0",
+    "delegation_inactive_amount": "5997717120.0",
+    "delegation_status": "inactive",
+    "delegation_status_error": null,
+    "recipient_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "withdraw_amount": "5.9",
+    "withdraw_transaction": {
+      "raw": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+      "signing_payload": "01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+      "signed": null,
+      "hash": null,
+      "status": null,
+      "error": null,
+      "signatures": null,
+      "block_time": null
+    },
+    "withdraw_transaction_funding_account_pubkey": "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+    "estimated_inactive_at": "2023-03-04T03:25:51.870Z"
+  },
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-03-02T08:28:38.784Z",
+  "updated_at": "2023-03-06T04:28:09.951Z"
+}
+```
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

@@ -7,7 +7,6 @@ import { RequestObject, ResponseObject } from "@site/types/src";
 import { CodeExample } from "./components";
 import styles from "./styles.module.css";
 import Link from "@docusaurus/Link";
-import MDDetails from "./MDDetails.mdx";
 
 interface Props {
   name: string;
@@ -18,17 +17,18 @@ interface Props {
   request: RequestObject;
   response: ResponseObject;
   endpoint: string;
+  host: string;
 }
 
 function APIMethod({
-  name,
+  name = "default_name",
   content = "",
   interactive,
   network,
   request,
-  accordionOpen = false,
   response,
   endpoint,
+  host,
 }: Props) {
   const isRewards = endpoint.includes("rewards-api");
   const isByDay = ["by day", "address"].find((n) => name.includes(n));
@@ -75,37 +75,71 @@ function APIMethod({
   const [description, ...rest] = content.trim().split(/\n+/);
   const specs = rest.join("\n");
 
+  /* 
+    Ternary for requests with the same endpoint or name:
+    we can differentiate them based on the name in the schema
+    however, the request method is displayed with data-method, 
+    so we need to avoid duplicating the method in the link title. 
+    TODO: This can be made more flexible with a regex.
+  */
+  if (name === undefined || name === null) {
+    return <></>;
+  }
+
   return (
     <>
-      <h2
-        id={name.toLowerCase()}
-        className={styles.heading}
-        data-method={request.method}
-      >
-        <Link to={`#${name.toLowerCase()}`}>
-          {name === "POST /eth2_staking/positions" ||
-          name === "GET /eth2_staking/positions"
-            ? "/eth2_staking/positions"
-            : name === "POST /api/v1/blockfrost_projects" ||
-              name === "GET /api/v1/blockfrost_projects" ||
-              name === "DELETE /api/v1/blockfrost_projects"
-            ? "/api/v1/blockfrost_projects"
-            : name}
-        </Link>
-      </h2>
+      <div className="row" style={{ marginTop: "40px" }}>
+        <div className="col col--6">
+          <h2
+            id={name.toLowerCase()}
+            className={styles.heading}
+            data-method={request?.method}
+          >
+            <Link to={`#${name.toLowerCase()}`}>
+              {name === "POST /eth2_staking/positions" ||
+              name === "GET /eth2_staking/positions"
+                ? "/eth2_staking/positions"
+                : name === "POST /api/v1/blockfrost_projects" ||
+                  name === "GET /api/v1/blockfrost_projects" ||
+                  name === "DELETE /api/v1/blockfrost_projects"
+                ? "/api/v1/blockfrost_projects"
+                : name === "POST /api/v1/webhook_endpoints" ||
+                  name === "GET /api/v1/webhook_endpoints" ||
+                  name === "DELETE /api/v1/webhook_endpoints"
+                ? "/api/v1/webhook_endpoints"
+                : name ===
+                    "GET /api/v1/webhook_endpoints/{{webhookEndpointId}}" ||
+                  name === "GET /api/v1/webhook_endpoints/" ||
+                  name ===
+                    "PUT /api/v1/webhook_endpoints/{{webhookEndpointId}}" ||
+                  name ===
+                    "DELETE /api/v1/webhook_endpoints/{{webhookEndpointId}}"
+                ? "/api/v1/webhook_endpoints/{{webhookEndpointId}}"
+                : name}
+            </Link>
+          </h2>
 
-      <ReactMarkdown>{description}</ReactMarkdown>
+          <ReactMarkdown>{description}</ReactMarkdown>
 
-      <CodeExample
-        req={request}
-        res={response}
-        interactive={interactive}
-        endpoint={endpoint}
-      />
+          <h3>{endpoint.includes("staking-api-webhooks") ? "Route" : "URL"}</h3>
+          <pre className={styles.hostURL}>
+            {endpoint.includes("staking-api-webhooks")
+              ? "/api/v1/webhook_endpoints"
+              : `https://${host !== undefined && host}`}
+          </pre>
 
-      <MDDetails details={specs} accordionOpen={accordionOpen} />
+          <ReactMarkdown className={styles.list}>{specs}</ReactMarkdown>
+        </div>
 
-      <hr />
+        <div className="col col--6">
+          <CodeExample
+            req={request}
+            res={response}
+            interactive={interactive}
+            endpoint={endpoint}
+          />
+        </div>
+      </div>
     </>
   );
 }
@@ -113,26 +147,43 @@ function APIMethod({
 export default function APIMethods({ network, methods, service, proxy, host }) {
   return (
     <>
-      <h3>Available Methods</h3>
-      {methods.map((method, index) => (
-        <APIMethod
-          key={network + index}
-          {...method}
-          network={network}
-          endpoint={`${proxy}/${service}/${
-            methods[index].name.includes("Withdrawals")
-              ? "ethereum_withdrawals"
-              : network
-          }`}
-          host={
-            methods[index].name.includes("Withdrawals")
-              ? host + "/v2/withdrawals"
-              : host
-          }
-          accordionOpen={service !== "node-api"}
-        />
-      ))}
-      <BackToTopButton />
+      {!methods && (
+        <>
+          <h2>Oops! No methods were passed to the APIMethods component.</h2>
+        </>
+      )}
+      {methods && (
+        <>
+          {methods.map((method, index) => (
+            <>
+              <APIMethod
+                key={network + index + Math.random()}
+                {...method}
+                network={network}
+                endpoint={`${proxy}/${service}/${
+                  methods[index].name.includes("Withdrawals")
+                    ? "ethereum_withdrawals"
+                    : network
+                }`}
+                host={
+                  methods[index].name.includes("Withdrawals")
+                    ? host.replace(/v2\/rewards$/, "") + "v2/withdrawals"
+                    : host
+                }
+              />
+              {methods.length > 1 && (
+                <>
+                  <br />
+                  <hr />
+                </>
+              )}
+            </>
+          ))}
+          <BackToTopButton />
+        </>
+      )}
     </>
   );
 }
+
+export { APIMethod, APIMethods };

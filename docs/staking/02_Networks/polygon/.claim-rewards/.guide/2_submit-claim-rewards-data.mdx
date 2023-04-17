@@ -1,0 +1,114 @@
+---
+title: Submit Claim Rewards Data
+slug: /staking/polygon/claim-rewards/submit-claim-rewards-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `delegator_address` &mdash; `string` The address delegating MATIC (required).
+  - `validator_address` &mdash; `string` The Validator contract address to which MATIC are delegated (required).
+  - `gas_limit` &mdash; `number` Adjust gas limit for the claim transaction (optional).
+  - `gas_price` &mdash; `number` Adjust gas limit for the claim transaction (optional).
+
+### Sample cURL Request
+
+```bash {5-8}
+curl -X PUT 'https://polygon-slate.datahub.figment.io/api/v1/flows/21ec6775-720c-4c58-bfd2-73275200e1d0/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "create_claim_rewards_tx",
+  "inputs": {
+    "delegator_address": "0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf",
+    "validator_address": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66"
+  }
+}'
+```
+
+### Response
+
+The response indicates two possible `actions` :
+
+- `refresh_claim_rewards_tx` &mdash; If you need to get a fresh version of the transaction payload (for example, if the nonce needs to be updated).
+- `sign_claim_rewards_tx ` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+
+We will choose `sign_claim_rewards_tx`, which indicates one input to collect:
+
+- `transaction_payload` &mdash; the signed transaction payload ready to be broadcast to the network.
+
+#### Sample Response
+
+```json {3,6,10,13,19}
+{
+  "id": "07d6752c-c412-4cfa-a12c-65feab06acd6",
+  "state": "claim_rewards_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_claim_rewards_tx",
+      "inputs": []
+    },
+    {
+      "name": "sign_claim_rewards_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [],
+          "signers": ["0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf"],
+          "transaction_payload": "0x02f86d05028459682f0084597a1b168304cf969415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c0"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "signers": ["0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf"],
+          "transaction_payload": "0x02f86d05028459682f0084597a1b168304cf969415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c0",
+          "signing_payload": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "delegator_address": "0x542138451d0953Aa082dE659d2A1ca1e5EF452Bf",
+    "validator_address": "0x15ED57Ca28cbebb58d9c6C62F570046BC089bC66",
+    "amount": "1.0",
+    "max_shares_to_burn": 1e18,
+    "max_slippage_percentage": 0,
+    "exchange_rate": "100000000000000000000000000000.0",
+    "exchange_rate_precision": "100000000000000000000000000000.0",
+    "unbond_transaction": {
+      "raw": "0x02f86d05028459682f0084597a1b168304cf969415ed57ca28cbebb58d9c6c62f570046bc089bc6680b844c83ec04d0000000000000000000000000000000000000000000000000de0b6b3a76400000000000000000000000000000000000000000000000000000de0b6b3a7640000c0",
+      "signing_payload": null,
+      "signed": null,
+      "hash": null,
+      "status": null,
+      "error": null,
+      "signatures": null,
+      "gas_limit": null,
+      "gas_price": null
+    },
+    "claim_transaction": null,
+    "estimated_unbonded_at": null,
+    "unbond_checkpoint": null,
+    "unbond_nonce": null
+  },
+  "network_code": "polygon",
+  "chain_code": "testnet",
+  "created_at": "2022-10-06T23:40:33.826Z",
+  "updated_at": "2022-10-07T17:22:05.511Z"
+}
+```
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

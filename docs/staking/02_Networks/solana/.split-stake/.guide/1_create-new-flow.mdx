@@ -1,0 +1,122 @@
+---
+title: Create New Split Stake Account Flow
+slug: /staking/solana/split-stake-account/create-new-flow
+---
+
+To initiate the split stake account process with the Staking API, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `solana`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`,`devnet`) (required).
+  - `operation` `string` The operation to perform (ex. `split_stake_account`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://solana-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "solana",
+    "chain_code": "devnet",
+    "operation": "split_stake_account",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible `action`:
+
+- `create_split_tx` &mdash; Use this Action to create a split stake account transaction.
+
+The `create_split_tx` action indicates three fields for data collection:
+
+- `funding_account_pubkey` &mdash; The public key of the wallet which will pay the transaction fee.
+- `source_stake_account_pubkey` &mdash; The existing stake account from which partial SOL balance will be split.
+- `amount` &mdash; The amount of SOL to be transferred to a newly created stake account. This field should be in full SOL, not in lamports (ie. if you want to transfer 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs.
+
+#### Sample Response
+
+```json {3-4,7,10,24,38}
+{
+  "id": "81a57270-89b2-46d9-83b0-2b6138b556cd",
+  "operation": "split_stake_account",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_split_tx",
+      "inputs": [
+        {
+          "name": "funding_account_pubkey",
+          "display": "Funding Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "source_stake_account_pubkey",
+          "display": "Source Stake Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in SOL",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "funding_account_pubkey": null,
+    "source_stake_account_pubkey": null,
+    "amount": null,
+    "split_transaction": null,
+    "source_stake_authority_pubkey": null,
+    "destination_stake_account_pubkey": null
+  },
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-03-02T08:24:44.629Z",
+  "updated_at": "2023-03-02T08:24:44.629Z"
+}
+```
+
+:::info
+
+Learn more about lamports here: https://docs.solana.com/terminology#lamport
+
+:::

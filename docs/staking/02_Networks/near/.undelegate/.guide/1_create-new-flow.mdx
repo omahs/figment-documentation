@@ -1,0 +1,252 @@
+---
+title: Create New Undelegation Flow
+slug: /staking/near/undelegate/create-new-flow
+---
+
+To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `near`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`) (required).
+  - `operation` `string` The operation to perform (ex. `unstaking`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://near-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "near",
+    "chain_code": "testnet",
+    "operation": "unstaking",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible action:
+
+- `create_undelegate_tx` &mdash; use this action to generate an undelegation transaction to unstake your NEAR.
+
+The `create_undelegate_tx` action indicates six fields for data collection:
+
+- `delegator_address` &mdash; The delegator address.
+- `delegator_pubkey` &mdash; The public key of the signing account.
+- `validator_address` &mdash; Validator address from which NEAR will be undelegated.
+- `undelegate_amount` &mdash; The amount of NEAR to be undelegated.
+- `undelegate_maximum` &mdash; Set to `true`if you wish to unbond the full delegated balance without needing to know the exact delegated balance.
+- `max_gas` &mdash; Adjust if you wish to limit the possible transaction fee.
+
+#### Sample Response
+
+```json {2-3,6,94,97,111,125,139,162,171}
+{
+  "id": "4f866b7f-2e79-4c61-9bb4-398777c12a0b",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_withdraw_tx",
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "delegator_pubkey",
+          "display": "Delegator Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "withdraw_amount",
+          "display": "Withdraw Amount",
+          "description": "",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {
+                "unless": "withdraw_maximum"
+              }
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "unless": "withdraw_maximum",
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "withdraw_maximum",
+          "display": "Withdraw Maximum",
+          "description": "",
+          "type": "boolean",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "max_gas",
+          "display": "Max Gas",
+          "description": "in NEAR",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "create_undelegate_tx",
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "delegator_pubkey",
+          "display": "Delegator Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "undelegate_amount",
+          "display": "Undelegate Amount",
+          "description": "",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {
+                "unless": "undelegate_maximum"
+              }
+            },
+            {
+              "type": "numericality",
+              "options": {
+                "unless": "undelegate_maximum",
+                "greater_than": 0
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "undelegate_maximum",
+          "display": "Undelegate Maximum",
+          "description": "",
+          "type": "boolean",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "max_gas",
+          "display": "Max Gas",
+          "description": "in NEAR",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "delegator_address": null,
+    "delegator_pubkey": null,
+    "validator_address": null,
+    "max_gas": null,
+    "undelegate_amount": null,
+    "undelegate_maximum": null,
+    "undelegate_transaction": null,
+    "estimated_inactive_at": null,
+    "withdraw_amount": null,
+    "withdraw_maximum": null,
+    "withdraw_transaction": null
+  },
+  "network_code": "near",
+  "chain_code": "testnet",
+  "created_at": "2023-02-27T17:51:08.550Z",
+  "updated_at": "2023-02-27T17:51:08.550Z"
+}
+```

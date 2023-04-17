@@ -1,0 +1,28 @@
+---
+title: Sign the Allowance Transaction
+slug: /staking/polygon/delegate/sign-allowance-transaction
+---
+
+Sign the allowance transaction using the `transaction_payload` you received in response to submitting the allowance transaction data.
+
+Locate the `transaction_payload` in the response from the previous step. It will look something like this:
+
+```json
+"transaction_payload": "0x02f86d05808459682f00850eaa6fba0e82b58394499d11e0b6eac7c0593d8fb292dcbbf815fb29ae80b844095ea7b300000000000000000000000000200ea4ee292e253e6ca07dba5edc07c8aa37a3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc0"
+```
+
+:::caution important
+
+Always confirm the details of the transaction before signing the payload.
+
+Figment has a tool for signing and decoding Staking API payloads, see the guide [Signing Transactions with Figment's NPM Package](/guides/staking-api/figment-signing-transactions) to continue.
+
+:::
+
+Transactions can also be signed using [web3.js](https://web3js.readthedocs.io/en/v1.2.11/web3-eth-accounts.html#signtransaction) or [Fireblocks](/guides/staking-api/fireblocks-signing-transactions).
+
+Sign the transaction and move on to the next step. A signed transaction payload for Polygon will look something like this:
+
+```text
+0x02f8b005808459682f00850eaa6fba0e82b58394499d11e0b6eac7c0593d8fb292dcbbf815fb29ae80b844095ea7b300000000000000000000000000200ea4ee292e253e6ca07dba5edc07c8aa37a3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc001a0a9cac4be7a0c56d6ed520814958b94d4385b1ac7d791485f85c6c58fa53e0d8aa002f14d836c1b5090b12ef16566056abd57e6fce013a759e444d925b8951633ea
+```

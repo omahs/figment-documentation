@@ -1,0 +1,42 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/solana/Workflows::V1::Solana::TransferFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Transfer
+
+To transfer tokens from one address to another on Solana, you will need:
+
+- The sending address
+- The receiving address
+- The amount of Solana
+
+The Staking API will manage the rest.
+
+### Flow Diagram
+
+Below is a complete diagram for the Solana Transfer flow:
+
+<img src={img1} alt="Solana Transfer Flow Diagram" className="inline-image" />
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="solana"
+  folders={undefined}
+  path="docs/staking/02_networks/solana/index.mdx"
+  methods={[
+    {
+      name: "Create New Transfer Flow",
+    },
+    {
+      name: "Submit Transfer Data",
+    },
+    {
+      name: "Submit a Signed Transfer Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

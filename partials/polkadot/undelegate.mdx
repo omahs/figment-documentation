@@ -1,0 +1,70 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/polkadot/Workflows::V1::Polkadot::UnstakingFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Undelegate
+
+The Staking API's DOT unstaking flow will walk your application through the process of unbonding DOT, and optional processes of chilling and withdrawing. There are a few different routes through this process:
+
+- **Withdraw** from delegated account
+- **Unbond** from the delegated account
+
+**Before** unbonding:
+
+- If the user selects the maximum amount and the delegation has active nominators, the account will first be chilled.
+
+**After** unbonding:
+
+- If an unbonded entry does not exist, then it is considered rebonded and we are done
+- If there are no funds to withdraw, then it is considered unbonded and we are done
+- If there are funds to withdraw, we proceed to withdraw funds and are done
+
+In the following guide we will illustrate the entire flow from chilling to withdrawing.
+
+### Flow Diagram
+
+Below is a complete diagram for the Polkadot Undelegation flow:
+
+<img
+  src={img1}
+  alt="Polkadot Undelegation Flow Diagram"
+  className="inline-image"
+/>
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="polkadot"
+  folders={undefined}
+  path="docs/staking/02_networks/polkadot/index.mdx"
+  methods={[
+    {
+      name: "Create New Undelegation Flow",
+    },
+    {
+      name: "Assign Unstaking Data",
+    },
+    {
+      name: "Create Chill Transaction",
+    },
+    {
+      name: "Submit a Signed Chill Transaction for Broadcast",
+    },
+    {
+      name: "Create Unbond Transaction",
+    },
+    {
+      name: "Submit Signed Unbond Transaction for Broadcast",
+    },
+    {
+      name: "Create Withdrawal Transaction",
+    },
+    {
+      name: "Submit Signed Withdrawal Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

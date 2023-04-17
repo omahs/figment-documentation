@@ -1,0 +1,55 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/near/Workflows::V1::Near::UnstakingFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Undelegate
+
+Undelegating NEAR is a simple process. We will collect:
+
+- The delegating address
+- The signing address
+- The validator address to undelegate from
+- Amount of NEAR to be undelegated
+- Optionally, a `maximum` Boolean if you wish to undelegate the full amount without having to check the current balance
+- Optionally, a max gas amount (upper limit of the transaction fee to be paid)
+
+Once the undelegation transaction is confirmed on-chain, the unbonding process will begin immediately.
+
+NEAR has an unbonding period of four epochs (≈ 48-60h). During this time, the unbonding NEAR will be illiquid and will _not_ earn rewards.
+Upon completion of the unbonding period, the NEAR will be available to be withdrawn.
+
+:::info
+
+If you have a balance waiting to be withdrawn and do not wish to undelegate more NEAR,
+you can use the `create_withdraw_tx` action to withdraw from that balance without first unbonding any NEAR.
+
+:::
+
+### Flow Diagram
+
+Below is a complete diagram for the NEAR Undelegation flow:
+
+<img src={img1} alt="NEAR Undelegation Flow Diagram" className="inline-image" />
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="near"
+  folders={undefined}
+  path="docs/staking/02_networks/near/index.mdx"
+  methods={[
+    {
+      name: "Create New Undelegation Flow",
+    },
+    {
+      name: "Submit Undelegate Data",
+    },
+    {
+      name: "Submit Signed Undelegate Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

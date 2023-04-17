@@ -1,8 +1,209 @@
 require("dotenv").config();
 const fs = require("fs-extra");
-const SCHEMAS_DIR = "schemas";
 
-const cliArgs = process.argv.slice(2);
+const SCHEMAS_DIR = "schemas";
+const CLI_ARGS = process.argv.slice(2);
+
+const FLOWS = {
+  avalanche: {
+    delegate: [
+      "Create New Delegation Flow",
+      "Submit Delegate Data",
+      "Submit Signed Delegate Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+  },
+  cardano: {
+    delegate: [
+      "Create New Delegation Flow",
+      "Assign Staking Data",
+      "Submit Signed Register Transaction for Broadcast",
+      "Submit Delegate Data",
+      "Submit Signed Delegate Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    transfer: [
+      "Create a New Transfer Flow",
+      "Submit Transfer Data",
+      "Submit Signed Transfer Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+  },
+  cosmos: {
+    delegate: [
+      "Create a New Delegation Flow",
+      "Submit Delegation Data",
+      "Submit Signed Delegate Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    redelegate: [
+      "Create a New Redelegation Flow",
+      "Submit Redelegation Data",
+      "Submit Signed Redelegate Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    undelegate: [
+      "Create a New Undelegation Flow",
+      "Submit Undelegation Data",
+      "Submit Signed Undelegate Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    claim_rewards: [
+      "Create a New Claim Rewards Flow",
+      "Submit Claim Rewards Data",
+      "Submit Signed Claim Rewards Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    transfer: [
+      "Create a New Transfer Flow",
+      "Submit Transfer Data",
+      "Submit Signed Transfer Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+  },
+  ethereum: {
+    staking: [
+      "Create New Staking Flow",
+      "Submit Deposit Data",
+      "Submit Signed Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    aggregated_staking: [
+      "Create New Aggregated Staking Flow",
+      "Submit Aggregated Staking Data",
+      "Submit Signed Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    unstaking: [
+      "Create New Unstaking Flow",
+      "Submit Unstaking Data",
+      "Get Flow Status",
+    ],
+  },
+  near: {
+    delegate: [
+      "Create New Delegation Flow",
+      "Submit Delegate Data",
+      "Submit Signed Delegate Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    undelegate: [
+      "Create New Undelegation Flow",
+      "Submit Undelegate Data",
+      "Submit Signed Undelegate Transaction for Broadcast",
+      "Submit Withdrawal Data",
+      "Submit a Signed Withdrawal Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    transfer: [
+      "Create a New Transfer Flow",
+      "Submit Transfer Data",
+      "Submit Signed Transfer Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+  },
+  polkadot: {
+    delegate: [
+      "Create New Delegation Flow",
+      "Submit Bonding Transaction Data",
+      "Submit Signed Bonding Transaction for Broadcast",
+      "Bond More Transaction (Optional)",
+      "Submit Nomination Addresses",
+      "Submit Signed Nomination Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    undelegate: [
+      "Create New Undelegation Flow",
+      "Assign Unstaking Data",
+      "Chill Transactions",
+      "Submit Signed Chill Transaction for Broadcast",
+      "Create Unbond Transaction",
+      "Submit Signed Unbond Transaction for Broadcast",
+      "Create Withdrawal Transaction",
+      "Submit Signed Withdrawal Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    add_staking_proxy: [
+      "Create New Add Staking Proxy Flow",
+      "Submit Add Proxy Data",
+      "Submit Signed Add Proxy Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    remove_staking_proxy: [
+      "Create New Flow To Remove Staking Proxy",
+      "Submit Remove Proxy Data",
+      "Submit a Signed Remove Proxy Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    transfer: [
+      "Create a New Transfer Flow",
+      "Submit Transfer Data",
+      "Submit Signed Transfer Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+  },
+  polygon: {
+    delegate: [
+      "Create New Delegation Flow",
+      "Submit Staking Data",
+      "Submit Staking Allowance Data",
+      "Submit a Signed Allowance Transaction for Broadcast",
+      "Submit Delegate Transaction Data",
+      "Submit a Signed Delegate Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    undelegate: [
+      "Create New Undelegation Flow",
+      "Submit Unbonding Data",
+      "Submit a Signed Unbonding Transaction for Broadcast",
+      "Submit Claim Transaction Data",
+      "Submit a Signed Claim Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    claim_rewards: [
+      "Create New Claim Rewards Flow",
+      "Submit Claim Rewards Data",
+      "Submit Signed Claim Rewards Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+  },
+  solana: {
+    delegate: [
+      "Create New Delegation Flow",
+      "Create New Staking Account",
+      "Submit a Signed Stake Account Transaction for Broadcast",
+      "Submit Validator Address",
+      "Submit a Signed Delegate Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    undelegate: [
+      "Create New Undelegation Flow",
+      "Submit Deactivate Transaction Data",
+      "Submit a Signed Deactivate Transaction for Broadcast",
+      "Submit Withdrawal Transaction Data",
+      "Submit a Signed Withdrawal Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    split_stake: [
+      "Create New Split Stake Account Flow",
+      "Submit Split Stake Account Data",
+      "Submit a Signed Split Stake Account Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    merge_stake: [
+      "Create New Merge Stake Account Flow",
+      "Submit Merge Stake Account Data",
+      "Submit a Signed Merge Stake Account Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+    transfer: [
+      "Create a New Transfer Flow",
+      "Submit Transfer Data",
+      "Submit Signed Transfer Transaction for Broadcast",
+      "Get Flow Status",
+    ],
+  },
+};
 
 function toDashCase(str) {
   return str?.toLowerCase().replace(/\s+/g, "-");
@@ -15,6 +216,16 @@ function toTitleCase(str) {
       return match.toUpperCase();
     })
     .replace(/\-/g, " ")
+    .replace("Api", "API");
+}
+
+function toTitleCaseNoSpaces(str) {
+  return str
+    .toLowerCase()
+    .replace(/(?:^|[\s-/])\w/g, function (match) {
+      return match.toUpperCase();
+    })
+    .replace(/\-/g, "")
     .replace("Api", "API");
 }
 
@@ -83,6 +294,7 @@ function processMethod(method, vars) {
     name: name,
     content: description,
     request: {
+      // network: network,
       ...request,
       body: request_body,
       headers: process.env.DEVELOPMENT
@@ -124,53 +336,6 @@ function processServices(services, variables) {
         .sort((a, b) => (a.network < b.network ? -1 : 1)),
     };
   });
-}
-
-function frontMatterTemplate({
-  title = "",
-  desc,
-  image,
-  keywords,
-  pos = 0,
-  prev = "null",
-  next = "null",
-  slug,
-  hide_toc,
-  body = "",
-}) {
-  return `---
-title: ${title}
-sidebar_position: ${pos}
-pagination_prev: ${prev}
-pagination_next: ${next}
-collapsed: true
-collapsible: true
-${desc ? `description: ${desc}` : ""}
-${image ? `image: ${image}` : ""}
-${keywords ? `keywords: ${keywords}` : ""}
-${slug ? `slug: ${slug}` : ""}
-${hide_toc ? `hide_table_of_contents: ${hide_toc}` : ""}
----\n
-${body}`;
-}
-
-function sidebarIndexForService(service) {
-  switch (service) {
-    case "node-api":
-      return 1;
-    case "staking-api":
-      return 2;
-    case "staking-api-webhooks":
-      return 3;
-    case "rewards-api":
-      return 4;
-    case "rewards-rates-api":
-      return 5;
-    case "validator-api":
-      return 6;
-    default:
-      return 0;
-  }
 }
 
 function referenceTable(_services, variables) {
@@ -338,7 +503,7 @@ function referenceTable(_services, variables) {
     desc: "API Reference supported protocols table",
     image: "/img/logo.svg",
     keywords: "[API Reference, Documentation]",
-    pos: 3,
+    sidebar_position: 3,
     prev: "null",
     next: "null",
     slug: "/api-reference",
@@ -347,96 +512,605 @@ function referenceTable(_services, variables) {
   }));
 }
 
-function createMarkdown(services, variables) {
-  fs.emptyDirSync("docs/api-reference/");
+function frontMatterTemplate({
+  title = "",
+  desc,
+  image,
+  keywords,
+  sidebar_position = 0,
+  prev = "null",
+  next = "null",
+  slug,
+  hide_toc,
+  sidebar_label,
+  body = "",
+}) {
+  return `---
+title: ${title}
+sidebar_position: ${sidebar_position}
+pagination_prev: ${prev}
+pagination_next: ${next}
+collapsed: true
+collapsible: true
+${desc ? `description: ${desc}` : ""}
+${image ? `image: ${image}` : ""}
+${keywords ? `keywords: ${keywords}` : ""}
+${slug ? `slug: ${slug}` : ""}
+${hide_toc ? `hide_table_of_contents: ${hide_toc}` : ""}
+${sidebar_label ? `sidebar_label: ${sidebar_label}` : ""}
+---\n
+${body}`;
+}
+
+function writeIndexFileRedirect(
+  path,
+  title,
+  position,
+  sidebar_label,
+  category,
+  service,
+  networks,
+  defaultNetwork,
+  partial
+) {
   fs.writeFileSync(
-    "docs/api-reference/index.mdx",
-    referenceTable(services, variables),
+    path,
+    frontMatterTemplate({
+      title: title,
+      sidebar_position: position,
+      prev: null,
+      next: null,
+      body: null,
+      hide_toc: true,
+      sidebar_label: sidebar_label,
+      body:
+        `<!--- This file was generated at build time, any modifications will be lost on next build --->\n\n` +
+        `import { Redirect } from "@docusaurus/router";\n\n<Redirect to={"/staking/overview"} />\n\n`,
+    }),
     "utf-8"
   );
+}
 
-  services.forEach(({ service, networks }) => {
-    fs.ensureDirSync(`docs/api-reference/${toDashCase(service)}`);
-    if (!fs.existsSync(`docs/api-reference/${toDashCase(service)}/index.mdx`)) {
-      fs.writeFileSync(
-        `docs/api-reference/${toDashCase(service)}/index.mdx`,
-        frontMatterTemplate({
-          title: toTitleCase(service),
-          pos: sidebarIndexForService(service),
-          body: `import APIHomeRoute from '@site/src/components/APIHomeRoute'\n\n<APIHomeRoute service='${toDashCase(
-            service
-          )}' network='${toDashCase(networks[0].network)}' />`,
-        }),
-        "utf-8"
-      );
+/* Write an index file using the frontmatter template */
+function writeIndexFile(
+  path,
+  title,
+  sidebar_position,
+  sidebar_label,
+  category,
+  service,
+  networks,
+  defaultNetwork,
+  partial
+) {
+  fs.writeFileSync(
+    path,
+    frontMatterTemplate({
+      title: title,
+      sidebar_position: sidebar_position,
+      prev: null,
+      next: null,
+      slug: `/${category}`,
+      hide_toc: true,
+      sidebar_label: sidebar_label,
+      body:
+        partial &&
+        `<!--- This file was generated at build time, any modifications will be lost on next build --->\n\n` +
+          `import Overview from '@site/overviews/${partial}'\n\n<Overview />\n\n`,
+    }),
+    "utf-8"
+  );
+}
+
+function writeReferenceFile(
+  path,
+  title,
+  sidebar_position,
+  hide_toc,
+  methods,
+  service,
+  network,
+  networksList,
+  variables,
+  routeEndpoint
+) {
+  let host = "";
+
+  for (const key in variables) {
+    if (network.toLowerCase() === "ethereum") {
+      network = "eth";
     }
+    if (network.toLowerCase() === "polygon") {
+      network = "matic";
+    }
+    if (variables[key].includes(network.toLowerCase())) {
+      host = variables[key];
+    }
+    if (variables[key].includes("hubble")) {
+      host = variables[key];
+    }
+    if (network.toLowerCase() === "eth") {
+      network = "ethereum";
+    }
+    if (network.toLowerCase() === "matic") {
+      network = "polygon";
+    }
+  }
 
-    const networksList = networks.map((n) => ({
+  fs.writeFileSync(
+    path,
+    frontMatterTemplate({
+      title: title,
+      sidebar_position: sidebar_position,
+      desc: `${toTitleCase(service)} - ${network}`,
+      keywords: `[${toTitleCase(service)}, ${network}]`,
+      hide_toc: hide_toc,
+      image: "img/logo.svg",
+      sidebar_label:
+        network.toLowerCase() !== "near"
+          ? toTitleCase(network)
+          : network.toUpperCase(),
+      body:
+        `<!--- This file was generated at build time, any modifications will be lost on next build --->\n\n` +
+        `import {APIMethods} from '@site/src/components'\n\n` +
+        `import {APIReferenceNav} from '@site/src/components/APIReferenceNav'\n\n` +
+        `<APIReferenceNav\n` +
+        ` service="${toDashCase(service)}"\n` +
+        ` network="${toDashCase(network)}"\n` +
+        ` networks={${JSON.stringify(networksList, null, 2)}}\n` +
+        ` methods={${
+          methods
+            ? JSON.stringify(
+                methods.map((m) => ({ name: m.name })),
+                null,
+                2
+              )
+            : JSON.stringify({ name: "methods" })
+        }}\n/>\n\n` +
+        `<APIMethods\n` +
+        ` methods={${JSON.stringify(methods, null, 2)}}\n` +
+        ` service="${toDashCase(service)}"\n` +
+        ` networks={${JSON.stringify(networksList, null, 2)}}\n` +
+        ` network="${toDashCase(network)}"\n` +
+        ` proxy="${process.env.PROXY_HOST}"\n` +
+        ` host="${host && routeEndpoint ? host + routeEndpoint : host}"\n` +
+        `/>\n\n`,
+    }),
+    "utf-8"
+  );
+}
+
+function writeStakingIndexFile(
+  path,
+  title,
+  sidebar_position,
+  hide_toc,
+  methods,
+  service,
+  network,
+  networksList,
+  variables,
+  routeEndpoint,
+  action,
+  folders
+) {
+  let host = "";
+
+  for (const key in variables) {
+    if (network.toLowerCase() === "ethereum") {
+      network = "eth";
+    }
+    if (network.toLowerCase() === "polygon") {
+      network = "matic";
+    }
+    if (variables[key].includes(network.toLowerCase())) {
+      host = variables[key];
+    }
+    if (network.toLowerCase() === "eth") {
+      network = "Ethereum";
+    }
+    if (network.toLowerCase() === "matic") {
+      network = "Polygon";
+    }
+  }
+
+  fs.writeFileSync(
+    path,
+    frontMatterTemplate({
+      title: title,
+      desc: `${toTitleCase(service)} - ${network}`,
+      image: "img/logo.svg",
+      keywords: `[${toTitleCase(service)}, ${network}]`,
+      sidebar_position: sidebar_position,
+      slug: `/staking/${toDashCase(network)}`,
+      hide_toc: hide_toc,
+      sidebar_label:
+        network.toLowerCase() === "near"
+          ? network.toUpperCase()
+          : toTitleCase(network),
+      body:
+        `<!--- This file was generated at build time, any modifications will be lost on next build --->\n\n` +
+        `import {APIMethods} from '@site/src/components'\n\n` +
+        `import {APIReferenceNav} from '@site/src/components/APIReferenceNav'\n\n` +
+        `import ${toTitleCase(
+          network
+        )}Overview from '@site/partials/${toDashCase(
+          network
+        )}/overview.mdx'\n\n` +
+        `<${toTitleCase(network)}Overview />\n\n` +
+        // This is still useful for generating the entire APIReferenceNav,
+        // don't remove it yet!
+        // `<${toTitleCase(network)}${toTitleCaseNoSpaces(action)} />\n\n` +
+        // `## API Reference\n\n` +
+        // `<APIReferenceNav\n` +
+        // ` service="${toDashCase(service)}"\n` +
+        // ` network="${toDashCase(network)}"\n` +
+        // ` folders={${JSON.stringify(folders, null, 2)}}\n` +
+        // ` path="${toDashCase(path)}"\n` +
+        // ` methods={${JSON.stringify(
+        //   methods?.map((m) => ({ name: m.name })),
+        //   null,
+        //   2
+        // )}}\n` +
+        // `/>\n\n` +
+        `<br />\n\n` +
+        `<APIMethods\n` +
+        ` service="${toDashCase(service)}"\n` +
+        ` network="${toDashCase(network)}"\n` +
+        ` proxy="${process.env.PROXY_HOST}"\n` +
+        ` host="${host && routeEndpoint ? host + routeEndpoint : host}"\n` +
+        ` methods={${JSON.stringify(methods, null, 2)}}\n` +
+        `/>\n\n`,
+    }),
+    "utf-8"
+  );
+}
+
+function createMarkdown(services, variables, schemas) {
+  let directoryList = "";
+  let networksList = "";
+
+  // TODO: Decide to modify or remove the reference table
+  // fs.emptyDirSync("docs/api-reference/");
+  // fs.writeFileSync(
+  //   "docs/api-reference/index.mdx",
+  //   referenceTable(services, variables),
+  //   "utf-8"
+  // );
+
+  const TOP_DIRS = [
+    "authentication",
+    "errors",
+    "rewards",
+    "staking",
+    "validators",
+  ];
+
+  TOP_DIRS.forEach((directory, index, TOP_DIRS) => {
+    directoryList = TOP_DIRS.map((d) => d);
+    fs.ensureDirSync(`docs/${directoryList[index]}`);
+  });
+
+  /* 
+    "services" here are equivalent to the names of the JSON files
+    in the /schemas directory.
+
+    The filenames are defined on Postman in the Backup to GitHub integration.
+  */
+  services.forEach(({ service, networks }, index) => {
+    networksList = networks.map((n) => ({
       label: n.network,
       value: toDashCase(n.network),
     }));
 
-    networks.forEach(({ network, methods, parameters }, index) => {
-      let routeEndpoint = methods[0].request.query
-        ? "/" + methods[0].request.query.split("?")[0]
-        : "";
-      if (service === "rewards-api") routeEndpoint = "/v2/rewards";
-      if (service === "rewards-rates-api") routeEndpoint = "/rates";
+    /*      
+      - The sidebar position of the category for a service is relative to the Overview
+      link at the top of the sidebar. 
+      - The third argument of writeIndexFile or writeIndexFileRedirect
+      sets the sidebar position of that category.
+      - The spacers added to the sidebar in docusaurus.config.js do not impact the position numbers.
 
-      fs.writeFileSync(
-        `docs/api-reference/${toDashCase(service)}/${toDashCase(network)}.mdx`,
-        frontMatterTemplate({
-          title: network,
-          desc: `${toTitleCase(service)} - ${network}`,
-          keywords: `[${toTitleCase(service)}, ${network}]`,
-          image: "img/logo.svg",
-          body:
-            `import {APIMethods} from '@site/src/components'\n` +
-            `import ApiReferenceNav from '@site/src/components/ApiReferenceNav'\n` +
-            `import FixBreadCrumbs from '@site/src/components/FixBreadCrumbs'\n` +
-            `import MakingCalls from '@site/partials/api-reference/making-calls.mdx'\n\n` +
-            `# ${toTitleCase(service)} - ${network}\n\n` +
-            `${
-              index === 0
-                ? `<FixBreadCrumbs network='${network}' service={{ link: '/api-reference/${toDashCase(
-                    service
-                  )}', label: '${toTitleCase(service)}' }} />\n\n`
-                : ""
-            }` +
-            `<ApiReferenceNav\n  service="${toDashCase(
-              service
-            )}"\n  network="${toDashCase(
-              network
-            )}"\n  networks={${JSON.stringify(
-              networksList,
-              null,
-              2
-            )}}\n  methods={${JSON.stringify(
-              methods.map((m) => ({ name: m.name })),
-              null,
-              2
-            )}}\n/>\n\n` +
-            `<MakingCalls\n  service="${toTitleCase(
-              service
-            )}"\n  network="${toTitleCase(network)}"\n  url="${
-              methods[0].request.url
-            }"\n  route="${routeEndpoint}"\n/>\n\n` +
-            `<APIMethods\n  methods={${JSON.stringify(
-              methods,
-              null,
-              2
-            )}}\n  service="${toDashCase(
-              service
-            )}"\n  networks={${JSON.stringify(
-              networksList,
-              null,
-              2
-            )}}\n  network="${toDashCase(network)}"\n  proxy="${
-              process.env.PROXY_HOST
-            }"\n/>`,
-        }),
-        "utf-8"
+      1 Overview
+      2 Authentication
+      3 Errors
+       => topspacer
+      4 Staking
+      5 Rewards
+      6 Validators
+      7 Network Data 
+       => bottomspacer
+    */
+
+    /* Sidebar index 4 - Staking */
+    if (service === "staking-api") {
+      /* The Staking link in the sidebar immediately redirects to the Overview page */
+      writeIndexFileRedirect(
+        `docs/staking/index.mdx`,
+        "Staking Overview",
+        4,
+        "Staking",
+        "staking",
+        service,
+        networks,
+        "avalanche",
+        "staking.mdx"
       );
+    }
+
+    /* Sidebar index 5 - Rewards */
+    if (service === "rewards-api") {
+      writeIndexFile(
+        "docs/rewards/index.mdx",
+        "Rewards Overview",
+        5,
+        "Rewards",
+        "rewards",
+        service,
+        networks,
+        "avalanche",
+        "rewards.mdx"
+      );
+    }
+
+    /* Sidebar index 6 - Validators */
+    if (service === "validator-api") {
+      writeIndexFile(
+        "docs/validators/index.mdx",
+        "Validators Overview",
+        6,
+        "Validators",
+        "validators",
+        service,
+        networks,
+        "ethereum",
+        "validators.mdx"
+      );
+    }
+
+    /* Sidebar index 7 - Network Data */
+    if (service === "rewards-rates-api") {
+      writeIndexFile(
+        "docs/network-data/index.mdx",
+        "Network Data Overview",
+        7,
+        "Network Data",
+        "network-data",
+        service,
+        networks,
+        "ethereum",
+        "network-data.mdx"
+      );
+    }
+
+    networks.forEach(({ network, folders, methods, parameters }, index) => {
+      // let routeEndpoint = methods[0].request.query
+      //   ? "/" + methods[0].request.query.split("?")[0]
+      //   : "";
+
+      /* Add the network pages below the Rewards category */
+      if (service === "rewards-api") {
+        routeEndpoint = "/v2/rewards";
+        withdrawalsEndpoint = "/v2/withdrawals";
+
+        writeReferenceFile(
+          `docs/rewards/${toDashCase(network)}.mdx`,
+          `Rewards - ${
+            network.toLowerCase() !== "near"
+              ? toTitleCase(network)
+              : network.toUpperCase()
+          }`,
+          2,
+          true,
+          methods,
+          service,
+          network,
+          networksList,
+          variables[service],
+          routeEndpoint
+        );
+      }
+
+      /* Add the network pages below the Network Data > Rewards Rates category */
+      if (service === "rewards-rates-api") {
+        routeEndpoint = "/rates";
+
+        writeReferenceFile(
+          `docs/network-data/rewards-rates/${toDashCase(network)}.mdx`,
+          `Rewards Rates - ${toTitleCase(network)}`,
+          2,
+          true,
+          methods,
+          service,
+          network,
+          networksList,
+          variables[service],
+          routeEndpoint
+        );
+      }
+
+      /* Add the network pages below the Staking > Networks category */
+      if (service === "staking-api") {
+        routeEndpoint = "/api/v1/flows";
+
+        /*
+          The third argument of writeStakingIndexFile sets the sidebar position
+          within the category
+        */
+        if (toDashCase(network) === "avalanche") {
+          writeStakingIndexFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            1,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "delegate"
+          );
+        }
+        if (toDashCase(network) === "cardano") {
+          writeStakingIndexFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "delegate"
+          );
+        }
+        if (toDashCase(network) === "cosmos") {
+          writeStakingIndexFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            3,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "delegate"
+          );
+        }
+        if (toDashCase(network) === "ethereum") {
+          writeStakingIndexFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            4,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "staking"
+          );
+        }
+        if (toDashCase(network) === "near") {
+          writeStakingIndexFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+            `Staking - ${network.toUpperCase()}`,
+            5,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "delegate"
+          );
+        }
+        if (toDashCase(network) === "polkadot") {
+          writeStakingIndexFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            6,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "delegate"
+          );
+        }
+        if (toDashCase(network) === "polygon") {
+          writeStakingIndexFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            7,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "delegate"
+          );
+        }
+        if (toDashCase(network) === "solana") {
+          writeStakingIndexFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            8,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "delegate"
+          );
+        }
+      }
+
+      /* Add the network pages below the Validators category */
+      if (service === "validator-api") {
+        if (toDashCase(network) === "ethereum") {
+          routeEndpoint = "/api/v1/prime/eth2_staking/";
+
+          writeReferenceFile(
+            `docs/validators/${toDashCase(network)}.mdx`,
+            `Validators - ${toTitleCase(network)}`,
+            1,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint
+          );
+        }
+        if (toDashCase(network) === "polkadot") {
+          routeEndpoint = "/api/v1/prime/polkadot/";
+
+          writeReferenceFile(
+            `docs/validators/${toDashCase(network)}.mdx`,
+            `Validators - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint
+          );
+        }
+      }
+
+      /*
+        The webhooks file is handwritten, we don't currently want to re-write it every build.
+      */
+      if (service === "staking-api-webhooks") {
+        routeEndpoint = "/api/v1/webhook_endpoints";
+
+        fs.ensureDirSync(`docs/staking/03_webhooks`);
+        // writeWebhooksGuideFile(
+        //   `partials/${toDashCase(network)}/webhooks.mdx`,
+        //   service,
+        //   network,
+        //   methods,
+        //   networksList,
+        //   variables[service],
+        //   routeEndpoint
+        // );
+      }
     });
   });
 }
@@ -521,7 +1195,7 @@ function generateCORSTests(services) {
   const variables = getEnvironmentVariables(schemas);
   const services = processServices(schemas, variables);
   createMarkdown(services, variables);
-  switch (cliArgs[0]) {
+  switch (CLI_ARGS[0]) {
     case "corstests":
       generateCORSTests(services);
       break;

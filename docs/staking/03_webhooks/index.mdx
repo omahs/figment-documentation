@@ -1,0 +1,749 @@
+---
+title: Webhooks
+pagination_prev: null
+pagination_next: null
+toc_max_heading_level: 2
+hide_table_of_contents: true
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+import { APIMethods } from "@site/src/components";
+
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+Figment's Staking API uses webhooks to send notifications about events related to the various Staking API flows.
+For example, when an undelegation flow is completed, a webhook can be sent to the server of your choosing.
+
+This guide provides all the information needed to successfully manage your webhooks in the context of Figment's Staking API.
+
+There are some additional security considerations when dealing with webhooks, covered in the [HMAC](#hmac) and [Signatures](#signatures) sections below.
+
+Jump directly to the API Reference for the webhook endpoint using these links:
+
+<APIReferenceNav
+  service="staking-api-webhooks"
+  network="avalanche"
+  networks={[
+    {
+      label: "Avalanche",
+      value: "avalanche",
+    },
+    {
+      label: "Cardano",
+      value: "cardano",
+    },
+    {
+      label: "Cosmos",
+      value: "cosmos",
+    },
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "NEAR",
+      value: "near",
+    },
+    {
+      label: "Polkadot",
+      value: "polkadot",
+    },
+    {
+      label: "Polygon",
+      value: "polygon",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  methods={[
+    {
+      name: "Create New Webhook Endpoint",
+    },
+    {
+      name: "Retrieve Endpoint",
+    },
+    {
+      name: "List Endpoints",
+    },
+    {
+      name: "Update Webhook Endpoint",
+    },
+    {
+      name: "Delete an Existing Endpoint",
+    },
+  ]}
+/>
+
+## Host
+
+| Network   | Host                               |
+| :-------- | :--------------------------------- |
+| Avalanche | avalanche-slate.datahub.figment.io |
+| Cardano   | cardano-slate.datahub.figment.io   |
+| Cosmos    | cosmos-slate.datahub.figment.io    |
+| Ethereum  | eth-slate.datahub.figment.io       |
+| NEAR      | near-slate.datahub.figment.io      |
+| Polkadot  | polkadot-slate.datahub.figment.io  |
+| Polygon   | matic-slate.datahub.figment.io     |
+| Solana    | solana-slate.datahub.figment.io    |
+
+## Event Types
+
+Staking API Webhook events can be categorized by type, specific to a network code and operation.
+The event type format follows the pattern **`<network_code>.<operation>.<action>.<specifier>`**.
+
+Event types are standardized, in that:
+
+- When a transaction is confirmed on-chain, there will be a `.confirmed` event &mdash; ex. `near.staking.delegation.confirmed`
+
+- If a transaction fails on-chain, there will be an `.error` event &mdash; ex. `near.staking.delegation.error`
+
+- For staking flows, whenever there is a waiting period involved the Staking API will send a `delegation.activating` event &mdash; ex. `near.staking.delegation.activating`
+
+- When the waiting period is finished, the Staking API will send a `delegation.active` event &mdash; ex. `near.staking.delegation.active`
+
+- Similarly, for unstaking flows the Staking API sends the `delegation.deactivating` event, followed by `delegation.inactive`
+
+- If there is a withdrawal action required after unstaking, the Staking API also sends a `delegation.ready_for_withdrawal` event
+
+### Usage
+
+Consumers of Staking API webhooks can subscribe to events with wildcards (`*`), or by specifying a valid event type without a wildcard:
+
+- `"event_types": ["*"]` subscribes to all webhook events, regardless of network
+- `"event_types": ["near.*"]` subscribes to all webhook events for NEAR flows
+- `"event_types": ["near.staking.*"]` subscribes to all webhook events for NEAR `staking` flows
+- `"event_types": ["near.staking.delegation.confirmed"]` subscribes to confirmation events for NEAR `staking` flows
+
+<Tabs><TabItem value="curl_wh" label="curl">
+
+```bash {7} title="Example POST /webhook_endpoints"
+curl -X POST 'https://near-slate.figment.io/api/v1/webhook_endpoints' \
+-H 'Authorization: API-KEY' \
+-H 'Content-Type: application/json' \
+-d '{
+    "webhook_endpoint": {
+        "target_url": "https://example.com/my/endpoint",
+        "event_types": ["near.transfer.*"],
+        "enabled": "true"
+    }
+}'
+```
+
+</TabItem><TabItem value="js_wh" label="JavaScript">
+
+```js {10} title="Example POST /webhook_endpoints"
+fetch("https://near-slate.figment.io/api/v1/webhook_endpoints", {
+  method: 'POST',
+  headers: {
+    "Authorization" : "<API_KEY>",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "webhook_endpoint": {
+      "target_url": "https://example.com/my/endpoint",
+      "event_types": ["near.transfer.*"],
+      "enabled": "true"
+    }
+  });
+});
+```
+
+</TabItem></Tabs>
+
+```json {3} title="Example response from /webhook_endpoints"
+{
+  "id": 16,
+  "event_types": ["near.transfer.*"],
+  "target_url": "https://example.com/my/endpoint",
+  "enabled": true,
+  "object": "webhook_endpoint",
+  "created": "2022-07-26T19:27:12.647Z",
+  "secret": "whsec_B8sidV4Bm8NnstMuP3a9TSGYov..."
+}
+```
+
+The above example webhook ID number 16 would send a payload to the `target_url` for any NEAR transfer flow event, provided that `enabled` is set to true.
+
+Verify the contents of webhook payloads using the HMAC signature that is sent as a response header from the Staking API. This is illustrated in the following section.
+
+The fields which are common to all Staking API webhook payloads are `flow_id` and `event_type`. All other fields will be relevant to the action and flow.
+
+```bash {4-5} title="Example Staking API Webhook Payload"
+{
+  amount: '10.0',
+  status: 'success',
+  flow_id: '49a1bab1-e3e6-4f77-8212-ee254e1ab9a3',
+  event_type: 'near.transfer.transfer_tx.confirmed',
+  transaction_hash: '2a9fnT6j5M9Fy6TFNbX2bA1Ncjh6aXK9Ky8oPBUuJwtS',
+  to_account_address: 'pizza.testnet',
+  from_account_pubkey: 'ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY',
+  from_account_address: 'staking-api-demo.testnet'
+}
+```
+
+### Event Type List
+
+The event type format follows the pattern **`<network_code>.<operation>.<action>.<specifier>`**.
+
+<Tabs><TabItem value="avalanche" label="Avalanche">
+
+#### Staking
+
+- `avalanche.staking.*` &mdash; Wildcard for all staking events
+
+- `avalanche.staking.delegation.activating` &rarr; `avalanche.staking.delegation.active` &rarr; `avalanche.staking.delegation.ready_for_withdrawal`
+
+- `avalanche.staking.delegate_tx.confirmed`
+
+</TabItem><TabItem value="cardano" label="Cardano">
+
+#### Staking
+
+- `cardano.staking.*` &mdash; Wildcard for all staking events
+
+- `cardano.staking.registration.activating` &rarr; `cosmos.staking.registration.active`
+
+- `cardano.staking.register_tx.confirmed`
+
+- `cardano.staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+
+- `cardano.staking.delegate_tx.confirmed`
+
+#### Transfer
+
+- `cardano.transfer.*` &mdash; Wildcard for all transfer events
+
+- `cardano.transfer.transfer_tx.confirmed`
+
+</TabItem><TabItem value="cosmos" label="Cosmos">
+
+#### Staking
+
+- `cosmos.staking.*` &mdash; Wildcard for all staking events
+
+- `cosmos.staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+
+- `cosmos.staking.delegate_tx.confirmed`
+
+#### Unstaking
+
+- `cosmos.unstaking.*` &mdash; Wildcard for all unstaking events
+
+- `cosmos.unstaking.undelegation.deactivating` &rarr; `cosmos.unstaking.undelegation.inactive`
+
+- `cosmos.unstaking.undelegate_tx.confirmed`
+
+#### Redelegate
+
+- `cosmos.redelegate.*` &mdash; Wildcard for all redelegate events
+
+- `cosmos.redelegate.redelegation.activating` &rarr; `cosmos.staking.redelegation.active`
+
+- `cosmos.redelegate.redelegate_tx.confirmed`
+
+#### Transfer
+
+- `cosmos.transfer.*` &mdash; Wildcard for all transfer events
+
+- `cosmos.transfer.transfer_tx.confirmed`
+
+#### Claim Rewards
+
+- `cosmos.claim_rewards.*` &mdash; Wildcard for all claim rewards events
+
+- `cosmos.claim_rewards.withdraw_tx.confirmed`
+
+</TabItem><TabItem value="ethereum" label="Ethereum">
+
+#### Staking
+
+- `ethereum.staking.*` &mdash; Wildcard for all staking events
+
+- `ethereum.staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+
+- `ethereum.staking.deposit_tx.confirmed`
+
+#### Aggregated Staking
+
+- `ethereum.aggregated_staking.*` &mdash; Wildcard for all aggregated staking events
+
+- `ethereum.aggregated_staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+
+- `ethereum.aggregated_staking.aggregated_deposit_tx.confirmed`
+
+</TabItem><TabItem value="near" label="NEAR">
+
+#### Staking
+
+- `near.staking.*` &mdash; Wildcard for all staking events
+
+- `near.staking.delegation.activating` &rarr; `near.staking.delegation.active`
+
+- `near.staking.delegate_tx.confirmed`
+
+#### Unstaking
+
+- `near.unstaking.*` &mdash; Wildcard for all unstaking events
+
+- `near.unstaking.undelegation.deactivating` &rarr; `near.unstaking.undelegation.inactive`
+
+- `near.unstaking.undelegate_tx.confirmed`
+
+- `near.unstaking.withdraw_tx.confirmed`
+
+#### Transfer
+
+- `near.transfer.*` &mdash; Wildcard for all transfer events
+
+- `near.transfer.transfer_tx.confirmed`
+
+</TabItem><TabItem value="polkadot" label="Polkadot">
+
+#### Staking
+
+- `polkadot.staking.*` &mdash; Wildcard for all staking events
+
+- `polkadot.staking.delegation.activating` &rarr; `polkadot.staking.delegation.active`
+
+- `polkadot.staking.bonding_tx.confirmed`
+
+- `polkadot.staking.nomination_tx.confirmed`
+
+#### Unstaking
+
+- `polkadot.unstaking.*` &mdash; Wildcard for all unstaking events
+
+- `polkadot.unstaking.delegation.deactivating`
+
+- `polkadot.unstaking.chill_tx.confirmed`
+
+- `polkadot.unstaking.unbond_tx.confirmed`
+
+- `polkadot.unstaking.withdraw_tx.confirmed`
+
+#### Add Staking Proxy
+
+- `polkadot.add_proxy.*` &mdash; Wildcard for all add staking proxy events
+
+- `polkadot.add_proxy.add_proxy_tx.confirmed`
+
+#### Remove Staking Proxy
+
+- `polkadot.remove_proxy.*` &mdash; Wildcard for all remove staking proxy events
+
+- `polkadot.remove_proxy.remove_proxy_tx.confirmed`
+
+#### Transfer
+
+- `polkadot.transfer.*` &mdash; Wildcard for all transfer events
+
+- `polkadot.transfer.transfer_tx.confirmed`
+
+</TabItem><TabItem value="polygon" label="Polygon">
+
+#### Staking
+
+- `polygon.staking.*` &mdash; Wildcard for all staking events
+
+- `polygon.staking.delegation.activating` &rarr; `polygon.staking.delegation.active`
+
+- `polygon.staking.delegate_tx.confirmed`
+
+#### Unstaking
+
+- `polygon.unstaking.*` &mdash; Wildcard for all unstaking events
+
+- `polygon.unstaking.delegation.deactivating` &rarr; `polygon.unstaking.delegation.inactive`
+
+- `polygon.unstaking.unbond_tx.confirmed`
+
+#### Claim Rewards
+
+- `polygon.claim_rewards.*` &mdash; Wildcard for all claim rewards events
+
+- `polygon.claim_rewards.delegation.activating` &rarr; `polygon.claim_rewards.delegation.active`
+
+- `polygon.claim_rewards.claim_rewards_tx.confirmed`
+
+</TabItem><TabItem value="solana" label="Solana">
+
+#### Staking
+
+- `solana.staking.*` &mdash; Wildcard for all staking events
+
+- `solana.staking.create_stake_account_tx.confirmed`
+
+- `solana.staking.delegation.activating` &rarr; `solana.staking.delegation.active`
+
+- `solana.staking.delegate_tx.confirmed`
+
+- `solana.staking.delegation.error`
+
+#### Unstaking
+
+- `solana.unstaking.*` &mdash; Wildcard for all staking events
+
+- `solana.unstaking.delegation.deactivating` &rarr; `solana.unstaking.delegation.inactive` &rarr; `solana.unstaking.delegation.ready_for_withdrawal`
+
+- `solana.unstaking.deactivate_tx.confirmed`
+
+- `solana.unstaking.withdraw_tx.confirmed`
+
+#### Transfer
+
+- `solana.transfer.*` &mdash; Wildcard for all staking events
+
+- `solana.transfer.transfer_tx.confirmed`
+
+#### Split Stake Account
+
+- `solana.split_stake_account.*` &mdash; Wildcard for all split stake account events
+
+- `solana.split_stake_account.split_tx.confirmed`
+
+#### Merge Stake Account
+
+- `solana.merge_stake_account.*` &mdash; Wildcard for all merge stake account events
+
+- `solana.merge_stake_account.merge_tx.confirmed`
+
+</TabItem></Tabs>
+
+## HMAC
+
+HMAC (**Hash-based Message Authentication Code**) is a cryptographic authentication technique which uses a shared secret and a hash function such as SHA-256.
+
+When you create a webhook endpoint with the Staking API, the response will include a `secret` beginning with `whsec_`.
+This is the shared secret you will use to verify future payloads sent to that webhook endpoint.
+
+Learn more about the specifics of HMAC in the <Link to="#references">References</Link> section.
+
+:::caution important
+
+Code examples are provided as samples only and should not be used in production out of the box. **Use at your own risk.**
+
+:::
+
+Here are some code examples for verifying the HMAC signatures:
+
+<Tabs><TabItem value="js" label="JavaScript">
+
+```js
+const crypto = require("crypto").webcrypto;
+const TOLERANCE = 300;
+const WH_SECRET = "<your webhook secret>";
+
+export default async function verifySignature(header, body) {
+  // get the time from the header
+  const timestamp = header.match(/t=([^,\s*]+)/)[1];
+
+  // get all signatures in Unit8Array format
+  const signatures = [...header.matchAll(/v\d+=([^,\s*]+)/g)].map((match) => {
+    return new Uint8Array(Math.ceil(match[1].length / 2)).map((v, i) =>
+      parseInt(match[1].substr(i * 2, 2), 16)
+    );
+  });
+
+  // init text encoder
+  const encoder = new TextEncoder();
+
+  // construct the cyptographic key
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(WH_SECRET),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["verify"]
+  );
+
+  // verify that at least one signature is valid
+  const verified = (
+    await Promise.all(
+      signatures.map(async (signature) => {
+        return await crypto.subtle.verify(
+          "HMAC",
+          key,
+          signature,
+          encoder.encode(`${timestamp}.${body}`)
+        );
+      })
+    )
+  ).includes(true);
+
+  // check if elapsed timestamp is within tolerance
+  const elapsed = Math.floor(Date.now() / 1000) - Number(timestamp);
+  const withinTolerance = !(TOLERANCE && elapsed > TOLERANCE);
+
+  // return validity
+  return verified && withinTolerance;
+}
+```
+
+</TabItem><TabItem value="python" label="Python">
+
+```python
+import re
+import hmac
+import binascii
+import hashlib
+import math
+import time
+
+TOLERANCE = 300
+WH_SECRET = "<your webhook secret>"
+
+def verifySignature(header, body):
+    timestamp = re.findall(r"t=([^,\s*]+)", header)
+
+    if not timestamp:
+        return False
+
+    timestamp = timestamp[0]
+
+    signatures = re.findall("v\d+=([^,\s*]+)", header)
+
+    verified_signatures = []
+
+    for signature in signatures:
+        shared_secret_signature = hmac.new(str.encode(WH_SECRET), str.encode(f"{timestamp}.{body}"), digestmod=hashlib.sha256)
+        verified_signatures.append(hmac.compare_digest(shared_secret_signature.hexdigest(), signature))
+
+    if verified_signatures.count(True) == 0:
+        return False
+
+    elapsed = math.floor(time.time()) - int(timestamp)
+
+    if elapsed > TOLERANCE:
+        return False
+
+    return True
+```
+
+</TabItem></Tabs>
+
+## Signatures
+
+Webhooks from the Staking API are sent with the `Slate-Signature` header, which you can use to verify the payload.
+The value of that header will look like this:
+
+```text
+t=1666214090,v1=f790a584722ff6c0ebf4e9b59835ba5b93ee824ae0a7164feba30953d6b52cee
+```
+
+- `t` is a UNIX Epoch timestamp.
+- `v1` is the signature. Each additional signature will increment the value of `v` &mdash; `v2`, `v3`, etc.
+
+---
+
+<APIMethods
+  methods={[
+    {
+      name: "Create New Webhook Endpoint",
+      content:
+        "Create a new webhook endpoint with the specified parameters.\n\n### Parameters\n\n*   `webhook_endpoint` - `object`\n    *   `target_url` - `string` The target URL to send the webhook to.\n    *   `event_types` - `string` Can be a specific event type, or use an asterisk as a catchall: `['*']`\n    *   `enabled` - `boolean` true / false\n\n### Response\n\n*   `id` - `number` Id of the newly created webhook endpoint.\n*   `event_types` - `string` Event type you have passed in the request parameter.\n*   `target_url` - `string` The target URL to send the webhook to.\n*   `enabled` - `boolean` true / false\n*   `object` - `string` webhook_endpoint\n*   `created` - `string` Timestamp when webhook endpoint was created.\n*   `secret` - `string` Unique authentication string for your webhook endpoint.\n    \n\n#### Note\n\n*   Each webhook is identified by a sequential number.\n*   Currently when a webhook ID has been deleted it cannot be reused.\n*   You will only be provided with the secret when you first create a webhook. Remember to capture this data!",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          webhook_endpoint: {
+            target_url: "https://example.com/my/endpoint",
+            event_types: ["*"],
+            enabled: "false",
+          },
+        },
+        url: "https://avalanche-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/webhook_endpoints",
+      },
+      interactive: false,
+      response: {
+        name: "200 - Create New Webhook Endpoint",
+        status: "Created",
+        code: 201,
+        body: {
+          id: 13,
+          event_types: ["*"],
+          target_url: "https://example.com/my/endpoint",
+          enabled: false,
+          object: "webhook_endpoint",
+          created: "2022-08-15T18:11:15.829Z",
+          secret:
+            "whsec_eC2MsygUnHLLDuYXCGcpHjuKzTcJsvAdQmQnx3t3gaLVcdwpv8hFA4WhjHhQz4resJZD7d4GfGx5zZr65ko7xtz5CtfY7K9dDMAq",
+        },
+      },
+    },
+    {
+      name: "Retrieve Endpoint",
+      content:
+        "Retrieve the details of a webhook endpoint.\n\n### Parameters\n\n- For **Individual Webhook Endpoint**\n - Include the webhook ID number in the request URL, to retreive details for an individual webhook endpoint.\n\n- For **All Webhook Endpoints**\n - None\n\n### Response\n\n- `object` - `string` list\n- `url` - `string` Endpoint url\n- `has_more` - `boolean` true / false\n- `data` - `object`\n - `id` - `number` Id of the newly created webhook endpoint.\n - `event_types` - `string` Event type you have passed in the request parameter.\n - `target_url` - `string` The target URL to send the webhook to.\n - `enabled` - `boolean` true / false\n - `object` - `string` webhook_endpoint\n - `created` - `string` Timestamp when webhook endpoint was created.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://avalanche-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/webhook_endpoints/{{webhookEndpointId}}",
+      },
+      interactive: false,
+      response: {
+        name: "200 - Retrieve Endpoint",
+        status: "OK",
+        code: 200,
+        body: {
+          id: 13,
+          event_types: ["*"],
+          target_url: "https://example.com/my/endpoint",
+          enabled: false,
+          object: "webhook_endpoint",
+          created: "2022-08-15T18:11:15.829Z",
+        },
+      },
+    },
+    {
+      name: "List Endpoints",
+      content:
+        "Get the list of all your webhook endpoints.\n\n### Parameters\n\n None\n\n### Response\n\n- `object` - `string` - The action, i.e., `list`.\n- `url` - `string` The endpoint URL.\n- `has_more` - `boolean`\n- `data` - `array` - An array of `object`s containing the details for each webhook:\n  - `id` - `number` Id of the newly created webhook endpoint.\n  - `event_types` - `string` Event type you have passed in the request parameter.\n  - `target_url` - `string` The target URL to send the webhook to.\n  - `enabled` - `boolean` true / false\n  - `object` - `string` - Describing the data object: `webhook_endpoint`.\n  - `created` - `string` Timestamp when the webhook endpoint was created.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://avalanche-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/webhook_endpoints",
+      },
+      interactive: false,
+      response: {
+        name: "200 - Get List of Existing Endpoints",
+        status: "OK",
+        code: 200,
+        body: {
+          object: "list",
+          url: "/api/v1/webhook_endpoints",
+          has_more: false,
+          data: [
+            {
+              id: 14,
+              event_types: ["*"],
+              target_url: "https://example.com/my/endpoint",
+              enabled: false,
+              object: "webhook_endpoint",
+              created: "2022-08-15T18:11:54.469Z",
+            },
+            {
+              id: 13,
+              event_types: ["*"],
+              target_url: "https://example.com/my/new/endpoint",
+              enabled: true,
+              object: "webhook_endpoint",
+              created: "2022-08-15T18:11:15.829Z",
+            },
+          ],
+        },
+      },
+    },
+    {
+      name: "Update Webhook Endpoint",
+      content:
+        "Update details for an existing webhook endpoint.\n\n### Parameters\n\n- `webhook_endpoint` - `object`\n - `target_url` - `string` The target URL to send the webhook to.\n - `event_types` - `string` Can be a specific event type, or use an asterisk as a catchall: `['*']`\n - `enabled` - `boolean` true / false\n\n### Response\n\n- `id` - `number` Id of the newly created webhook endpoint.\n- `event_types` - `string` Event type you have passed in the request parameter.\n- `target_url` - `string` The target URL to send the webhook to.\n- `enabled` - `boolean` true / false\n- `object` - `string` webhook_endpoint\n- `created` - `string` Timestamp when webhook endpoint was created.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          webhook_endpoint: {
+            target_url: "https://example.com/my/new/endpoint",
+            event_types: ["*"],
+            enabled: "true",
+          },
+        },
+        url: "https://avalanche-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/webhook_endpoints/{{webhookEndpointId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Update Webhook Endpoint",
+        status: "OK",
+        code: 200,
+        body: {
+          id: 13,
+          event_types: ["*"],
+          target_url: "https://example.com/my/new/endpoint",
+          enabled: true,
+          object: "webhook_endpoint",
+          created: "2022-08-15T18:11:15.829Z",
+        },
+      },
+    },
+    {
+      name: "Delete an Existing Endpoint",
+      content:
+        "Delete a webhook endpoint\n\n### Parameters\n\nInclude the webhook ID number in the request URL, to delete webhook endpoint.\n\n### Response\n\nNone - `204 - No Content`",
+      request: {
+        method: "DELETE",
+        header: [],
+        url: "https://avalanche-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/webhook_endpoints/{{webhookEndpointId}}",
+      },
+      interactive: false,
+      response: {
+        name: "204 - No Content (Webhook successfully removed)",
+        status: "No Content",
+        code: 204,
+        body: "",
+      },
+    },
+  ]}
+  service="staking-api-webhooks"
+  networks={[
+    {
+      label: "Avalanche",
+      value: "avalanche",
+    },
+    {
+      label: "Cardano",
+      value: "cardano",
+    },
+    {
+      label: "Cosmos",
+      value: "cosmos",
+    },
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "NEAR",
+      value: "near",
+    },
+    {
+      label: "Polkadot",
+      value: "polkadot",
+    },
+    {
+      label: "Polygon",
+      value: "polygon",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  network="avalanche"
+  proxy=""
+  host="avalanche-slate.datahub.figment.io/api/v1/webhook_endpoints"
+/>

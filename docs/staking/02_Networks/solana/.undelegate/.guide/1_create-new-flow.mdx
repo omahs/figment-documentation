@@ -1,0 +1,170 @@
+---
+title: Create New Undelegation Flow
+slug: /staking/solana/undelegate/create-new-flow
+---
+
+To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network on which this flow operates (ex. `solana`) (required).
+  - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`,`devnet`) (required).
+  - `operation` `string` The operation to perform (ex. `unstaking`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://solana-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "solana",
+    "chain_code": "devnet",
+    "operation": "unstaking",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible action:
+
+- `create_deactivate_tx` &mdash; Collect the data needed to build a stake deactivation transaction and submit back to the Staking API.
+
+The `create_deactivate_tx` action indicates two fields to be collected:
+
+- `stake_account_pubkey` &mdash; The address of the stake account to be deactivated.
+- `funding_account_pubkey` &mdash; The address of the wallet with signing rights to deactivate the stake account.
+
+#### Sample Response
+
+```json {3-4,7,10,24,40,43,57,71,85}
+{
+  "id": "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+  "operation": "unstaking",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_deactivate_tx",
+      "inputs": [
+        {
+          "name": "stake_account_pubkey",
+          "display": "Stake Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "funding_account_pubkey",
+          "display": "Funding Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "create_withdraw_tx",
+      "inputs": [
+        {
+          "name": "stake_account_pubkey",
+          "display": "Stake Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "in SOL",
+          "type": "decimal",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "funding_account_pubkey",
+          "display": "Funding Account Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "recipient_pubkey",
+          "display": "Recipient Pubkey",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "funding_account_pubkey": null,
+    "stake_account_pubkey": null,
+    "stake_authority_pubkey": null,
+    "withdraw_authority_pubkey": null,
+    "deactivate_transaction": null,
+    "delegation_active_amount": null,
+    "delegation_inactive_amount": null,
+    "delegation_status": null,
+    "delegation_status_error": null,
+    "recipient_pubkey": null,
+    "withdraw_amount": null,
+    "withdraw_transaction": null,
+    "withdraw_transaction_funding_account_pubkey": null,
+    "estimated_inactive_at": null
+  },
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-03-02T08:28:38.784Z",
+  "updated_at": "2023-03-02T08:28:38.784Z"
+}
+```

@@ -1,0 +1,68 @@
+---
+title: Submit Signed Transfer Transaction for Broadcast
+slug: /staking/near/transfer/submit-signed-transfer-transaction
+---
+
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the NEAR network.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `transaction_payload` &mdash; Signed transaction payload from the previous step's response.
+
+#### Sample cURL Request
+
+```bash {5-8}
+curl -X PUT 'https://near-slate.datahub.figment.io/api/v1/flows/79d4a437-e964-4f90-ba19-998d0de8c1cb/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "sign_transfer_tx",
+  "inputs": {
+    "transaction_payload": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b2900000000000069cab19548fcac9253ef66fde2853aa46611ac42aeae30d4109fae9a026de1ba67a4c55fe576a019898e8a1b817c93d02779dfd1be63fde390e0bf576cb67404"
+  }
+}'
+```
+
+### Response
+
+With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
+
+- `transfer_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting confirmation.
+- `transferred` &mdash; Transaction has been confirmed and the transfer is complete.
+
+#### Sample Response
+
+```json {3}
+{
+  "id": "79d4a437-e964-4f90-ba19-998d0de8c1cb",
+  "state": "transfer_tx_broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-27T18:45:13.315Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "from_account_pubkey": "ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV",
+    "from_account_address": "0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet",
+    "to_account_address": "slate-demo.testnet",
+    "amount": "50.0",
+    "transfer_transaction": {
+      "raw": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b290000000000",
+      "signing_payload": "87050c63e63a1269228176a458743c99d23ca12ad9c9758a42c10e56799dc8c3",
+      "signed": "380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa432e4c11c36b000012000000736c6174652d64656d6f2e746573746e657415143914926d227d21ea635e6ae70a967ad19ad74dd305ac3a556968fd9039170100000003000000726906646ee95b2900000000000069cab19548fcac9253ef66fde2853aa46611ac42aeae30d4109fae9a026de1ba67a4c55fe576a019898e8a1b817c93d02779dfd1be63fde390e0bf576cb67404",
+      "hash": "A64WEYru3xv7jQsCDn9JV4RYK4frvNWtfAUUMYQmcVLn",
+      "status": null,
+      "error": null,
+      "signatures": []
+    }
+  },
+  "network_code": "near",
+  "chain_code": "testnet",
+  "created_at": "2023-02-27T18:35:44.613Z",
+  "updated_at": "2023-02-27T18:44:12.803Z"
+}
+```

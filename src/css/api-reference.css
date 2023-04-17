@@ -1,25 +1,25 @@
-[class*="docs-doc-id-api-reference"] label {
+[class*="docs-doc-id-staking"] label {
   padding-top: 10px;
   display: flex;
 }
 
 /* 👇 Code block customizations */
-[class*="docs-doc-id-api-reference"] pre.prism-code {
+[class*="docs-doc-id-staking"] pre.prism-code {
   max-height: 300px;
 }
 
-[class*="docs-doc-id-api-reference"] pre.prism-code [class^="codeLineNumber"] {
+[class*="docs-doc-id-staking"] pre.prism-code [class^="codeLineNumber"] {
   white-space: nowrap;
 }
 
 /* 👇 Used for custom selectboxes */
 
 /* remove default arrow in IE */
-[class*="docs-doc-id-api-reference"] select::-ms-expand {
+[class*="docs-doc-id-staking"] select::-ms-expand {
   display: none;
 }
 
-[class*="docs-doc-id-api-reference"][data-theme="light"] .custom-select {
+[class*="docs-doc-id-staking"][data-theme="light"] .custom-select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -35,17 +35,17 @@
   border-radius: 3px;
 }
 
-[class*="docs-doc-id-api-reference"][data-theme="light"] .custom-select:hover {
+[class*="docs-doc-id-staking"][data-theme="light"] .custom-select:hover {
   border: 1px solid var(--ifm-color-primary-lightest);
 }
 
-[class*="docs-doc-id-api-reference"][data-theme="light"] .custom-select:focus {
+[class*="docs-doc-id-staking"][data-theme="light"] .custom-select:focus {
   border: 1px solid var(--ifm-color-primary-lightest);
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
   outline: none;
 }
 
-[class*="docs-doc-id-api-reference"][data-theme="dark"] .custom-select {
+[class*="docs-doc-id-staking"][data-theme="dark"] .custom-select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -63,25 +63,17 @@
   font-weight: bold;
 }
 
-[class*="docs-doc-id-api-reference"][data-theme="dark"] .custom-select:hover {
+[class*="docs-doc-id-staking"][data-theme="dark"] .custom-select:hover {
   border: 1px solid var(--ifm-color-white);
 }
 
-[class*="docs-doc-id-api-reference"][data-theme="dark"] .custom-select:focus {
+[class*="docs-doc-id-staking"][data-theme="dark"] .custom-select:focus {
   border: 1px solid var(--ifm-color-white);
   box-shadow: 0 3px 5px 0 rgba(255, 255, 255, 0.3);
   outline: none;
 }
 
-[class*="docs-doc-id-api-reference"] th a {
+[class*="docs-doc-id-staking"] th a {
   text-decoration: underline;
   color: var(--ifm-link-color);
-}
-
-details:not([open]) .open {
-  display: none;
-}
-
-details[open] .closed {
-  display: none;
 }

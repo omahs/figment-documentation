@@ -1,0 +1,3265 @@
+---
+title: Staking - Solana
+sidebar_position: 2
+pagination_prev: null
+pagination_next: null
+collapsed: true
+collapsible: true
+description: Staking API - Solana
+image: img/logo.svg
+keywords: [Staking API, Solana]
+
+hide_table_of_contents: true
+sidebar_label: Undelegate
+---
+
+import { APIMethods } from "@site/src/components";
+
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+import SolanaUndelegate from "@site/partials/solana/undelegate.mdx";
+
+<SolanaUndelegate />
+
+## API Reference
+
+<APIReferenceNav
+  service="staking-api"
+  network="solana"
+  folders={undefined}
+  path="docs/staking/networks/solana/undelegate/index.mdx"
+  methods={[
+    {
+      name: "Create New Delegation Flow",
+    },
+    {
+      name: "Create New Staking Account",
+    },
+    {
+      name: "Submit a Signed Stake Account Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Submit Validator Address",
+    },
+    {
+      name: "Submit a Signed Delegate Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Create New Undelegation Flow",
+    },
+    {
+      name: "Submit Deactivate Transaction Data",
+    },
+    {
+      name: "Submit a Signed Deactivate Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Submit Withdrawal Transaction Data",
+    },
+    {
+      name: "Submit a Signed Withdrawl Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Create New Transfer Flow",
+    },
+    {
+      name: "Submit Transfer Data",
+    },
+    {
+      name: "Submit a Signed Transfer Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Create New Split Stake Account Flow",
+    },
+    {
+      name: "Submit Split Stake Account Data",
+    },
+    {
+      name: "Submit a Signed Split Stake Account Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+    {
+      name: "Create New Merge Stake Account Flow",
+    },
+    {
+      name: "Submit Merge Stake Account Data",
+    },
+    {
+      name: "Submit a Signed Merge Stake Account Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>
+
+<APIMethods
+  service="staking-api"
+  network="solana"
+  proxy=""
+  host="solana-slate.datahub.figment.io/api/v1/flows"
+  methods={[
+    {
+      name: "Create New Delegation Flow",
+      content:
+        'To initiate the staking process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `solana`) (required).\n    - `chain_code` — `string` Chain this flow operates on (ex. `testnet`) (required).\n    - `operation` `string` The operation to perform (ex. `staking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_stake_account` — Use this action if you already have an inactive stake account you want to activate.\n    - `create_new_stake_account` — Use this action if you do not have an inactive stake account and want to create a new one.\n        - `funding_account_pubkey` — The main wallet your SOL will be originating from.\n        - `stake_authority_pubkey` — Grants authority to sign certain staking relation transactions to the provided address. Defaults to `funding_account_pubkey`.\n        - `withdraw_authority_pubkey` — Grants authority to sign certain withdrawal related transactions to the provided address. Defaults to `funding_account_pubkey`.\n        - `amount` — The amount of SOL to be sent to the stake account. This field should be in full SOL, not in lamports (i.e. if you want to stake 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs.\n- `data` — `object` Delegation flow & transaction data.',
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "solana",
+            chain_code: "devnet",
+            operation: "staking",
+            version: "v1",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Delegation Flow",
+        body: {
+          id: "e2285668-f6ab-4b77-9e96-edbcca63cd24",
+          operation: "staking",
+          state: "initialized",
+          actions: [
+            {
+              name: "assign_stake_account",
+              inputs: [
+                {
+                  name: "stake_account_pubkey",
+                  display: "Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+            {
+              name: "create_new_stake_account",
+              inputs: [
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "stake_authority_pubkey",
+                  display: "Stake Authority Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "withdraw_authority_pubkey",
+                  display: "Withdraw Authority Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "amount",
+                  display: "Amount (SOL)",
+                  description:
+                    "Amount in SOL (maximum stake will be this amount minus rent exempt threshold - https://docs.solana.com/developing/intro/rent#rent-exempt)",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            stake_account_pubkey: null,
+            create_stake_account_transaction: null,
+            funding_account_pubkey: null,
+            stake_authority_pubkey: null,
+            withdraw_authority_pubkey: null,
+            amount: null,
+            validator_address: null,
+            delegate_transaction: null,
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            estimated_active_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T07:04:33.714Z",
+          updated_at: "2023-02-28T07:04:33.714Z",
+        },
+      },
+    },
+    {
+      name: "Create New Staking Account",
+      content:
+        'After collecting the required inputs as mentioned below, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.  \nIf you already have a staking account, proceed to the step "Submit Staking Account Data"\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `funding_account_pubkey` — The main wallet your SOL will be originating from (required).\n    - `stake_authority_pubkey` — Grants authority to sign certain staking relation transactions to the provided address. Defaults to `funding_account_pubkey` (optional).\n    - `withdraw_authority_pubkey` — Grants authority to sign certain withdrawal related transactions to the provided address. Defaults to `funding_account_pubkey` (optional).\n    - `amount` — The amount of SOL to be sent to the Stake Account. This field should be in full SOL, not in lamports (i.e. if you want to stake 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_stake_account_tx` — If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).\n    - `sign_stake_account_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_stake_account_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Delegation flow & transaction data.',
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_new_stake_account",
+          inputs: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            amount: 4,
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Staking Account",
+        body: {
+          id: "e2285668-f6ab-4b77-9e96-edbcca63cd24",
+          operation: "staking",
+          state: "stake_account_tx_signature",
+          actions: [
+            {
+              name: "refresh_stake_account_tx",
+              inputs: [
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+                {
+                  name: "stake_authority_pubkey",
+                  display: "Stake Authority Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+                {
+                  name: "withdraw_authority_pubkey",
+                  display: "Withdraw Authority Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "4.0",
+                },
+              ],
+            },
+            {
+              name: "sign_stake_account_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+                  signing_payload:
+                    "02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_stake_account_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            create_stake_account_transaction: {
+              raw: "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signing_payload:
+                "02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signed: null,
+              hash: null,
+              status: null,
+              error: null,
+              signatures: null,
+              block_time: null,
+            },
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            amount: "4.0",
+            validator_address: null,
+            delegate_transaction: null,
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            estimated_active_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T07:04:33.714Z",
+          updated_at: "2023-02-28T07:54:41.900Z",
+        },
+      },
+    },
+    {
+      name: "Submit a Signed Stake Account Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a PUT request to `/api/v1/flows/[:flow_id]/next` with the signed payload. The Staking API will broadcast the transaction to the Solana network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `stake_account_tx_broadcasting` — Transaction has been broadcast but not confirmed.\n    - `stake_account` — Transaction broadcasted and confirmed.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Delegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_stake_account_tx",
+          inputs: {
+            transaction_payload:
+              "0238e01c7c328cf82967071dda5d3eefb445bca087b967955c3ffd53a2a3ea0999a0aca1dddcb556a9df7e1316460e3f10cfa66c7ad90b685eacf39ab4f816500609a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit a Signed Stake Account Transaction for Broadcast",
+        body: {
+          id: "e2285668-f6ab-4b77-9e96-edbcca63cd24",
+          operation: "staking",
+          state: "stake_account_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-02-28T07:56:33.558Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            create_stake_account_transaction: {
+              raw: "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signing_payload:
+                "02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signed:
+                "0238e01c7c328cf82967071dda5d3eefb445bca087b967955c3ffd53a2a3ea0999a0aca1dddcb556a9df7e1316460e3f10cfa66c7ad90b685eacf39ab4f816500609a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              hash: "28xHAnmmVY6A2wfwe4v1LeoeS3qPBYL4haajmswwfVZ4JVsobeTCzoksVjZjgzzKtbJpCnraCquUwTiYRvkXpoKb",
+              status: null,
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: null,
+            },
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            amount: "4.0",
+            validator_address: null,
+            delegate_transaction: null,
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            estimated_active_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T07:04:33.714Z",
+          updated_at: "2023-02-28T07:55:32.689Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `stake_account_tx_broadcasting` — Transaction has been broadcast but not confirmed.\n    - `stake_account` — Transaction broadcasted and confirmed.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaStakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "e2285668-f6ab-4b77-9e96-edbcca63cd24",
+          operation: "staking",
+          state: "stake_account",
+          actions: [
+            {
+              name: "create_delegate_tx",
+              inputs: [
+                {
+                  name: "validator_address",
+                  display: "Vote Account Public Key",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+            {
+              name: "assign_stake_account",
+              inputs: [
+                {
+                  name: "stake_account_pubkey",
+                  display: "Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+              ],
+            },
+          ],
+          data: {
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            create_stake_account_transaction: {
+              raw: "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signing_payload:
+                "02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signed:
+                "0238e01c7c328cf82967071dda5d3eefb445bca087b967955c3ffd53a2a3ea0999a0aca1dddcb556a9df7e1316460e3f10cfa66c7ad90b685eacf39ab4f816500609a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              hash: "28xHAnmmVY6A2wfwe4v1LeoeS3qPBYL4haajmswwfVZ4JVsobeTCzoksVjZjgzzKtbJpCnraCquUwTiYRvkXpoKb",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-02-28T07:55:33.000Z",
+            },
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            amount: "4.0",
+            validator_address: null,
+            delegate_transaction: null,
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            estimated_active_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T07:04:33.714Z",
+          updated_at: "2023-02-28T07:55:56.620Z",
+        },
+      },
+    },
+    {
+      name: "Submit Validator Address",
+      content:
+        "Now that the stake account is created, submit a delegation transaction to activate the stake.\n\nThe previous response indicates one required input: `validator_address`.\n\n### Parameters\n\n- `validator_address` — The vote address of the validator to which the SOL will be delegated (required).\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_delegate_tx` — If you need to get a fresh version of the transaction payload.\n    - `sign_delegate_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_delegate_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Delegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_delegate_tx",
+          inputs: {
+            validator_address: "DNTc4P9ngY51Uc8hXSjhJdZdLTxyx7j1N1GbfXjVkLPr",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Validator Address",
+        body: {
+          id: "e2285668-f6ab-4b77-9e96-edbcca63cd24",
+          operation: "staking",
+          state: "delegate_tx_signature",
+          actions: [
+            {
+              name: "refresh_delegate_tx",
+              inputs: [
+                {
+                  name: "validator_address",
+                  display: "Vote Account Public Key",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "DNTc4P9ngY51Uc8hXSjhJdZdLTxyx7j1N1GbfXjVkLPr",
+                },
+              ],
+            },
+            {
+              name: "sign_delegate_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+                  signing_payload:
+                    "01000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_delegate_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            create_stake_account_transaction: {
+              raw: "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signing_payload:
+                "02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signed:
+                "0238e01c7c328cf82967071dda5d3eefb445bca087b967955c3ffd53a2a3ea0999a0aca1dddcb556a9df7e1316460e3f10cfa66c7ad90b685eacf39ab4f816500609a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              hash: "28xHAnmmVY6A2wfwe4v1LeoeS3qPBYL4haajmswwfVZ4JVsobeTCzoksVjZjgzzKtbJpCnraCquUwTiYRvkXpoKb",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-02-28T07:55:33.000Z",
+            },
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            amount: "4.0",
+            validator_address: "DNTc4P9ngY51Uc8hXSjhJdZdLTxyx7j1N1GbfXjVkLPr",
+            delegate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+              signing_payload:
+                "01000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+              signed: null,
+              hash: null,
+              status: null,
+              error: null,
+              signatures: null,
+              block_time: null,
+            },
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            estimated_active_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T07:04:33.714Z",
+          updated_at: "2023-02-28T08:01:54.481Z",
+        },
+      },
+    },
+    {
+      name: "Submit a Signed Delegate Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` and the Staking API will broadcast the transaction to the Solana network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `delegate_tx_broadcasting` — The delegation transaction has been broadcast but not confirmed.\n    - `delegation_activating` — The delegation is progressing.\n    - `delegation_active` — The delegation is active and confirmed.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Delegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_delegate_tx",
+          inputs: {
+            transaction_payload:
+              "01eb12cc9bae40148bdaba7f15a47f0102528de605f2a3fc7d2125258133074af9b4f6c18abd42e8eeac16004fbe57b106b52cef704662b9016ca8531997596b0b01000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaStakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit a Signed Delegate Transaction for Broadcast",
+        body: {
+          id: "e2285668-f6ab-4b77-9e96-edbcca63cd24",
+          operation: "staking",
+          state: "delegate_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-02-28T08:03:36.644Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            create_stake_account_transaction: {
+              raw: "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signing_payload:
+                "02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signed:
+                "0238e01c7c328cf82967071dda5d3eefb445bca087b967955c3ffd53a2a3ea0999a0aca1dddcb556a9df7e1316460e3f10cfa66c7ad90b685eacf39ab4f816500609a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              hash: "28xHAnmmVY6A2wfwe4v1LeoeS3qPBYL4haajmswwfVZ4JVsobeTCzoksVjZjgzzKtbJpCnraCquUwTiYRvkXpoKb",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-02-28T07:55:33.000Z",
+            },
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            amount: "4.0",
+            validator_address: "DNTc4P9ngY51Uc8hXSjhJdZdLTxyx7j1N1GbfXjVkLPr",
+            delegate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+              signing_payload:
+                "01000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+              signed:
+                "01eb12cc9bae40148bdaba7f15a47f0102528de605f2a3fc7d2125258133074af9b4f6c18abd42e8eeac16004fbe57b106b52cef704662b9016ca8531997596b0b01000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+              hash: "5hbND6b542r6sPsgmTma5fY6DoG69tBYPhidRujWPnAtLvSJMb4LZtCqUG2DJ7BuejAJbUf3SPWokHMWWeyxx4XC",
+              status: null,
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: null,
+            },
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            estimated_active_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T07:04:33.714Z",
+          updated_at: "2023-02-28T08:02:35.654Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `delegate_tx_broadcasting` — The delegation transaction has been broadcast but not confirmed.\n    - `delegation_activating` — The delegation is progressing.\n    - `delegation_active` — The delegation is active and confirmed.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Delegation flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaStakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "e2285668-f6ab-4b77-9e96-edbcca63cd24",
+          operation: "staking",
+          state: "delegation_active",
+          actions: [],
+          data: {
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            create_stake_account_transaction: {
+              raw: "020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signing_payload:
+                "02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              signed:
+                "0238e01c7c328cf82967071dda5d3eefb445bca087b967955c3ffd53a2a3ea0999a0aca1dddcb556a9df7e1316460e3f10cfa66c7ad90b685eacf39ab4f816500609a17014be532f0085f0ffb9e98911d86f2e19539d8c2f97b47e1974e0a3d9d28d149448f401776e1e4fa25b7523e18a680bf153468df782af75f59c7ff0580d02000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d517192c5c51218cc94c3d4af17f58daee089ba1fd44e3dbd98a0000000026288b8d1932a012665045867e29aaaff8a08b472849903582e42b994b45203f0202020001340000000000286bee00000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000030201047400000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53400000000000000000000000000000000f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a534",
+              hash: "28xHAnmmVY6A2wfwe4v1LeoeS3qPBYL4haajmswwfVZ4JVsobeTCzoksVjZjgzzKtbJpCnraCquUwTiYRvkXpoKb",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-02-28T07:55:33.000Z",
+            },
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            amount: "4.0",
+            validator_address: "DNTc4P9ngY51Uc8hXSjhJdZdLTxyx7j1N1GbfXjVkLPr",
+            delegate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+              signing_payload:
+                "01000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+              signed:
+                "01eb12cc9bae40148bdaba7f15a47f0102528de605f2a3fc7d2125258133074af9b4f6c18abd42e8eeac16004fbe57b106b52cef704662b9016ca8531997596b0b01000507f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136fb7cb85988308c169f6126f291e5b5dd7b73047e3579055effdda5ce41db8981106a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a1d817a502050b680791e6ce6db88e1e5b7150f61fc6790a4eb4d10000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000004254944a07ae2e089b96f5e6f017a60f356d680fbcd0efb6b70580983400475b0103060102050604000402000000",
+              hash: "5hbND6b542r6sPsgmTma5fY6DoG69tBYPhidRujWPnAtLvSJMb4LZtCqUG2DJ7BuejAJbUf3SPWokHMWWeyxx4XC",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-02-28T08:02:35.000Z",
+            },
+            delegation_active_amount: "6997717120.0",
+            delegation_inactive_amount: "0.0",
+            delegation_status: "active",
+            delegation_status_error: null,
+            estimated_active_at: "2023-03-02T04:42:16.214Z",
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T07:04:33.714Z",
+          updated_at: "2023-03-02T04:05:23.467Z",
+        },
+      },
+    },
+    {
+      name: "Create New Undelegation Flow",
+      content:
+        "To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network on which this flow operates (ex. `solana`) (required).\n    - `chain_code` — `string` Chain on which this flow operates (ex. `mainnet`, `testnet`) (required).\n    - `operation` `string` The operation to perform (ex. `unstaking`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_deactivate_tx` — Collect the data needed to build a stake deactivation transaction and submit back to the Staking API.\n        - `stake_account_pubkey` — The address of the stake account to be deactivated.\n        - `funding_account_pubkey` — The address of the wallet with signing rights to deactivate the stake account.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "solana",
+            chain_code: "devnet",
+            operation: "unstaking",
+            version: "v1",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create a New Undelegation Flow",
+        body: {
+          id: "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+          operation: "unstaking",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_deactivate_tx",
+              inputs: [
+                {
+                  name: "stake_account_pubkey",
+                  display: "Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+            {
+              name: "create_withdraw_tx",
+              inputs: [
+                {
+                  name: "stake_account_pubkey",
+                  display: "Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in SOL",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "recipient_pubkey",
+                  display: "Recipient Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            funding_account_pubkey: null,
+            stake_account_pubkey: null,
+            stake_authority_pubkey: null,
+            withdraw_authority_pubkey: null,
+            deactivate_transaction: null,
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            recipient_pubkey: null,
+            withdraw_amount: null,
+            withdraw_transaction: null,
+            withdraw_transaction_funding_account_pubkey: null,
+            estimated_inactive_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:28:38.784Z",
+          updated_at: "2023-03-02T08:28:38.784Z",
+        },
+      },
+    },
+    {
+      name: "Submit Deactivate Transaction Data",
+      content:
+        "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `funding_account_pubkey` — `string` The address of the stake account to be deactivated (required).\n    - `stake_account_pubkey` — `string` The address of the wallet with signing rights to deactivate the stake account (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_deactivate_tx` — If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).\n    - `sign_deactivate_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_deactivate_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_deactivate_tx",
+          inputs: {
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaUnstakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Deactivate Transaction Data",
+        body: {
+          id: "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+          operation: "unstaking",
+          state: "deactivate_tx_signature",
+          actions: [
+            {
+              name: "refresh_deactivate_tx",
+              inputs: [
+                {
+                  name: "stake_account_pubkey",
+                  display: "Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+              ],
+            },
+            {
+              name: "sign_deactivate_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+                  signing_payload:
+                    "01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_deactivate_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            deactivate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signing_payload:
+                "01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signed: null,
+              hash: null,
+              status: null,
+              error: null,
+              signatures: null,
+              block_time: null,
+            },
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            recipient_pubkey: null,
+            withdraw_amount: null,
+            withdraw_transaction: null,
+            withdraw_transaction_funding_account_pubkey: null,
+            estimated_inactive_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:28:38.784Z",
+          updated_at: "2023-03-02T08:30:09.009Z",
+        },
+      },
+    },
+    {
+      name: "Submit a Signed Deactivate Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` and the Staking API will broadcast the transaction to the Solana network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `deactivate_tx_broadcasting` — Transaction has been broadcast but not confirmed.\n    - `cool_down` — Transaction is under cool-down period.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_deactivate_tx",
+          inputs: {
+            transaction_payload:
+              "0108b202d6415b02cf9db966eccf11da492a79d343de947b7e0775168e938eb43fdb6263ffb6dec528bd71c0d753833afa7eec1ef1a1603e4bdc26f1c6d9f8420a01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaUnstakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit a Signed Deactivate Transaction for Broadcast",
+        body: {
+          id: "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+          operation: "unstaking",
+          state: "deactivate_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-03-02T08:31:46.969Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            deactivate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signing_payload:
+                "01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signed:
+                "0108b202d6415b02cf9db966eccf11da492a79d343de947b7e0775168e938eb43fdb6263ffb6dec528bd71c0d753833afa7eec1ef1a1603e4bdc26f1c6d9f8420a01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              hash: "B5pqLyY3Wo8C3StMeqXSJZL8rxXLodr3sVvRqfeudGc87xNpiaB9GAcKVCBpBYpFeDk3SNUUFeZ8sejPPKNRCjj",
+              status: null,
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: null,
+            },
+            delegation_active_amount: null,
+            delegation_inactive_amount: null,
+            delegation_status: null,
+            delegation_status_error: null,
+            recipient_pubkey: null,
+            withdraw_amount: null,
+            withdraw_transaction: null,
+            withdraw_transaction_funding_account_pubkey: null,
+            estimated_inactive_at: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:28:38.784Z",
+          updated_at: "2023-03-02T08:30:46.246Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `deactivate_tx_broadcasting` — Transaction has been broadcast but not confirmed.\n    - `cool_down` — Transaction is under cool-down period.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaUnstakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+          operation: "unstaking",
+          state: "deactivated",
+          actions: [
+            {
+              name: "create_withdraw_tx",
+              inputs: [
+                {
+                  name: "stake_account_pubkey",
+                  display: "Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in SOL",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "recipient_pubkey",
+                  display: "Recipient Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            deactivate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signing_payload:
+                "01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signed:
+                "0108b202d6415b02cf9db966eccf11da492a79d343de947b7e0775168e938eb43fdb6263ffb6dec528bd71c0d753833afa7eec1ef1a1603e4bdc26f1c6d9f8420a01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              hash: "B5pqLyY3Wo8C3StMeqXSJZL8rxXLodr3sVvRqfeudGc87xNpiaB9GAcKVCBpBYpFeDk3SNUUFeZ8sejPPKNRCjj",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-03-02T08:30:46.000Z",
+            },
+            delegation_active_amount: "0.0",
+            delegation_inactive_amount: "5997717120.0",
+            delegation_status: "inactive",
+            delegation_status_error: null,
+            recipient_pubkey: null,
+            withdraw_amount: null,
+            withdraw_transaction: null,
+            withdraw_transaction_funding_account_pubkey: null,
+            estimated_inactive_at: "2023-03-04T03:25:51.870Z",
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:28:38.784Z",
+          updated_at: "2023-03-04T02:40:15.121Z",
+        },
+      },
+    },
+    {
+      name: "Submit Withdrawal Transaction Data",
+      content:
+        "After deactivation, there is one action — `create_withdraw_tx` — and three required fields for data collection:\n\n- `amount` — The number of SOL to be withdrawn. Partial withdrawal is possible.\n- `funding_account_pubkey` — The address of the account that will pay the transaction fee.\n- `recipient_pubkey` — The address of the wallet to which the withdrawn SOL will be sent.\n    \n\nNote that the recipient of the withdrawal is _not_ the originating address by default!\n\nOnce this data has been collected, submit it to the Staking API:  \n`PUT /api/v1/flows/[:flow_id]/next`.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `amount` — `string` The number of SOL to be withdrawn. Partial withdrawal is possible (required).\n    - `funding_account_pubkey` — `string` The address of the account that will pay the transaction fee (required).\n    - `recipient_pubkey` — `string` the number of SOL to be withdrawn. Partial withdrawal is possible (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_withdraw_tx` — If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired)\n    - `sign_withdraw_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_withdraw_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_withdraw_tx",
+          inputs: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            recipient_pubkey: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            amount: 5.9,
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaUnstakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Withdrawal Transaction Data",
+        body: {
+          id: "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+          operation: "unstaking",
+          state: "withdraw_tx_signature",
+          actions: [
+            {
+              name: "refresh_withdraw_tx",
+              inputs: [
+                {
+                  name: "stake_account_pubkey",
+                  display: "Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in SOL",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "5.9",
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+                {
+                  name: "recipient_pubkey",
+                  display: "Recipient Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+              ],
+            },
+            {
+              name: "sign_withdraw_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+                  signing_payload:
+                    "01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_withdraw_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            deactivate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signing_payload:
+                "01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signed:
+                "0108b202d6415b02cf9db966eccf11da492a79d343de947b7e0775168e938eb43fdb6263ffb6dec528bd71c0d753833afa7eec1ef1a1603e4bdc26f1c6d9f8420a01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              hash: "B5pqLyY3Wo8C3StMeqXSJZL8rxXLodr3sVvRqfeudGc87xNpiaB9GAcKVCBpBYpFeDk3SNUUFeZ8sejPPKNRCjj",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-03-02T08:30:46.000Z",
+            },
+            delegation_active_amount: "0.0",
+            delegation_inactive_amount: "5997717120.0",
+            delegation_status: "inactive",
+            delegation_status_error: null,
+            recipient_pubkey: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_amount: "5.9",
+            withdraw_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+              signing_payload:
+                "01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+              signed: null,
+              hash: null,
+              status: null,
+              error: null,
+              signatures: null,
+              block_time: null,
+            },
+            withdraw_transaction_funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            estimated_inactive_at: "2023-03-04T03:25:51.870Z",
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:28:38.784Z",
+          updated_at: "2023-03-06T04:28:09.951Z",
+        },
+      },
+    },
+    {
+      name: "Submit a Signed Withdrawl Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` and the Staking API will broadcast the transaction to the Solana network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `withdraw_tx_broadcasting` — Transaction broadcasting\n    - `withdrawn` — Transaction is confirmed and tokens are withdrawn\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_withdraw_tx",
+          inputs: {
+            transaction_payload:
+              "0108b202d6415b02cf9db966eccf11da492a79d343de947b7e0775168e938eb43fdb6263ffb6dec528bd71c0d753833afa7eec1ef1a1603e4bdc26f1c6d9f8420a01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaUnstakingFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit a Signed Withdrawl Transaction for Broadcast",
+        body: {
+          id: "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+          operation: "unstaking",
+          state: "withdraw_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-03-06T04:29:51.974Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            deactivate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signing_payload:
+                "01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signed:
+                "0108b202d6415b02cf9db966eccf11da492a79d343de947b7e0775168e938eb43fdb6263ffb6dec528bd71c0d753833afa7eec1ef1a1603e4bdc26f1c6d9f8420a01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              hash: "B5pqLyY3Wo8C3StMeqXSJZL8rxXLodr3sVvRqfeudGc87xNpiaB9GAcKVCBpBYpFeDk3SNUUFeZ8sejPPKNRCjj",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-03-02T08:30:46.000Z",
+            },
+            delegation_active_amount: "0.0",
+            delegation_inactive_amount: "5997717120.0",
+            delegation_status: "inactive",
+            delegation_status_error: null,
+            recipient_pubkey: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_amount: "5.9",
+            withdraw_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+              signing_payload:
+                "01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+              signed:
+                "012fd92132f4cd3e1fe8339f3aece9a757da1e7277d6c2cc10919c882d7c8aff03c123d3e720755c8a996919e127e219e31e268277019ee53d5dc24e0cecff960d01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+              hash: "xV8ZSsWE4qRmW7Eu52xZCfLM1S5xjezjHDh7TP1FGTwTrQiTw9a6tfS8sKYmn6XKuxdnmPHrmKGVgxWQMg6BVV6",
+              status: null,
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: null,
+            },
+            withdraw_transaction_funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            estimated_inactive_at: "2023-03-04T03:25:51.870Z",
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:28:38.784Z",
+          updated_at: "2023-03-06T04:28:51.327Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `withdraw_tx_broadcasting` — Transaction broadcasting\n    - `withdrawn` — Transaction is confirmed and tokens are withdrawn\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Undelegation flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaUnstakingFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "0e42073a-1f7d-4997-a4f0-cab1130a9521",
+          operation: "unstaking",
+          state: "withdrawn",
+          actions: [],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            deactivate_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signing_payload:
+                "01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              signed:
+                "0108b202d6415b02cf9db966eccf11da492a79d343de947b7e0775168e938eb43fdb6263ffb6dec528bd71c0d753833afa7eec1ef1a1603e4bdc26f1c6d9f8420a01000204f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000023652dc33a447d52fa6da4e090bb2c792e8bcff1a7af9a2d3ce91a994c8779e90102030103000405000000",
+              hash: "B5pqLyY3Wo8C3StMeqXSJZL8rxXLodr3sVvRqfeudGc87xNpiaB9GAcKVCBpBYpFeDk3SNUUFeZ8sejPPKNRCjj",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-03-02T08:30:46.000Z",
+            },
+            delegation_active_amount: "0.0",
+            delegation_inactive_amount: "5997717120.0",
+            delegation_status: "inactive",
+            delegation_status_error: null,
+            recipient_pubkey: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            withdraw_amount: "5.9",
+            withdraw_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+              signing_payload:
+                "01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+              signed:
+                "012fd92132f4cd3e1fe8339f3aece9a757da1e7277d6c2cc10919c882d7c8aff03c123d3e720755c8a996919e127e219e31e268277019ee53d5dc24e0cecff960d01000305f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff40000005d9445ea22a4f27189c9c66f69d4469f9fa6d5fc304aea386e1cf4fe5f30508d01020501000304000c0400000000dbaa5f01000000",
+              hash: "xV8ZSsWE4qRmW7Eu52xZCfLM1S5xjezjHDh7TP1FGTwTrQiTw9a6tfS8sKYmn6XKuxdnmPHrmKGVgxWQMg6BVV6",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-03-06T04:28:51.000Z",
+            },
+            withdraw_transaction_funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            estimated_inactive_at: "2023-03-04T03:25:51.870Z",
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:28:38.784Z",
+          updated_at: "2023-03-06T04:29:06.559Z",
+        },
+      },
+    },
+    {
+      name: "Create New Transfer Flow",
+      content:
+        'To initiate the transfer process with Staking API, create a new flow with `POST /api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network on which this flow operates (ex. `solana`) (required).\n    - `chain_code` — `string` Chain on which this flow operates (ex. `mainnet` , `testnet`) (required).\n    - `operation` `string` The operation to perform (ex. `transfer`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_transfer_tx` — Use this action to generate a transfer transaction to move SOL between accounts.\n        - `funding_account_pubkey` — The public key of the wallet which will pay the transaction fee.\n        - `from_account_pubkey` — The wallet that SOL will be originating from.\n        - `to_account_pubkey` — The withdrawal address for the given validator.\n        - `amount` — The amount of SOL to be transferred to the account. This field should be in full SOL, not in lamports (ie. if you want to transfer 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs.\n- `data` — `object` Transfer flow & transaction data.',
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "solana",
+            chain_code: "devnet",
+            operation: "transfer",
+            version: "v1",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Transfer Flow",
+        body: {
+          id: "6b8502c2-77b3-4541-a742-62ff337f0d15",
+          operation: "transfer",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_transfer_tx",
+              inputs: [
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "from_account_pubkey",
+                  display: "From Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "to_account_pubkey",
+                  display: "To Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in SOL",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            from_account_pubkey: null,
+            to_account_pubkey: null,
+            amount: null,
+            funding_account_pubkey: null,
+            transfer_transaction: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T09:32:03.904Z",
+          updated_at: "2023-02-28T09:32:03.904Z",
+        },
+      },
+    },
+    {
+      name: "Submit Transfer Data",
+      content:
+        "After creating the new transfer flow, we need to submit the transfer data.\n\nAfter collecting the required inputs as mentioned below, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute, such as `create_transfer_tx`\n- `inputs` — `object`\n    - `funding_account_pubkey` — `string` Pubkey of the wallet which will pay the transaction fee. (optional).\n    - `from_account_pubkey` — `string` The address of the sender's account.\n    - `to_account_pubkey` — `string` The address of the wallet to which SOL will be transferred (required).\n    - `amount` — `number` — The amount of the tokens you want to transfer (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_transfer_tx` — If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).\n    - `sign_transfer_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_transfer_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Transfer flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_transfer_tx",
+          inputs: {
+            from_account_address:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            from_account_pubkey: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            to_account_pubkey: "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
+            amount: 1,
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaTransferFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Transfer Data",
+        body: {
+          id: "6b8502c2-77b3-4541-a742-62ff337f0d15",
+          operation: "transfer",
+          state: "transfer_tx_signature",
+          actions: [
+            {
+              name: "refresh_transfer_tx",
+              inputs: [
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+                {
+                  name: "from_account_pubkey",
+                  display: "From Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+                {
+                  name: "to_account_pubkey",
+                  display: "To Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in SOL",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "1.0",
+                },
+              ],
+            },
+            {
+              name: "sign_transfer_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+                  signing_payload:
+                    "01000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_transfer_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            from_account_pubkey: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            to_account_pubkey: "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
+            amount: "1.0",
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            transfer_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+              signing_payload:
+                "01000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+              signed: null,
+              hash: null,
+              status: null,
+              error: null,
+              signatures: null,
+              block_time: null,
+            },
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T09:32:03.904Z",
+          updated_at: "2023-02-28T09:37:45.799Z",
+        },
+      },
+    },
+    {
+      name: "Submit a Signed Transfer Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` and the Staking API will broadcast the transaction to the network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `transfer_tx_broadcasting` — Transaction has been broadcast and is awaiting confirmation.\n    - `transfered` - Transaction is confirmed and tokens are transferred.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Transfer flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_transfer_tx",
+          inputs: {
+            transaction_payload:
+              "01c9e6e53b2165b582192710482f23178d5c7a6d5666cc97f841e07cd983265033f73790fd6650b298ee908e5a42927a68212f6368029a4b9e4e5961e0ca24a70801000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaTransferFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit a Signed Transfer Transaction for Broadcast",
+        body: {
+          id: "6b8502c2-77b3-4541-a742-62ff337f0d15",
+          operation: "transfer",
+          state: "transfer_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-02-28T09:39:53.205Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            from_account_pubkey: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            to_account_pubkey: "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
+            amount: "1.0",
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            transfer_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+              signing_payload:
+                "01000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+              signed:
+                "01c9e6e53b2165b582192710482f23178d5c7a6d5666cc97f841e07cd983265033f73790fd6650b298ee908e5a42927a68212f6368029a4b9e4e5961e0ca24a70801000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+              hash: "538M3ptZsiHeDaRWX6RnFeuCbJcUwfDSU8YzDRBJnPx1AEQvk3to7n1VEWQyCz87oqZpsLC8obvxJNQizMCQauHZ",
+              status: null,
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: null,
+            },
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T09:32:03.904Z",
+          updated_at: "2023-02-28T09:38:52.469Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `transfer_tx_broadcasting` — Transaction has been broadcast and is awaiting confirmation.\n    - `transfered` - Transaction is confirmed and tokens are transferred.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Transfer flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaTransferFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "6b8502c2-77b3-4541-a742-62ff337f0d15",
+          operation: "transfer",
+          state: "transfered",
+          actions: [],
+          data: {
+            from_account_pubkey: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            to_account_pubkey: "9c8oxENj8XrEM2EMadxUoifZgB1Vbc8GEYqKTxTfPo3i",
+            amount: "1.0",
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            transfer_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+              signing_payload:
+                "01000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+              signed:
+                "01c9e6e53b2165b582192710482f23178d5c7a6d5666cc97f841e07cd983265033f73790fd6650b298ee908e5a42927a68212f6368029a4b9e4e5961e0ca24a70801000103f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5347fdda76b682402ecb38e705b77d7eee793c587b6294a461c14ad89e7e161ade500000000000000000000000000000000000000000000000000000000000000008a20e5a91435e4f72d11db3e291b4797b6830cd2187f94596bca768ca81a5dff01020200010c0200000000ca9a3b00000000",
+              hash: "538M3ptZsiHeDaRWX6RnFeuCbJcUwfDSU8YzDRBJnPx1AEQvk3to7n1VEWQyCz87oqZpsLC8obvxJNQizMCQauHZ",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: null,
+            },
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T09:32:03.904Z",
+          updated_at: "2023-02-28T09:38:52.469Z",
+        },
+      },
+    },
+    {
+      name: "Create New Split Stake Account Flow",
+      content:
+        'To initiate the split stake account process with Staking API, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network on which this flow operates (ex. `solana`) (required).\n    - `chain_code` — `string` Chain on which this flow operates (ex. `testnet`) (required).\n    - `operation` `string` The operation to perform (ex. `split_stake_account`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_split_tx` — Use this Action to create a split stake account transaction.\n        - `funding_account_pubkey` — The public key of the wallet which will pay the transaction fee.\n        - `source_stake_account_pubkey` — The existing stake account from which partial SOL balance will be split.\n        - `amount` — The amount of SOL to be transferred to a newly created stake account. This field should be in full SOL, not in lamports (ie. if you want to transfer 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs.\n- `data` — `object` Split stake flow & transaction data.',
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "solana",
+            chain_code: "devnet",
+            operation: "split_stake_account",
+            version: "v1",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Split Stake Account Flow",
+        body: {
+          id: "81a57270-89b2-46d9-83b0-2b6138b556cd",
+          operation: "split_stake_account",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_split_tx",
+              inputs: [
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "source_stake_account_pubkey",
+                  display: "Source Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in SOL",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            funding_account_pubkey: null,
+            source_stake_account_pubkey: null,
+            amount: null,
+            split_transaction: null,
+            source_stake_authority_pubkey: null,
+            destination_stake_account_pubkey: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:24:44.629Z",
+          updated_at: "2023-03-02T08:24:44.629Z",
+        },
+      },
+    },
+    {
+      name: "Submit Split Stake Account Data",
+      content:
+        'After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `funding_account_pubkey` — The public key of the wallet which will pay the transaction fee (required).\n    - `source_stake_account_pubkey` — The existing stake account from which partial SOL balance will be split (required).\n    - `amount` — The amount of SOL to be transferred to the new stake account. This field should be in full SOL, not in lamports (ie. if you want to fund the new stake account with 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor. Lamports are fractional SOLs (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_split_tx` — If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).\n    - `sign_split_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_split_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Split stake flow & transaction data.',
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_split_tx",
+          inputs: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            source_stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            amount: 1,
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaSplitStakeFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Split Stake Account Data",
+        body: {
+          id: "81a57270-89b2-46d9-83b0-2b6138b556cd",
+          operation: "split_stake_account",
+          state: "split_tx_signature",
+          actions: [
+            {
+              name: "refresh_split_tx",
+              inputs: [
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+                {
+                  name: "source_stake_account_pubkey",
+                  display: "Source Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+                },
+                {
+                  name: "amount",
+                  display: "Amount",
+                  description: "in SOL",
+                  type: "decimal",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "1.0",
+                },
+              ],
+            },
+            {
+              name: "sign_split_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "0200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "0200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+                  signing_payload:
+                    "02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_split_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            source_stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            amount: "1.0",
+            split_transaction: {
+              raw: "0200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+              signing_payload:
+                "02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+              signed: null,
+              hash: null,
+              status: null,
+              error: null,
+              signatures: null,
+              block_time: null,
+            },
+            source_stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            destination_stake_account_pubkey:
+              "XD7o3qSrZr6GJJnZ1s4ks3yDsHuso4Z9pSXy5VPLNLG",
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:24:44.629Z",
+          updated_at: "2023-03-02T08:26:08.885Z",
+        },
+      },
+    },
+    {
+      name: "Submit a Signed Split Stake Account Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` and the Staking API will broadcast the transaction to the network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `split_tx_broadcasting` — Transaction has been broadcast and is awaiting confirmation.\n    - `completed` — Transaction has been confirmed and split is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Split stake flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_split_tx",
+          inputs: {
+            transaction_payload:
+              "02d6acd5591a09401b3b20c3cb323d0c05bd9f64f5ed346795b5890e60aca150e4293c4f487c85475c141a6b443f746f3479473dcb2b61c33b39a30aa4c6c42107615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaSplitStakeFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit a Signed Split Stake Account Transaction for Broadcast",
+        body: {
+          id: "81a57270-89b2-46d9-83b0-2b6138b556cd",
+          operation: "split_stake_account",
+          state: "split_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-03-02T08:27:37.929Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            source_stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            amount: "1.0",
+            split_transaction: {
+              raw: "0200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+              signing_payload:
+                "02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+              signed:
+                "02d6acd5591a09401b3b20c3cb323d0c05bd9f64f5ed346795b5890e60aca150e4293c4f487c85475c141a6b443f746f3479473dcb2b61c33b39a30aa4c6c42107615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+              hash: "5HwSBZggASZfGbSsfeaoSwTG4Kz8V7njWaBWYkD3c4sjDtvtJGKAvdRozk5CdnMvL9Z98rDR3MUcx6neYJyEXWte",
+              status: null,
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: null,
+            },
+            source_stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            destination_stake_account_pubkey:
+              "XD7o3qSrZr6GJJnZ1s4ks3yDsHuso4Z9pSXy5VPLNLG",
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:24:44.629Z",
+          updated_at: "2023-03-02T08:26:36.620Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `split_tx_broadcasting` — Transaction has been broadcast and is awaiting confirmation.\n    - `completed` — Transaction has been confirmed and split is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Split stake flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaSplitStakeFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "81a57270-89b2-46d9-83b0-2b6138b556cd",
+          operation: "split_stake_account",
+          state: "completed",
+          actions: [],
+          data: {
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            source_stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            amount: "1.0",
+            split_transaction: {
+              raw: "0200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+              signing_payload:
+                "02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+              signed:
+                "02d6acd5591a09401b3b20c3cb323d0c05bd9f64f5ed346795b5890e60aca150e4293c4f487c85475c141a6b443f746f3479473dcb2b61c33b39a30aa4c6c42107615272813a0191838a4ed56c460df8411f77e6b18ed94554be36900d37d7d81675bd0fd8b1b235618ae7525f3008a1f5c383d33ad488e93f1647cdb76322220f02000205f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a53407bd200aaa5a1b4ac8ea7e9fb1c13be7f0b0b161cce1065293381497f62ecf297de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f000000000000000000000000000000000000000000000000000000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc000000000d56fb5fb2e873897e4cbff1e4b7038e7b64b82d27fd8dbd72310c047a7851f1d020302000134000000000000000000000000c80000000000000006a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000004030201000c0300000000ca9a3b00000000",
+              hash: "5HwSBZggASZfGbSsfeaoSwTG4Kz8V7njWaBWYkD3c4sjDtvtJGKAvdRozk5CdnMvL9Z98rDR3MUcx6neYJyEXWte",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-03-02T08:26:37.000Z",
+            },
+            source_stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            destination_stake_account_pubkey:
+              "XD7o3qSrZr6GJJnZ1s4ks3yDsHuso4Z9pSXy5VPLNLG",
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-03-02T08:24:44.629Z",
+          updated_at: "2023-03-02T08:27:12.964Z",
+        },
+      },
+    },
+    {
+      name: "Create New Merge Stake Account Flow",
+      content:
+        "To initiate the merge stake account process with Staking API, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Parameters\n\n- `flow` — `object`\n    - `network_code` — `string` Network on which this flow operates (ex. `solana`) (required).\n    - `chain_code` — `string` Chain on which this flow operates (ex. `devnet`) (required).\n    - `operation` `string` The operation to perform (ex. `merge_stake_account`) (required).\n    - `version` — `string` API version to use (ex. `v1`) (optional).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_merge_tx` — Use this Action to create a merge stake account transaction.\n        - `destination_stake_account_pubkey` - Public key of the stake account into which you want to merge another stake account.\n        - `source_stake_account_pubkey` - Public key of the stake account which you want to merge with the destination stake account.\n        - `funding_account_pubkey` - Public key of the account which will pay the transaction fee.\n- `data` — `object` Merge stake flow & transaction data.",
+      request: {
+        method: "POST",
+        header: [],
+        body: {
+          flow: {
+            network_code: "solana",
+            chain_code: "devnet",
+            operation: "merge_stake_account",
+            version: "v1",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows",
+      },
+      interactive: false,
+      response: {
+        name: "Create New Merge Stake Account Flow",
+        body: {
+          id: "07fa6b05-476e-493e-aa02-0d855fe98b78",
+          operation: "merge_stake_account",
+          state: "initialized",
+          actions: [
+            {
+              name: "create_merge_tx",
+              inputs: [
+                {
+                  name: "destination_stake_account_pubkey",
+                  display: "Destination Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "source_stake_account_pubkey",
+                  display: "Source Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            destination_stake_account_pubkey: null,
+            source_stake_account_pubkey: null,
+            stake_authority_pubkey: null,
+            funding_account_pubkey: null,
+            merge_transaction: null,
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T09:12:59.071Z",
+          updated_at: "2023-02-28T09:12:59.071Z",
+        },
+      },
+    },
+    {
+      name: "Submit Merge Stake Account Data",
+      content:
+        "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `source_stake_account_pubkey` - Public key of the stake account from which you want to merge (required).\n    - `destination_stake_account_pubkey` - Public key of the stake account into which you want to merge the stake account balances (required).\n    - `funding_account_pubkey` - Public key of the account which will pay the transaction fee (required).\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_merge_tx` — If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).\n    - `sign_merge_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_merge_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n- `data` — `object` Merge stake flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "create_merge_tx",
+          inputs: {
+            destination_stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            source_stake_account_pubkey:
+              "23ANo1epPVGhGHyfsJP9581nNULGK7UoM7LPFyhx45Ss",
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaMergeStakeFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit Merge Stake Account Data",
+        body: {
+          id: "07fa6b05-476e-493e-aa02-0d855fe98b78",
+          operation: "merge_stake_account",
+          state: "merge_tx_signature",
+          actions: [
+            {
+              name: "refresh_merge_tx",
+              inputs: [
+                {
+                  name: "destination_stake_account_pubkey",
+                  display: "Destination Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+                },
+                {
+                  name: "source_stake_account_pubkey",
+                  display: "Source Stake Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "23ANo1epPVGhGHyfsJP9581nNULGK7UoM7LPFyhx45Ss",
+                },
+                {
+                  name: "funding_account_pubkey",
+                  display: "Funding Account Pubkey",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                },
+              ],
+            },
+            {
+              name: "sign_merge_tx",
+              inputs: [
+                {
+                  name: "transaction_payload",
+                  display: "Transaction Payload",
+                  description: "",
+                  type: "signed_transaction",
+                  validations: [
+                    {
+                      type: "sign_payload",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+                },
+                {
+                  name: "signatures",
+                  display: "Signatures",
+                  description: "",
+                  type: "array_of_signatures",
+                  validations: [],
+                  array: true,
+                  default_value: null,
+                  element_type: "signature_data",
+                  signers: ["Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy"],
+                  transaction_payload:
+                    "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+                  signing_payload:
+                    "01000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+                  inputs: [
+                    {
+                      name: "account_address",
+                      display: "Account Address",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                    {
+                      name: "signature",
+                      display: "Signature",
+                      description: "",
+                      type: "string",
+                      validations: [
+                        {
+                          type: "presence",
+                          options: {},
+                        },
+                      ],
+                      array: false,
+                      default_value: null,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "confirm_merge_tx_by_hash",
+              inputs: [
+                {
+                  name: "hash",
+                  display: "Hash",
+                  description: "",
+                  type: "string",
+                  validations: [
+                    {
+                      type: "presence",
+                      options: {},
+                    },
+                  ],
+                  array: false,
+                  default_value: null,
+                },
+                {
+                  name: "block_number",
+                  display: "Block Number",
+                  description: "",
+                  type: "integer",
+                  validations: [],
+                  array: false,
+                  default_value: null,
+                },
+              ],
+            },
+          ],
+          data: {
+            destination_stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            source_stake_account_pubkey:
+              "23ANo1epPVGhGHyfsJP9581nNULGK7UoM7LPFyhx45Ss",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            merge_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+              signing_payload:
+                "01000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+              signed: null,
+              hash: null,
+              status: null,
+              error: null,
+              signatures: null,
+              block_time: null,
+            },
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T09:12:59.071Z",
+          updated_at: "2023-02-28T09:18:37.497Z",
+        },
+      },
+    },
+    {
+      name: "Submit a Signed Merge Stake Account Transaction for Broadcast",
+      content:
+        "Before broadcasting the transaction, you must [sign the `transaction_payload`](https://docs.figment.io/guides/staking-api/figment-signing-transactions) you received in the previous step. After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` and the Staking API will broadcast the transaction to the network.\n\n### Parameters\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`\n    - `transaction_payload` — Signed transaction payload from the previous step's response.\n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `merge_tx_broadcasting` — Transaction has been broadcast and is awaiting confirmation.\n    - `completed` — Transaction has been confirmed and the merge is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Merge stake flow & transaction data.",
+      request: {
+        method: "PUT",
+        header: [],
+        body: {
+          name: "sign_merge_tx",
+          inputs: {
+            transaction_payload:
+              "010df1df512ef26a08c91b7ed68a53aab28a4b434650c9f2f1b2778ce6012fae33d339803d4e7ad8cbbb233248d472ed7a843a9e54b245983192cbb9c6eb3f320801000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+          },
+        },
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaMergeStakeFlowId}}/next",
+      },
+      interactive: false,
+      response: {
+        name: "Submit a Signed Merge Stake Account Transaction for Broadcast",
+        body: {
+          id: "07fa6b05-476e-493e-aa02-0d855fe98b78",
+          operation: "merge_stake_account",
+          state: "merge_tx_broadcasting",
+          actions: [
+            {
+              name: "wait",
+              estimated_state_change_at: "2023-02-28T09:20:07.155Z",
+              inputs: [],
+            },
+          ],
+          data: {
+            destination_stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            source_stake_account_pubkey:
+              "23ANo1epPVGhGHyfsJP9581nNULGK7UoM7LPFyhx45Ss",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            merge_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+              signing_payload:
+                "01000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+              signed:
+                "010df1df512ef26a08c91b7ed68a53aab28a4b434650c9f2f1b2778ce6012fae33d339803d4e7ad8cbbb233248d472ed7a843a9e54b245983192cbb9c6eb3f320801000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+              hash: "HAtWyX8EPwCQZZpdazBLrj1ZwZxCtMHWEekDC34GMVx9Rx4q6CaVSBSpMwbJR2Hn11UdRrZMacELB2TDBQ9wXgj",
+              status: null,
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: null,
+            },
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T09:12:59.071Z",
+          updated_at: "2023-02-28T09:19:06.417Z",
+        },
+      },
+    },
+    {
+      name: "Get Flow Status",
+      content:
+        "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Parameters\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `merge_tx_broadcasting` — Transaction has been broadcast and is awaiting confirmation.\n    - `completed` — Transaction has been confirmed and the merge is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Merge stake flow & transaction data.",
+      request: {
+        method: "GET",
+        header: [],
+        url: "https://solana-slate.datahub.figment.io",
+        headers: {
+          Authorization: "",
+        },
+        query: "api/v1/flows/{{solanaMergeStakeFlowId}}",
+      },
+      interactive: false,
+      response: {
+        name: "Get Flow Status",
+        body: {
+          id: "07fa6b05-476e-493e-aa02-0d855fe98b78",
+          operation: "merge_stake_account",
+          state: "completed",
+          actions: [],
+          data: {
+            destination_stake_account_pubkey:
+              "9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x",
+            source_stake_account_pubkey:
+              "23ANo1epPVGhGHyfsJP9581nNULGK7UoM7LPFyhx45Ss",
+            stake_authority_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            funding_account_pubkey:
+              "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+            merge_transaction: {
+              raw: "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+              signing_payload:
+                "01000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+              signed:
+                "010df1df512ef26a08c91b7ed68a53aab28a4b434650c9f2f1b2778ce6012fae33d339803d4e7ad8cbbb233248d472ed7a843a9e54b245983192cbb9c6eb3f320801000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000",
+              hash: "HAtWyX8EPwCQZZpdazBLrj1ZwZxCtMHWEekDC34GMVx9Rx4q6CaVSBSpMwbJR2Hn11UdRrZMacELB2TDBQ9wXgj",
+              status: "confirmed",
+              error: null,
+              signatures: [
+                {
+                  account_address:
+                    "Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy",
+                  signature: "",
+                },
+              ],
+              block_time: "2023-02-28T09:19:06.000Z",
+            },
+          },
+          network_code: "solana",
+          chain_code: "devnet",
+          created_at: "2023-02-28T09:12:59.071Z",
+          updated_at: "2023-02-28T09:19:20.817Z",
+        },
+      },
+    },
+  ]}
+/>

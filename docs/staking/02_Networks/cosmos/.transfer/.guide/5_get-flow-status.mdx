@@ -1,0 +1,70 @@
+---
+title: Get Flow Status
+slug: /staking/cosmos/transfer/get-flow-status-transferred
+---
+
+To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.
+
+### Parameters
+
+- None
+
+#### Sample cURL Request
+
+```bash
+curl -X GET 'https://cosmos-slate.datahub.figment.io/api/v1/flows/1ff5d5ce-9716-441f-a197-5c264e16965b' \
+-H 'Authorization: <api_key>'
+```
+
+### Response
+
+- `state` &mdash; `string` The current state of the flow.
+
+:::info note
+
+The `state` field will update from `transfer_tx_broadcasting` to `completed`.
+
+:::
+
+#### Sample Response
+
+```json {4,17-18}
+{
+  "id": "1ff5d5ce-9716-441f-a197-5c264e16965b",
+  "operation": "transfer",
+  "state": "completed",
+  "actions": [],
+  "data": {
+    "from_account_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
+    "to_account_address": "cosmos1vxhllask0nynh20htyfkpkfthy7k3395kz8y3c",
+    "amount": "0.1",
+    "gas_price": null,
+    "gas_limit": null,
+    "memo": "",
+    "transfer_transaction": {
+      "raw": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e62616e6b2e763162657461312e4d736753656e64222c2276616c7565223a7b2266726f6d41646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c22746f41646472657373223a22636f736d6f73317678686c6c61736b306e796e683230687479666b706b66746879376b333339356b7a38793363222c22616d6f756e74223a5b7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d5d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2231393637222c2264656e6f6d223a227561746f6d227d5d2c22676173223a223738363535227d2c226d656d6f223a22227d",
+      "signing_payload": "6c90440d3d80a938ec972ec744d87c0f7ecbb155e903737db885e1b71b321e9c",
+      "signed": "0a92010a8f010a1c2f636f736d6f732e62616e6b2e763162657461312e4d736753656e64126f0a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c122d636f736d6f73317678686c6c61736b306e796e683230687479666b706b66746879376b333339356b7a387933631a0f0a057561746f6d120631303030303012670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2102db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe23512040a020801180a12130a0d0a057561746f6d12043139363710bfe6041a408c4cc00ff79d497f98baa639ae673d84d21cda8d82109a93857c7d99cb016881297c6fe2d3b4a9e7328e7f242cb3f0f5abff668a8bde09b7fb8c051c4d287d87",
+      "hash": "01A6F459A7585A17285ADB953093F6D8EE47A67B4844E39FE192A0AE2E3B71E1",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [
+        {
+          "account_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
+          "signature": ""
+        }
+      ],
+      "block_time": "2023-02-28T11:51:49.908Z"
+    },
+    "pubkey": "02db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe235"
+  },
+  "network_code": "cosmos",
+  "chain_code": "testnet",
+  "created_at": "2023-02-28T11:46:05.097Z",
+  "updated_at": "2023-02-28T11:52:06.359Z"
+}
+```
+
+### Token Transfer Flow Complete
+
+Congratulations, you have successfully transferred your ATOM tokens!

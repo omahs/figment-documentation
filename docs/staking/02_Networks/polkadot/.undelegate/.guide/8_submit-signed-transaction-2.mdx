@@ -1,0 +1,248 @@
+---
+title: Submit Signed Unbond Transaction for Broadcast
+slug: /staking/polkadot/undelegate/submit-signed-unbond-transaction
+---
+
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload.
+The Staking API will broadcast the transaction to the Polkadot network.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `transaction_payload` &mdash; Signed transaction payload from the previous step's response.
+
+#### Sample cURL Request
+
+```bash {5-8}
+curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/86d4a5d4-1c75-4c6a-926d-ab930e57f504/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "sign_unbond_tx",
+	"inputs": {
+    "transaction_payload": "0xb9018400beaa875b14abaeae2d1a55193ba6f175aa846b7e624dce1514fbf043638aa85801ac450cfe75472d098ead17ad661c282f65fabd0547359ced7118c3962b1aba5b6a23f2cd84aa3f09df44811a0ae9cf144be73aec333105e2f18bcdfd00a1e9840018000602070010a5d4e8"
+  }
+}'
+```
+
+### Response
+
+With the signed transaction provided, Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be `unbond_tx_broadcasting`.
+
+Upon transaction finalization, the unbond transaction will be complete. When the `estimated_state_change_at` has elapsed for a flow in the `unbonding` state, you can move on to one of the next steps:
+
+- If the unbonded entry _does not_ exist in the era, then it is considered `rebonded` and it moves into the `done` state.
+- If the unbonded entry _does_ exist and there are no funds to withdraw, it is considered `unbonded` and it moves into the `done` state.
+- If the unbonded entry _does_ exist and there are funds to withdraw, it moves into the `ready_to_withdraw` state. The response indicates two possible actions:
+  - `create_withdraw_tx` &mdash; This proceeds with withdrawing from the account.
+  - `complete` &mdash; This will end the flow if we do not want to withdraw funds.
+
+#### Sample Response `unbond_tx_broadcasting`
+
+```json {4,8,31-42}
+{
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
+  "state": "unbond_tx_broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-28T21:29:16.900Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "amount": "1.0",
+    "maximum": true,
+    "chill_transaction": {
+      "raw": "0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e0000000000000000000000000000000000000000000000000000000000000000000000000006061c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0606000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xa1018400246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e67901a80802082aebf10f18f617120553d717c9173f5c453ad4b3d84575f466ce6863f4e09541db117fd8b78cd057433ca5dd64cbe80b845525cbf8d138dd3200508d0004000606",
+      "hash": "0x677b522703e763ca44273e69b4633bc38b03ad51dd55fdd169d5986190a8ca44",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_time": "2023-02-28T21:20:53.081Z",
+      "block_number": 14839540,
+      "proxy": false
+    },
+    "estimated_chilled_at": "2023-02-28T21:25:53.081Z",
+    "unbond_transaction": {
+      "raw": "0x0008000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000602070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0602070010a5d4e8000800a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xb9018400246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e6790168ec300920dcc4fc99e920ddffffbee1b07e47d43c28219de8b58222f8e2953e9dda8850f371afefdaf5e32db748136da1d70dec871fdf3baf173cad7537cd800008000602070010a5d4e8",
+      "hash": "0x10ed254dfe97bf01b5ca0961cd503f867b5df5b8016a8fee4d090640ccbb6c37",
+      "status": null,
+      "error": null,
+      "signatures": [],
+      "block_time": null,
+      "block_number": 14839609,
+      "proxy": false
+    },
+    "unbonding_era": null,
+    "estimated_unbonded_at": null,
+    "withdraw_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:28:16.877Z"
+}
+```
+
+#### Sample Response `unbonding`
+
+```json {4,8,43-44}
+{
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
+  "state": "unbonding",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-03-01T03:56:45.062Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "amount": "1.0",
+    "maximum": true,
+    "chill_transaction": {
+      "raw": "0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e0000000000000000000000000000000000000000000000000000000000000000000000000006061c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0606000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xa1018400246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e67901a80802082aebf10f18f617120553d717c9173f5c453ad4b3d84575f466ce6863f4e09541db117fd8b78cd057433ca5dd64cbe80b845525cbf8d138dd3200508d0004000606",
+      "hash": "0x677b522703e763ca44273e69b4633bc38b03ad51dd55fdd169d5986190a8ca44",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_time": "2023-02-28T21:20:53.081Z",
+      "block_number": 14839540,
+      "proxy": false
+    },
+    "estimated_chilled_at": "2023-02-28T21:25:53.081Z",
+    "unbond_transaction": {
+      "raw": "0x0008000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000602070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0602070010a5d4e8000800a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xb9018400246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e6790168ec300920dcc4fc99e920ddffffbee1b07e47d43c28219de8b58222f8e2953e9dda8850f371afefdaf5e32db748136da1d70dec871fdf3baf173cad7537cd800008000602070010a5d4e8",
+      "hash": "0x10ed254dfe97bf01b5ca0961cd503f867b5df5b8016a8fee4d090640ccbb6c37",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_time": "2023-02-28T21:29:26.517Z",
+      "block_number": 14839612,
+      "proxy": false
+    },
+    "unbonding_era": 6238,
+    "estimated_unbonded_at": "2023-03-01T03:56:45.062Z",
+    "withdraw_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:29:27.067Z"
+}
+```
+
+#### Sample Response `ready_to_withdraw`
+
+```json {4}
+{
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
+  "state": "ready_to_withdraw",
+  "actions": [
+    {
+      "name": "create_withdraw_tx",
+      "inputs": [
+        {
+          "name": "stash_account_address",
+          "display": "Stash Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t"
+        },
+        {
+          "name": "controller_account_address",
+          "display": "Controller Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg"
+        },
+        {
+          "name": "controller_proxy_account_address",
+          "display": "Controller Proxy Account Address",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    },
+    {
+      "name": "complete",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "amount": "1.0",
+    "maximum": true,
+    "chill_transaction": {
+      "raw": "0x0004000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e0000000000000000000000000000000000000000000000000000000000000000000000000006061c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0606000400a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xa1018400246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e67901a80802082aebf10f18f617120553d717c9173f5c453ad4b3d84575f466ce6863f4e09541db117fd8b78cd057433ca5dd64cbe80b845525cbf8d138dd3200508d0004000606",
+      "hash": "0x677b522703e763ca44273e69b4633bc38b03ad51dd55fdd169d5986190a8ca44",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_time": "2023-02-28T21:20:53.081Z",
+      "block_number": 14839540,
+      "proxy": false
+    },
+    "estimated_chilled_at": "2023-02-28T21:25:53.081Z",
+    "unbond_transaction": {
+      "raw": "0x0008000000000000000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e000000000000000000000000000000000000000000000000000000000000000000000000000602070010a5d4e81c77657374656e64387061726974792d77657374656e6402000000a42400000000000040df6acb689907609b0400000037e397fc7c91f5e40100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0300000049eaaf1b548a0cb00100000091d5df18b0d2cf5801000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a803000000f3ff14d5ab5270590300000017a6bc0d0062aeb30100000013000000010004",
+      "signing_payload": "0x0602070010a5d4e8000800a424000013000000e143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423ee143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+      "signed": "0xb9018400246c8389743df168ed8f55e531a31e55d5d3ac774d8f7efe626d46c2c433e6790168ec300920dcc4fc99e920ddffffbee1b07e47d43c28219de8b58222f8e2953e9dda8850f371afefdaf5e32db748136da1d70dec871fdf3baf173cad7537cd800008000602070010a5d4e8",
+      "hash": "0x10ed254dfe97bf01b5ca0961cd503f867b5df5b8016a8fee4d090640ccbb6c37",
+      "status": "confirmed",
+      "error": null,
+      "signatures": [],
+      "block_time": "2023-02-28T21:29:26.517Z",
+      "block_number": 14839612,
+      "proxy": false
+    },
+    "unbonding_era": 6238,
+    "estimated_unbonded_at": "2023-03-01T03:56:45.062Z",
+    "withdraw_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:29:27.067Z"
+}
+```

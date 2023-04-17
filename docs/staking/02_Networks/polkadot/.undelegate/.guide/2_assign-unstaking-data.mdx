@@ -1,0 +1,117 @@
+---
+title: Assign Unstaking Data
+slug: /staking/polkadot/undelegate/assign-unstaking-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object`
+  - `controller_account_address` &mdash; `string` Address of the wallet DOT will be bonded to (required).
+  - `controller_proxy_account_address` &mdash; `string` A proxy account that will sign on behalf of the controller account (optional).
+  - `stash_account_address` &mdash; `string` Primary wallet from which DOT will be bonded (required).
+  - `amount` &mdash; `number` &mdash; The amount of DOT to be bonded to the controller. This field should be in full DOT, not in Planck (ie. if you want to stake 5 DOT, return "amount": 5.0). Staking API will translate the amount to Plancks so you do not have to worry about the conversion factor (required). A Planck is the smallest unit of DOT. One DOT contains 10,000,000,000 Plancks.
+  - `maximum` &mdash; `boolean` &mdash; `true` if you want to unbond the maximum number of tokens, else `false`.
+
+### Sample cURL Request
+
+```bash {5-10}
+curl -X PUT 'https://polkadot-slate.datahub.figment.io/api/v1/flows/6c37da8a-4b69-44db-b0df-6fb9af75f24b/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "assign_unstaking_data",
+  "inputs": {
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+    "maximum": true
+  }
+}'
+```
+
+### Response
+
+#### Sample Response `ready_to_chill`
+
+:::info note
+
+- If chilling is required before unbonding, a chill transaction will automatically be created by the Staking API, and the flow state becomes `chill_tx_signature`.
+
+:::
+
+```json {4,8}
+{
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
+  "state": "ready_to_chill",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-28T21:10:19.901Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "amount": "1.0",
+    "maximum": true,
+    "chill_transaction": null,
+    "estimated_chilled_at": null,
+    "unbond_transaction": null,
+    "unbonding_era": null,
+    "estimated_unbonded_at": null,
+    "withdraw_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:09:19.882Z"
+}
+```
+
+#### Sample Response `ready_to_unbond`
+
+:::info note
+
+- If no chilling is required, proceed to create an unbond transaction: [Create Unbond Transaction](/staking/polkadot/undelegate/create-unbond-transaction)
+
+:::
+
+```json {4}
+{
+  "id": "6c37da8a-4b69-44db-b0df-6fb9af75f24b",
+  "operation": "unstaking",
+  "state": "ready_to_unbond",
+  "actions": [
+    {
+      "name": "create_unbond_tx",
+      "inputs": []
+    },
+    {
+      "name": "complete",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "controller_account_address": "5CtTpJSdf13cbBZU4RX7EHkEaJ53pVaAF5XJosmusXJ5gdDg",
+    "controller_proxy_account_address": null,
+    "stash_account_address": "5HRJp9zQzMTjyv7skG3gnWwopPgFfc5FNwyNtEsmLHLyRK8t",
+    "amount": "1.0",
+    "maximum": true,
+    "chill_transaction": null,
+    "estimated_chilled_at": null,
+    "unbond_transaction": null,
+    "unbonding_era": null,
+    "estimated_unbonded_at": null,
+    "withdraw_transaction": null
+  },
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-02-28T21:04:29.799Z",
+  "updated_at": "2023-02-28T21:09:19.882Z"
+}
+```

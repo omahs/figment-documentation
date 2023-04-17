@@ -1,0 +1,49 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/solana/Workflows::V1::Solana::SplitStakeAccountFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Split Stake Account
+
+The Split Stake Account flow allows you to break the balance of a given stake account up into two separate accounts.
+This way, you are able to partially unbond your SOL rather than needing to unbond the full balance of the stake account.
+
+To break the balance of a stake account up into two separate accounts, you will need:
+
+- The existing stake account from which partial SOL balance will be split
+- The pubkey of the wallet which will pay the transaction fee
+- The amount of SOL tokens you want to unbond
+
+The Staking API will manage the rest.
+
+### Flow Diagram
+
+Below is a complete diagram for the Solana Split Stake Account flow:
+
+<img
+  src={img1}
+  alt="Solana Split Stake Account Flow Diagram"
+  className="inline-image"
+/>
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="solana"
+  folders={undefined}
+  path="docs/staking/02_networks/solana/index.mdx"
+  methods={[
+    {
+      name: "Create New Split Stake Account Flow",
+    },
+    {
+      name: "Submit Split Stake Account Data",
+    },
+    {
+      name: "Submit a Signed Split Stake Account Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

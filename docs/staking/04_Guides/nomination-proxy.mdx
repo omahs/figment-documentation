@@ -1,0 +1,109 @@
+---
+title: Setup a Polkadot Staking Nomination Proxy
+slug: /staking/guides/polkadot-nomination-proxy
+sidebar_position: 9
+pagination_prev: null
+pagination_next: null
+---
+
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/guides/proxy/polkadot_apps_add_proxy.png";
+import img2 from "@site/static/img/guides/proxy/polkadot_apps_staking_proxy.png";
+import img3 from "@site/static/img/guides/proxy/proxy_active.png";
+
+For the purposes of creating a proxy account that Figment can use on a nominator’s
+behalf, customers must create a new account on Polkadot.js to be used as a proxy.
+Once a nominator has created this account, they will back up the account as a `.json` file
+or mnemonic, then send the account information along with the access password in order for
+Figment to operate the account.
+
+:::caution important
+
+The creation of this account will not compromise a nominator’s tokens,
+as those are held within the stash account operated by the
+controller that holds their proxy list - the staking proxy will not have the power to do
+anything other than nominate with the account, and a nominator can delete the proxy at
+any time.
+
+:::
+
+### Required DOT For Deposit and Transactions
+
+In order for a Controller to have a proxy list, the Controller must have a
+`ProxyDepositBase` of 20.008 DOT, in addition to the product of `ProxyDepositFactors` (.033 DOT)
+multiplied by the number of accounts that will be included on the proxy list.
+
+Each proxy account must hold a small deposit in order to execute transactions.
+Transaction fees are measured in milliDOTs, so a small balance of around 5 DOT should be sufficient for the lifetime of transactions on the account.
+
+:::caution important
+
+When deleting a proxy account, the deposit will be returned to the Controller account.
+
+Refer to the Polkadot documentation on <Link to="https://wiki.polkadot.network/docs/learn-proxies#removing-proxy">Removing Proxy</Link> for more information.
+
+For specifics on removing proxy rights via the Staking API, refer to our guide: <Link to="/guides/staking-api/remove-staking-proxy">Remove a Staking Proxy</Link>.
+
+:::
+
+## Creating a Staking Proxy Account in polkadot.js
+
+1. Go to <Link to="https://polkadot.js.org/apps/#/accounts">https://polkadot.js.org/apps/#/accounts</Link> and click **Add account**.
+2. Follow the given steps to add the account.
+3. Once you have added the account, you will still need to set it as a proxy on your Controller account. Do this by clicking on the account menu in polkadot.js (three vertical dots on the right side of the UI) and selecting **Add proxy**.
+
+<img
+  src={img1}
+  width="400"
+  className="shadow--tl inline-image"
+  alt="Polkadot.js Apps - Add a Proxy"
+/>
+
+4. The **Proxied account** must be your Controller account - the **Proxy account** will be the account you just added to polkadot.js for this purpose. Set the type of the account to **Staking** as well. Once you have confirmed the details, click **Submit**.
+
+<img
+  src={img2}
+  width="700"
+  className="shadow--tl inline-image"
+  alt="Polkadot.js Apps - Add a Proxy"
+/>
+
+5. You can verify that the proxy has been created by checking the accounts list in polkadot.js. You can click on **Proxy overview** to see details.
+
+<img
+  src={img3}
+  width="500"
+  className="shadow--tl inline-image"
+  alt="Polkadot.js Apps - Proxy Active"
+/>
+
+6. When you added the account to polkadot.js, you should receive a password protected `.json` file. Below is an example of what the file looks like.
+   This file, along with the password you set when making the account, must be sent to <Link to="mailto:staking@figment.io">staking@figment.io</Link> with a request to implement this staking proxy. The Figment team will then operate this proxy to make validator nominations on your behalf, maximizing your staking rewards.
+
+- If for any reason you did not receive this file, you can create a new backup from the account options in the polkadot.js UI.
+
+```json
+{
+  "encoded": "MoAoycMls/0jP8lwaxcSgOoc3b/UEcQTcDJL1TFEB5cAgAAAAQAAAAgAAACWbWFR374N1mmw4l9IOyzSsy/HfBYAqmLKifd4qhfhL89zr1FlNKVAJozgN3Br8eAUjIfF0VcIIjqemCv2PJ3F8IMLaNO2IZ/PNxg3X7VEVdANjBAscAMSmWhLfEQAcqA4vsdsYJo/J1ORV0h0zIetF5WQZ1WaTDAcJLzLXKmEtRweaELSPxVLopKo0l+lHsIyQLS9hCVkTsfdrs6W",
+  "encoding": {
+    "content": ["pkcs8", "sr25519"],
+    "type": ["scrypt", "xsalsa20-poly1305"],
+    "version": "3"
+  },
+  "address": "5Gk6mC1wGsKow9HfQhtkHEmVTH8C2SoJe25G6r6dBy3t4zzh",
+  "meta": {
+    "genesisHash": "0xe143f23803ac50e8f6f8e62695d1ce9e4e1d68aa36c1cd2cfd15340213f3423e",
+    "isHardware": false,
+    "name": "FirstProxy",
+    "tags": [],
+    "whenCreated": 1667583095748
+  }
+}
+```
+
+## References
+
+- <Link to="https://wiki.polkadot.network/docs/">Polkadot Wiki</Link>
+- <Link to="https://wiki.polkadot.network/docs/learn-keys#%23%23%22controller%22-and-%22stash%22-keys">
+    Controller and Stash keys
+  </Link>

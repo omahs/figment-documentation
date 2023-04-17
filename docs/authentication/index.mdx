@@ -1,0 +1,73 @@
+---
+title: Authentication
+sidebar_position: 2
+pagination_prev: null
+pagination_next: null
+slug: "/authentication"
+hide_table_of_contents: true
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import CodeBlock from "@theme/CodeBlock";
+
+The Figment API uses API keys to authenticate requests.
+
+## Where to find the API Key
+
+We're in the process of having all our services use the same API key. In the meantime:
+
+- For requests to the Rewards API or Staking API, manage your API key on [https://datahub.figment.io](https://datahub.figment.io).
+- For requests to the Validators API, get an API key from [https://hubble.figment.io/prime](https://hubble.figment.io/prime).
+
+## How to pass the API Key
+
+<Tabs>
+  <TabItem value="js-header" label="Fetch with Header">
+    <CodeBlock language="js">
+      {`fetch("https://erigon-mainnet--rpc-dbgtxn.datahub.figment.io/", {
+    method: 'POST', // can also be 'GET', 'PUT' or any appropriate method
+    headers: {
+        "Authorization" : "<api_key>",
+        "Content-Type": "application/json" // if method is 'POST'
+    },
+    body: JSON.stringify({
+      // JSON Payload
+    })
+})`}
+    </CodeBlock>
+  </TabItem>
+  <TabItem value="js-parameter" label="Fetch with Parameter">
+    <CodeBlock language="js">
+      {`fetch("https://erigon-mainnet--rpc-dbgtxn.datahub.figment.io/apikey/<api_key>/", {
+    method: 'POST', // can also be 'GET', 'PUT' or any appropriate method
+    headers: {
+        "Content-Type": "application/json" // if method is 'POST'
+    },
+    body: JSON.stringify({
+      // JSON Payload
+    })
+})`}
+    </CodeBlock>
+  </TabItem>
+  <TabItem value="curl-header" label="CURL with Header">
+    <CodeBlock language="bash">
+      {`curl -X POST 'https://erigon-mainnet--rpc-dbgtxn.datahub.figment.io/' \\
+--header 'Content-Type: application/json' \\
+--header 'Authorization: <api_key>' \\
+--data '{
+  // JSON Payload
+}'`}
+    </CodeBlock>
+  </TabItem>
+  <TabItem value="curl-parameter" label="CURL with Parameter">
+    <CodeBlock language="bash">
+      {`curl -X POST 'https://erigon-mainnet--rpc-dbgtxn.datahub.figment.io/apikey/<api_key>/' \\
+--header 'Content-Type: application/json' \\
+--data '{
+  // JSON Payload
+}'`}
+    </CodeBlock>
+  </TabItem>
+</Tabs>

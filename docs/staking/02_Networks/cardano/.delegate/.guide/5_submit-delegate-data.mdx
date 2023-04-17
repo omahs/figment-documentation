@@ -1,0 +1,192 @@
+---
+title: Submit Delegate Data
+slug: /staking/cardano/delegate/submit-delegate-data
+---
+
+After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.
+
+:::caution important
+
+This step is only required for flows where a registration has **already been completed**, and the flow state entered `delegate_tx_signature` after the `assign_staking_data` action.
+
+If you have previously completed the registration transaction, a delegate transaction has already been created. Check the flow response to be certain which action is available.
+
+:::
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required).
+- `inputs` &mdash; `object` (required).
+  - `delegator_address` &mdash; A Cardano address from which ADA will be staked.
+  - `validator_address` &mdash; A Cardano staking pool to which ADA will be staked.
+
+#### Sample cURL Request
+
+```bash {5-11}
+curl -X PUT 'https://cardano-slate.datahub.figment.io/api/v1/flows/6f995c8a-08b7-43ff-9275-0ef8fc94bc26/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "create_delegate_tx",
+  "inputs": {
+    "delegator_address": "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd",
+    "validator_address": "pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222"
+  }
+}'
+```
+
+:::info
+
+A registration is required to complete the flow for the first time. When a registration exists for a delegator address, the flow state will proceed directly from `initialized` to `delegate_tx_signature`.
+
+:::
+
+### Response
+
+The response indicates 3 possible `actions` :
+
+- `refresh_delegate_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).
+- `sign_delegate_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.
+- `confirm_register_tx_by_hash` &mdash; Confirm a completed transaction by supplying its hash.
+
+We will choose `sign_delegate_tx`, which indicates 1 input to collect:
+
+- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network.
+
+#### Sample Response
+
+```json {4,7,11,14,29,79}
+{
+  "id": "6f995c8a-08b7-43ff-9275-0ef8fc94bc26",
+  "operation": "staking",
+  "state": "delegate_tx_signature",
+  "actions": [
+    {
+      "name": "refresh_delegate_tx",
+      "inputs": []
+    },
+    {
+      "name": "sign_delegate_tx",
+      "inputs": [
+        {
+          "name": "transaction_payload",
+          "display": "Transaction Payload",
+          "description": "",
+          "type": "signed_transaction",
+          "validations": [
+            {
+              "type": "sign_payload",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null,
+          "signers": [
+            "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd"
+          ],
+          "transaction_payload": "84a40081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018182583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05cf8d0d021a0002a1fd048183028200581ce3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c7581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca0f5f6"
+        },
+        {
+          "name": "signatures",
+          "display": "Signatures",
+          "description": "",
+          "type": "array_of_signatures",
+          "validations": [],
+          "array": true,
+          "default_value": null,
+          "element_type": "signature_data",
+          "signers": [
+            "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd"
+          ],
+          "transaction_payload": "84a40081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018182583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05cf8d0d021a0002a1fd048183028200581ce3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c7581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca0f5f6",
+          "signing_payload": "cc568d108793019b2586319a7209a93034a06a12e0e109abf0e0b6c55e10179a",
+          "inputs": [
+            {
+              "name": "account_address",
+              "display": "Account Address",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            },
+            {
+              "name": "signature",
+              "display": "Signature",
+              "description": "",
+              "type": "string",
+              "validations": [
+                {
+                  "type": "presence",
+                  "options": {}
+                }
+              ],
+              "array": false,
+              "default_value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "delegator_address": "addr_test1qpspgu485kwfvhvpnk3mpvxr8vzvhnvw0jcsckcnw6rafklrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rs0ekrpd",
+    "validator_address": "pool1wn6a6f23ctq06udwhw27ravdpd6zcr7jlut3yez0wzdackz3222",
+    "registered": null,
+    "register_transaction": null,
+    "delegate_transaction": {
+      "raw": "84a40081825820409f739d3afb030a23e68ac4506dc3ca8bc646474ea4450568e7dad51fd38b3600018182583900601472a7a59c965d819da3b0b0c33b04cbcd8e7cb10c5b137687d4dbe3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a05cf8d0d021a0002a1fd048183028200581ce3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c7581c74f5dd2551c2c0fd71aebb95e1f58d0b742c0fd2ff1712644f709bdca0f5f6",
+      "signing_payload": "cc568d108793019b2586319a7209a93034a06a12e0e109abf0e0b6c55e10179a",
+      "signed": null,
+      "hash": "cc568d108793019b2586319a7209a93034a06a12e0e109abf0e0b6c55e10179a",
+      "status": null,
+      "error": null,
+      "signatures": null,
+      "block_time": null
+    }
+  },
+  "network_code": "cardano",
+  "chain_code": "preprod",
+  "created_at": "2023-02-24T19:22:11.009Z",
+  "updated_at": "2023-02-24T19:22:43.174Z"
+}
+```
+
+:::info note
+
+Make sure to save the `transaction_payload` from this response, which is what needs to be signed in the next step.
+
+:::

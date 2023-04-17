@@ -1,0 +1,111 @@
+---
+title: Rewards Rates - Ethereum
+sidebar_position: 2
+pagination_prev: null
+pagination_next: null
+collapsed: true
+collapsible: true
+description: Rewards Rates API - ethereum
+image: img/logo.svg
+keywords: [Rewards Rates API, ethereum]
+
+hide_table_of_contents: true
+sidebar_label: Ethereum
+---
+
+<!--- This file was generated at build time, any modifications will be lost on next build --->
+
+import { APIMethods } from "@site/src/components";
+
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+<APIReferenceNav
+  service="rewards-rates-api"
+  network="ethereum"
+  networks={[
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  methods={[
+    {
+      name: "ETH Reward Rates",
+    },
+  ]}
+/>
+
+<APIMethods
+  methods={[
+    {
+      name: "ETH Reward Rates",
+      content:
+        'This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe first compute daily rates by aggregating all rewards (on both consensus and execution layers) received by all validators within a 24h period (from midnight UTC to midnight UTC) and divide this by the aggregated balances of all validators at the beginning of this 24h period. We then annualize this rate without compounding.\n\n### Query Parameters\n\n- `figment` _(optional)_: if `true` is passed we will return the reward rate for Figment validators only. If omitted or any other value is passed we will return the reward rate of the network as a whole.\n    \n\n### Response\n\nAn array of following objects:\n\n- `date`: timestamp for the day in format "YYYY-MM-DD"\n- `value`: the total annualized reward rate for that day - in %\n- `staking`: the piece due to consensus layer rewards (inflation) - in %\n- `tips`: the piece due to execution layer rewards (transaction fees) - in %',
+      request: {
+        method: "GET",
+        header: [
+          {
+            key: "figment",
+            value: "",
+            type: "text",
+          },
+        ],
+        url: "https://eth-rewards.datahub.figment.io",
+        headers: {
+          Authorization: "e68ac2d1e2f6671a96e6a88115a3f734",
+        },
+        query: "",
+      },
+      interactive: true,
+      response: {
+        name: "Reward Rates",
+        status: "OK",
+        code: 200,
+        body: [
+          {
+            date: "2022-11-08",
+            value: "5.726611",
+            staking: "3.410072",
+            tips: "2.316538",
+          },
+          {
+            date: "2022-11-07",
+            value: "5.361810",
+            staking: "4.198922",
+            tips: "1.162887",
+          },
+          {
+            date: "2022-11-06",
+            value: "5.172277",
+            staking: "4.202448",
+            tips: "0.969829",
+          },
+          {
+            date: "2022-11-05",
+            value: "5.071560",
+            staking: "4.184485",
+            tips: "0.887075",
+          },
+        ],
+      },
+    },
+  ]}
+  service="rewards-rates-api"
+  networks={[
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  network="ethereum"
+  proxy="https://api-service-proxy-development.figment-secops.workers.dev"
+  host="eth-rewards.datahub.figment.io/rates"
+/>

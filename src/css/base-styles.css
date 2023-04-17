@@ -1,10 +1,13 @@
 :root {
-  --doc-sidebar-width: 380px !important;
+  --logo-nav-bg: #f6f8fb;
+  --doc-sidebar-width: 300px !important;
 
-  --ifm-font-family-base: "Jungka", "Helvetica", "Arial", sans-serif;
-  --ifm-font-color-base: #000;
-  --ifm-link-color: #000;
-  --ifm-code-font-size: 95%;
+  --link-highlight: var(--ifm-color-primary);
+
+  --ifm-font-family-base: "Helvetica", "Arial", sans-serif;
+  --ifm-font-color-base: #2a2f45;
+  --ifm-link-color: #0b703f;
+  --ifm-code-font-size: 80%;
 
   --ifm-color-primary: #034d77;
   --ifm-color-primary-dark: #03456b;
@@ -14,7 +17,7 @@
   --ifm-color-primary-lighter: #035989;
   --ifm-color-primary-lightest: #04649b;
 
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.15);
 
   --ifm-footer-background-color: #0c3f5c;
   --ifm-footer-title-color: #f6f8fb;
@@ -25,19 +28,27 @@
 
   --side-nav-bg: #f6f8fb;
   --side-nav-open-category-bg: #fff;
-  --side-nav-color: #16161a;
+  --side-nav-color: #4f566b;
   --side-nav-sublist-color: #595959;
   --side-nav-color--active: #000;
 
   --ifm-breadcrumb-color-active: #000;
+
+  --ifm-list-left-padding: 1.5rem;
+  --ifm-h2-font-size: 1em;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* For readability concerns, use a lighter palette in dark mode. */
 [data-theme="dark"] {
-  --ifm-font-family-base: "Jungka", "Helvetica", "Arial", sans-serif;
+  --logo-nav-bg: #000;
+  --doc-sidebar-width: 300px !important;
+
+  --link-highlight: var(--ifm-color-primary-lightest);
+
+  --ifm-font-family-base: "Helvetica", "Arial", sans-serif;
   --ifm-font-color-base: #fff;
   --ifm-link-color: #fff;
-  --ifm-code-font-size: 95%;
+  --ifm-code-font-size: 80%;
 
   --ifm-color-primary: #034d77;
   --ifm-color-primary-dark: #03456b;
@@ -73,31 +84,184 @@ html {
   display: none !important;
 }
 
-/* miscellaneous */
-iframe.signup,
 img.inline-image {
   border-radius: 8px;
   margin: 30px 20px;
 }
 
-[data-theme="dark"] article a {
-  color: #fff;
-  text-decoration: underline;
+[data-theme="light"] li {
+  color: #4f566b;
 }
 
-[data-theme="dark"] article a:hover {
-  color: var(--ifm-footer-link-color);
-}
-
+/* line-height impacts APIReferenceNav */
 [data-theme="light"] article a {
   color: #000;
-  text-decoration: underline;
+  border-bottom: solid 1px black;
+  line-height: 2rem;
 }
 
 [data-theme="light"] article a:hover {
-  color: var(--side-nav-color--active);
+  color: #0b703f;
+  text-decoration: none;
+  border-bottom: none;
 }
 
-[data-theme] a.breadcrumbs__link {
+[data-theme="dark"] article a {
+  color: #fff;
+  /* text-decoration: underline; */
+  border-bottom: solid 1px white;
+  line-height: 2rem;
+}
+
+[data-theme="dark"] article a:hover {
+  color: var(--ifm-color-primary-lightest);
   text-decoration: none;
+  border-bottom: none;
+}
+
+/* widen the layout container, move top edge into
+   space previously occupied by the navbar */
+[data-theme] .container-wide {
+  width: 95%;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+/* remove li bullets for top-of-page navigation links  */
+.requestList {
+  list-style-type: none;
+  margin-left: -1.1rem;
+  padding: 0;
+}
+
+/* <details> accordion */
+details:not([open]) .open {
+  display: none;
+}
+
+details[open] .closed {
+  display: none;
+}
+
+/* fix copyButton padding, prevents content shifting */
+[data-theme]
+  .clean-btn.overlayHeaderButton_src-components-APIMethods-components-CodeExample-styles-module {
+  width: 0.25rem;
+  margin-left: -0.5rem;
+  margin-right: 0.5rem;
+}
+
+/* fix copyButton checkmark display on click padding */
+[data-theme]
+  .clean-btn.copyButtonCopied_node_modules-docusaurus-theme-classic-lib-theme-CodeBlock-CopyButton-styles-module {
+  width: 1.25rem;
+  margin-left: -0.5rem;
+  margin-right: 0.5rem;
+}
+
+/* space between top items & categories on the side-nav */
+div.nav_spacer {
+  margin-top: 3rem;
+}
+
+/* space between categories & email link on the side-nav */
+[data-theme="light"] div.bottom_nav_spacer {
+  margin-top: 2.5rem;
+  margin-left: 12px;
+  font-size: 0.9rem;
+  color: #686868;
+}
+
+[data-theme="light"] .bottom_nav_spacer a {
+  border-bottom: 1px solid #686868;
+  color: #686868;
+}
+
+.bottom_nav_spacer a:hover {
+  text-decoration: none;
+  color: var(--link-highlight);
+}
+
+[data-theme="dark"] div.bottom_nav_spacer {
+  margin-top: 2.5rem;
+  margin-left: 12px;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+[data-theme="dark"] .bottom_nav_spacer a {
+  border-bottom: 1px solid #fff;
+  color: #fff;
+}
+
+[data-theme="dark"] .bottom_nav_spacer a:hover {
+  text-decoration: none;
+  border-bottom: none;
+  color: #fff;
+}
+
+/* prevent double underline in admonitions */
+.alert a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 2.2em;
+  margin-bottom: 1em;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 1.6em;
+  margin-bottom: 0.7em;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.3em;
+  margin-bottom: 0.7em;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 1em;
+  margin-bottom: 0.6em !important;
+  font-weight: 500;
+}
+
+/* prevents content shift on hover */
+h2.heading_src-components-APIMethods-styles-module > a:hover {
+  border-bottom: solid 1px transparent;
+}
+
+ul.referenceLinks {
+  line-height: 0.5rem;
+  padding-left: 1.9em;
+}
+
+/* remove li bullets from the list of flows at the top of a page */
+ul.flowLinks {
+  list-style-type: none;
+  margin-left: -1.5rem;
+}
+
+ul.flowLinks li {
+  margin: 0;
+}
+
+/* bottom right corners of code blocks */
+[data-theme="light"] .thin-scrollbar::-webkit-scrollbar-corner {
+  background: #f1f1f1;
+}
+
+[data-theme="dark"] .thin-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+code {
+  color: #2a2f45;
+  background: #f7fafc;
+  padding: 0 3px;
+  margin: 0 1px;
+  border: solid 1px rgba(0, 0, 0, 0.05);
 }

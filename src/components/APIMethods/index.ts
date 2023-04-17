@@ -1,1 +1,1 @@
-export { default as APIMethods } from "./APIMethods";
+export { default as APIMethods, APIMethod } from "./APIMethods";

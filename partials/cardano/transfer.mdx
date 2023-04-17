@@ -1,0 +1,47 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/shared/Workflows::V1::Shared::TransferFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Transfer
+
+Transferring ADA requires:
+
+- The account from which ADA to be transferred, which will sign the transaction.
+- The address to which ADA is transferred.
+- Amount of ADA to be transferred.
+
+### Blockfrost Project IDs
+
+To use Cardano with the Staking API, you must first add a [Blockfrost Project ID](https://blockfrost.dev/docs/overview/getting-started#creating-first-project) to your account using the `/blockfrost_projects` endpoint, which is detailed in the [API Reference](https://docs.figment.io/api-reference/staking-api/cardano#post%20/api/v1/blockfrost_projects).
+
+:::caution important
+
+Blockfrost Project IDs are a secret. Treat them with caution, following the same security [best practices](https://docs.figment.io/guides/manage-and-secure-api-keys#api-key-best-practices) as with an API key.
+
+:::
+
+### Flow Diagram
+
+Below is a complete diagram for the Cardano Transfer flow:
+
+<img src={img1} alt="Cardano Transfer Flow Diagram" className="inline-image" />
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="cardano"
+  folders={undefined}
+  path="docs/staking/02_networks/cardano/index.mdx"
+  methods={[
+    {
+      name: "Create New Transfer Flow",
+    },
+    {
+      name: "Submit Transfer Data",
+    },
+    {
+      name: "Submit Signed Transfer Transaction for Broadcast",
+    },
+  ]}
+/>

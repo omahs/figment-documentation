@@ -1,0 +1,42 @@
+import Link from "@docusaurus/Link";
+import img1 from "@site/static/img/staking/workflows/v1/polkadot/Workflows::V1::Polkadot::RemoveProxyFlow_workflow.png";
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+## Remove Staking Proxy
+
+The Staking API's staking proxy flow for Polkadot will walk your application through the process of removing proxy rights which were previously granted.
+
+In the following steps, we will illustrate how to remove a proxy account.
+
+## Flow Diagram
+
+Below is a complete diagram for the Polkadot Remove Proxy flow:
+
+<img
+  src={img1}
+  alt="Polkadot Remove Proxy Flow Diagram"
+  className="inline-image"
+/>
+
+### Actions
+
+<APIReferenceNav
+  service="staking-api"
+  network="polkadot"
+  folders={undefined}
+  path="docs/staking/02_networks/polkadot/index.mdx"
+  methods={[
+    {
+      name: "Create New Flow To Remove Staking Proxy",
+    },
+    {
+      name: "Submit Remove Proxy Data",
+    },
+    {
+      name: "Submit a Signed Remove Proxy Transaction for Broadcast",
+    },
+    {
+      name: "Get Flow Status",
+    },
+  ]}
+/>

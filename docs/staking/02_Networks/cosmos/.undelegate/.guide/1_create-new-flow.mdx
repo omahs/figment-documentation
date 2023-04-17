@@ -1,0 +1,172 @@
+---
+title: Create a New Undelegation Flow
+slug: /staking/cosmos/undelegate/create-new-flow
+---
+
+To initiate the unstaking process, create a new flow with a `POST` request to `/api/v1/flows`.
+
+### Parameters
+
+- `flow` &mdash; `object`
+  - `network_code` &mdash; `string` Network this flow operates on (ex. `cosmos`) (required).
+  - `chain_code` &mdash; `string` Chain this flow operates on (ex. `testnet`) (required).
+  - `operation` &mdash; `string` The operation to perform (ex. `unstaking`) (required).
+  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+
+#### Sample cURL Request
+
+```bash {5-10}
+curl -X POST 'https://cosmos-slate.datahub.figment.io/api/v1/flows' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "flow": {
+    "network_code": "cosmos",
+    "chain_code": "testnet",
+    "operation": "unstaking",
+    "version": "v1"
+  }
+}'
+```
+
+### Response
+
+- `id` &mdash; `string` ID of the newly created flow.
+- `state` &mdash; `string` The current state of the flow.
+
+The response indicates one possible action:
+
+- `create_undelegate_tx` &mdash; Use this action to generate an undelegation transaction to unstake your ATOM.
+
+The `create_undelegate_tx` action indicates seven possible fields for data collection:
+
+- `delegator_address` &mdash; The address from which ATOM was delegated.
+- `validator_address` &mdash; The validator address from which ATOM will be undelegated.
+- `amount` &mdash; The amount of ATOM to be undelegated.
+- `memo` &mdash; an optional message to record on-chain with your transaction.
+- `gas_limit` &mdash; Total amount of gas you're willing to let this transaction consume (optional).
+  - If you do not include a gas limit, the Staking API uses a Cosmos library to select a good default for you.
+- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction (optional).
+  - If you do not include a gas price, the Staking API uses a Cosmos library to select a good default for you.
+- `pubkey` &mdash; The public key value will be retrieved from the chain, however if you're using a fresh account (that does not have any outgoing activity) then this information is not available and it requires the user to pass it.
+
+#### Sample Response
+
+```json {3,4,7,10,24,49,58,76,85}
+{
+  "id": "f624c185-afb0-46d5-aa63-4d7649a2690a",
+  "operation": "unstaking",
+  "state": "initialized",
+  "actions": [
+    {
+      "name": "create_undelegate_tx",
+      "inputs": [
+        {
+          "name": "delegator_address",
+          "display": "Delegator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "validator_address",
+          "display": "Validator Address",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "presence",
+              "options": {}
+            },
+            {
+              "type": "format",
+              "options": {
+                "with": "(?-mix:\\Acosmosvaloper.*)",
+                "message": "should start with `cosmosvaloper`"
+              }
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "amount",
+          "display": "Amount",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "memo",
+          "display": "Memo",
+          "description": "",
+          "type": "string",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_price",
+          "display": "Gas Price",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "gas_limit",
+          "display": "Gas Limit",
+          "description": "",
+          "type": "decimal",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "pubkey",
+          "display": "Pubkey",
+          "description": "Value will be retrieved from the chain if available",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  "data": {
+    "delegator_address": null,
+    "validator_address": null,
+    "amount": null,
+    "memo": null,
+    "gas_price": null,
+    "gas_limit": null,
+    "undelegate_transaction": null,
+    "estimated_unbonded_at": null,
+    "pubkey": null
+  },
+  "network_code": "cosmos",
+  "chain_code": "testnet",
+  "created_at": "2023-02-28T11:02:24.657Z",
+  "updated_at": "2023-02-28T11:02:24.657Z"
+}
+```

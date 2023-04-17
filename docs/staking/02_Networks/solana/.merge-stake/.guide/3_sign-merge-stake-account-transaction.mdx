@@ -1,0 +1,36 @@
+---
+title: Sign Merge Stake Account Transaction
+slug: /staking/solana/merge-stake-account/sign-merge-stake-account-transaction
+---
+
+:::warning important
+
+The transaction signing window on Solana is sometimes less than 90 seconds.
+
+If you encounter an error `"Transaction simulation failed: Blockhash not found"`, refresh the transaction, sign the payload again and submit it in < 90 seconds.
+
+:::
+
+Sign the merge stake account transaction using the `transaction_payload` you received in response to submitting the merge stake account data.
+
+Locate the `transaction_payload` in the response from the previous step. It will look something like this:
+
+```json
+"transaction_payload": "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000"
+```
+
+:::caution important
+
+Always confirm the details of the transaction before signing the payload.
+
+Figment has a tool for signing and decoding Staking API payloads, see the guide [Signing Transactions with Figment's NPM Package](/guides/staking-api/figment-signing-transactions) to continue.
+
+:::
+
+Transactions can also be signed using the [Solana CLI](https://docs.solana.com/offline-signing#:~:text=Typically%20a%20Solana%20transaction%20must,the%20extra%20time%20you%20need) or [Fireblocks](/guides/staking-api/fireblocks-signing-transactions).
+
+Sign the transaction and move on to the next step. A signed transaction payload for Solana will look something like this:
+
+```text
+010df1df512ef26a08c91b7ed68a53aab28a4b434650c9f2f1b2778ce6012fae33d339803d4e7ad8cbbb233248d472ed7a843a9e54b245983192cbb9c6eb3f320801000306f8c4898641adada76eeeee2de872d931bc58bfb2ce5b79734e32808cc501a5340f697321d318f2f1c2e891ee2d6b6bdb44f720c581e463d2a0c93e3e6d1885547de1a9be894d367a1544b885b2e3c4f9f7e79728ae5177f7b39c76a35112136f06a1d8179137542a983437bdfe2a7ab2557f535c8a78722b68a49dc00000000006a7d51718c774c928566398691d5eb68b5eb8a39b4b6d5c73555b210000000006a7d517193584d0feed9bb3431d13206be544281b57b8566cc5375ff400000020d3ed297260dfd3906862d59d97517fd4adc1c3270d4b5c7143b71cbf68361b01030502010405000407000000
+```

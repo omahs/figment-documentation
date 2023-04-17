@@ -1,0 +1,74 @@
+---
+hide_title: true
+id: Figment Docs
+slug: /
+pagination_prev: null
+pagination_next: null
+hide_table_of_contents: true
+sidebar_position: 1
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+import styles from "@site/src/index.module.css";
+
+import img1 from "@site/static/img/staking/workflow_without_staking_api.png";
+import img2 from "@site/static/img/staking/workflow_with_staking_api.png";
+
+<!---
+
+Important note:
+
+Due to this being an MDX file, the indentation of the HTML is critical,
+if it is not maintained the page layout *will* break in hilariously
+difficult to understand ways.
+
+The upper divs MUST remain unindented!
+Divs below another div CAN be indented.
+HTML tags below a div CAN be indented.
+Child content of HTML tags CAN be indented.
+
+-->
+
+<div className="container">
+    <h1 className={styles.heroTitle} style={{textAlign: "center"}}>
+        Figment API Documentation
+    </h1>
+    <p className="hero__subtitle" style={{textAlign: "center"}}>
+        Everything you need to integrate staking on your platform
+    </p>
+
+<div className={styles.products}>
+    <div className={styles.product}>
+    <Link to="/staking">
+        <p className={styles.emoji}>🥩</p>
+        <h2>Staking</h2>
+        <p>
+            Build transactions and staking flows to enable staking on your platform
+        </p>
+    </Link>
+    </div>
+    
+    <div className={styles.product}>
+    <Link to="/rewards">
+        <p className={styles.emoji}>💰</p>
+        <h2>Rewards</h2>
+        <p>
+            Retrieve historical rewards to power rewards distribution and performance dashboards
+        </p>
+    </Link>
+    </div>
+    
+    <div className={styles.product}>
+    <Link to="/validators">
+        <p className={styles.emoji}>🛡️</p>
+        <h2>Validators</h2>
+        <p>
+            Provision and manage your inventory of Ethereum validators
+        </p>
+    </Link>
+    </div>
+</div>
+</div>

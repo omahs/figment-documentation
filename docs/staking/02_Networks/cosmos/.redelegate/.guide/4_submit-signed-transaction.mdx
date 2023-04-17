@@ -1,0 +1,80 @@
+---
+title: Submit Signed Redelegate Transaction for Broadcast
+slug: /staking/cosmos/redelegate/submit-signed-redelegate-transaction
+---
+
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload.
+The Staking API will broadcast the transaction to the Cosmos network.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required). `sign_redelegate_tx` in this case.
+- `inputs` &mdash; `object`
+  - `transaction_payload` &mdash; Signed transaction payload from the previous step's response.
+
+#### Sample cURL Request
+
+```bash {5-8}
+curl -X PUT 'https://cosmos-slate.datahub.figment.io/api/v1/flows/8fc829e2-9e8a-40aa-8c2d-d6bd9125b7f0/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "sign_redelegate_tx",
+  "inputs": {
+    "transaction_payload": "0ade010adb010a2a2f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c656761746512ac010a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c1234636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a3665657465331a34636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78220f0a057561746f6d120631303030303012670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2102db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe23512040a020801180712130a0d0a057561746f6d120439333936108ef8161a403d2b1b5f20403b842956a306f160484ed39ed091e624ada428a18fa630c6e9e551e20f0cd85649db0bad28e2fbfc608b837e33c1b3ceeac6fd5e798f2e286eb1"
+  }
+}'
+```
+
+### Response
+
+With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
+
+- `redelegate_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting for confirmation.
+- `completed` &mdash; Transaction has been confirmed and the redelegation is complete.
+
+#### Sample Response
+
+```json {4,8,23-24}
+{
+  "id": "8fc829e2-9e8a-40aa-8c2d-d6bd9125b7f0",
+  "operation": "redelegate",
+  "state": "redelegate_tx_broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-02-28T11:01:06.749Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "delegator_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
+    "source_validator_address": "cosmosvaloper1tflk30mq5vgqjdly92kkhhq3raev2hnz6eete3",
+    "destination_validator_address": "cosmosvaloper1t8dv80kdq3t2g88kn8vtyeldvnf8xq5c4sklmx",
+    "amount": "0.1",
+    "memo": "",
+    "gas_price": null,
+    "gas_limit": null,
+    "redelegate_transaction": {
+      "raw": "7b226d65737361676573223a5b7b227479706555726c223a222f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c6567617465222c2276616c7565223a7b2264656c656761746f7241646472657373223a22636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c222c2276616c696461746f7253726341646472657373223a22636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a366565746533222c2276616c696461746f7244737441646472657373223a22636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78222c22616d6f756e74223a7b2264656e6f6d223a227561746f6d222c22616d6f756e74223a22313030303030227d7d7d5d2c22666565223a7b22616d6f756e74223a5b7b22616d6f756e74223a2239333936222c2264656e6f6d223a227561746f6d227d5d2c22676173223a22333735383232227d2c226d656d6f223a22227d",
+      "signing_payload": "e236c0d65b21f6b03bef964974bb4ba9ca8567405e6077b5fc5510b374005959",
+      "signed": "0ade010adb010a2a2f636f736d6f732e7374616b696e672e763162657461312e4d7367426567696e526564656c656761746512ac010a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c1234636f736d6f7376616c6f7065723174666c6b33306d71357667716a646c7939326b6b686871337261657632686e7a3665657465331a34636f736d6f7376616c6f706572317438647638306b64713374326738386b6e38767479656c64766e66387871356334736b6c6d78220f0a057561746f6d120631303030303012670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2102db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe23512040a020801180712130a0d0a057561746f6d120439333936108ef8161a403d2b1b5f20403b842956a306f160484ed39ed091e624ada428a18fa630c6e9e551e20f0cd85649db0bad28e2fbfc608b837e33c1b3ceeac6fd5e798f2e286eb1",
+      "hash": "DFA204ACBEF03A3B3F2EAAAD98C55F14B0DFCD0425B1ECD3424CCFB0687026CB",
+      "status": null,
+      "error": null,
+      "signatures": [
+        {
+          "account_address": "cosmos1u85upk2v7pr65g0wv2976zleu6v8qjl9qprvzl",
+          "signature": ""
+        }
+      ],
+      "block_time": null
+    },
+    "pubkey": "02db33d72ee215f1a61e5f4ffa098b9325cc1da6f5c3557974ad0f21a5ec9fe235"
+  },
+  "network_code": "cosmos",
+  "chain_code": "testnet",
+  "created_at": "2023-02-28T10:55:32.660Z",
+  "updated_at": "2023-02-28T11:00:05.766Z"
+}
+```

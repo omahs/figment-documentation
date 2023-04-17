@@ -67,7 +67,7 @@ export default function CodeEditor({
   );
 
   return (
-    <div ref={ref}>
+    <div className="LiveEditor" ref={ref}>
       <Header actions={actions} status={status}>
         {header}
       </Header>

@@ -5,13 +5,13 @@ static/.DS_Store
 static/img/.DS_Store
 static/img/**/.DS_Store
 schemas/.DS_Store
+schemas/backup/*
 
 # Dependencies
 node_modules
 
 # Artifacts
 .docusaurus
-docs/api-reference/*
 build
 partials/transaction-search-parameters
 .env
@@ -19,3 +19,5 @@ partials/transaction-search-parameters
 # CORS test files created by generate.js
 corstests.js
 cors_failed.txt
+
+docs/test/*

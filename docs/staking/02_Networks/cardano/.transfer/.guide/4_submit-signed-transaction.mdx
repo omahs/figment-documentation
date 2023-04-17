@@ -1,0 +1,75 @@
+---
+title: Submit Signed Transfer Transaction for Broadcast
+slug: /staking/cardano/transfer/submit-signed-transfer-transaction
+---
+
+After signing the transaction, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` with the signed payload.
+The Staking API will broadcast the transaction to the Cosmos network.
+
+### Parameters
+
+- `name` &mdash; `string` Name of the action to execute (required). `sign_transfer_tx` in this case.
+- `inputs` &mdash; `object`
+  - `transaction_payload` &mdash; Signed transaction payload from the previous step's response.
+
+#### Sample cURL Request
+
+```bash {5-8}
+curl -X PUT 'https://cardano-slate.datahub.figment.io/api/v1/flows/55fcfcdd-b1f5-460c-bce9-8b8864461315/next' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: <api_key>' \
+-d '{
+  "name": "sign_transfer_tx",
+  "inputs": {
+    "transaction_payload": "0a93010a90010a1c2f636f736d6f732e62616e6b2e763162657461312e4d736753656e6412700a2d636f736d6f733175383575706b3276377072363567307776323937367a6c6575367638716a6c39717072767a6c122d636f736d6f73317678686c6c61736b306e796e683230687479666b706b66746879376b333339356b7a387933631a100a057561746f6d12073130303030303012670a500a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a2104db33d72ee215f1a61e5f4ffa098b7425cc1da6f5c3627994ad0f21a5ec6fe23512040a020801180112130a0d0a057561746f6d12043138333310c9bc041a40549391fc956e81101ba0b815b6a4297ac537ed633522a676f18c06666c1da2020e8a655c0bc8281022b4831f82c8a8b40a2a4a2736c54c3beae4fb2a0a44135e"
+  }
+}'
+```
+
+### Response
+
+With the signed transaction provided, the Staking API will broadcast it to the network. As the transaction progresses towards confirmation, the returned state will be either:
+
+- `transfer_tx_broadcasting` &mdash; Transaction has been broadcast and is waiting for confirmation.
+- `completed` &mdash; Transaction has been confirmed and the transfer is complete.
+
+#### Sample Response
+
+```json {4,8}
+{
+  "id": "55fcfcdd-b1f5-460c-bce9-8b8864461315",
+  "operation": "transfer",
+  "state": "transfer_tx_broadcasting",
+  "actions": [
+    {
+      "name": "wait",
+      "estimated_state_change_at": "2023-03-07T20:59:11.072Z",
+      "inputs": []
+    }
+  ],
+  "data": {
+    "from_account_address": "addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8",
+    "to_account_address": "addr_test1qpr0vyprum2feg2340lmtx0gs3ye0qwnsagwqfhy5pfd5glrhsw5y2xnks9h9x5k6l7wyjdwumqggtnvrn3dyjtt28rsvy9lvz",
+    "amount": "10.0",
+    "transfer_transaction": {
+      "raw": "84a30081825820a4cf432a8f3f0fe44ffdd9775ae55b2bd419c4652fb96cdeaaa27c6e0f83ea5f0001828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3affa30b021a00029075a0f5f6",
+      "signing_payload": "701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f7",
+      "signed": "84a30081825820a4cf432a8f3f0fe44ffdd9775ae55b2bd419c4652fb96cdeaaa27c6e0f83ea5f0001828258390046f61023e6d49ca151abffb599e884499781d38750e026e4a052da23e3bc1d4228d3b40b729a96d7fce249aee6c0842e6c1ce2d2496b51c71a009896808258390023ef84a0e50d3bd688f837771a87a591c146c7940192d103943420aa322ed8c9523dc2472a6d709a934005543f0834b04318dceabcb332631a3affa30b021a00029075a10081825820002d9a48169c6d508699b7aaaa360cc38cb1f3b771444451d38cd0f901ac139d5840285bbda669d5e3805d0e81596271546f070be66c55eb30a03c2b98892b57cb99b9eb2ad4c08181d1d2ca7d84dca876bfad6756d1be68eaa99df127fe5c2aa403f5f6",
+      "hash": "701e79cd816d453ac93018e9550b63c52b394808cfaf011f5b0c180793e4f7f7",
+      "status": null,
+      "error": null,
+      "signatures": [
+        {
+          "account_address": "addr_test1qq37lp9qu5xnh45glqmhwx585kguz3k8jsqe95grjs6zp23j9mvvj53acfrj5mtsn2f5qp258uyrfvzrrrww409nxf3svhyew8",
+          "signature": ""
+        }
+      ],
+      "block_time": null
+    }
+  },
+  "network_code": "cardano",
+  "chain_code": "preprod",
+  "created_at": "2023-03-07T20:56:38.877Z",
+  "updated_at": "2023-03-07T20:58:10.110Z"
+}
+```
