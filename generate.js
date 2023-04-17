@@ -630,10 +630,10 @@ function writeReferenceFile(
       host = variables[key];
     }
     if (network.toLowerCase() === "eth") {
-      network = "ethereum";
+      network = "Ethereum";
     }
     if (network.toLowerCase() === "matic") {
-      network = "polygon";
+      network = "Polygon";
     }
   }
 
@@ -1061,7 +1061,7 @@ function createMarkdown(services, variables, schemas) {
       /* Add the network pages below the Validators category */
       if (service === "validator-api") {
         if (toDashCase(network) === "ethereum") {
-          routeEndpoint = "/api/v1/prime/eth2_staking/";
+          routeEndpoint = `/api/v1/prime/eth2_staking/`;
 
           writeReferenceFile(
             `docs/validators/${toDashCase(network)}.mdx`,

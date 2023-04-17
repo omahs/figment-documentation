@@ -86,6 +86,36 @@ function APIMethod({
     return <></>;
   }
 
+  /* TODO: Clean this up. */
+  if (name === "Create Staking Position") {
+    host = "hubble.figment.io/api/v1/prime/eth2_staking/positions";
+  }
+
+  if (name === "Get Staking Positions") {
+    host = "hubble.figment.io/api/v1/prime/eth2_staking/positions";
+  }
+
+  if (name === "Get Validators In Staking Position") {
+    host =
+      "hubble.figment.io/api/v1/prime/eth2_staking/positions/{position_id}/validators";
+  }
+
+  if (name === "Create Funding Transactions") {
+    host = "hubble.figment.io/api/v1/prime/eth2_staking/funding_transactions";
+  }
+
+  if (name === "Provision Validators") {
+    host = "hubble.figment.io/api/v1/prime/eth2_staking/provision";
+  }
+
+  if (name === "Get List of Validators") {
+    host = "hubble.figment.io/api/v1/prime/eth2_staking/validators";
+  }
+
+  if (name === "Get Validator Details") {
+    host = "hubble.figment.io/api/v1/prime/eth2_staking/validators/{id}";
+  }
+
   return (
     <>
       <div className="row" style={{ marginTop: "40px" }}>
