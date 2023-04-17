@@ -110,7 +110,7 @@ function APIMethod({
   );
 }
 
-export default function APIMethods({ network, methods, service, proxy }) {
+export default function APIMethods({ network, methods, service, proxy, host }) {
   return (
     <>
       <h3>Available Methods</h3>
@@ -119,7 +119,16 @@ export default function APIMethods({ network, methods, service, proxy }) {
           key={network + index}
           {...method}
           network={network}
-          endpoint={`${proxy}/${service}/${network}`}
+          endpoint={`${proxy}/${service}/${
+            methods[index].name.includes("Withdrawals")
+              ? "ethereum_withdrawals"
+              : network
+          }`}
+          host={
+            methods[index].name.includes("Withdrawals")
+              ? host + "/v2/withdrawals"
+              : host
+          }
           accordionOpen={service !== "node-api"}
         />
       ))}
