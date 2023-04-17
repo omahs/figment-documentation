@@ -116,6 +116,15 @@ function APIMethod({
     host = "hubble.figment.io/api/v1/prime/eth2_staking/validators/{id}";
   }
 
+  if (name === "Add Nomination Proxy") {
+    host = "hubble.figment.io/api/v1/prime/polkadot/nomination_proxy";
+  }
+
+  if (name === "Revoke Nomination Proxy") {
+    host =
+      "hubble.figment.io/api/v1/prime/polkadot/nomination_proxy/revoke_proxy";
+  }
+
   return (
     <>
       <div className="row" style={{ marginTop: "40px" }}>
