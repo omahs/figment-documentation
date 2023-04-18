@@ -1107,7 +1107,7 @@
 						"method": "GET",
 						"header": [],
 						"url": "https://{{COSMOS_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{cosmosStakingFlowId}}",
-						"description": "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Request\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `delegate_tx_broadcasting` — Transaction has been broadcast and is waiting for confirmation.\n    - `completed` — Transaction has been confirmed and the delegation is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Staking flow & transaction data."
+						"description": "To get the current state of the existing flow, send a `GET` request to `/api/v1/flows/[:flow_id]` using the flow ID from the previous step.\n\n### Request\n\n- None\n    \n\n### Response\n\n- `id` — `string` ID of the flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n    - `redelegate_tx_broadcasting` — Transaction has been broadcast and is waiting for confirmation.\n    - `completed` — Transaction has been confirmed and the delegation is complete.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- `data` — `object` Staking flow & transaction data."
 					},
 					"response": [
 						{
@@ -5823,48 +5823,48 @@
 	],
 	"variable": [
 		{
-			"id": "b0028803-4db3-4d6b-9feb-a8b229f6abf6",
+			"id": "d8f0055a-f829-4d36-9c91-136f0c337630",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "2229d065-8d76-4fd7-84e8-ec6e0cd5c15a",
+			"id": "60096920-9e61-4553-aacc-d75c84014139",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "4c7208c4-53c4-4dfc-a446-1111f618ff5f",
+			"id": "403ad844-701c-48f9-86a8-cc446931fb0b",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "06045e9d-08ce-4193-90c2-6fa248f539ae",
+			"id": "9da66c2d-0ecb-4c9e-b2bc-59cc0d445dd7",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "b412fdaf-7a99-4769-a164-372b57dfbbef",
+			"id": "b9b58fc9-fb7d-4c93-aac0-971c5cace1df",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "b50c1e16-8a1d-43ca-8503-480ec401ef78",
+			"id": "4c7ee919-7ef6-4d43-bf4c-4f9cfdf6f1cc",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "f89f83ea-6f63-4eea-8ec4-e874e5b81b1b",
+			"id": "93cbb74b-26cd-42ae-a4dd-043e71ae81ef",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "66d3dd1a-7f6e-4aa0-bcd9-8c0e4b59607f",
+			"id": "85ae90da-f474-46df-ae66-38fc9d995960",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "12075f7d-7516-4395-829f-153ef30b7ee0",
+			"id": "4e53f78a-d651-4351-b727-49f85d1ace96",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
