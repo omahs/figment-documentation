@@ -86,43 +86,72 @@ function APIMethod({
     return <></>;
   }
 
+  // @ts-ignore
+  if (request.method === "PUT" && endpoint.includes("staking-api")) {
+    host = host + "/[:flow_id]/next";
+  }
+
+  if (request.method === "GET" && endpoint.includes("staking-api")) {
+    host = host + "/[:flow_id]";
+  }
+
   /* TODO: Clean this up. */
-  if (name === "Create Staking Position") {
+  if (
+    name === "Create Staking Position" &&
+    endpoint.includes("validator-api")
+  ) {
     host = "hubble.figment.io/api/v1/prime/eth2_staking/positions";
   }
 
-  if (name === "Get Staking Positions") {
+  if (name === "Get Staking Positions" && endpoint.includes("validator-api")) {
     host = "hubble.figment.io/api/v1/prime/eth2_staking/positions";
   }
 
-  if (name === "Get Validators In Staking Position") {
+  if (
+    name === "Get Validators In Staking Position" &&
+    endpoint.includes("validator-api")
+  ) {
     host =
       "hubble.figment.io/api/v1/prime/eth2_staking/positions/{position_id}/validators";
   }
 
-  if (name === "Create Funding Transactions") {
+  if (
+    name === "Create Funding Transactions" &&
+    endpoint.includes("validator-api")
+  ) {
     host = "hubble.figment.io/api/v1/prime/eth2_staking/funding_transactions";
   }
 
-  if (name === "Provision Validators") {
+  if (name === "Provision Validators" && endpoint.includes("validator-api")) {
     host = "hubble.figment.io/api/v1/prime/eth2_staking/provision";
   }
 
-  if (name === "Get List of Validators") {
+  if (name === "Get List of Validators" && endpoint.includes("validator-api")) {
     host = "hubble.figment.io/api/v1/prime/eth2_staking/validators";
   }
 
-  if (name === "Get Validator Details") {
+  if (name === "Get Validator Details" && endpoint.includes("validator-api")) {
     host = "hubble.figment.io/api/v1/prime/eth2_staking/validators/{id}";
   }
 
-  if (name === "Add Nomination Proxy") {
+  if (name === "Add Nomination Proxy" && endpoint.includes("validator-api")) {
     host = "hubble.figment.io/api/v1/prime/polkadot/nomination_proxy";
   }
 
-  if (name === "Revoke Nomination Proxy") {
+  if (
+    name === "Revoke Nomination Proxy" &&
+    endpoint.includes("validator-api")
+  ) {
     host =
       "hubble.figment.io/api/v1/prime/polkadot/nomination_proxy/revoke_proxy";
+  }
+
+  if (
+    name === "Add Blockfrost Project" ||
+    name === "Get Blockfrost Project" ||
+    name === "Delete Blockfrost Project"
+  ) {
+    host = "cardano-slate.datahub.figment.io/api/v1/blockfrost_projects";
   }
 
   return (
@@ -134,28 +163,7 @@ function APIMethod({
             className={styles.heading}
             data-method={request?.method}
           >
-            <Link to={`#${name.toLowerCase()}`}>
-              {name === "POST /eth2_staking/positions" ||
-              name === "GET /eth2_staking/positions"
-                ? "/eth2_staking/positions"
-                : name === "POST /api/v1/blockfrost_projects" ||
-                  name === "GET /api/v1/blockfrost_projects" ||
-                  name === "DELETE /api/v1/blockfrost_projects"
-                ? "/api/v1/blockfrost_projects"
-                : name === "POST /api/v1/webhook_endpoints" ||
-                  name === "GET /api/v1/webhook_endpoints" ||
-                  name === "DELETE /api/v1/webhook_endpoints"
-                ? "/api/v1/webhook_endpoints"
-                : name ===
-                    "GET /api/v1/webhook_endpoints/{{webhookEndpointId}}" ||
-                  name === "GET /api/v1/webhook_endpoints/" ||
-                  name ===
-                    "PUT /api/v1/webhook_endpoints/{{webhookEndpointId}}" ||
-                  name ===
-                    "DELETE /api/v1/webhook_endpoints/{{webhookEndpointId}}"
-                ? "/api/v1/webhook_endpoints/{{webhookEndpointId}}"
-                : name}
-            </Link>
+            <Link to={`#${name.toLowerCase()}`}>{name}</Link>
           </h2>
 
           <ReactMarkdown>{description}</ReactMarkdown>

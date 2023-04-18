@@ -207,11 +207,11 @@ The event type format follows the pattern **`<network_code>.<operation>.<action>
 
 - `cardano.staking.*` &mdash; Wildcard for all staking events
 
-- `cardano.staking.registration.activating` &rarr; `cosmos.staking.registration.active`
+- `cardano.staking.registration.activating` &rarr; `cardano.staking.registration.active`
 
 - `cardano.staking.register_tx.confirmed`
 
-- `cardano.staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+- `cardano.staking.delegation.activating` &rarr; `cardano.staking.delegation.active`
 
 - `cardano.staking.delegate_tx.confirmed`
 
@@ -265,7 +265,7 @@ The event type format follows the pattern **`<network_code>.<operation>.<action>
 
 - `ethereum.staking.*` &mdash; Wildcard for all staking events
 
-- `ethereum.staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+- `ethereum.staking.delegation.activating` &rarr; `ethereum.staking.delegation.active`
 
 - `ethereum.staking.deposit_tx.confirmed`
 
@@ -273,9 +273,13 @@ The event type format follows the pattern **`<network_code>.<operation>.<action>
 
 - `ethereum.aggregated_staking.*` &mdash; Wildcard for all aggregated staking events
 
-- `ethereum.aggregated_staking.delegation.activating` &rarr; `cosmos.staking.delegation.active`
+- `ethereum.aggregated_staking.deposits_ready` &mdash; If you had to await provisioning (i.e. On-demand ETH Staking)
 
-- `ethereum.aggregated_staking.aggregated_deposit_tx.confirmed`
+- `ethereum.aggregated_staking.aggregated_deposit_tx.confirmed` &mdash; After you give us a signed tx and we broadcast it and it is confirmed onchain
+
+- `ethereum.aggregated_staking.delegation.activating` &mdash; One or many times, as each group of your validators becomes active
+
+- `ethereum.staking.delegation.active` &mdash; Once all validators are active
 
 </TabItem><TabItem value="near" label="NEAR">
 
