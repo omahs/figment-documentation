@@ -2,7 +2,7 @@ import Link from "@docusaurus/Link";
 import img1 from "@site/static/img/staking/workflows/v1/polkadot/Workflows::V1::Polkadot::UnstakingFlow_workflow.png";
 import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
-## Undelegate
+## Unstaking
 
 The Staking API's DOT unstaking flow will walk your application through the process of unbonding DOT, and optional processes of chilling and withdrawing. There are a few different routes through this process:
 
@@ -23,11 +23,11 @@ In the following guide we will illustrate the entire flow from chilling to withd
 
 ### Flow Diagram
 
-Below is a complete diagram for the Polkadot Undelegation flow:
+Below is a complete diagram for the Polkadot Unstaking flow:
 
 <img
   src={img1}
-  alt="Polkadot Undelegation Flow Diagram"
+  alt="Polkadot Unstaking Flow Diagram"
   className="inline-image"
 />
 
@@ -40,7 +40,7 @@ Below is a complete diagram for the Polkadot Undelegation flow:
   path="docs/staking/02_networks/polkadot/index.mdx"
   methods={[
     {
-      name: "Create New Undelegation Flow",
+      name: "Create New Unstaking Flow",
     },
     {
       name: "Assign Unstaking Data",
@@ -49,7 +49,7 @@ Below is a complete diagram for the Polkadot Undelegation flow:
       name: "Create Chill Transaction",
     },
     {
-      name: "Submit a Signed Chill Transaction for Broadcast",
+      name: "Submit Signed Chill Transaction for Broadcast",
     },
     {
       name: "Create Unbond Transaction",
@@ -64,7 +64,7 @@ Below is a complete diagram for the Polkadot Undelegation flow:
       name: "Submit Signed Withdrawal Transaction for Broadcast",
     },
     {
-      name: "Get Flow Status",
+      name: "Get Unstaking Flow Status",
     },
   ]}
 />

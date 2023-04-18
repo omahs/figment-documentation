@@ -2,9 +2,9 @@ import Link from "@docusaurus/Link";
 import img1 from "@site/static/img/staking/workflows/v1/near/Workflows::V1::Near::UnstakingFlow_workflow.png";
 import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
-## Undelegate
+## Unstaking
 
-Undelegating NEAR is a simple process. We will collect:
+Unstaking NEAR is a simple process. We will collect:
 
 - The delegating address
 - The signing address
@@ -27,9 +27,9 @@ you can use the `create_withdraw_tx` action to withdraw from that balance withou
 
 ### Flow Diagram
 
-Below is a complete diagram for the NEAR Undelegation flow:
+Below is a complete diagram for the NEAR Unstaking flow:
 
-<img src={img1} alt="NEAR Undelegation Flow Diagram" className="inline-image" />
+<img src={img1} alt="NEAR Unstaking Flow Diagram" className="inline-image" />
 
 ### Actions
 
@@ -40,16 +40,16 @@ Below is a complete diagram for the NEAR Undelegation flow:
   path="docs/staking/02_networks/near/index.mdx"
   methods={[
     {
-      name: "Create New Undelegation Flow",
+      name: "Create New Unstaking Flow",
     },
     {
-      name: "Submit Undelegate Data",
+      name: "Submit Undelegate Transaction Data",
     },
     {
       name: "Submit Signed Undelegate Transaction for Broadcast",
     },
     {
-      name: "Get Flow Status",
+      name: "Get Unstaking Flow Status",
     },
   ]}
 />

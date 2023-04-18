@@ -2,7 +2,7 @@ import Link from "@docusaurus/Link";
 import img1 from "@site/static/img/staking/workflows/v1/cardano/Workflows::V1::Cardano::StakingFlow_workflow.png";
 import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
-## Delegate
+## Staking
 
 Make a delegation to a Cardano staking pool using this flow in the Staking API!
 
@@ -53,31 +53,31 @@ Below is a complete diagram for the Cardano staking flow:
   path="docs/staking/02_networks/cardano/index.mdx"
   methods={[
     {
-      name: "POST /api/v1/blockfrost_projects",
+      name: "Add Blockfrost Project",
     },
     {
-      name: "GET /api/v1/blockfrost_projects",
+      name: "Get Blockfrost Project",
     },
     {
-      name: "DELETE /api/v1/blockfrost_projects/{id}",
+      name: "Delete Blockfrost Project",
     },
     {
-      name: "Get Flow Status",
-    },
-    {
-      name: "Create New Delegation Flow",
+      name: "Create New Staking Flow",
     },
     {
       name: "Assign Staking Data",
     },
     {
-      name: "Submit Delegation Data",
+      name: "Submit Delegate Data",
     },
     {
       name: "Submit Signed Registration Transaction for Broadcast",
     },
     {
       name: "Submit Signed Delegate Transaction for Broadcast",
+    },
+    {
+      name: "Get Staking Flow Status",
     },
   ]}
 />

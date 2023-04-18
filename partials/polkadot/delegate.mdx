@@ -2,19 +2,22 @@ import Link from "@docusaurus/Link";
 import img1 from "@site/static/img/staking/workflows/v1/polkadot/Workflows::V1::Polkadot::StakingFlow_workflow.png";
 import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
-## Delegate
+## Staking
 
-The Staking API's DOT staking flow will walk your application through the process of both bonding DOT, and making validator nominations. You are able to skip either step so effectively you can:
+The Staking API's DOT staking flow will walk your application through the process of both bonding DOT, and making validator nominations.
+You are able to skip either step so effectively you can:
 
 - Bond and nominate
-- Bond (or [bond extra](delegate/create-bond-more-transaction)) with or without updating nominations
+- Bond (or bond extra) with or without updating nominations
 - Just nominate
 
-In the following steps we will illustrate how to bond and nominate in one flow. There is a dedicated page for the optional [bond extra](delegate/create-bond-more-transaction) action.
+In the following steps we will illustrate how to bond and nominate in one flow.
+
+Use the `create_bond_more_tx` action when you need to bond extra tokens while the flow state is `bonding_complete`.
 
 ### Flow Diagram
 
-Below is a complete diagram for the Polkadot Delegation flow:
+Below is a complete diagram for the Polkadot Staking flow:
 
 <img
   src={img1}
@@ -31,7 +34,7 @@ Below is a complete diagram for the Polkadot Delegation flow:
   path="docs/staking/02_networks/polkadot/index.mdx"
   methods={[
     {
-      name: "Create New Delegation Flow",
+      name: "Create New Staking Flow",
     },
     {
       name: "Submit Bonding Transaction Data",
@@ -49,7 +52,7 @@ Below is a complete diagram for the Polkadot Delegation flow:
       name: "Submit Signed Nomination Transaction for Broadcast",
     },
     {
-      name: "Get Flow Status",
+      name: "Get Staking Flow Status",
     },
   ]}
 />

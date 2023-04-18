@@ -2,7 +2,7 @@ import Link from "@docusaurus/Link";
 import img1 from "@site/static/img/staking/workflows/v1/polygon/Workflows::V1::Polygon::StakingFlow_workflow.png";
 import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
-## Delegate
+## Staking
 
 Delegating MATIC tokens happens on the Ethereum network (not the Polygon network), and requires two steps:
 
@@ -24,13 +24,9 @@ There is a step-by-step guide for the withdrawal process available on the Polygo
 
 ### Flow Diagram
 
-Below is a complete diagram for the Polygon Delegation flow:
+Below is a complete diagram for the Polygon Staking flow:
 
-<img
-  src={img1}
-  alt="Polygon Delegation Flow Diagram"
-  className="inline-image"
-/>
+<img src={img1} alt="Polygon Staking Flow Diagram" className="inline-image" />
 
 ### Actions
 
@@ -41,7 +37,7 @@ Below is a complete diagram for the Polygon Delegation flow:
   path="docs/staking/02_networks/polygon/index.mdx"
   methods={[
     {
-      name: "Create New Delegation Flow",
+      name: "Create New Staking Flow",
     },
     {
       name: "Submit Staking Data",
@@ -50,16 +46,16 @@ Below is a complete diagram for the Polygon Delegation flow:
       name: "Submit Staking Allowance Data",
     },
     {
-      name: "Submit a Signed Allowance Transaction for Broadcast",
+      name: "Submit Signed Allowance Transaction for Broadcast",
     },
     {
       name: "Submit Delegate Transaction Data",
     },
     {
-      name: "Submit a Signed Delegate Transaction for Broadcast",
+      name: "Submit Signed Delegate Transaction for Broadcast",
     },
     {
-      name: "Get Flow Status",
+      name: "Get Staking Flow Status",
     },
   ]}
 />
