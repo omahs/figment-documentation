@@ -2,17 +2,17 @@ import Link from "@docusaurus/Link";
 import img1 from "@site/static/img/staking/workflows/v1/cosmos/Workflows::V1::Cosmos::RedelegateFlow_workflow.png";
 import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
-## ReStaking
+## Redelegate
 
-The Cosmos ReStaking flow allows you to immediately reStaking the ATOM tokens from Validator X to Validator Y.
+The Cosmos Redelegate flow allows you to immediately redelegate the ATOM tokens from Validator X to Validator Y.
 This way, you don't need to wait for 21 days to unbond the ATOM tokens and then Staking that stake to another validator.
 
-To reStaking ATOM tokens, you will need:
+To redelegate ATOM tokens, you will need:
 
-- The `delegator_address` from which ATOM is being reStakingd, which will sign the transaction.
-- The `source_validator_address` from which ATOM is being reStakingd (Validator X).
-- The `destination_validator_address` to which ATOM will be reStakingd (Validator Y).
-- The `amount` of ATOM to be reStakingd.
+- The `delegator_address` from which ATOM is being redelegated, which will sign the transaction.
+- The `source_validator_address` from which ATOM is being redelegated (Validator X).
+- The `destination_validator_address` to which ATOM will be redelegated (Validator Y).
+- The `amount` of ATOM to be redelegated.
 - An optional `memo`.
 - An optional `gas_limit` and `gas_price` in ATOM.
 - The `pubkey` (public key) of the `delegator_address`.
@@ -21,9 +21,9 @@ Follow the steps in this guide for the details on this process.
 
 ### Flow Diagram
 
-Below is a complete diagram for the Cosmos ReStaking flow:
+Below is a complete diagram for the Cosmos Redelegate flow:
 
-<img src={img1} alt="Cosmos ReStaking Flow Diagram" className="inline-image" />
+<img src={img1} alt="Cosmos Redelegate Flow Diagram" className="inline-image" />
 
 ### Actions
 
