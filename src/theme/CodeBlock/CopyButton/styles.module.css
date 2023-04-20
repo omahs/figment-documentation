@@ -23,7 +23,17 @@
 .copyButtonSuccessIcon {
   top: 50%;
   left: 50%;
-  margin-left: 0.5rem; /* TODO: prevents content shifting, keeping the checkmark centered, but conflicts with copy button on codeblock. need a way to do :not(.buttonGroup_src-theme-CodeBlock-Content-styles-module) */
+  transform: translate(-50%, -50%) scale(0.33);
+  opacity: 0;
+  color: #00d600;
+}
+
+/* Set left margin to prevent content shift on the copy button 
+   which is displayed in the "Request (try it)" header  */
+button > button .copyButtonSuccessIcon {
+  top: 50%;
+  left: 50%;
+  margin-left: 0.5rem;
   transform: translate(-50%, -50%) scale(0.33);
   opacity: 0;
   color: #00d600;

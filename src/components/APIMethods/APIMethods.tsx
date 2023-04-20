@@ -8,6 +8,7 @@ import { CodeExample } from "./components";
 import styles from "./styles.module.css";
 import Link from "@docusaurus/Link";
 
+/* TODO: Populate this list from the schema? It cannot be out of sync or the display breaks! */
 const FLOWS = {
   avalanche: {
     staking: {
@@ -368,7 +369,13 @@ function APIMethod({
           <h3>{endpoint.includes("staking-api-webhooks") ? "Route" : "URL"}</h3>
           <pre className={styles.hostURL}>
             {endpoint.includes("staking-api-webhooks")
-              ? "/api/v1/webhook_endpoints"
+              ? `/api/v1/webhook_endpoints${
+                  name === "Retrieve Endpoint" ||
+                  name === "Update Webhook Endpoint" ||
+                  name === "Delete an Existing Endpoint"
+                    ? "/[:id]"
+                    : ""
+                }`
               : `https://${host !== undefined && host}`}
           </pre>
 
@@ -396,8 +403,6 @@ export default function APIMethods({
   host,
   operation,
 }) {
-  console.log(network, operation);
-
   if (!operation) {
     return (
       <>
@@ -439,8 +444,10 @@ export default function APIMethods({
     );
   }
 
+  /* We only want to display the actions specific to a flow on that flow's page */
   const METHODS_IN_FLOW = FLOWS[network][operation];
 
+  /* TODO: Find a better way to handle the ternary expressions below for methods[index].name.includes("Withdrawals")  */
   return (
     <>
       {!methods && (

@@ -86,7 +86,7 @@ html {
 
 img.inline-image {
   border-radius: 8px;
-  margin: 30px 20px;
+  margin: 30px 20px 0px 0px;
 }
 
 [data-theme="light"] li {
