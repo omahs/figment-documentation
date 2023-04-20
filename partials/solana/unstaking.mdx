@@ -4,7 +4,7 @@ import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
 ## Unstaking
 
-In order to undelegate SOL, we will:
+In order to unStaking SOL, we will:
 
 - Deactivate a given stake account
 - Wait for the stake to become inactive (generally at the next epoch boundary)
@@ -35,13 +35,13 @@ Below is a complete diagram for the Solana Undelegation flow:
       name: "Submit Deactivate Transaction Data",
     },
     {
-      name: "Submit a Signed Deactivate Transaction for Broadcast",
+      name: "Submit Signed Deactivate Transaction for Broadcast",
     },
     {
       name: "Submit Withdrawal Transaction Data",
     },
     {
-      name: "Submit a Signed Withdrawl Transaction for Broadcast",
+      name: "Submit Signed Withdrawal Transaction for Broadcast",
     },
     {
       name: "Get Unstaking Flow Status",

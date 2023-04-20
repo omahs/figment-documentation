@@ -8,9 +8,9 @@ Unstaking NEAR is a simple process. We will collect:
 
 - The delegating address
 - The signing address
-- The validator address to undelegate from
-- Amount of NEAR to be undelegated
-- Optionally, a `maximum` Boolean if you wish to undelegate the full amount without having to check the current balance
+- The validator address to unStaking from
+- Amount of NEAR to be unStakingd
+- Optionally, a `maximum` Boolean if you wish to unStaking the full amount without having to check the current balance
 - Optionally, a max gas amount (upper limit of the transaction fee to be paid)
 
 Once the undelegation transaction is confirmed on-chain, the unbonding process will begin immediately.
@@ -20,7 +20,7 @@ Upon completion of the unbonding period, the NEAR will be available to be withdr
 
 :::info
 
-If you have a balance waiting to be withdrawn and do not wish to undelegate more NEAR,
+If you have a balance waiting to be withdrawn and do not wish to unStaking more NEAR,
 you can use the `create_withdraw_tx` action to withdraw from that balance without first unbonding any NEAR.
 
 :::
@@ -43,10 +43,10 @@ Below is a complete diagram for the NEAR Unstaking flow:
       name: "Create New Unstaking Flow",
     },
     {
-      name: "Submit Undelegate Transaction Data",
+      name: "Submit Unstaking Transaction Data",
     },
     {
-      name: "Submit Signed Undelegate Transaction for Broadcast",
+      name: "Submit Signed Unstaking Transaction for Broadcast",
     },
     {
       name: "Get Unstaking Flow Status",

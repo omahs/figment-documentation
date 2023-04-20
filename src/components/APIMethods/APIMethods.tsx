@@ -8,6 +8,211 @@ import { CodeExample } from "./components";
 import styles from "./styles.module.css";
 import Link from "@docusaurus/Link";
 
+const FLOWS = {
+  avalanche: {
+    staking: {
+      "Create New Staking Flow": "",
+      "Submit Delegate Data": "",
+      "Submit Signed Delegate Transaction for Broadcast": "",
+      "Get Staking Flow Status": "",
+    },
+  },
+  cardano: {
+    staking: {
+      "Add Blockfrost Project": "",
+      "Get Blockfrost Project": "",
+      "Delete Blockfrost Project": "",
+      "Create New Staking Flow": "",
+      "Assign Staking Data": "",
+      "Submit Delegate Data": "",
+      "Submit Signed Registration Transaction for Broadcast": "",
+      "Submit Signed Delegate Transaction for Broadcast": "",
+      "Get Staking Flow Status": "",
+    },
+    transfer: {
+      "Add Blockfrost Project": "",
+      "Get Blockfrost Project": "",
+      "Delete Blockfrost Project": "",
+      "Create a New Transfer Flow": "",
+      "Submit Transfer Data": "",
+      "Submit Signed Transfer Transaction for Broadcast": "",
+      "Get Transfer Flow Status": "",
+    },
+  },
+  cosmos: {
+    staking: {
+      "Create New Staking Flow": "",
+      "Submit Delegate Data": "",
+      "Submit Signed Delegate Transaction for Broadcast": "",
+      "Get Staking Flow Status": "",
+    },
+    redelegate: {
+      "Create New Redelegate Flow": "",
+      "Submit Redelegate Data": "",
+      "Submit Signed Redelegate Transaction for Broadcast": "",
+      "Get Redelegate Flow Status": "",
+    },
+    unstaking: {
+      "Create New Unstaking Flow": "",
+      "Submit Undelegate Data": "",
+      "Submit Signed Undelegate Transaction for Broadcast": "",
+      "Get Unstaking Flow Status": "",
+    },
+    "claim-rewards": {
+      "Create New Claim Rewards Flow": "",
+      "Submit Claim Rewards Data": "",
+      "Submit Signed Claim Rewards Transaction for Broadcast": "",
+      "Get Claim Rewards Flow Status": "",
+    },
+    transfer: {
+      "Create New Transfer Flow": "",
+      "Submit Transfer Data": "",
+      "Submit Signed Transfer Transaction for Broadcast": "",
+      "Get Transfer Flow Status": "",
+    },
+  },
+  ethereum: {
+    staking: {
+      "Create New Staking Flow": "",
+      "Submit Deposit Data": "",
+      "Submit Signed Transaction for Broadcast": "",
+      "Get Staking Flow Status": "",
+    },
+    "aggregated-staking": {
+      "Create New Aggregated Staking Flow": "",
+      "Submit Aggregated Staking Data": "",
+      "Submit Signed Aggregated Deposit Transaction for Broadcast": "",
+      "Get Aggregated Staking Flow Status": "",
+    },
+    unstaking: {
+      "Create New Unstaking Flow": "",
+      "Submit Unstaking Data": "",
+      "Get Unstaking Flow Status": "",
+    },
+  },
+  near: {
+    staking: {
+      "Create New Staking Flow": "",
+      "Submit Delegate Data": "",
+      "Submit Signed Delegate Transaction for Broadcast": "",
+      "Get Staking Flow Status": "",
+    },
+    unstaking: {
+      "Create New Unstaking Flow": "",
+      "Submit Undelegate Data": "",
+      "Submit Signed Undelegate Transaction for Broadcast": "",
+      "Submit Withdrawal Data": "",
+      "Submit Signed Withdrawal Transaction for Broadcast": "",
+      "Get Unstaking Flow Status": "",
+    },
+    transfer: {
+      "Create New Transfer Flow": "",
+      "Submit Transfer Data": "",
+      "Submit Signed Transfer Transaction for Broadcast": "",
+      "Get Transfer Flow Status": "",
+    },
+  },
+  polkadot: {
+    staking: {
+      "Create New Staking Flow": "",
+      "Submit Bonding Transaction Data": "",
+      "Submit Bond More Transaction Data": "",
+      "Submit Signed Bonding Transaction for Broadcast": "",
+      "Submit Nomination Addresses": "",
+      "Submit Signed Nomination Transaction for Broadcast": "",
+      "Get Staking Flow Status": "",
+    },
+    unstaking: {
+      "Create New Unstaking Flow": "",
+      "Assign Unstaking Data": "",
+      "Create Chill Transaction": "",
+      "Submit Signed Chill Transaction for Broadcast": "",
+      "Create Withdrawal Transaction": "",
+      "Submit Signed Withdrawal Transaction for Broadcast": "",
+      "Get Unstaking Flow Status": "",
+    },
+    "add-staking-proxy": {
+      "Create New Add Staking Proxy Flow": "",
+      "Submit Add Proxy Data": "",
+      "Submit Signed Add Proxy Transaction for Broadcast": "",
+      "Get Add Staking Proxy Flow Status": "",
+    },
+    "remove-staking-proxy": {
+      "Create New Flow To Remove Staking Proxy": "",
+      "Submit Remove Proxy Data": "",
+      "Submit Signed Remove Proxy Transaction for Broadcast": "",
+      "Get Remove Staking Proxy Flow Status": "",
+    },
+    transfer: {
+      "Create New Transfer Flow": "",
+      "Submit Transfer Data": "",
+      "Submit Signed Transfer Transaction for Broadcast": "",
+      "Get Transfer Flow Status": "",
+    },
+  },
+  polygon: {
+    staking: {
+      "Create New Staking Flow": "",
+      "Submit Staking Data": "",
+      "Submit Staking Allowance Data": "",
+      "Submit Signed Allowance Transaction for Broadcast": "",
+      "Submit Delegate Transaction Data": "",
+      "Submit Signed Delegate Transaction for Broadcast": "",
+      "Get Staking Flow Status": "",
+    },
+    unstaking: {
+      "Create New Undelegation Flow": "",
+      "Submit Unbonding Data": "",
+      "Submit Signed Unbonding Transaction for Broadcast": "",
+      "Submit Claim Transaction Data": "",
+      "Submit Signed Claim Transaction for Broadcast": "",
+      "Get Flow Status": "",
+    },
+    "claim-rewards": {
+      "Create New Claim Rewards Flow": "",
+      "Submit Claim Rewards Data": "",
+      "Submit Signed Claim Rewards Transaction for Broadcast": "",
+      "Get Flow Status": "",
+    },
+  },
+  solana: {
+    staking: {
+      "Create New Staking Flow": "",
+      "Create New Staking Account": "",
+      "Submit Signed Stake Account Transaction for Broadcast": "",
+      "Submit Validator Address": "",
+      "Submit Signed Delegate Transaction for Broadcast": "",
+      "Get Staking Flow Status": "",
+    },
+    unstaking: {
+      "Create New Unstaking Flow": "",
+      "Submit Deactivate Transaction Data": "",
+      "Submit Signed Deactivate Transaction for Broadcast": "",
+      "Submit Withdrawal Transaction Data": "",
+      "Submit Signed Withdrawal Transaction for Broadcast": "",
+      "Get Unstaking Flow Status": "",
+    },
+    "split-stake-account": {
+      "Create New Split Stake Account Flow": "",
+      "Submit Split Stake Account Data": "",
+      "Submit Signed Split Stake Account Transaction for Broadcast": "",
+      "Get Split Stake Account Flow Status": "",
+    },
+    "merge-stake-account": {
+      "Create New Merge Stake Account Flow": "",
+      "Submit Merge Stake Account Data": "",
+      "Submit Signed Merge Stake Account Transaction for Broadcast": "",
+      "Get Merge Stake Account Flow Status": "",
+    },
+    transfer: {
+      "Create New Transfer Flow": "",
+      "Submit Transfer Data": "",
+      "Submit Signed Transfer Transaction for Broadcast": "",
+      "Get Transfer Flow Status": "",
+    },
+  },
+};
+
 interface Props {
   name: string;
   content: string;
@@ -191,7 +396,59 @@ function APIMethod({
   );
 }
 
-export default function APIMethods({ network, methods, service, proxy, host }) {
+export default function APIMethods({
+  network,
+  methods,
+  service,
+  proxy,
+  host,
+  operation,
+}) {
+  console.log(network, operation);
+
+  if (!operation) {
+    return (
+      <>
+        {methods && (
+          <>
+            {methods.map((method, index) => (
+              <>
+                {method.name && (
+                  <>
+                    <APIMethod
+                      key={network + index + Math.random()}
+                      {...method}
+                      network={network}
+                      endpoint={`${proxy}/${service}/${
+                        methods[index].name.includes("Withdrawals")
+                          ? "ethereum_withdrawals"
+                          : network
+                      }`}
+                      host={
+                        methods[index].name.includes("Withdrawals")
+                          ? host.replace(/v2\/rewards$/, "") + "v2/withdrawals"
+                          : host
+                      }
+                    />
+                  </>
+                )}
+                {methods.length > 1 && (
+                  <>
+                    <br />
+                    <hr />
+                  </>
+                )}
+              </>
+            ))}
+            <BackToTopButton />
+          </>
+        )}
+      </>
+    );
+  }
+
+  const METHODS_IN_FLOW = FLOWS[network][operation];
+
   return (
     <>
       {!methods && (
@@ -203,22 +460,26 @@ export default function APIMethods({ network, methods, service, proxy, host }) {
         <>
           {methods.map((method, index) => (
             <>
-              <APIMethod
-                key={network + index + Math.random()}
-                {...method}
-                network={network}
-                endpoint={`${proxy}/${service}/${
-                  methods[index].name.includes("Withdrawals")
-                    ? "ethereum_withdrawals"
-                    : network
-                }`}
-                host={
-                  methods[index].name.includes("Withdrawals")
-                    ? host.replace(/v2\/rewards$/, "") + "v2/withdrawals"
-                    : host
-                }
-              />
-              {methods.length > 1 && (
+              {method.name in METHODS_IN_FLOW && (
+                <>
+                  <APIMethod
+                    key={network + index + Math.random()}
+                    {...method}
+                    network={network}
+                    endpoint={`${proxy}/${service}/${
+                      methods[index].name.includes("Withdrawals")
+                        ? "ethereum_withdrawals"
+                        : network
+                    }`}
+                    host={
+                      methods[index].name.includes("Withdrawals")
+                        ? host.replace(/v2\/rewards$/, "") + "v2/withdrawals"
+                        : host
+                    }
+                  />
+                </>
+              )}
+              {methods.length > 1 && method.name in METHODS_IN_FLOW && (
                 <>
                   <br />
                   <hr />

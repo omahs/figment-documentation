@@ -14,10 +14,10 @@ node_modules
 .docusaurus
 docs/api-reference/*
 docs/staking/index.mdx
-docs/staking/02_Networks/*
+docs/staking/02_Networks/**/index.mdx
 docs/rewards/*
 docs/network-data/*
-docs/network-data/rewards-rates/*
+docs/network-data/**/*.mdx
 docs/validators/*
 build
 partials/transaction-search-parameters

@@ -4,14 +4,14 @@ import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
 ## Staking
 
-The Cosmos Delegate flow allows you to stake your ATOM tokens to the validator of your choice on Cosmos.
+The Cosmos Staking flow allows you to stake your ATOM tokens to the validator of your choice on Cosmos.
 This way, you are able to stake your ATOM within a few steps and start earning rewards on your staked tokens.
 
 Staking ATOM is a simple process. We will collect:
 
-- The `delegator_address` from which ATOM is being delegated, which will sign the transaction.
-- The `validator_address` to which ATOM is delegated.
-- The `amount` of ATOM to be delegated.
+- The `delegator_address` from which ATOM is being Stakingd, which will sign the transaction.
+- The `validator_address` to which ATOM is Stakingd.
+- The `amount` of ATOM to be Stakingd.
 - An optional `memo`.
 - An optional `gas_limit` and `gas_price` in ATOM.
 
@@ -19,7 +19,7 @@ Follow the steps in this guide for the details on this process.
 
 ### Flow Diagram
 
-Below is a complete diagram for the Cosmos Delegation flow:
+Below is a complete diagram for the Cosmos Staking flow:
 
 <img src={img1} alt="Cosmos Delegation Flow Diagram" className="inline-image" />
 
@@ -35,7 +35,7 @@ Below is a complete diagram for the Cosmos Delegation flow:
       name: "Create New Staking Flow",
     },
     {
-      name: "Submit Delegation Data",
+      name: "Submit Delegate Data",
     },
     {
       name: "Submit Signed Delegate Transaction for Broadcast",

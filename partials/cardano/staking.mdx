@@ -6,10 +6,10 @@ import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
 Make a delegation to a Cardano staking pool using this flow in the Staking API!
 
-To delegate ADA, you will need:
+To Staking ADA, you will need:
 
 - `delegator_address` &mdash; The wallet from which the ADA will originate
-- `validator_address` &mdash; The validator address to which the ADA will be delegated
+- `validator_address` &mdash; The validator address to which the ADA will be Stakingd
 
 Cardano has specific requirements for staking account registration:
 
@@ -20,9 +20,9 @@ Follow the steps in this guide for the details on this process.
 
 :::info
 
-Cardano has no unbonding period, any delegated balance is free to be transferred at any time.
+Cardano has no unbonding period, any Stakingd balance is free to be transferred at any time.
 
-Delegation on Cardano differs from other networks, in that the entire balance of the delegator address is delegated, rather than a portion of the balance. Delegating more ADA is just a matter of transferring funds into the delegating wallet, the balance of which will be delegated without further action.
+Delegation on Cardano differs from other networks, in that the entire balance of the delegator address is Stakingd, rather than a portion of the balance. Delegating more ADA is just a matter of transferring funds into the delegating wallet, the balance of which will be Stakingd without further action.
 
 Undelegating ADA only requires transferring that amount out of the delegating wallet.
 
@@ -68,13 +68,13 @@ Below is a complete diagram for the Cardano staking flow:
       name: "Assign Staking Data",
     },
     {
-      name: "Submit Delegate Data",
+      name: "Submit Staking Data",
     },
     {
       name: "Submit Signed Registration Transaction for Broadcast",
     },
     {
-      name: "Submit Signed Delegate Transaction for Broadcast",
+      name: "Submit Signed Staking Transaction for Broadcast",
     },
     {
       name: "Get Staking Flow Status",

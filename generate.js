@@ -4,207 +4,6 @@ const fs = require("fs-extra");
 const SCHEMAS_DIR = "schemas";
 const CLI_ARGS = process.argv.slice(2);
 
-const FLOWS = {
-  avalanche: {
-    delegate: [
-      "Create New Delegation Flow",
-      "Submit Delegate Data",
-      "Submit Signed Delegate Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-  },
-  cardano: {
-    delegate: [
-      "Create New Delegation Flow",
-      "Assign Staking Data",
-      "Submit Signed Register Transaction for Broadcast",
-      "Submit Delegate Data",
-      "Submit Signed Delegate Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    transfer: [
-      "Create a New Transfer Flow",
-      "Submit Transfer Data",
-      "Submit Signed Transfer Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-  },
-  cosmos: {
-    delegate: [
-      "Create a New Delegation Flow",
-      "Submit Delegation Data",
-      "Submit Signed Delegate Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    redelegate: [
-      "Create a New Redelegation Flow",
-      "Submit Redelegation Data",
-      "Submit Signed Redelegate Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    undelegate: [
-      "Create a New Undelegation Flow",
-      "Submit Undelegation Data",
-      "Submit Signed Undelegate Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    claim_rewards: [
-      "Create a New Claim Rewards Flow",
-      "Submit Claim Rewards Data",
-      "Submit Signed Claim Rewards Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    transfer: [
-      "Create a New Transfer Flow",
-      "Submit Transfer Data",
-      "Submit Signed Transfer Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-  },
-  ethereum: {
-    staking: [
-      "Create New Staking Flow",
-      "Submit Deposit Data",
-      "Submit Signed Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    aggregated_staking: [
-      "Create New Aggregated Staking Flow",
-      "Submit Aggregated Staking Data",
-      "Submit Signed Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    unstaking: [
-      "Create New Unstaking Flow",
-      "Submit Unstaking Data",
-      "Get Flow Status",
-    ],
-  },
-  near: {
-    delegate: [
-      "Create New Delegation Flow",
-      "Submit Delegate Data",
-      "Submit Signed Delegate Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    undelegate: [
-      "Create New Undelegation Flow",
-      "Submit Undelegate Data",
-      "Submit Signed Undelegate Transaction for Broadcast",
-      "Submit Withdrawal Data",
-      "Submit a Signed Withdrawal Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    transfer: [
-      "Create a New Transfer Flow",
-      "Submit Transfer Data",
-      "Submit Signed Transfer Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-  },
-  polkadot: {
-    delegate: [
-      "Create New Delegation Flow",
-      "Submit Bonding Transaction Data",
-      "Submit Signed Bonding Transaction for Broadcast",
-      "Bond More Transaction (Optional)",
-      "Submit Nomination Addresses",
-      "Submit Signed Nomination Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    undelegate: [
-      "Create New Undelegation Flow",
-      "Assign Unstaking Data",
-      "Chill Transactions",
-      "Submit Signed Chill Transaction for Broadcast",
-      "Create Unbond Transaction",
-      "Submit Signed Unbond Transaction for Broadcast",
-      "Create Withdrawal Transaction",
-      "Submit Signed Withdrawal Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    add_staking_proxy: [
-      "Create New Add Staking Proxy Flow",
-      "Submit Add Proxy Data",
-      "Submit Signed Add Proxy Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    remove_staking_proxy: [
-      "Create New Flow To Remove Staking Proxy",
-      "Submit Remove Proxy Data",
-      "Submit a Signed Remove Proxy Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    transfer: [
-      "Create a New Transfer Flow",
-      "Submit Transfer Data",
-      "Submit Signed Transfer Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-  },
-  polygon: {
-    delegate: [
-      "Create New Delegation Flow",
-      "Submit Staking Data",
-      "Submit Staking Allowance Data",
-      "Submit a Signed Allowance Transaction for Broadcast",
-      "Submit Delegate Transaction Data",
-      "Submit a Signed Delegate Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    undelegate: [
-      "Create New Undelegation Flow",
-      "Submit Unbonding Data",
-      "Submit a Signed Unbonding Transaction for Broadcast",
-      "Submit Claim Transaction Data",
-      "Submit a Signed Claim Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    claim_rewards: [
-      "Create New Claim Rewards Flow",
-      "Submit Claim Rewards Data",
-      "Submit Signed Claim Rewards Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-  },
-  solana: {
-    delegate: [
-      "Create New Delegation Flow",
-      "Create New Staking Account",
-      "Submit a Signed Stake Account Transaction for Broadcast",
-      "Submit Validator Address",
-      "Submit a Signed Delegate Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    undelegate: [
-      "Create New Undelegation Flow",
-      "Submit Deactivate Transaction Data",
-      "Submit a Signed Deactivate Transaction for Broadcast",
-      "Submit Withdrawal Transaction Data",
-      "Submit a Signed Withdrawal Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    split_stake: [
-      "Create New Split Stake Account Flow",
-      "Submit Split Stake Account Data",
-      "Submit a Signed Split Stake Account Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    merge_stake: [
-      "Create New Merge Stake Account Flow",
-      "Submit Merge Stake Account Data",
-      "Submit a Signed Merge Stake Account Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-    transfer: [
-      "Create a New Transfer Flow",
-      "Submit Transfer Data",
-      "Submit Signed Transfer Transaction for Broadcast",
-      "Get Flow Status",
-    ],
-  },
-};
-
 function toDashCase(str) {
   return str?.toLowerCase().replace(/\s+/g, "-");
 }
@@ -680,7 +479,7 @@ function writeReferenceFile(
   );
 }
 
-function writeStakingIndexFile(
+function writeStakingReferenceFile(
   path,
   title,
   sidebar_position,
@@ -691,8 +490,7 @@ function writeStakingIndexFile(
   networksList,
   variables,
   routeEndpoint,
-  action,
-  folders
+  operation
 ) {
   let host = "";
 
@@ -722,7 +520,75 @@ function writeStakingIndexFile(
       image: "img/logo.svg",
       keywords: `[${toTitleCase(service)}, ${network}]`,
       sidebar_position: sidebar_position,
-      slug: `/staking/${toDashCase(network)}`,
+      slug: `/staking/${toDashCase(network)}/${toDashCase(operation)}`,
+      sidebar_label: `${toTitleCase(operation)}`,
+      hide_toc: hide_toc,
+      sidebar_label: `${toTitleCase(operation)}`,
+      body:
+        `<!--- This file was generated at build time, any modifications will be lost on next build --->\n\n` +
+        `import {APIMethods} from '@site/src/components'\n\n` +
+        `import ${toTitleCase(network)}${toTitleCaseNoSpaces(
+          operation
+        )} from '@site/partials/${toDashCase(network)}/${toDashCase(
+          operation
+        )}.mdx'\n\n` +
+        `<${toTitleCase(network)}${toTitleCaseNoSpaces(operation)} />\n\n` +
+        `<APIMethods\n` +
+        ` service="${toDashCase(service)}"\n` +
+        ` network="${toDashCase(network)}"\n` +
+        ` proxy="${process.env.PROXY_HOST}"\n` +
+        ` host="${host && routeEndpoint ? host + routeEndpoint : host}"\n` +
+        ` methods={${JSON.stringify(methods, null, 2)}}\n` +
+        ` operation="${toDashCase(operation)}"\n` +
+        `/>\n\n`,
+    }),
+    "utf-8"
+  );
+}
+
+function writeStakingIndexFile(
+  path,
+  title,
+  sidebar_position,
+  hide_toc,
+  methods,
+  service,
+  network,
+  networksList,
+  variables,
+  routeEndpoint,
+  operation
+) {
+  let host = "";
+
+  for (const key in variables) {
+    if (network.toLowerCase() === "ethereum") {
+      network = "eth";
+    }
+    if (network.toLowerCase() === "polygon") {
+      network = "matic";
+    }
+    if (variables[key].includes(network.toLowerCase())) {
+      host = variables[key];
+    }
+    if (network.toLowerCase() === "eth") {
+      network = "Ethereum";
+    }
+    if (network.toLowerCase() === "matic") {
+      network = "Polygon";
+    }
+  }
+
+  fs.writeFileSync(
+    path,
+    frontMatterTemplate({
+      title: title,
+      desc: `${toTitleCase(service)} - ${network}`,
+      image: "img/logo.svg",
+      keywords: `[${toTitleCase(service)}, ${network}]`,
+      sidebar_position: sidebar_position,
+      slug: `/staking/${toDashCase(network)}/${toDashCase(operation)}`,
+      sidebar_label: `1${toTitleCase(operation)}`,
       hide_toc: hide_toc,
       sidebar_label:
         network.toLowerCase() === "near"
@@ -736,11 +602,17 @@ function writeStakingIndexFile(
           network
         )}Overview from '@site/partials/${toDashCase(
           network
-        )}/overview.mdx'\n\n` +
+        )}/overview.mdx'\n` +
+        `import ${toTitleCase(network)}${toTitleCaseNoSpaces(
+          operation
+        )} from '@site/partials/${toDashCase(network)}/${toDashCase(
+          operation
+        )}.mdx'\n\n` +
         `<${toTitleCase(network)}Overview />\n\n` +
+        `<${toTitleCase(network)}${toTitleCaseNoSpaces(operation)} />\n\n` +
         // This is still useful for generating the entire APIReferenceNav,
         // don't remove it yet!
-        // `<${toTitleCase(network)}${toTitleCaseNoSpaces(action)} />\n\n` +
+        // `<${toTitleCase(network)}${toTitleCaseNoSpaces(operation)} />\n\n` +
         // `## API Reference\n\n` +
         // `<APIReferenceNav\n` +
         // ` service="${toDashCase(service)}"\n` +
@@ -937,55 +809,10 @@ function createMarkdown(services, variables, schemas) {
           within the category
         */
         if (toDashCase(network) === "avalanche") {
-          writeStakingIndexFile(
-            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
             1,
-            true,
-            methods,
-            service,
-            network,
-            networksList,
-            variables[service],
-            routeEndpoint,
-            "delegate"
-          );
-        }
-        if (toDashCase(network) === "cardano") {
-          writeStakingIndexFile(
-            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
-            `Staking - ${toTitleCase(network)}`,
-            2,
-            true,
-            methods,
-            service,
-            network,
-            networksList,
-            variables[service],
-            routeEndpoint,
-            "delegate"
-          );
-        }
-        if (toDashCase(network) === "cosmos") {
-          writeStakingIndexFile(
-            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
-            `Staking - ${toTitleCase(network)}`,
-            3,
-            true,
-            methods,
-            service,
-            network,
-            networksList,
-            variables[service],
-            routeEndpoint,
-            "delegate"
-          );
-        }
-        if (toDashCase(network) === "ethereum") {
-          writeStakingIndexFile(
-            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
-            `Staking - ${toTitleCase(network)}`,
-            4,
             true,
             methods,
             service,
@@ -996,10 +823,100 @@ function createMarkdown(services, variables, schemas) {
             "staking"
           );
         }
-        if (toDashCase(network) === "near") {
-          writeStakingIndexFile(
-            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
-            `Staking - ${network.toUpperCase()}`,
+        if (toDashCase(network) === "cardano") {
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            1,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "staking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/transfer/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "transfer"
+          );
+        }
+        if (toDashCase(network) === "cosmos") {
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            1,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "staking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/redelegate/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "redelegate"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            3,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/claim-rewards/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            4,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "claim-rewards"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/transfer/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
             5,
             true,
             methods,
@@ -1008,14 +925,104 @@ function createMarkdown(services, variables, schemas) {
             networksList,
             variables[service],
             routeEndpoint,
-            "delegate"
+            "transfer"
+          );
+        }
+        if (toDashCase(network) === "ethereum") {
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            1,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "staking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/aggregated-staking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "aggregated-staking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            3,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+        }
+        if (toDashCase(network) === "near") {
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
+            `Staking - ${network.toUpperCase()}`,
+            1,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "staking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking - ${network.toUpperCase()}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/transfer/index.mdx`,
+            `Staking - ${network.toUpperCase()}`,
+            3,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "transfer"
           );
         }
         if (toDashCase(network) === "polkadot") {
-          writeStakingIndexFile(
-            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
-            6,
+            1,
             true,
             methods,
             service,
@@ -1023,14 +1030,74 @@ function createMarkdown(services, variables, schemas) {
             networksList,
             variables[service],
             routeEndpoint,
-            "delegate"
+            "staking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/add-staking-proxy/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "add-staking-proxy"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/remove-staking-proxy/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            3,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "remove-staking-proxy"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            4,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/transfer/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            5,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "transfer"
           );
         }
         if (toDashCase(network) === "polygon") {
-          writeStakingIndexFile(
-            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
-            7,
+            1,
             true,
             methods,
             service,
@@ -1038,14 +1105,44 @@ function createMarkdown(services, variables, schemas) {
             networksList,
             variables[service],
             routeEndpoint,
-            "delegate"
+            "staking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/claim-rewards/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            3,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "claim-rewards"
           );
         }
         if (toDashCase(network) === "solana") {
-          writeStakingIndexFile(
-            `docs/staking/02_Networks/${toDashCase(network)}/index.mdx`,
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
-            8,
+            1,
             true,
             methods,
             service,
@@ -1053,7 +1150,67 @@ function createMarkdown(services, variables, schemas) {
             networksList,
             variables[service],
             routeEndpoint,
-            "delegate"
+            "staking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/split-stake-account/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            3,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "split-stake-account"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/merge-stake-account/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            4,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "merge-stake-account"
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/transfer/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            5,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "transfer"
           );
         }
       }

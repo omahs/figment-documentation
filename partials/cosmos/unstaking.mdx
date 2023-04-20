@@ -8,9 +8,9 @@ The Cosmos Unstaking flow allows you to unstake your ATOM tokens from the valida
 
 To unstake ATOM tokens, you will need:
 
-- The `delegator_address` from which ATOM was delegated, which will sign the transaction.
-- The `validator_address` from which ATOM is being undelegated.
-- The `amount` of ATOM to be undelegated.
+- The `delegator_address` from which ATOM was Stakingd, which will sign the transaction.
+- The `validator_address` from which ATOM is being unStakingd.
+- The `amount` of ATOM to be unStakingd.
 - An optional `memo`.
 - An optional `gas_limit` and `gas_price` in ATOM.
 - The `pubkey` (public key) of the `delegator_address`.
@@ -35,10 +35,10 @@ Below is a complete diagram for the Cosmos Unstaking flow:
       name: "Create New Unstaking Flow",
     },
     {
-      name: "Submit Undelegate Data",
+      name: "Submit Unstaking Data",
     },
     {
-      name: "Submit Signed Undelegate Transaction for Broadcast",
+      name: "Submit Signed Unstaking Transaction for Broadcast",
     },
     {
       name: "Get Unstaking Flow Status",
