@@ -809,6 +809,9 @@ function createMarkdown(services, variables, schemas) {
           within the category
         */
         if (toDashCase(network) === "avalanche") {
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
@@ -824,6 +827,9 @@ function createMarkdown(services, variables, schemas) {
           );
         }
         if (toDashCase(network) === "cardano") {
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
@@ -836,6 +842,9 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "staking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/transfer/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
@@ -854,6 +863,9 @@ function createMarkdown(services, variables, schemas) {
           );
         }
         if (toDashCase(network) === "cosmos") {
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
@@ -866,6 +878,9 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "staking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/redelegate/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
@@ -882,6 +897,9 @@ function createMarkdown(services, variables, schemas) {
             routeEndpoint,
             "redelegate"
           );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/unstaking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
               network
@@ -897,6 +915,9 @@ function createMarkdown(services, variables, schemas) {
             routeEndpoint,
             "unstaking"
           );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/claim-rewards/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
               network
@@ -911,6 +932,9 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "claim-rewards"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/transfer/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
@@ -929,6 +953,9 @@ function createMarkdown(services, variables, schemas) {
           );
         }
         if (toDashCase(network) === "ethereum") {
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
@@ -941,6 +968,11 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "staking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/aggregated-staking/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
@@ -956,6 +988,9 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "aggregated-staking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/unstaking/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
@@ -974,10 +1009,50 @@ function createMarkdown(services, variables, schemas) {
           );
         }
         if (toDashCase(network) === "near") {
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${network.toUpperCase()}`,
             1,
+
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "staking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/unstaking/`
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking - ${network.toUpperCase()}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/transfer/`
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/transfer/index.mdx`,
+            `Staking - ${network.toUpperCase()}`,
+            3,
             true,
             methods,
             service,
@@ -1019,6 +1094,9 @@ function createMarkdown(services, variables, schemas) {
           );
         }
         if (toDashCase(network) === "polkadot") {
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
@@ -1031,6 +1109,9 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "staking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/add-staking-proxy/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
@@ -1047,6 +1128,11 @@ function createMarkdown(services, variables, schemas) {
             routeEndpoint,
             "add-staking-proxy"
           );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/remove-staking-proxy/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
               network
@@ -1062,6 +1148,9 @@ function createMarkdown(services, variables, schemas) {
             routeEndpoint,
             "remove-staking-proxy"
           );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/unstaking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
               network
@@ -1076,6 +1165,9 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "unstaking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/transfer/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
@@ -1094,10 +1186,49 @@ function createMarkdown(services, variables, schemas) {
           );
         }
         if (toDashCase(network) === "polygon") {
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
             1,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "staking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/unstaking/`
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/claim-rewards/`
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/claim-rewards/index.mdx`,
+            `Staking - ${toTitleCase(network)}`,
+            3,
             true,
             methods,
             service,
@@ -1139,6 +1270,9 @@ function createMarkdown(services, variables, schemas) {
           );
         }
         if (toDashCase(network) === "solana") {
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/staking/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
             `Staking - ${toTitleCase(network)}`,
@@ -1151,6 +1285,9 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "staking"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/unstaking/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
@@ -1167,6 +1304,11 @@ function createMarkdown(services, variables, schemas) {
             routeEndpoint,
             "unstaking"
           );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/split-stake-account/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
               network
@@ -1182,6 +1324,11 @@ function createMarkdown(services, variables, schemas) {
             routeEndpoint,
             "split-stake-account"
           );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/merge-stake-account/`
+          );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
               network
@@ -1196,6 +1343,9 @@ function createMarkdown(services, variables, schemas) {
             variables[service],
             routeEndpoint,
             "merge-stake-account"
+          );
+          fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/transfer/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
