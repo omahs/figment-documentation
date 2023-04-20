@@ -23,51 +23,14 @@ We're in the process of having all our services use the same API key. In the mea
 
 ## How to pass the API Key
 
-<Tabs>
-  <TabItem value="js-header" label="Fetch with Header">
-    <CodeBlock language="js">
-      {`fetch("https://erigon-mainnet--rpc-dbgtxn.datahub.figment.io/", {
-    method: 'POST', // can also be 'GET', 'PUT' or any appropriate method
-    headers: {
-        "Authorization" : "<api_key>",
-        "Content-Type": "application/json" // if method is 'POST'
-    },
-    body: JSON.stringify({
-      // JSON Payload
-    })
-})`}
-    </CodeBlock>
-  </TabItem>
-  <TabItem value="js-parameter" label="Fetch with Parameter">
-    <CodeBlock language="js">
-      {`fetch("https://erigon-mainnet--rpc-dbgtxn.datahub.figment.io/apikey/<api_key>/", {
-    method: 'POST', // can also be 'GET', 'PUT' or any appropriate method
-    headers: {
-        "Content-Type": "application/json" // if method is 'POST'
-    },
-    body: JSON.stringify({
-      // JSON Payload
-    })
-})`}
-    </CodeBlock>
-  </TabItem>
-  <TabItem value="curl-header" label="CURL with Header">
-    <CodeBlock language="bash">
-      {`curl -X POST 'https://erigon-mainnet--rpc-dbgtxn.datahub.figment.io/' \\
---header 'Content-Type: application/json' \\
---header 'Authorization: <api_key>' \\
---data '{
-  // JSON Payload
-}'`}
-    </CodeBlock>
-  </TabItem>
-  <TabItem value="curl-parameter" label="CURL with Parameter">
-    <CodeBlock language="bash">
-      {`curl -X POST 'https://erigon-mainnet--rpc-dbgtxn.datahub.figment.io/apikey/<api_key>/' \\
---header 'Content-Type: application/json' \\
---data '{
-  // JSON Payload
-}'`}
-    </CodeBlock>
-  </TabItem>
-</Tabs>
+The Figment API expects the API key to be passed in the HTTP Authorization request header.
+
+<div className="container-wide">
+  <div className="row">
+    <div className="col col--6" style={{ marginLeft: "-50px" }}>
+      <CodeBlock language="bash">
+        {`curl 'https://api.figment.io' -H 'Authorization: <api_key>'`}
+      </CodeBlock>
+    </div>
+  </div>
+</div>

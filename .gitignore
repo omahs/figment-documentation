@@ -12,18 +12,17 @@ node_modules
 
 # Artifacts
 .docusaurus
-docs/api-reference/*
-docs/staking/index.mdx
-docs/staking/02_Networks/**/index.mdx
-docs/rewards/*
-docs/network-data/*
-docs/network-data/**/*.mdx
-docs/validators/*
 build
-partials/transaction-search-parameters
 .env
 
 # CORS test files created by generate.js
 corstests.js
 cors_failed.txt
 
+# Generated pages
+docs/network-data/index.mdx
+docs/network-data/rewards-rates/**
+docs/staking/index.mdx
+docs/staking/02_Networks/**
+docs/rewards/**
+docs/validators/**

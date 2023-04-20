@@ -280,18 +280,10 @@ function APIMethod({
   const [description, ...rest] = content.trim().split(/\n+/);
   const specs = rest.join("\n");
 
-  /* 
-    Ternary for requests with the same endpoint or name:
-    we can differentiate them based on the name in the schema
-    however, the request method is displayed with data-method, 
-    so we need to avoid duplicating the method in the link title. 
-    TODO: This can be made more flexible with a regex.
-  */
   if (name === undefined || name === null) {
     return <></>;
   }
 
-  // @ts-ignore
   if (request.method === "PUT" && endpoint.includes("staking-api")) {
     host = host + "/[:flow_id]/next";
   }

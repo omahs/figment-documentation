@@ -3,7 +3,7 @@ export interface RequestObject {
   query: string | undefined;
   header: [];
   headers: {};
-  method: "POST" | "GET";
+  method: "POST" | "GET" | "PUT";
   url: string;
 }
 

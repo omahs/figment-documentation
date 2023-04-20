@@ -67,10 +67,6 @@
   padding-left: 1.75rem;
 }
 
-/* .menu__link--sublist {
-  padding-left: 1.5rem;
-} */
-
 .menu__list-item-collapsible a {
   order: 1;
 }
@@ -219,7 +215,3 @@ li.theme-doc-sidebar-item-link-level-4 > a.menu__link--active {
 div.navbar__logo > b.navbar__title {
   color: black;
 }
-
-/* .sidebarViewport_src-theme-DocPage-Layout-Sidebar-styles-module {
-  width: var(--doc-sidebar-width);
-} */
