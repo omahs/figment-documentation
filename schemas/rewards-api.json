@@ -1359,7 +1359,7 @@
 							}
 						},
 						"url": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/withdrawals",
-						"description": "Returns a history of withdrawals for the specified addresses. Staking provider agnostic. Goes all the way back to the upgrade of April 12th 2023.\n\n## Request\n\n- `withdrawal_addresses` takes an array of withdrawal addresses\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\")\n    \n\n## Response\n\n- `index` the unique index of the withdrawal on chain (from round robin process)\n- `validator_public_key` is the public key of the validator\n- `validator_index` is the index of the validator\n- `withdrawal_address` is the withdrawal address of the validator\n- `amount_text` is the withdrawal amount (as text)\n- `currency` is \"ETH\"\n- `amount_numeric` is the withdrawal amount (as an integer) - needs `exp` below\n- `exp` is the exponent used to calculate the final ETH amount\n- `full_withdrawal` is a boolean indicating whether the validator exited or not\n- `slot` is the consensus layer slot at which the withdrawal occurred\n- `epoch` is the execution layer block in which the transaction was included\n- `timestamp` is the timestamp of the end of the epoch"
+						"description": "Returns a history of withdrawals for the specified addresses. Staking provider agnostic. Goes all the way back to the upgrade of April 12th 2023.\n\n## Request\n\n- `withdrawal_addresses` takes an array of withdrawal addresses\n- `start` and `end` are epoch numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\")\n    \n\n## Response\n\n- `index` the unique index of the withdrawal on chain (from round robin process)\n- `validator_public_key` is the public key of the validator\n- `validator_index` is the index of the validator\n- `withdrawal_address` is the withdrawal address of the validator\n- `amount_text` is the withdrawal amount (as text)\n- `currency` is \"ETH\"\n- `amount_numeric` is the withdrawal amount (as an integer) - needs `exp` below\n- `exp` is the exponent used to calculate the final ETH amount\n- `full_withdrawal` is a boolean indicating whether the validator exited or not\n- `slot` is the consensus layer slot in which the withdrawal was included\n- `epoch` is the consensus layer epoch in which the withdrawal occurred\n- `timestamp` is the timestamp of the end of the epoch"
 					},
 					"response": [
 						{
@@ -1482,47 +1482,47 @@
 	],
 	"variable": [
 		{
-			"id": "90d797a4-444e-4a8a-94c1-76b593f88554",
+			"id": "2908812e-d2b0-42cd-8d7f-10b2d59b4dad",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "f0637879-9d9f-45bb-8fd7-3f56b9445e9c",
+			"id": "321f4769-e293-4d25-a070-3a54ed503cb1",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "7e0e4390-5967-4779-8bef-ba20920b3dea",
+			"id": "b9c4db69-e916-4fb1-a27b-3a4aa44ef0c0",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "7b9c8d59-6f4f-46c7-bccf-67c4e8c50b5a",
+			"id": "b4f7427a-e87c-4825-9e05-9b75984b8245",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "902cbf9a-1e5a-404a-8c41-f4dbd453acd6",
+			"id": "3f6d8dee-1b6d-4233-834e-27a21d6ebea4",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "9dc27e3c-e9ad-4bf8-96b8-96e3b2788271",
+			"id": "a4c5c61a-f4e2-41d9-8128-8a6dd96fa17a",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "2c497cd1-1f3a-4688-8153-7b5e89d3119b",
+			"id": "e70eabe2-531a-4fed-b0d0-b64f20594e7d",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "b097bea3-838c-409a-b4ae-b754634152c4",
+			"id": "327a8176-06d3-4b74-be77-e854d83f3eb5",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "c1954162-c172-47f5-a7bb-931a63148bd3",
+			"id": "b0d3bf22-e6e8-43ca-9e1b-3e2fc947e555",
 			"key": "epoch-start-date",
 			"value": ""
 		}
