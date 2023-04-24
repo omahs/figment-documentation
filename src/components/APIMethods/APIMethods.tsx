@@ -79,6 +79,11 @@ const FLOWS = {
       "Submit Signed Deposit Transaction for Broadcast": "",
       "Get Staking Flow Status": "",
     },
+    unstaking: {
+      "Create New Unstaking Flow": "",
+      "Submit Unstaking Data": "",
+      "Get Unstaking Flow Status": "",
+    },
     "aggregated-staking": {
       "Create New Aggregated Staking Flow": "",
       "Submit Aggregated Staking Data (Option 1)": "",
@@ -86,10 +91,11 @@ const FLOWS = {
       "Submit Signed Aggregated Deposit Transaction for Broadcast": "",
       "Get Aggregated Staking Flow Status": "",
     },
-    unstaking: {
-      "Create New Unstaking Flow": "",
-      "Submit Unstaking Data": "",
-      "Get Unstaking Flow Status": "",
+    "aggregated-unstaking": {
+      "Create New Aggregated Unstaking Flow": "",
+      "Submit Aggregated Unstaking Data (Option 1)": "",
+      "Submit Aggregated Unstaking Data (Option 2)": "",
+      "Get Aggregated Unstaking Flow Status": "",
     },
   },
   near: {

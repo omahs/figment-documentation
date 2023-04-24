@@ -970,6 +970,24 @@ function createMarkdown(services, variables, schemas) {
             "staking"
           );
           fs.ensureDirSync(
+            `docs/staking/02_Networks/${toDashCase(network)}/unstaking/`
+          );
+          writeStakingReferenceFile(
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/unstaking/index.mdx`,
+            `Staking > ${toTitleCase(network)}`,
+            2,
+            true,
+            methods,
+            service,
+            network,
+            networksList,
+            variables[service],
+            routeEndpoint,
+            "unstaking"
+          );
+          fs.ensureDirSync(
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/aggregated-staking/`
@@ -979,7 +997,7 @@ function createMarkdown(services, variables, schemas) {
               network
             )}/aggregated-staking/index.mdx`,
             `Staking > ${toTitleCase(network)}`,
-            2,
+            3,
             true,
             methods,
             service,
@@ -990,14 +1008,16 @@ function createMarkdown(services, variables, schemas) {
             "aggregated-staking"
           );
           fs.ensureDirSync(
-            `docs/staking/02_Networks/${toDashCase(network)}/unstaking/`
+            `docs/staking/02_Networks/${toDashCase(
+              network
+            )}/aggregated-unstaking/`
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(
               network
-            )}/unstaking/index.mdx`,
+            )}/aggregated-unstaking/index.mdx`,
             `Staking > ${toTitleCase(network)}`,
-            3,
+            4,
             true,
             methods,
             service,
@@ -1005,7 +1025,7 @@ function createMarkdown(services, variables, schemas) {
             networksList,
             variables[service],
             routeEndpoint,
-            "unstaking"
+            "aggregated-unstaking"
           );
         }
         if (toDashCase(network) === "near") {

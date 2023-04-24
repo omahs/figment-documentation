@@ -246,6 +246,16 @@ The event type format follows the pattern **`<network_code>.<operation>.<action>
 
 - `ethereum.staking.delegation.active` &mdash; Once all validators are active
 
+#### Aggregated Unstaking
+
+- `ethereum.aggregated_unstaking.*` &mdash; Wildcard for all aggregated unstaking events
+
+- `ethereum.aggregated_unstaking.in_queue` &mdash; Validator(s) have joined the exit queue
+
+- `ethereum.aggregated_unstaking.exited_queue` &mdash; Validator(s) have left the exit queue
+
+- `ethereum.aggregated_unstaking.withdrawal_done` &mdash; Once all validators are successfully withdrawn
+
 </TabItem><TabItem value="near" label="NEAR">
 
 #### Staking
