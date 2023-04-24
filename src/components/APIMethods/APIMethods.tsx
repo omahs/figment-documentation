@@ -81,7 +81,8 @@ const FLOWS = {
     },
     "aggregated-staking": {
       "Create New Aggregated Staking Flow": "",
-      "Submit Aggregated Staking Data": "",
+      "Submit Aggregated Staking Data (Option 1)": "",
+      "Submit Aggregated Staking Data (Option 2)": "",
       "Submit Signed Aggregated Deposit Transaction for Broadcast": "",
       "Get Aggregated Staking Flow Status": "",
     },
