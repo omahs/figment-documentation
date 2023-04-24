@@ -2002,7 +2002,7 @@
 					]
 				},
 				{
-					"name": "Submit Aggregated Staking Data",
+					"name": "Submit Aggregated Staking Data (Option 1)",
 					"id": "2e30592c-1370-41d0-a9e1-88442afd47a7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -2020,7 +2020,7 @@
 							}
 						},
 						"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethAggregatedStakingFlowId}}/next",
-						"description": "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`. **Required.**\n    - `funding_account_address` — `string` The wallet from which the ETH will originate. **Required.**\n    - `deposits` — Array of validator deposit data:\n        - `validator_pub_key` — `string` The public key of the validator to which the ETH will be deposited. **Required.**\n        - `withdrawal_credentials` — `string` The withdrawal address for the given validator. **Required.**\n        - `signature` — `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pub_key` is known by the signer. **Required.**\n        - `deposit_data_root` — `string` Uniquely identifies the set of deposits made so far. **Required.**\n    - `gas_price` — `string` Adjust the gas price.\n    - `gas_limit` — `string` Adjust the gas limit.\n\n### Response\n\nThe aggregated staking flow will provision enough validators to stake your full `amount`, even if your organization has not pre-provisioned enough validators for it. This is an async process, and may require you to await a webhook indicating provision success before proceeding. Alternatively you can poll the flow until `status aggregated_deposit_tx_signature` is reached. Therefore, there are two possible returned states:\n\n- `awaiting_provision` &mdash; The Staking API is communicating with internal systems to provision validators for your org.\n- `aggregated_deposit_tx_signature` &mdash; Your organization has enough validators available to proceed to transaction signing. This is either because there are preprovisioned validators available for your org, or the Staking API has provisioned validators for you and has advanced out of the `awaiting_provision` state.\n\nWhen the flow is in `aggregated_deposit_tx_signature`, it will include an unsigned transaction payload to stake to your organization's validators. This transaction-ready state indicates three possible `actions`:\n\n- `refresh_aggregated_deposit_tx` &mdash; If you need to get a fresh version of the transaction payload (i.e., your `funding_account`'s transaction nonce has increased).\n- `sign_aggregated_deposit_tx` &mdash; Submit a signed transaction payload ready to be broadcast to the network.\n- `confirm_aggregated_deposit_tx_by_hash` &mdash; Submit a previously completed transaction hash to continue the flow.\n\nWe will choose `sign_aggregated_deposit_tx`, which indicates one input to collect:\n\n- `transaction_payload` &mdash; The signed transaction payload ready to be broadcast to the network."
+						"description": "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`. **Required.**\n    - `funding_account_address` — `string` The wallet from which the ETH will originate. **Required.**\n    - `withdrawal_address` — `hex` Your withdrawal address.\n    - `amount` — `number` The amount of ETH to stake. Must be a multiple of 32.\n\n### Response\n\nThe aggregated staking flow will provision enough validators to stake your full `amount`, even if your organization has not pre-provisioned enough validators for it. This is an async process, and may require you to await a webhook indicating provision success before proceeding. Alternatively you can poll the flow until `status aggregated_deposit_tx_signature` is reached. Therefore, there are two possible returned states:\n\n- `awaiting_provision` — The Staking API is communicating with internal systems to provision validators for your org.\n- `aggregated_deposit_tx_signature` — Your organization has enough validators available to proceed to transaction signing. This is either because there are preprovisioned validators available for your org, or the Staking API has provisioned validators for you and has advanced out of the `awaiting_provision` state.\n    \n\nWhen the flow is in `aggregated_deposit_tx_signature`, it will include an unsigned transaction payload to stake to your organization's validators. This transaction-ready state indicates three possible `actions`:\n\n- `refresh_aggregated_deposit_tx` — If you need to get a fresh version of the transaction payload (i.e., your `funding_account`'s transaction nonce has increased).\n- `sign_aggregated_deposit_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n- `confirm_aggregated_deposit_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n    \n\nWe will choose `sign_aggregated_deposit_tx`, which indicates one input to collect:\n\n- `transaction_payload` — The signed transaction payload ready to be broadcast to the network."
 					},
 					"response": [
 						{
@@ -2054,6 +2054,78 @@
 						},
 						{
 							"id": "39ef2543-bc9a-4aa9-a237-52bccb962683",
+							"name": "Submit Aggregated Staking Data",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"assign_staking_data\",\n    \"inputs\": {\n        \"funding_account_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"withdrawal_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"amount\": 32\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethAggregatedStakingFlowId}}/next"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"7d0c5354-72f0-4bac-bc29-b7384d0321a8\",\n    \"operation\": \"aggregated_staking\",\n    \"state\": \"aggregated_deposit_tx_signature\",\n    \"actions\": [\n        {\n            \"name\": \"refresh_aggregated_deposit_tx\",\n            \"inputs\": []\n        },\n        {\n            \"name\": \"sign_aggregated_deposit_tx\",\n            \"inputs\": [\n                {\n                    \"name\": \"transaction_payload\",\n                    \"display\": \"Transaction Payload\",\n                    \"description\": \"\",\n                    \"type\": \"signed_transaction\",\n                    \"validations\": [],\n                    \"array\": false,\n                    \"default_value\": null,\n                    \"signers\": [\n                        \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\"\n                    ],\n                    \"transaction_payload\": \"0x02f902d805028459682f0085293dc82d66830116fa943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000309855d353352eefb56929801e0d376cf6e5973d18c39424fe42c829cb62a6ff17648e6fdbf0c7259d25d09e17769cf27600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000b458d87418e6020260c92e18b11b64f1ed6fff3000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006094c7e3414664f4dbd1cc8d326de278ee0e4fcf4bc74fb1ea74216bab8c644ddc4fd1ed59dca7db60959f81d4dd5dd8271175113fbc0decb19486f885a5e2bc440a5b3b33184be66dd069290ebe7f47024d2799ea7b1c1eb829cc018b8334fdb00000000000000000000000000000000000000000000000000000000000000001348de8001f6b5ce424f93ca0ca090ad1986ee5969991fa02af345980e874ade6c0\"\n                },\n                {\n                    \"name\": \"signatures\",\n                    \"display\": \"Signatures\",\n                    \"description\": \"\",\n                    \"type\": \"array_of_signatures\",\n                    \"validations\": [],\n                    \"array\": true,\n                    \"default_value\": null,\n                    \"element_type\": \"signature_data\",\n                    \"signers\": [\n                        \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\"\n                    ],\n                    \"transaction_payload\": \"0x02f902d805028459682f0085293dc82d66830116fa943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000309855d353352eefb56929801e0d376cf6e5973d18c39424fe42c829cb62a6ff17648e6fdbf0c7259d25d09e17769cf27600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000b458d87418e6020260c92e18b11b64f1ed6fff3000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006094c7e3414664f4dbd1cc8d326de278ee0e4fcf4bc74fb1ea74216bab8c644ddc4fd1ed59dca7db60959f81d4dd5dd8271175113fbc0decb19486f885a5e2bc440a5b3b33184be66dd069290ebe7f47024d2799ea7b1c1eb829cc018b8334fdb00000000000000000000000000000000000000000000000000000000000000001348de8001f6b5ce424f93ca0ca090ad1986ee5969991fa02af345980e874ade6c0\",\n                    \"signing_payload\": \"0xbf2cd8a721c4845f9a13813c680ba205f166da1d5a6e0e42f92baca723feb5d0\",\n                    \"inputs\": [\n                        {\n                            \"name\": \"account_address\",\n                            \"display\": \"Account Address\",\n                            \"description\": \"\",\n                            \"type\": \"string\",\n                            \"validations\": [\n                                {\n                                    \"type\": \"presence\",\n                                    \"options\": {}\n                                }\n                            ],\n                            \"array\": false,\n                            \"default_value\": null\n                        },\n                        {\n                            \"name\": \"signature\",\n                            \"display\": \"Signature\",\n                            \"description\": \"\",\n                            \"type\": \"string\",\n                            \"validations\": [\n                                {\n                                    \"type\": \"presence\",\n                                    \"options\": {}\n                                }\n                            ],\n                            \"array\": false,\n                            \"default_value\": null\n                        }\n                    ]\n                }\n            ]\n        },\n        {\n            \"name\": \"confirm_aggregated_deposit_tx_by_hash\",\n            \"inputs\": [\n                {\n                    \"name\": \"hash\",\n                    \"display\": \"Hash\",\n                    \"description\": \"\",\n                    \"type\": \"string\",\n                    \"validations\": [\n                        {\n                            \"type\": \"presence\",\n                            \"options\": {}\n                        }\n                    ],\n                    \"array\": false,\n                    \"default_value\": null\n                },\n                {\n                    \"name\": \"block_number\",\n                    \"display\": \"Block Number\",\n                    \"description\": \"\",\n                    \"type\": \"integer\",\n                    \"validations\": [],\n                    \"array\": false,\n                    \"default_value\": null\n                }\n            ]\n        }\n    ],\n    \"data\": {\n        \"withdrawal_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"validators_to_provision\": 1,\n        \"estimated_active_at\": null,\n        \"transactions\": [\n            {\n                \"code\": \"aggregated_deposit\",\n                \"amount\": \"32.0\",\n                \"raw\": \"0x02f902d805028459682f0085293dc82d66830116fa943e30fc2cc800af86e88b69d32d9daf7eccb3a5208901bc16d674ec800000b902a44f498c730000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000000000000000000000000000000000000000002600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000309855d353352eefb56929801e0d376cf6e5973d18c39424fe42c829cb62a6ff17648e6fdbf0c7259d25d09e17769cf27600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000020010000000000000000000000b458d87418e6020260c92e18b11b64f1ed6fff3000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006094c7e3414664f4dbd1cc8d326de278ee0e4fcf4bc74fb1ea74216bab8c644ddc4fd1ed59dca7db60959f81d4dd5dd8271175113fbc0decb19486f885a5e2bc440a5b3b33184be66dd069290ebe7f47024d2799ea7b1c1eb829cc018b8334fdb00000000000000000000000000000000000000000000000000000000000000001348de8001f6b5ce424f93ca0ca090ad1986ee5969991fa02af345980e874ade6c0\",\n                \"signing_payload\": \"0xbf2cd8a721c4845f9a13813c680ba205f166da1d5a6e0e42f92baca723feb5d0\",\n                \"signed\": null,\n                \"hash\": null,\n                \"status\": null,\n                \"error\": null,\n                \"signatures\": null,\n                \"block_time\": null,\n                \"inputs\": {\n                    \"funding_account_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n                    \"gas_price\": null,\n                    \"gas_limit\": null,\n                    \"deposits\": [\n                        {\n                            \"validator_pub_key\": \"0x9855d353352eefb56929801e0d376cf6e5973d18c39424fe42c829cb62a6ff17648e6fdbf0c7259d25d09e17769cf276\",\n                            \"withdrawal_credentials\": \"0x010000000000000000000000b458d87418e6020260c92e18b11b64f1ed6fff30\",\n                            \"signature\": \"0x94c7e3414664f4dbd1cc8d326de278ee0e4fcf4bc74fb1ea74216bab8c644ddc4fd1ed59dca7db60959f81d4dd5dd8271175113fbc0decb19486f885a5e2bc440a5b3b33184be66dd069290ebe7f47024d2799ea7b1c1eb829cc018b8334fdb0\",\n                            \"deposit_data_root\": \"0x348de8001f6b5ce424f93ca0ca090ad1986ee5969991fa02af345980e874ade6\",\n                            \"genesis_fork_version\": \"0x00001020\"\n                        }\n                    ],\n                    \"amount\": \"32.0\"\n                }\n            }\n        ]\n    },\n    \"network_code\": \"ethereum\",\n    \"chain_code\": \"goerli\",\n    \"created_at\": \"2023-04-06T06:37:06.055Z\",\n    \"updated_at\": \"2023-04-06T06:39:40.438Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Submit Aggregated Staking Data (Option 2)",
+					"id": "c876ce37-7fcb-4f8a-8bd4-efc29c3b9508",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"assign_staking_data\",\n    \"inputs\": {\n        \"funding_account_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"deposits\": [\n            {\n                \"validator_pub_key\": \"0xb2941193136e8f0b19ac49a7a2e937fc3c6b0c8640702665395aab4f252c31ba9b9826a2028f862a6e6daf535f2cfd93\",\n                \"withdrawal_credentials\": \"0x010000000000000000000000f264465a0a14cc121d2cc528f4bbaebbfd157bb6\",\n                \"signature\": \"0x812f7fb761e4e32a0dccc199c5fa5dd0b3f70c31dcf9011f8fccd12b8736f0a990ed5888dd1888045f69fa1e203a3f0918a607e8e654619daddaf50d03c3ed733d4f614c0bd2eadafa44b9d189e89487862f39ba8e1df748c9e3ad5c65cc403b\",\n                \"deposit_data_root\": \"0x298f629ecbb7defc1c36f247f79981e655eee2c127def8aad12fc89d9a9150fe\",\n                \"genesis_fork_version\": \"0x00001020\"\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethAggregatedStakingFlowId}}/next",
+						"description": "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`. **Required.**\n    - `funding_account_address` — `string` The wallet from which the ETH will originate. **Required.**\n    - `deposits` — Array of validator deposit data:\n        - `validator_pub_key` — `string` The public key of the validator to which the ETH will be deposited. **Required.**\n        - `withdrawal_credentials` — `string` The withdrawal address for the given validator. **Required.**\n        - `signature` — `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pub_key` is known by the signer. **Required.**\n        - `deposit_data_root` — `string` Uniquely identifies the set of deposits made so far. **Required.**\n    - `gas_price` — `string` Adjust the gas price.\n    - `gas_limit` — `string` Adjust the gas limit.\n\n### Response\n\nThe aggregated staking flow will provision enough validators to stake your full `amount`, even if your organization has not pre-provisioned enough validators for it. This is an async process, and may require you to await a webhook indicating provision success before proceeding. Alternatively you can poll the flow until `status aggregated_deposit_tx_signature` is reached. Therefore, there are two possible returned states:\n\n- `awaiting_provision` — The Staking API is communicating with internal systems to provision validators for your org.\n- `aggregated_deposit_tx_signature` — Your organization has enough validators available to proceed to transaction signing. This is either because there are preprovisioned validators available for your org, or the Staking API has provisioned validators for you and has advanced out of the `awaiting_provision` state.\n    \n\nWhen the flow is in `aggregated_deposit_tx_signature`, it will include an unsigned transaction payload to stake to your organization's validators. This transaction-ready state indicates three possible `actions`:\n\n- `refresh_aggregated_deposit_tx` — If you need to get a fresh version of the transaction payload (i.e., your `funding_account`'s transaction nonce has increased).\n- `sign_aggregated_deposit_tx` — Submit a signed transaction payload ready to be broadcast to the network.\n- `confirm_aggregated_deposit_tx_by_hash` — Submit a previously completed transaction hash to continue the flow.\n    \n\nWe will choose `sign_aggregated_deposit_tx`, which indicates one input to collect:\n\n- `transaction_payload` — The signed transaction payload ready to be broadcast to the network."
+					},
+					"response": [
+						{
+							"id": "2bfab31b-0793-4bcc-a662-0850f47fae89",
+							"name": "Submit Aggregated Staking Data",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"assign_staking_data\",\n    \"inputs\": {\n        \"funding_account_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"withdrawal_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"amount\": 32\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethAggregatedStakingFlowId}}/next"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								""
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"id\": \"7d0c5354-72f0-4bac-bc29-b7384d0321a8\",\n    \"operation\": \"aggregated_staking\",\n    \"state\": \"awaiting_provision\",\n    \"actions\": [\n        {\n            \"name\": \"wait\",\n            \"estimated_state_change_at\": \"2023-04-06T06:44:08.345Z\",\n            \"inputs\": []\n        }\n    ],\n    \"data\": {\n        \"deposits\": [\n            {\n                \"validator_pub_key\": \"0x9855d353352eefb56929801e0d376cf6e5973d18c39424fe42c829cb62a6ff17648e6fdbf0c7259d25d09e17769cf276\",\n                \"withdrawal_credentials\": \"0x010000000000000000000000b458d87418e6020260c92e18b11b64f1ed6fff30\",\n                \"signature\": \"0x94c7e3414664f4dbd1cc8d326de278ee0e4fcf4bc74fb1ea74216bab8c644ddc4fd1ed59dca7db60959f81d4dd5dd8271175113fbc0decb19486f885a5e2bc440a5b3b33184be66dd069290ebe7f47024d2799ea7b1c1eb829cc018b8334fdb0\",\n                \"deposit_data_root\": \"0x348de8001f6b5ce424f93ca0ca090ad1986ee5969991fa02af345980e874ade6\",\n                \"genesis_fork_version\": \"0x00001020\"\n            }\n        ],\n        \"funding_account_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"withdrawal_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"amount\": \"32.0\",\n        \"validators_to_provision\": 1,\n        \"gas_price\": null,\n        \"gas_limit\": null,\n        \"estimated_active_at\": null,\n        \"transactions\": []\n    },\n    \"network_code\": \"ethereum\",\n    \"chain_code\": \"goerli\",\n    \"created_at\": \"2023-04-06T06:37:06.055Z\",\n    \"updated_at\": \"2023-04-06T06:39:07.287Z\"\n}"
+						},
+						{
+							"id": "d8d1a234-7008-4989-af65-8d8604e19c93",
 							"name": "Submit Aggregated Staking Data",
 							"originalRequest": {
 								"method": "PUT",
@@ -2250,7 +2322,7 @@
 							}
 						},
 						"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethAggregatedStakingFlowId}}/next",
-						"description": "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`. **Required.**\n    - `withdrawal_address` — `string` The wallet to which the ETH will be deposited. **Required.**\n    - `amount` — A multiple of 32 ETH. **Required.**\n\n### Response\n\nThe aggregated unstaking flow will exit enough validators to unstake your full `amount`, provided that the validators have a common withdrawal address. The flow state will become `broadcasting` until Figment manually approves the validator exits (within 24-72 business hours)."
+						"description": "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`. **Required.**\n    - `withdrawal_address` — `string` The wallet to which the ETH will be deposited. **Required.**\n    - `amount` — A multiple of 32 ETH. **Required.**\n\n### Response\n\nThe aggregated unstaking flow will exit enough validators to unstake your full `amount`, provided that the validators have a common withdrawal address. The flow state will become `broadcasting` until Figment manually approves the validator exits (within 24-72 business hours). The flow state will move to `exiting` when the validators have joined the exit queue, `withdrawing` when the validators have left the exit queue and `unstaked` when all validators have been withdrawn.\n\nThe timestamp `estimated_principal_return_at` indicates the (estimated) latest time for all validators to be withdrawn."
 					},
 					"response": [
 						{
@@ -2299,18 +2371,18 @@
 							}
 						},
 						"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethAggregatedStakingFlowId}}/next",
-						"description": "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`. **Required.**\n    - `exits` — `array` of `VoluntaryExit` data. **Required.**\n        - `validator_index` — `number` — The validator's index number on the beacon chain. Pass _either_ the index number or the public key. **Required.**\n        - `validator_pubkey` — `string` The public key of the validator to exit.\n        - `epoch` — `number` The epoch in which the validator can be exited. **Required.**\n        - `signature` — `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pubkey` or `validator_index` is known by the signer. **Required.**\n\n### Response\n\nThe aggregated unstaking flow will exit the validators for which you provide `VoluntaryExit` data. The exit transactions are immediately broadcast, without manual approval by Figment.\n\nThe validator status(es) will update as the validator(s) join the exit queue, leave the exit queue, and are withdrawn.\n\n- `in_queue` when a validator is found in the exit queue and is still in the active set.\n- `exited_queue`when a validator has left the active set and is no longer receiving rewards.\n- `withdrawal_done` when a validator has exited the active set and the staked ETH has been sent to the withdrawal address."
+						"description": "After collecting the required inputs, `PUT /api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name` — `string` Name of the action to execute (required).\n- `inputs` — `object`. **Required.**\n    - `exits` — `array` of `VoluntaryExit` data. **Required.**\n        - `validator_index` — `number` — The validator's index number on the beacon chain. Pass _either_ the index number or the public key. **Required.**\n        - `validator_pubkey` — `string` The public key of the validator to exit.\n        - `epoch` — `number` The epoch in which the validator can be exited. **Required.**\n        - `signature` — `string` A BLS proof of possession i.e., a proof that the private key corresponding to the `validator_pubkey` or `validator_index` is known by the signer. **Required.**\n\n### Response\n\nThe aggregated unstaking flow will exit the validators for which you provide `VoluntaryExit` data. The exit transactions are immediately broadcast, without manual approval by Figment.\n\nThe flow state will move from `broadcasting` to `exiting` while the validator is in the exit queue. Once the validator has been withdrawn, the flow state will move to `unstaked`.\n\nThe validator status(es) will update as the validator(s) join the exit queue, leave the exit queue, and are withdrawn.\n\n- `in_queue` when a validator is found in the exit queue and is still in the active set.\n- `exited_queue`when a validator has left the active set and is no longer receiving rewards.\n- `withdrawal_done` when a validator has exited the active set and the staked ETH has been sent to the withdrawal address."
 					},
 					"response": [
 						{
 							"id": "c999a9c8-08c1-4315-ab53-c4e4afa37194",
-							"name": "Submit Aggregated Unstaking Data",
+							"name": "Submit Aggregated Unstaking Data - Broadcasting",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"assign_staking_data\",\n    \"inputs\": {\n        \"funding_account_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"withdrawal_address\": \"0xB458D87418e6020260C92e18b11b64F1ed6fFF30\",\n        \"amount\": 32\n    }\n}",
+									"raw": "{\n    \"name\": \"perform_aggregated_unstake\",\n    \"inputs\": {\n        \"exits\": [\n            {\n                \"validator_index\": 470821,\n                \"validator_pubkey\": null,\n                \"epoch\": 171379,\n                \"signature\": \"0xb4ab419f310e3485e7ac03f40a31839b595c006227cc93900421ee5f4df768ca97c99a8dd447c543b5e789b4f37bb3490fd2d8c5259c08516d888c88c2534cb15c94493bab321d11ff30c34e3a31f97785bf09f9a15a6e564fb98676215d5c93\"\n            }\n        ]\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2319,13 +2391,38 @@
 								},
 								"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethAggregatedStakingFlowId}}/next"
 							},
-							"_postman_previewlanguage": "Text",
+							"_postman_previewlanguage": "json",
 							"header": [
 								""
 							],
 							"cookie": [],
 							"responseTime": null,
-							"body": "{\n  \"id\": \"46318ed0-05b9-4027-896a-cbd35e43983e\",\n  \"operation\": \"aggregated_unstaking\",\n  \"state\": \"broadcasting\",\n  \"actions\": [\n    {\n      \"name\": \"wait\",\n      \"estimated_state_change_at\": \"2023-04-24T16:23:48.419Z\",\n      \"inputs\": []\n    }\n  ],\n  \"data\": {\n    \"exits\": [\n      {\n        \"validator_index\": 470821,\n        \"validator_pubkey\": null,\n        \"epoch\": 171379,\n        \"signature\": \"0xb4ab419f310e3485e7ac03f40a31839b595c006227cc93900421ee5f4df768ca97c99a8dd447c543b5e789b4f37bb3490fd2d8c5259c08516d888c88c2534cb15c94493bab321d11ff30c34e3a31f97785bf09f9a15a6e564fb98676215d5c93\",\n        \"status\": \"broadcasting\",\n        \"source\": \"external\"\n      }\n    ],\n    \"estimated_principal_return_at\": null,\n    \"withdrawal_address\": null,\n    \"amount\": \"32.0\",\n    \"transactions\": []\n  },\n  \"network_code\": \"ethereum\",\n  \"chain_code\": \"goerli\",\n  \"created_at\": \"2023-04-24T16:15:07.485Z\",\n  \"updated_at\": \"2023-04-24T16:15:48.175Z\"\n}"
+							"body": "{\n    \"id\": \"46318ed0-05b9-4027-896a-cbd35e43983e\",\n    \"operation\": \"aggregated_unstaking\",\n    \"state\": \"broadcasting\",\n    \"actions\": [\n        {\n            \"name\": \"wait\",\n            \"estimated_state_change_at\": \"2023-04-24T16:23:48.419Z\",\n            \"inputs\": []\n        }\n    ],\n    \"data\": {\n        \"exits\": [\n            {\n                \"validator_index\": 470821,\n                \"validator_pubkey\": null,\n                \"epoch\": 171379,\n                \"signature\": \"0xb4ab419f310e3485e7ac03f40a31839b595c006227cc93900421ee5f4df768ca97c99a8dd447c543b5e789b4f37bb3490fd2d8c5259c08516d888c88c2534cb15c94493bab321d11ff30c34e3a31f97785bf09f9a15a6e564fb98676215d5c93\",\n                \"status\": \"broadcasting\",\n                \"source\": \"external\"\n            }\n        ],\n        \"estimated_principal_return_at\": null,\n        \"withdrawal_address\": null,\n        \"amount\": \"32.0\",\n        \"transactions\": []\n    },\n    \"network_code\": \"ethereum\",\n    \"chain_code\": \"goerli\",\n    \"created_at\": \"2023-04-24T16:15:07.485Z\",\n    \"updated_at\": \"2023-04-24T16:15:48.175Z\"\n}"
+						},
+						{
+							"id": "171a4f37-9056-411c-bd51-25026233c5aa",
+							"name": "Submit Aggregated Unstaking Data - Exiting",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"perform_aggregated_unstake\",\n    \"inputs\": {\n        \"exits\": [\n            {\n                \"validator_index\": 470821,\n                \"validator_pubkey\": null,\n                \"epoch\": 171379,\n                \"signature\": \"0xb4ab419f310e3485e7ac03f40a31839b595c006227cc93900421ee5f4df768ca97c99a8dd447c543b5e789b4f37bb3490fd2d8c5259c08516d888c88c2534cb15c94493bab321d11ff30c34e3a31f97785bf09f9a15a6e564fb98676215d5c93\"\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{ethAggregatedStakingFlowId}}/next"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								""
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"46318ed0-05b9-4027-896a-cbd35e43983e\",\n  \"operation\": \"aggregated_unstaking\",\n  \"state\": \"exiting\",\n  \"actions\": [\n    {\n      \"name\": \"wait\",\n      \"estimated_state_change_at\": null,\n      \"inputs\": [\n\n      ]\n    }\n  ],\n  \"data\": {\n    \"exits\": [\n      {\n        \"validator_index\": 470821,\n        \"validator_pubkey\": null,\n        \"epoch\": 171379,\n        \"signature\": \"0xb4ab419f310e3485e7ac03f40a31839b595c006227cc93900421ee5f4df768ca97c99a8dd447c543b5e789b4f37bb3490fd2d8c5259c08516d888c88c2534cb15c94493bab321d11ff30c34e3a31f97785bf09f9a15a6e564fb98676215d5c93\",\n        \"status\": \"in_queue\",\n        \"source\": \"external\"\n      }\n    ],\n    \"estimated_principal_return_at\": \"2023-04-25T20:26:01.803Z\",\n    \"withdrawal_address\": null,\n    \"amount\": \"32.0\",\n    \"transactions\": [\n\n    ]\n  },\n  \"network_code\": \"ethereum\",\n  \"chain_code\": \"goerli\",\n  \"created_at\": \"2023-04-24T16:15:07.485Z\",\n  \"updated_at\": \"2023-04-24T16:54:49.804Z\"\n}\n"
 						}
 					]
 				},
@@ -6046,48 +6143,48 @@
 	],
 	"variable": [
 		{
-			"id": "3b5e7701-5f54-48ad-a2c0-9f6bdf6ee99e",
+			"id": "a02193da-be68-4c39-939d-dbe3fa2d2362",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "3a80a8b5-ad25-4f83-ad80-c7f2f75f7a17",
+			"id": "dadd3327-ae09-422d-ada7-8b111a25fbbc",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "75c369f4-85e8-4b73-acf8-47beef3307ff",
+			"id": "9026d23f-4b71-4d46-b3ad-5f0c60376d71",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "b13fe4bb-4ac1-4a28-bdcd-d3a025b0b1f2",
+			"id": "357c0b0c-493c-47cb-91ab-df157af168ad",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "40ca367d-47b7-496f-8098-40d5e19e6bd7",
+			"id": "5394d600-1ed6-46c8-bf38-c9b2049b1486",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "faf9b49d-1e4a-49cb-824b-46ccf75d9655",
+			"id": "0306c262-9abb-4af3-baf8-1890968f5630",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "e8729a6e-3c82-46f0-8704-46ecc4c9d15e",
+			"id": "37ac2067-9de4-486d-aee8-2d6eeb527de6",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "4026588f-8799-4f0a-b170-9fc502f6b277",
+			"id": "5b5bfafa-fa5a-41db-a6ec-36c2946cfdc7",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "73a47af1-3e3d-42c2-a276-9e27648e4829",
+			"id": "1eb07444-743d-4b5a-937d-a989914d511b",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
