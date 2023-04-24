@@ -1967,7 +1967,7 @@
 							}
 						},
 						"url": "https://{{ETH_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
-						"description": "To initiate the aggregated staking process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Request\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `ethereum`). **Required.**\n    - `chain_code` — `string` Chain this flow operates on (ex. `goerli`). **Required.**\n    - `operation` — `string` The operation to perform (ex. `aggregated_staking`). **Required.**\n    - `version` — `string` API version to use (ex. `v1`).\n\n### Response\n\n- `id` — `string` ID of the newly created flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n- To go with Option 1 (On-demand ETH staking) you only need `funding_account_address`, `withdrawal_address` and `amount`.\n- To go with Option 2 (Bring your validators) you'll only need `funding_account_address` and `deposits` data.\n    - `assign_staking_data` — Use this action to generate an aggregated deposit transaction to stake your ETH. The `assign_staking_data` action indicates eleven fields for data collection.\n        - `funding_account_address` — The wallet from which the ETH will originate\n        - `deposits` — `array` of validator deposit data:\n            - `validator_pub_key` — The public key of the validator to which the ETH will be deposited.\n            - `withdrawal_credentials` — The withdrawal address for the given validator.\n            - `signature` — A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer.\n            - `deposit_data_root` — Uniquely identifies the set of deposits made so far.\n            - `genesis_fork_version` — The fork version of Ethereum you used as an input to create `signature`.\n        - `gas_limit` — Adjust the gas limit.\n        - `gas_price` — Adjust the gas price.\n        - `withdrawal_address` — The withdrawal address into which you want to receive your ETH after withdrawal.\n        - `amount` — The amount of ETH you want to stake. It must be a multiple of 32."
+						"description": "To initiate the aggregated staking process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Request\n\n- `flow` — `object`\n    - `network_code` — `string` Network this flow operates on (ex. `ethereum`). **Required.**\n    - `chain_code` — `string` Chain this flow operates on (ex. `goerli`). **Required.**\n    - `operation` — `string` The operation to perform (ex. `aggregated_staking`). **Required.**\n    - `version` — `string` API version to use (ex. `v1`).\n\n### Response\n\n- `id` — `string` ID of the newly created flow.\n- `operation` — `string` The Staking API operation being performed by this flow.\n- `state` — `string` The current state of the flow.\n- `actions` — `array` It includes the `name` & `inputs` of all next possible actions.\n    - `assign_staking_data` — Use this action to generate an aggregated deposit transaction to stake your ETH. The `assign_staking_data` action indicates eleven fields for data collection.\n        - `funding_account_address` — The wallet from which the ETH will originate\n        - `deposits` — `array` of validator deposit data:\n            - `validator_pub_key` — The public key of the validator to which the ETH will be deposited.\n            - `withdrawal_credentials` — The withdrawal address for the given validator.\n            - `signature` — A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer.\n            - `deposit_data_root` — Uniquely identifies the set of deposits made so far.\n            - `genesis_fork_version` — The fork version of Ethereum you used as an input to create `signature`.\n        - `gas_limit` — Adjust the gas limit.\n        - `gas_price` — Adjust the gas price.\n        - `withdrawal_address` — The withdrawal address into which you want to receive your ETH after withdrawal.\n        - `amount` — The amount of ETH you want to stake. It must be a multiple of 32.\n\n- To proceed with Option 1 (On-demand ETH staking) you only need `funding_account_address`, `withdrawal_address` and `amount`.\n\n- To proceed with Option 2 (Bring your validators) you only need `funding_account_address` and `deposits` data."
 					},
 					"response": [
 						{
@@ -6046,48 +6046,48 @@
 	],
 	"variable": [
 		{
-			"id": "28909a6b-5e8c-4db1-9422-9275149409e8",
+			"id": "3b5e7701-5f54-48ad-a2c0-9f6bdf6ee99e",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "d518b59a-de77-4dec-8675-1fe6f69861b6",
+			"id": "3a80a8b5-ad25-4f83-ad80-c7f2f75f7a17",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "056697a5-30b2-40ac-a957-7dd5c5fb4e6c",
+			"id": "75c369f4-85e8-4b73-acf8-47beef3307ff",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "deb30c8d-28ee-442f-9ec7-3b654209c370",
+			"id": "b13fe4bb-4ac1-4a28-bdcd-d3a025b0b1f2",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "9c68fc6c-f043-4234-b2bd-f2d1917bab2f",
+			"id": "40ca367d-47b7-496f-8098-40d5e19e6bd7",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "777b7839-0c09-4755-a190-7230fe9ce7c4",
+			"id": "faf9b49d-1e4a-49cb-824b-46ccf75d9655",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "8641fbc4-df65-4b0b-8dcb-6658e3d2bd27",
+			"id": "e8729a6e-3c82-46f0-8704-46ecc4c9d15e",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "96576087-6e48-4d8c-8088-2275ccd0d042",
+			"id": "4026588f-8799-4f0a-b170-9fc502f6b277",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "71dfc361-b85c-4a11-ae85-8b0323c34cee",
+			"id": "73a47af1-3e3d-42c2-a276-9e27648e4829",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
