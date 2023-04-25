@@ -57,6 +57,32 @@ const config = {
                   };
                 }
 
+                /* Redirects for outdated links */
+                if (link.label === "Quickstart") {
+                  return {
+                    className: "hidden",
+                  };
+                }
+
+                if (link.label === "Support") {
+                  return {
+                    className: "hidden",
+                  };
+                }
+
+                if (link.label === "Guides") {
+                  return {
+                    className: "hidden",
+                  };
+                }
+
+                if (link.label === "API Reference") {
+                  return {
+                    className: "hidden",
+                  };
+                }
+                /* End redirects for outdated links */
+
                 if (link.label === "TopLogo") {
                   return {
                     type: "html",
