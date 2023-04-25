@@ -11,7 +11,7 @@ To initiate the staking process, create a new flow with a `POST` request to `/ap
   - `network_code` &mdash; `string` Network this flow operates on (ex. `cosmos`) (required).
   - `chain_code` &mdash; `string` Chain this flow operates on (ex. `testnet`) (required).
   - `operation` &mdash; `string` The operation to perform (ex. `staking`) (required).
-  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+  - `version` &mdash; `string` API version to use (ex. `v1`) .
 
 #### Sample cURL Request
 
@@ -44,9 +44,9 @@ The `create_delegate_tx` action indicates seven possible fields for data collect
 - `validator_address` &mdash; The validator address to which ATOM will be delegated.
 - `amount` &mdash; The amount of ATOM to be delegated.
 - `memo` &mdash; An optional message to record on-chain with your transaction.
-- `gas_limit` &mdash; Total amount of gas you're willing to let this transaction consume (optional).
+- `gas_limit` &mdash; Total amount of gas you're willing to let this transaction consume .
   - If you do not include a gas limit, the Staking API uses a Cosmos library to select a good default for you.
-- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction (optional).
+- `gas_price` &mdash; how many ATOM you're willing to pay per unit of gas consumed by this transaction .
   - If you do not include a gas price, the Staking API uses a Cosmos library to select a good default for you.
 - `pubkey` &mdash; The public key value will be retrieved from the chain, however if you're using a fresh account (that does not have any outgoing activity) then this information is not available and it requires the user to pass it.
 

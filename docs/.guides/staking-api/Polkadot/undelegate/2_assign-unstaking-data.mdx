@@ -10,7 +10,7 @@ After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:f
 - `name` &mdash; `string` Name of the action to execute (required).
 - `inputs` &mdash; `object`
   - `controller_account_address` &mdash; `string` Address of the wallet DOT will be bonded to (required).
-  - `controller_proxy_account_address` &mdash; `string` A proxy account that will sign on behalf of the controller account (optional).
+  - `controller_proxy_account_address` &mdash; `string` A proxy account that will sign on behalf of the controller account .
   - `stash_account_address` &mdash; `string` Primary wallet from which DOT will be bonded (required).
   - `amount` &mdash; `number` &mdash; The amount of DOT to be bonded to the controller. This field should be in full DOT, not in Planck (ie. if you want to stake 5 DOT, return "amount": 5.0). Staking API will translate the amount to Plancks so you do not have to worry about the conversion factor (required). A Planck is the smallest unit of DOT. One DOT contains 10,000,000,000 Plancks.
   - `maximum` &mdash; `boolean` &mdash; `true` if you want to unbond the maximum number of tokens, else `false`.

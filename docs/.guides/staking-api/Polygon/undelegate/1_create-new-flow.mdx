@@ -11,7 +11,7 @@ To initiate the undelegation process, create a new flow with a `POST` request to
   - `network_code` &mdash; `string` Network on which this flow operates (ex. `polygon`) (required).
   - `chain_code` &mdash; `string` Chain on which this flow operates (ex. `testnet`) (required).
   - `operation` `string` The operation to perform (ex. `unstaking`) (required).
-  - `version` &mdash; `string` API version to use (ex. `v1`) (optional).
+  - `version` &mdash; `string` API version to use (ex. `v1`) .
 
 #### Sample cURL Request
 
@@ -43,10 +43,10 @@ The `create_unbond_tx` action indicates seven fields for data collection:
 - `delegator_address` &mdash; The delegator address (required).
 - `validator_address` &mdash; The validator contract address from which MATIC will be undelegated (required).
 - `amount` &mdash; The amount of MATIC to be undelegated (required).
-- `max_shares_to_burn` &mdash; The maximum number of shares of the delegation to be burned. If the exchange rate results in more shares being burned, the transaction will fail (optional).
-- `max_slippage_percentage` &mdash; The maximum slippage you are willing to accept (optional).
-- `gas_limit` &mdash; Adjust gas limit for the transaction (optional).
-- `gas_price` &mdash; Adjust gas price for the transaction (optional).
+- `max_shares_to_burn` &mdash; The maximum number of shares of the delegation to be burned. If the exchange rate results in more shares being burned, the transaction will fail .
+- `max_slippage_percentage` &mdash; The maximum slippage you are willing to accept .
+- `gas_limit` &mdash; Adjust gas limit for the transaction .
+- `gas_price` &mdash; Adjust gas price for the transaction .
 
 #### Sample Response
 

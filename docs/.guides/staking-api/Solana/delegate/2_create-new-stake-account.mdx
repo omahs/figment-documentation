@@ -12,8 +12,8 @@ After collecting the required inputs as mentioned below, send a `PUT` request to
 - `name` &mdash; `string` Name of the action to execute (required).
 - `inputs` &mdash; `object`
   - `funding_account_pubkey` &mdash; The main wallet your SOL will be originating from (required).
-  - `stake_authority_pubkey` &mdash; Grants authority to sign certain staking relation transactions to the provided address. Defaults to `funding_account_pubkey` (optional).
-  - `withdraw_authority_pubkey` &mdash; Grants authority to sign certain withdrawal related transactions to the provided address. Defaults to `funding_account_pubkey` (optional).
+  - `stake_authority_pubkey` &mdash; Grants authority to sign certain staking relation transactions to the provided address. Defaults to `funding_account_pubkey` .
+  - `withdraw_authority_pubkey` &mdash; Grants authority to sign certain withdrawal related transactions to the provided address. Defaults to `funding_account_pubkey` .
   - `amount` &mdash; The amount of SOL to be sent to the Stake Account. This field should be in full SOL, not in lamports (i.e. if you want to stake 5 SOL, return `"amount": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor (required).
 
 #### Sample cURL Request
