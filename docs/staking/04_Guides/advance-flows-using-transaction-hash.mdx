@@ -456,46 +456,52 @@ For comparison, an Ethereum staking flow state would be `deposited` after a succ
 
 <Tabs><TabItem value="avax" label="Avalanche">
 
-- Avalanche [delegation flow](avalanche/delegate/submit-signed-delegate-transaction) final state is `completed`
+- Avalanche [delegation flow](/staking/avalanche/staking/) final state is `completed`
+
+</TabItem><TabItem value="ada" label="Cardano">
+
+- Cardano [staking](/staking/cardano/staking/) and [transfer](/staking/cardano/transfer/) flows&apos; final state is `completed`
 
 </TabItem><TabItem value="atom" label="Cosmos">
 
-- Cosmos [delegation](cosmos/delegate/submit-signed-delegate-transaction),
-  [redelegation](cosmos/redelegate/submit-signed-redelegate-transaction),
-  [transfer](cosmos/transfer/submit-signed-transfer-transaction) &
-  [claim rewards](cosmos/claim-rewards/submit-signed-claim-rewards-transaction) flows&apos; final state is `completed`
-- Cosmos [undelegation](cosmos/undelegate/submit-signed-undelegate-transaction) state is `unbonding` during the unbonding period, moving to `completed` when successful
+- Cosmos [staking](/staking/cosmos/staking/),
+  [redelegation](/staking/cosmos/redelegate/),
+  [transfer](/staking/cosmos/transfer/) &
+  [claim rewards](/staking/cosmos/claim-rewards/) flows&apos; final state is `completed`
+- Cosmos [unstaking](/staking/cosmos/unstaking/) state is `unbonding` during the unbonding period, moving to `completed` when successful
 
 </TabItem><TabItem value="eth" label="Ethereum">
 
-- Ethereum [staking](ethereum/staking/submit-signed-deposit-transaction) flow final state is `deposited`
-- Ethereum [aggregated staking](ethereum/aggregated-staking/submit-signed-aggregated-deposit-transaction) flow state is `activating` during the activation period, moving to `active` when successful
+- Ethereum [staking](/staking/ethereum/staking/) flow final state is `deposited`
+- Ethereum [unstaking](/staking/ethereum/unstaking/) flow final state is `unstaked`
+- Ethereum [aggregated staking](/staking/ethereum/aggregated-staking/) flow state is `activating` during the activation period, moving to `active` when successful
+- Ethereum [aggregated unstaking](/staking/ethereum/aggregated-unstaking/) flow state is `broadcasting` if awaiting manual Figment approval, or `exiting` while the validator(s) are in the exit queue, moving to `unstaked` when successful
 
 </TabItem><TabItem value="near" label="NEAR">
 
-- NEAR [delegation](near/delegate/submit-signed-delegate-transaction) flow final state is `delegated`
-- NEAR [undelegation](near/undelegate/submit-signed-undelegate-transaction) flow state is `cool_down` during the unbonding period, moving to `withdrawn` after a successful withdrawal transaction
-- NEAR [transfer](near/transfer/submit-signed-transfer-transaction) flow final state is `transferred`
+- NEAR [staking](/staking/near/staking/) flow final state is `delegated`
+- NEAR [unstaking](/staking/near/unstaking/) flow state is `cool_down` during the unbonding period, moving to `withdrawn` after a successful withdrawal transaction
+- NEAR [transfer](/staking/near/transfer/) flow final state is `transferred`
 
 </TabItem><TabItem value="dot" label="Polkadot" default>
 
-- Polkadot [delegation](polkadot/delegate/submit-signed-bonding-transaction) flow state is `bonding_complete` after a successful bonding transaction and `delegated` after a successful nomination transaction
-- Polkadot [undelegation](polkadot/undelegate) flow final state is `done` or `ready_to_withdraw`, moving to `done` after a successful withdrawal transaction
-- Polkadot [add proxy](polkadot/add-staking-proxy/submit-signed-add-proxy-transaction) flow final state is `registered`
-- Polkadot [remove proxy](polkadot/remove-staking-proxy/submit-signed-remove-proxy-transaction) flow final state is `removed`
-- Polkadot [transfer](polkadot/transfer/submit-signed-transfer-transaction) flow final state is `transferred`
+- Polkadot [staking](/staking/polkadot/staking/) flow state is `bonding_complete` after a successful bonding transaction and `delegated` after a successful nomination transaction
+- Polkadot [unstaking](/staking/polkadot/unstaking/) flow final state is `done` or `ready_to_withdraw`, moving to `done` after a successful withdrawal transaction
+- Polkadot [add staking proxy](/staking/polkadot/add-staking-proxy/) flow final state is `registered`
+- Polkadot [remove staking proxy](/staking/polkadot/remove-staking-proxy/) flow final state is `removed`
+- Polkadot [transfer](/staking/polkadot/transfer/) flow final state is `transferred`
 
 </TabItem><TabItem value="matic" label="Polygon">
 
-- Polygon [delegation](polygon/delegate/submit-signed-delegate-transaction) flow state is `create_delegate_tx` after a successful allowance transaction and `completed` after a successful delegate transaction
-- Polygon [undelegation](polygon/undelegate/submit-signed-unbonding-transaction) flow state is `unbonding` during the unbonding period, moving to `done` after a successful claim transaction
-- Polygon [claim rewards](polygon/claim-rewards/submit-signed-claim-rewards-transaction) flow final state is `done` after a successful claim rewards transaction
+- Polygon [staking](/staking/polygon/staking/) flow state is `create_delegate_tx` after a successful allowance transaction and `completed` after a successful delegate transaction
+- Polygon [unstaking](/staking/polygon/unstaking/) flow state is `unbonding` during the unbonding period, moving to `done` after a successful claim transaction
+- Polygon [claim rewards](/staking/polygon/claim-rewards/) flow final state is `done` after a successful claim rewards transaction
 
 </TabItem><TabItem value="sol" label="Solana">
 
-- Solana [delegation](solana/delegate/submit-signed-delegate-transaction) flow state is `stake_account` after a stake account is created or assigned, moving to `delegation_activating` during the bonding period to a final state of `delegation_active` after a successful delegation
-- Solana [undelegation](solana/undelegate/submit-signed-deactivate-transaction) flow state is `cool_down` during the deactivation period, moving to a final state of `withdrawn` after a successful withdrawal transaction
-- Solana [transfer](solana/transfer/submit-signed-transfer-transaction) flow final state is `transferred`
-- Solana [merge stake account](solana/merge-stake-account/submit-signed-merge-stake-account-transaction) and [split stake account](solana/split-stake-account/submit-signed-split-stake-account-transaction) account flow final states are both `completed`
+- Solana [staking](/staking/solana/staking/) flow state is `stake_account` after a stake account is created or assigned, moving to `delegation_activating` during the bonding period to a final state of `delegation_active` after a successful delegation
+- Solana [unstaking](/staking/solana/unstaking/) flow state is `cool_down` during the deactivation period, moving to a final state of `withdrawn` after a successful withdrawal transaction
+- Solana [transfer](/staking/solana/transfer/) flow final state is `transferred`
+- Solana [merge stake account](/staking/solana/merge-stake-account/) and [split stake account](/staking/solana/split-stake-account/) account flow final states are both `completed`
 
 </TabItem></Tabs>

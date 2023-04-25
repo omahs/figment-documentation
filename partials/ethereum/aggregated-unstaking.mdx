@@ -15,7 +15,7 @@ The recommended way to unstake ETH across multiple validators is to use our on-d
 - `amount` &mdash; The amount of ETH you want to unstake. Must be a multiple of 32.
 - `withdrawal_address` &mdash; The withdrawal address associated with the group of validators you wish to exit.
 
-**There are no transactions to be signed in this flow** &mdash; Figment will review and manually approve on-demand exits within 24-72 business hours from the time the flow is processed.
+**There are no transactions to be signed by the customer in this flow** &mdash; Figment will review and manually approve on-demand exits within 24-72 business hours from the time the flow is processed.
 
 :::info note
 
@@ -37,11 +37,11 @@ You would need to submit two separate requests to unstake from all 100 validator
 The optional way to unstake ETH using the Staking API is to provide `VoluntaryExits`. To unstake ETH as per this method:
 
 - Supply an array of `VoluntaryExit` objects, consisting of:
-  - `validator_index` - The Validator's index on the beacon chain.
-  - `epoch` - The epoch in which the validator can be exited.
-  - `signature` - The cryptographic signature of the `VoluntaryExit` itself.
+  - `validator_index` - Index of the validator to exit.
+  - `epoch` - Earliest epoch when a voluntary exit can be processed for the given validator. This value must be for a past or current epoch, not a future epoch.
+  - `signature` - A BLS signature of the `VoluntaryExit` message by the validator's signing key.
 
-**There are no transactions to be signed in this flow** &mdash; The `VoluntaryExit` data will be immediately broadcast without a manual approval by Figment.
+**There are no transactions to be signed by the customer in this flow** &mdash; The `VoluntaryExit` data will be immediately broadcast without a manual approval by Figment.
 
 ### Validator Status
 
