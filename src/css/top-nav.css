@@ -50,6 +50,7 @@
   color: white;
 }
 
-.navbar__items.navbar__items--right {
+/* colorModeToggle on navbar */
+/* .navbar__items.navbar__items--right {
   display: none;
-}
+} */

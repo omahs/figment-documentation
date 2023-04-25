@@ -93,6 +93,12 @@ img.inline-image {
   color: #4f566b;
 }
 
+/* Prevent dark background on darkmode for ``` codeblocks in Postman schema */
+[data-theme="dark"]
+  pre:not(.hostURL_src-components-APIMethods-styles-module):not(.prism-code) {
+  background: #f6f8fb;
+}
+
 /* line-height impacts APIReferenceNav */
 [data-theme="light"] article a {
   color: #000;

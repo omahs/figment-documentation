@@ -2,62 +2,15 @@ import Link from "@docusaurus/Link";
 import img1 from "@site/static/img/staking/workflows/v1/ethereum/Workflows::V1::Ethereum::AggregatedStakingFlowUpdated_workflow.png";
 import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
-## Aggregated Unstaking
+The Aggregated Unstaking flow allows you to unstake ETH from multiple validators at once. There are two ways:
 
-The Ethereum Aggregated Unstaking flow allows you to unstake ETH from multiple validators at once in just a few steps.
+### Option 1: On Demand Exits
 
-The aggregated unstaking flow allows you to unstake ETH from validators in two ways:
-
-### Option 1 (On-demand exits)
-
-The recommended way to unstake ETH across multiple validators is to use our on-demand exit method.
-
-- `amount` &mdash; The amount of ETH you want to unstake. Must be a multiple of 32.
-- `withdrawal_address` &mdash; The withdrawal address associated with the group of validators you wish to exit.
+This is the way to unstake ETH across multiple validators with a single request.
 
 **There are no transactions to be signed by the customer in this flow** &mdash; Figment will review and manually approve on-demand exits within 24-72 business hours from the time the flow is processed.
 
-:::info note
-
 A maximum of 100 validators sharing the same withdrawal address can be exited per request.
-
-**Example**:
-
-You have a total of 100 validators, of which:
-
-- 50 use the withdrawal address `0xabcd...ffff`.
-- 50 use the withdrawal address `0xdcba...aabb`.
-
-You would need to submit two separate requests to unstake from all 100 validators.
-
-:::
-
-### Option 2 (Using `VoluntaryExits`)
-
-The optional way to unstake ETH using the Staking API is to provide `VoluntaryExits`. To unstake ETH as per this method:
-
-- Supply an array of `VoluntaryExit` objects, consisting of:
-  - `validator_index` - Index of the validator to exit.
-  - `epoch` - Earliest epoch when a voluntary exit can be processed for the given validator. This value must be for a past or current epoch, not a future epoch.
-  - `signature` - A BLS signature of the `VoluntaryExit` message by the validator's signing key.
-
-**There are no transactions to be signed by the customer in this flow** &mdash; The `VoluntaryExit` data will be immediately broadcast without a manual approval by Figment.
-
-### Validator Status
-
-The status reported by each validator in the API response will be one of:
-
-- `broadcast_scheduled` when a validator is waiting for Figment's manual approval of the exit within 24-72 business hours.
-- `in_queue` when a validator is found in the exit queue and is still in the active set.
-- `exited_queue` when a validator has left the active set and is no longer receiving rewards.
-- `withdrawal_done` when a validator has exited the active set and the staked eth has been sent to the withdrawal address.
-
-You will also see a timestamp for `estimated_principal_return_at` in the response,
-which indicates the (estimated) latest time that all unstaked ETH will be sent to the withdrawal address.
-
-This is subject to change and it is possible for validators to be exited and withdrawals to occur before this timestamp.
-
-### Actions
 
 <APIReferenceNav
   service="staking-api"
@@ -68,10 +21,30 @@ This is subject to change and it is possible for validators to be exited and wit
       name: "Create New Aggregated Unstaking Flow",
     },
     {
-      name: "Submit Aggregated Unstaking Data (Option 1)",
+      name: "Submit Aggregated Unstaking Data (Option 1: On Demand Exits)",
     },
     {
-      name: "Submit Aggregated Unstaking Data (Option 2)",
+      name: "Get Aggregated Unstaking Flow Status",
+    },
+  ]}
+/>
+
+### Option 2: Using VoluntaryExits
+
+This is the way to unstake ETH if you have pre-signed exit transactions for the validators you want to exit.
+
+**There are no transactions to be signed by the customer in this flow** &mdash; The `VoluntaryExit` data will be immediately broadcast without a manual approval by Figment.
+
+<APIReferenceNav
+  service="staking-api"
+  network="ethereum"
+  path="docs/staking/02_networks/ethereum/index.mdx"
+  methods={[
+    {
+      name: "Create New Aggregated Unstaking Flow",
+    },
+    {
+      name: "Submit Aggregated Unstaking Data (Option 2: Using VoluntaryExits)",
     },
     {
       name: "Get Aggregated Unstaking Flow Status",

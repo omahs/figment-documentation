@@ -2,45 +2,11 @@ import Link from "@docusaurus/Link";
 import img1 from "@site/static/img/staking/workflows/v1/ethereum/Workflows::V1::Ethereum::AggregatedStakingFlowUpdated_workflow.png";
 import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
 
-## Aggregated Staking
+The Ethereum Aggregated Staking flow allows you to stake ETH to multiple validators at once. There are two ways:
 
-The Ethereum Aggregated Staking flow allows you to stake ETH to multiple validators at once in just a few steps.
+### Option 1: On Demand Validators (`Recommended`)
 
-Aggregated staking flow allows you to stake ETH in two ways:
-
-### Option 1 (On-demand ETH staking)
-
-It's the recommended way to stake ETH using the Staking API. To stake ETH as per this method you will need:
-
-- `funding_account_address` &mdash; The wallet from which the ETH will originate
-- `withdrawal_address` &mdash; The withdrawal address into which you want to receive your ETH after withdrawal.
-- `amount` &mdash; The amount of ETH you want to stake. It must be a multiple of 32.
-
-### Option 2 (Bring your validators)
-
-It's the optional way to stake ETH using the Staking API in which you have to manually input the deposits data. To stake ETH as per this method you will need:
-
-- `funding_account_address` &mdash; The wallet from which the ETH will originate
-- `deposits` &mdash; Array of validator deposit data:
-  - `validator_pub_key` &mdash; The public key of the validator to which the ETH will be deposited
-  - `withdrawal_credentials` &mdash; The withdrawal address for the given validator
-  - `signature` &mdash; A BLS proof of possession, i.e. a proof that the private key corresponding to the `validator_pub_key` is known by the signer
-  - `deposit_data_root` &mdash; Uniquely identifies the set of deposits made so far
-  - `genesis_fork_version` &mdash; The fork version of Ethereum you used as an input to create `signature`.
-- `gas_limit` &mdash; Adjust the gas limit
-- `gas_price` &mdash; Adjust the gas price
-
-### Flow Diagram
-
-Below is a complete diagram for the Ethereum Aggregated Staking flow:
-
-<img
-  src={img1}
-  alt="Ethereum Aggregated Staking Flow Diagram"
-  className="inline-image"
-/>
-
-### Actions
+To stake ETH as per this method you do not need validators.
 
 <APIReferenceNav
   service="staking-api"
@@ -51,10 +17,31 @@ Below is a complete diagram for the Ethereum Aggregated Staking flow:
       name: "Create New Aggregated Staking Flow",
     },
     {
-      name: "Submit Aggregated Staking Data (Option 1)",
+      name: "Submit Aggregated Staking Data (Option 1: On Demand Validators)",
     },
     {
-      name: "Submit Aggregated Staking Data (Option 2)",
+      name: "Submit Signed Aggregated Deposit Transaction for Broadcast",
+    },
+    {
+      name: "Get Aggregated Staking Flow Status",
+    },
+  ]}
+/>
+
+### Option 2: Bring Your Validators
+
+This is the way to stake ETH if you already have validators.
+
+<APIReferenceNav
+  service="staking-api"
+  network="ethereum"
+  path="docs/staking/02_networks/ethereum/index.mdx"
+  methods={[
+    {
+      name: "Create New Aggregated Staking Flow",
+    },
+    {
+      name: "Submit Aggregated Staking Data (Option 2: Bring Your Validators)",
     },
     {
       name: "Submit Signed Aggregated Deposit Transaction for Broadcast",
