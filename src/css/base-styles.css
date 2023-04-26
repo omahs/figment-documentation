@@ -93,12 +93,6 @@ img.inline-image {
   color: #4f566b;
 }
 
-/* Prevent dark background on darkmode for ``` codeblocks in Postman schema */
-[data-theme="dark"]
-  pre:not(.hostURL_src-components-APIMethods-styles-module):not(.prism-code) {
-  background: #f6f8fb;
-}
-
 /* line-height impacts APIReferenceNav */
 [data-theme="light"] article a {
   color: #000;
@@ -264,18 +258,36 @@ ul.flowLinks li {
   background: transparent;
 }
 
-code [data-theme="light"] code {
+/* Prevent dark background on darkmode for ``` codeblocks in Postman schema */
+[data-theme="dark"]
+  pre:not(.hostURL_src-components-APIMethods-styles-module):not(.prism-code) {
+  background: #f6f8fb;
+}
+
+[data-theme="light"]
+  code:not(.language-json):not(
+    .codeBlockLines_src-theme-CodeBlock-Content-styles-module
+  ) {
   color: #2a2f45;
   background: #f7fafc;
   padding: 0 3px;
-  margin: 0 1px;
+  margin: 0 2px;
   border: solid 1px rgba(0, 0, 0, 0.05);
 }
 
-[data-theme="dark"] code {
+[data-theme="dark"]
+  code:not(.language-json):not(
+    .codeBlockLines_src-theme-CodeBlock-Content-styles-module
+  ) {
   color: #ffffff;
   background: #595959;
   padding: 0 3px;
-  margin: 0 1px;
+  margin: 0 2px;
   border: solid 1px rgba(0, 0, 0, 0.05);
 }
+
+[data-theme="dark"] pre > code.language-json {
+  color: #000;
+  background: #f6f8fb;
+}
+/* End - Prevent dark background on darkmode for ``` codeblocks in Postman schema */
