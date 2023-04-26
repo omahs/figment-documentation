@@ -49,3 +49,8 @@
 [data-theme="dark"] .navbar__title {
   color: white;
 }
+
+/* colorModeToggle on navbar */
+.navbar__items.navbar__items--right {
+  background: transparent;
+}
