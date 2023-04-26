@@ -53,7 +53,7 @@
   .clean-btn:not(.toggleButton_src-theme-ColorModeToggle-styles-module):not(
     .overlayHeaderButton_src-components-APIMethods-components-CodeExample-styles-module
   ):not(.theme-back-to-top-button) {
-  width: 1.25rem;
+  width: 2rem;
   padding: 0;
 }
 
