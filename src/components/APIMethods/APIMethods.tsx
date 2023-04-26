@@ -135,6 +135,8 @@ const FLOWS = {
       "Assign Unstaking Data": "",
       "Create Chill Transaction": "",
       "Submit Signed Chill Transaction for Broadcast": "",
+      "Create Unbond Transaction": "",
+      "Submit Signed Unbond Transaction for Broadcast": "",
       "Create Withdrawal Transaction": "",
       "Submit Signed Withdrawal Transaction for Broadcast": "",
       "Get Unstaking Flow Status": "",
