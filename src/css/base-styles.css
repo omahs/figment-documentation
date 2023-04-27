@@ -264,7 +264,12 @@ ul.flowLinks li {
   background: transparent;
 }
 
-code [data-theme="light"] code {
+/*
+ The <code> tag is used for single line and multi line preformatted text.
+ Because of this, we need to be more specific about which code tags to style,
+ to prevent an issue where the darkmode code blocks have a light background.
+ */
+[data-theme="light"] li > code {
   color: #2a2f45;
   background: #f7fafc;
   padding: 0 3px;
@@ -272,10 +277,15 @@ code [data-theme="light"] code {
   border: solid 1px rgba(0, 0, 0, 0.05);
 }
 
-[data-theme="dark"] code {
+[data-theme="dark"] li > code {
   color: #ffffff;
   background: #595959;
   padding: 0 3px;
   margin: 0 1px;
   border: solid 1px rgba(0, 0, 0, 0.05);
+}
+
+/* When displaying the URL ensure it isn't light-on-light */
+[data-theme="dark"] pre.hostURL {
+  color: #000;
 }
