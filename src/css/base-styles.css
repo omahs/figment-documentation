@@ -294,13 +294,11 @@ ul.flowLinks li {
 
 /* Media queries */
 
+/* 600px for Mobile */
 @media screen and (max-width: 600px) {
   .navbar--fixed-top {
-    /* display: none; */
-    /* width: 100%; */
-    /* height: 100vh;
-    display: block; */
     position: relative;
+    width: 100%;
   }
   [data-theme="light"] .navbar-sidebar {
     background: var(--side-nav-bg);
@@ -308,39 +306,10 @@ ul.flowLinks li {
   [data-theme="dark"] .navbar-sidebar {
     background: var(--side-nav-bg);
   }
-  [data-theme="dark"] .navbar__title {
-    color: #000 !important;
-  }
-
+  /* TODO: There has to be a better way to do this. The menu items don't want to stay within the sidebar container? */
   .navbar-sidebar__item {
     margin-top: 1px;
-    margin-left: 490px !important;
-    position: fixed;
-  }
-  /* When the width is reduced, show the menu hamburger icon */
-  [data-theme="light"] .navbar__toggle {
-    display: inherit;
-    color: #000;
-  }
-  main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
-    margin-top: 1rem;
-  }
-}
-
-@media screen and (max-width: 996px) {
-  .navbar--fixed-top {
-    position: relative;
-  }
-  [data-theme="light"] .navbar-sidebar {
-    background: var(--side-nav-bg);
-  }
-  [data-theme="dark"] .navbar-sidebar {
-    background: var(--side-nav-bg);
-  }
-  .navbar-sidebar__item {
-    margin-top: 1px;
-    margin-left: 830px;
-    position: fixed;
+    margin-left: -330px;
   }
   /* When the width is reduced, show the menu hamburger icon */
   [data-theme="light"] .navbar__toggle {
@@ -350,6 +319,34 @@ ul.flowLinks li {
   [data-theme="dark"] .navbar__title {
     color: white;
   }
+  /* Move content to the left on mobile  */
+  main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
+    margin-left: -25px;
+  }
+}
+
+/* 996px to prevent the sidebar from blocking content width */
+@media screen and (max-width: 996px) {
+  [data-theme="light"] .navbar-sidebar {
+    background: var(--side-nav-bg);
+  }
+  [data-theme="dark"] .navbar-sidebar {
+    background: var(--side-nav-bg);
+  }
+  .navbar-sidebar__item {
+    margin-top: 1px;
+    position: absolute;
+    left: 830px;
+  }
+  /* Show the menu hamburger icon to access sidenav */
+  [data-theme="light"] .navbar__toggle {
+    display: inherit;
+    color: #000;
+  }
+  [data-theme="dark"] .navbar__title {
+    color: white;
+  }
+  /* Move content below the topbar  */
   main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
     margin-top: 1rem;
   }
