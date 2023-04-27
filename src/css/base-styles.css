@@ -289,3 +289,9 @@ ul.flowLinks li {
 [data-theme="dark"] pre.hostURL {
   color: #000;
 }
+
+/* When displaying a ``` codeblock from Postman ensure it isn't light-on-light */
+[data-theme="dark"] pre > code.language-json {
+  color: #000;
+  background: #f6f8fb;
+}
