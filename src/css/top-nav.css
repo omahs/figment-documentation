@@ -23,7 +23,7 @@
   margin-left: 8px;
 }
 
-/* Hide the top-nav */
+/* 👇 Hide the top-nav */
 .navbar--fixed-top {
   box-shadow: none;
   border-right: 1px solid var(--ifm-toc-border-color);
@@ -53,35 +53,4 @@
 /* colorModeToggle on navbar */
 .navbar__items.navbar__items--right {
   background: transparent;
-}
-
-/* Media queries */
-@media screen and (max-width: 600px) {
-  [data-theme="light"] nav.navbar--fixed-top {
-    width: 100%;
-    box-shadow: none;
-    border-right: 0px solid var(--ifm-toc-border-color);
-  }
-
-  [data-theme="dark"] nav.navbar--fixed-top {
-    width: 100%;
-    background: #16161a;
-    box-shadow: none;
-    border-right: 0px solid var(--ifm-toc-border-color);
-  }
-}
-
-@media screen and (max-width: 996px) {
-  [data-theme="light"] .navbar--fixed-top {
-    width: 100%;
-    box-shadow: none;
-    border-right: 0px solid var(--ifm-toc-border-color);
-  }
-
-  [data-theme="dark"] .navbar--fixed-top {
-    width: 100%;
-    background: #16161a;
-    box-shadow: none;
-    border-right: 0px solid var(--ifm-toc-border-color);
-  }
 }
