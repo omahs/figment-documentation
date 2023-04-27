@@ -93,6 +93,12 @@ img.inline-image {
   color: #4f566b;
 }
 
+/* Prevent dark background on darkmode for ``` codeblocks in Postman schema */
+[data-theme="dark"]
+  pre:not(.hostURL_src-components-APIMethods-styles-module):not(.prism-code) {
+  background: #f6f8fb;
+}
+
 /* line-height impacts APIReferenceNav */
 [data-theme="light"] article a {
   color: #000;
@@ -239,7 +245,7 @@ ul.referenceLinks {
   padding-left: 1.9em;
 }
 
-/* Remove li bullets from the list of links to flow actions */
+/* remove li bullets from the list of flows at the top of a page */
 ul.flowLinks {
   list-style-type: none;
   margin-left: -1.5rem;
@@ -249,13 +255,7 @@ ul.flowLinks li {
   margin: 0;
 }
 
-/* Prevent light-on-light text when the URL is displayed */
-[data-theme] .hostURL {
-  width: 95%;
-  color: #000;
-}
-
-/* Bottom right corners of code blocks */
+/* bottom right corners of code blocks */
 [data-theme="light"] .thin-scrollbar::-webkit-scrollbar-corner {
   background: #f1f1f1;
 }
@@ -264,177 +264,18 @@ ul.flowLinks li {
   background: transparent;
 }
 
-/* Prevent dark background on darkmode for ``` codeblocks in Postman schema */
-[data-theme="dark"] pre:not(.prism-code) {
-  background: #f6f8fb;
-}
-
-[data-theme="light"]
-  code:not(.language-json):not(
-    .codeBlockLines_src-theme-CodeBlock-Content-styles-module
-  ) {
+code [data-theme="light"] code {
   color: #2a2f45;
   background: #f7fafc;
   padding: 0 3px;
-  margin: 0 2px;
+  margin: 0 1px;
   border: solid 1px rgba(0, 0, 0, 0.05);
 }
 
-[data-theme="dark"]
-  code:not(.language-json):not(
-    .codeBlockLines_src-theme-CodeBlock-Content-styles-module
-  ) {
+[data-theme="dark"] code {
   color: #ffffff;
   background: #595959;
   padding: 0 3px;
-  margin: 0 2px;
+  margin: 0 1px;
   border: solid 1px rgba(0, 0, 0, 0.05);
-}
-
-[data-theme="dark"] pre > code.language-json {
-  color: #000;
-  background: #f6f8fb;
-}
-
-.col.col--6 > pre {
-  width: 95%;
-}
-/* End - Prevent dark background on darkmode for ``` codeblocks in Postman schema */
-
-/* The reference links div needs to be repositioned to the left to align below headings */
-.refLinksRow {
-  margin-left: -29px;
-}
-
-/* Media queries */
-
-/* 600px for Mobile */
-@media (max-width: 600px) {
-  .col {
-    width: 98% !important;
-  }
-
-  .navbar--fixed-top {
-    position: relative;
-    width: 100%;
-  }
-  [data-theme="light"] .navbar-sidebar {
-    background: var(--side-nav-bg);
-  }
-  [data-theme="dark"] .navbar-sidebar {
-    background: var(--side-nav-bg);
-  }
-  /* TODO: There has to be a better way to do this. The menu items don't want to stay within the sidebar container? */
-  .navbar-sidebar__item {
-    margin-top: 1px;
-    margin-left: -330px;
-  }
-  /* When the width is reduced, show the menu hamburger icon */
-  [data-theme="light"] .navbar__toggle {
-    display: inherit;
-    color: #000;
-  }
-  [data-theme="dark"] .navbar__title {
-    color: white;
-  }
-  /* Move content to the left on mobile  */
-  main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
-    margin-left: -40px;
-  }
-
-  .col.col--6 ul {
-    width: 98%;
-  }
-
-  .col.col--6 p {
-    width: 97%;
-  }
-
-  article hr {
-    width: 95%;
-  }
-
-  .refLinksRow {
-    width: 95%;
-  }
-
-  .col.col--6 .LiveEditor {
-    width: 95%;
-  }
-
-  .col.col--6 h2,
-  h3 {
-    width: 95%;
-  }
-
-  .LiveResponse_src-components-APIMethods-components-CodeExample-styles-module {
-    width: 95%;
-  }
-  /* language-json codeBlockContainer_src-theme-CodeBlock-Container-styles-module theme-code-block */
-}
-
-/* 996px to prevent the sidebar from blocking content width */
-@media (max-width: 996px) {
-  .col {
-    width: 98% !important;
-  }
-  .navbar--fixed-top {
-    position: relative;
-    width: 100%;
-  }
-
-  [data-theme="light"] .navbar-sidebar {
-    background: var(--side-nav-bg);
-  }
-  [data-theme="dark"] .navbar-sidebar {
-    background: var(--side-nav-bg);
-  }
-  .navbar-sidebar__item {
-    margin-top: 1px;
-    position: absolute;
-    left: 830px;
-  }
-  /* Show the menu hamburger icon to access sidenav */
-  [data-theme="light"] .navbar__toggle {
-    display: inherit;
-    color: #000;
-  }
-  [data-theme="dark"] .navbar__title {
-    color: white;
-  }
-  /* Move content below the topbar  */
-  main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
-    margin-top: 1rem;
-    margin-left: -20px;
-  }
-}
-
-/* 755px is specific to the landing page, for the product link boxes */
-@media (max-width: 755px) {
-  [data-theme="dark"] .quickLinks,
-  .products [data-theme="light"] .quickLinks,
-  .products {
-    margin-top: 40px;
-    display: block;
-    float: none;
-    width: 100%;
-    max-width: 100%;
-  }
-  [data-theme="dark"] .quickLink,
-  [data-theme="light"] .quickLink {
-    display: flex;
-    float: none;
-    width: 100% !important;
-    max-width: none !important;
-    margin-top: 20px;
-    flex-direction: column;
-  }
-  [data-theme="dark"] .product,
-  [data-theme="light"] .product {
-    width: 100%;
-    max-width: 100%;
-    flex-shrink: 0;
-    margin-bottom: 40px;
-    flex-direction: column;
-  }
 }
