@@ -376,7 +376,7 @@ function APIMethod({
           <ReactMarkdown>{description}</ReactMarkdown>
 
           <h3>{endpoint.includes("staking-api-webhooks") ? "Route" : "URL"}</h3>
-          <pre className={styles.hostURL}>
+          <pre className="hostURL">
             {endpoint.includes("staking-api-webhooks")
               ? `/api/v1/webhook_endpoints${
                   name === "Retrieve Endpoint" ||

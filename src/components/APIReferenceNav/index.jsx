@@ -13,7 +13,7 @@ export default function APIReferenceNav({
         <>
           {methods.length < 10 && (
             <>
-              <div className="row" style={{ marginLeft: "-29px" }}>
+              <div className="row refLinksRow">
                 <div className="col">
                   <ul className="referenceLinks">
                     {methods.map((m, i) => (
