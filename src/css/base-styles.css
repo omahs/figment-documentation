@@ -388,6 +388,12 @@ ul.flowLinks li {
   .LiveResponse_src-components-APIMethods-components-CodeExample-styles-module {
     width: 95%;
   }
+
+  /* Move content to the left on mobile  */
+  main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
+    margin-left: -25px;
+    margin-top: 1rem;
+  }
 }
 
 /* 600px for Mobile */
@@ -474,7 +480,10 @@ ul.flowLinks li {
   .LiveResponse_src-components-APIMethods-components-CodeExample-styles-module {
     width: 95%;
   }
-  /* language-json codeBlockContainer_src-theme-CodeBlock-Container-styles-module theme-code-block */
+  /* Move content to the left on mobile  */
+  main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
+    margin-left: -25px;
+  }
 }
 
 /* 996px to prevent the sidebar from blocking content width */
