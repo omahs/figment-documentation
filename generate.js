@@ -515,7 +515,7 @@ function writeStakingReferenceFile(
   fs.writeFileSync(
     path,
     frontMatterTemplate({
-      title: title + ` > ${toTitleCase(operation)}`,
+      title: title + ` / ${toTitleCase(operation)}`,
       desc: `${toTitleCase(service)} - ${network}`,
       image: "img/logo.svg",
       keywords: `[${toTitleCase(service)}, ${network}]`,
@@ -814,7 +814,7 @@ function createMarkdown(services, variables, schemas) {
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             1,
             true,
             methods,
@@ -832,7 +832,7 @@ function createMarkdown(services, variables, schemas) {
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             1,
             true,
             methods,
@@ -850,7 +850,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/transfer/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             2,
             true,
             methods,
@@ -868,7 +868,7 @@ function createMarkdown(services, variables, schemas) {
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             1,
             true,
             methods,
@@ -886,7 +886,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/redelegate/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             2,
             true,
             methods,
@@ -904,7 +904,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/unstaking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             3,
             true,
             methods,
@@ -922,7 +922,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/claim-rewards/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             4,
             true,
             methods,
@@ -940,7 +940,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/transfer/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             5,
             true,
             methods,
@@ -958,7 +958,7 @@ function createMarkdown(services, variables, schemas) {
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             1,
             true,
             methods,
@@ -976,7 +976,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/unstaking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             2,
             true,
             methods,
@@ -996,7 +996,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/aggregated-staking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             3,
             true,
             methods,
@@ -1016,7 +1016,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/aggregated-unstaking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             4,
             true,
             methods,
@@ -1034,7 +1034,7 @@ function createMarkdown(services, variables, schemas) {
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
-            `Staking > ${network.toUpperCase()}`,
+            `${network.toUpperCase()}`,
             1,
 
             true,
@@ -1053,7 +1053,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/unstaking/index.mdx`,
-            `Staking > ${network.toUpperCase()}`,
+            `${network.toUpperCase()}`,
             2,
             true,
             methods,
@@ -1071,7 +1071,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/transfer/index.mdx`,
-            `Staking > ${network.toUpperCase()}`,
+            `${network.toUpperCase()}`,
             3,
             true,
             methods,
@@ -1086,7 +1086,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/unstaking/index.mdx`,
-            `Staking > ${network.toUpperCase()}`,
+            `${network.toUpperCase()}`,
             2,
             true,
             methods,
@@ -1101,7 +1101,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/transfer/index.mdx`,
-            `Staking > ${network.toUpperCase()}`,
+            `${network.toUpperCase()}`,
             3,
             true,
             methods,
@@ -1119,7 +1119,7 @@ function createMarkdown(services, variables, schemas) {
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             1,
             true,
             methods,
@@ -1137,7 +1137,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/add-staking-proxy/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             2,
             true,
             methods,
@@ -1157,7 +1157,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/remove-staking-proxy/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             3,
             true,
             methods,
@@ -1175,7 +1175,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/unstaking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             4,
             true,
             methods,
@@ -1193,7 +1193,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/transfer/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             5,
             true,
             methods,
@@ -1211,7 +1211,7 @@ function createMarkdown(services, variables, schemas) {
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             1,
             true,
             methods,
@@ -1229,7 +1229,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/unstaking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             2,
             true,
             methods,
@@ -1247,7 +1247,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/claim-rewards/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             3,
             true,
             methods,
@@ -1262,7 +1262,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/unstaking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             2,
             true,
             methods,
@@ -1277,7 +1277,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/claim-rewards/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             3,
             true,
             methods,
@@ -1295,7 +1295,7 @@ function createMarkdown(services, variables, schemas) {
           );
           writeStakingReferenceFile(
             `docs/staking/02_Networks/${toDashCase(network)}/staking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             1,
             true,
             methods,
@@ -1313,7 +1313,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/unstaking/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             2,
             true,
             methods,
@@ -1333,7 +1333,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/split-stake-account/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             3,
             true,
             methods,
@@ -1353,7 +1353,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/merge-stake-account/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             4,
             true,
             methods,
@@ -1371,7 +1371,7 @@ function createMarkdown(services, variables, schemas) {
             `docs/staking/02_Networks/${toDashCase(
               network
             )}/transfer/index.mdx`,
-            `Staking > ${toTitleCase(network)}`,
+            `${toTitleCase(network)}`,
             5,
             true,
             methods,
