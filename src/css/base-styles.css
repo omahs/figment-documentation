@@ -295,3 +295,164 @@ ul.flowLinks li {
   color: #000;
   background: #f6f8fb;
 }
+
+/* The reference links div needs to be repositioned to the left to align below headings */
+.refLinksRow {
+  margin-left: -29px;
+}
+
+/* Media queries */
+
+/* 600px for Mobile */
+@media (max-width: 600px) {
+  .theme-admonition {
+    width: 95%;
+  }
+
+  pre.hostURL {
+    width: 95%;
+  }
+
+  img.inline-image {
+    margin: 0px;
+    width: 95%;
+  }
+
+  .col {
+    width: 98% !important;
+  }
+
+  .navbar--fixed-top {
+    position: relative;
+    width: 100%;
+  }
+
+  .container-wide {
+    width: 90%;
+  }
+
+  [data-theme="light"] .navbar-sidebar {
+    background: var(--side-nav-bg);
+  }
+  [data-theme="dark"] .navbar-sidebar {
+    background: var(--side-nav-bg);
+  }
+  /* TODO: There has to be a better way to do this. The menu items don't want to stay within the sidebar container? */
+  .navbar-sidebar__item {
+    margin-top: 1px;
+    margin-left: -330px;
+  }
+  /* When the width is reduced, show the menu hamburger icon */
+  [data-theme="light"] .navbar__toggle {
+    display: inherit;
+    color: #000;
+  }
+  [data-theme="dark"] .navbar__title {
+    color: white;
+  }
+  /* Move content to the left on mobile  */
+  main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
+    margin-left: -40px;
+  }
+
+  .col.col--6 ul {
+    width: 98%;
+  }
+
+  .col.col--6 p {
+    width: 97%;
+  }
+
+  article hr {
+    width: 95%;
+  }
+
+  article ul {
+    width: 95%;
+  }
+
+  .refLinksRow {
+    width: 95%;
+  }
+
+  .col.col--6 .LiveEditor {
+    width: 95%;
+  }
+
+  .col.col--6 h2,
+  h3 {
+    width: 95%;
+  }
+
+  .LiveResponse_src-components-APIMethods-components-CodeExample-styles-module {
+    width: 95%;
+  }
+  /* language-json codeBlockContainer_src-theme-CodeBlock-Container-styles-module theme-code-block */
+}
+
+/* 996px to prevent the sidebar from blocking content width */
+@media (max-width: 996px) {
+  .col {
+    width: 98% !important;
+  }
+  nav.navbar--fixed-top {
+    position: relative;
+    width: 100%;
+    border: 0px solid transparent;
+  }
+
+  [data-theme="light"] .navbar-sidebar {
+    background: var(--side-nav-bg);
+  }
+  [data-theme="dark"] .navbar-sidebar {
+    background: var(--side-nav-bg);
+  }
+  .navbar-sidebar__item {
+    margin-top: 1px;
+    position: absolute;
+    left: 830px;
+  }
+  /* Show the menu hamburger icon to access sidenav */
+  [data-theme="light"] .navbar__toggle {
+    display: inherit;
+    color: #000;
+  }
+  [data-theme="dark"] .navbar__title {
+    color: white;
+  }
+  /* Move content below the topbar  */
+  main.docMainContainer_src-theme-DocPage-Layout-Main-styles-module {
+    margin-top: 1rem;
+    margin-left: -20px;
+  }
+}
+
+/* 755px is specific to the landing page, for the product link boxes */
+@media (max-width: 755px) {
+  [data-theme="dark"] .quickLinks,
+  .products [data-theme="light"] .quickLinks,
+  .products {
+    margin-top: 40px;
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: 100%;
+  }
+  [data-theme="dark"] .quickLink,
+  [data-theme="light"] .quickLink {
+    display: flex;
+    float: none;
+    width: 100% !important;
+    max-width: none !important;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+  [data-theme="dark"] .product,
+  [data-theme="light"] .product {
+    width: 100%;
+    max-width: 100%;
+    flex-shrink: 0;
+    margin-bottom: 40px;
+    flex-direction: column;
+  }
+}
