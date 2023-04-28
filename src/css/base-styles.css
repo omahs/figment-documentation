@@ -131,8 +131,7 @@ img.inline-image {
    space previously occupied by the navbar */
 [data-theme] .container-wide {
   width: 95%;
-  margin-left: 50px;
-  margin-right: 50px;
+  padding-left: 50px;
 }
 
 /* remove li bullets for top-of-page navigation links  */
