@@ -16909,7 +16909,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/rates",
+							"raw": "https://{{ETH_REWARDS_HOST}}/apikey/{{API_KEY}}/rates?figment=false",
 							"protocol": "https",
 							"host": [
 								"{{ETH_REWARDS_HOST}}"
@@ -16922,8 +16922,7 @@
 							"query": [
 								{
 									"key": "figment",
-									"value": "true",
-									"disabled": true
+									"value": "false"
 								}
 							]
 						},
@@ -26804,17 +26803,17 @@
 	],
 	"variable": [
 		{
-			"id": "1eac6db8-133f-46f9-aee2-df02f115cdf0",
+			"id": "d4abc24a-3d36-419a-a05e-71d7fed0dd14",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "325aae8f-22e5-40a7-b291-7e9d7d7851c4",
+			"id": "b036a83b-415c-40d7-86a5-c83b2735c873",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "9b976105-cdcd-47c5-a3d3-468f20449ea1",
+			"id": "84aefd08-3515-4b61-9c83-c25916ad94f8",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
