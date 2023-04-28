@@ -755,9 +755,9 @@ function createMarkdown(services, variables, schemas) {
     }
 
     networks.forEach(({ network, folders, methods, parameters }, index) => {
-      // let routeEndpoint = methods[0].request.query
-      //   ? "/" + methods[0].request.query.split("?")[0]
-      //   : "";
+      let routeEndpoint = methods[0].request.query
+        ? "/" + methods[0].request.query.split("?")[0]
+        : "";
 
       /* Add the network pages below the Rewards category */
       if (service === "rewards-api") {

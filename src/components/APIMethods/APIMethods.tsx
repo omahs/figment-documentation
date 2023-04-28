@@ -245,11 +245,24 @@ function APIMethod({
   endpoint,
   host,
 }: Props) {
+  const isRewardsRates = endpoint.includes("rewards-rates-api");
   const isRewards = endpoint.includes("rewards-api");
   const isByDay = ["by day", "address"].find((n) => name.includes(n));
   const isByEpoch =
     ["by epoch", "by era"].find((n) => name.includes(n)) ||
     name.startsWith("SOL");
+
+  /* 
+  
+  For Rewards Rates, prevent the route portion of the query parameter coming from Postman being passed,
+  which would cause a 404 when sending the request via CloudFlare proxy.
+  
+   - Instead of rates?figment=false it will be ?figment=false
+
+  */
+  if (isRewardsRates) {
+    request.query = request.query.replace(/rates/g, "");
+  }
 
   if (isRewards && isByDay) {
     const { start, end } = days();
