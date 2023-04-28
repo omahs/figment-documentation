@@ -4,5 +4,5 @@
 }
 
 .wordWrapButtonEnabled .wordWrapButtonIcon {
-  color: var(--ifm-color-primary);
+  color: var(--word-wrap-selected);
 }
