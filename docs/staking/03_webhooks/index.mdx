@@ -525,7 +525,7 @@ t=1666214090,v1=f790a584722ff6c0ebf4e9b59835ba5b93ee824ae0a7164feba30953d6b52cee
     {
       name: "Create New Webhook Endpoint",
       content:
-        "Create a new webhook endpoint with the specified parameters.\n\n### Parameters\n\n*   `webhook_endpoint` - `object`\n    *   `target_url` - `string` The target URL to send the webhook to.\n    *   `event_types` - `string` Can be a specific event type, or use an asterisk as a catchall: `['*']`\n    *   `enabled` - `boolean` true / false\n\n### Response\n\n*   `id` - `number` Id of the newly created webhook endpoint.\n*   `event_types` - `string` Event type you have passed in the request parameter.\n*   `target_url` - `string` The target URL to send the webhook to.\n*   `enabled` - `boolean` true / false\n*   `object` - `string` webhook_endpoint\n*   `created` - `string` Timestamp when webhook endpoint was created.\n*   `secret` - `string` Unique authentication string for your webhook endpoint.\n    \n\n#### Note\n\n*   Each webhook is identified by a sequential number.\n*   Currently when a webhook ID has been deleted it cannot be reused.\n*   You will only be provided with the secret when you first create a webhook. Remember to capture this data!",
+        "Create a new webhook endpoint with the specified parameters.\n\n### Parameters\n\n*   `webhook_endpoint`* : `object`\n    *   `target_url`* : `string` The target URL to send the webhook to.\n    *   `event_types`* : `string` Can be a specific event type, or use an asterisk for a wildcard: `['*']`\n    *   `enabled`* : `boolean` true / false\n\n### Response\n\n*   `id` : `number` Id of the newly created webhook endpoint.\n*   `event_types` : `string` Event type you have passed in the request parameter.\n*   `target_url` : `string` The target URL to send the webhook to.\n*   `enabled` : `boolean` true / false\n*   `object` : `string` \"webhook_endpoint\"\n*   `created` : `string` Timestamp when webhook endpoint was created.\n*   `secret` : `string` Unique authentication string for your webhook endpoint.\n    \n\n#### Note\n\n*   Each webhook is identified by a sequential number.\n*   Currently when a webhook ID has been deleted it cannot be reused.\n*   You will only be provided with the secret when you first create a webhook. Remember to capture this data!",
       request: {
         method: "POST",
         header: [],
@@ -562,7 +562,7 @@ t=1666214090,v1=f790a584722ff6c0ebf4e9b59835ba5b93ee824ae0a7164feba30953d6b52cee
     {
       name: "Retrieve Endpoint",
       content:
-        "Retrieve the details of a webhook endpoint.\n\n### Parameters\n\n- For **Individual Webhook Endpoint**\n - Include the webhook ID number in the request URL, to retreive details for an individual webhook endpoint.\n\n- For **All Webhook Endpoints**\n - None\n\n### Response\n\n- `object` - `string` list\n- `url` - `string` Endpoint url\n- `has_more` - `boolean` true / false\n- `data` - `object`\n - `id` - `number` Id of the newly created webhook endpoint.\n - `event_types` - `string` Event type you have passed in the request parameter.\n - `target_url` - `string` The target URL to send the webhook to.\n - `enabled` - `boolean` true / false\n - `object` - `string` webhook_endpoint\n - `created` - `string` Timestamp when webhook endpoint was created.",
+        'Retrieve the details of a webhook endpoint.\n\n### Parameters\n\n- For **Individual Webhook Endpoint**\n   - Include the webhook ID number in the request URL, to retreive details for an individual webhook endpoint.\n\n- For **All Webhook Endpoints**\n   - None, see [List Endpoints](/staking/webhooks/#list%20endpoints) below\n\n### Response\n\n- `object` : `string` list\n- `url` : `string` Endpoint URL\n- `has_more` : `boolean` true / false\n- `data` : `object`\n - `id` : `number` ID of the newly created webhook endpoint.\n - `event_types` : `string` Event type you have passed in the request parameter.\n - `target_url` : `string` The target URL to send the webhook to.\n - `enabled` : `boolean` true / false\n - `object` : `string` "webhook_endpoint"\n - `created` : `string` Timestamp when webhook endpoint was created.',
       request: {
         method: "GET",
         header: [],
@@ -590,7 +590,7 @@ t=1666214090,v1=f790a584722ff6c0ebf4e9b59835ba5b93ee824ae0a7164feba30953d6b52cee
     {
       name: "List Endpoints",
       content:
-        "Get the list of all your webhook endpoints.\n\n### Parameters\n\n None\n\n### Response\n\n- `object` - `string` - The action, i.e., `list`.\n- `url` - `string` The endpoint URL.\n- `has_more` - `boolean`\n- `data` - `array` - An array of `object`s containing the details for each webhook:\n  - `id` - `number` Id of the newly created webhook endpoint.\n  - `event_types` - `string` Event type you have passed in the request parameter.\n  - `target_url` - `string` The target URL to send the webhook to.\n  - `enabled` - `boolean` true / false\n  - `object` - `string` - Describing the data object: `webhook_endpoint`.\n  - `created` - `string` Timestamp when the webhook endpoint was created.",
+        'Get the list of all your webhook endpoints.\n\n### Parameters\n\n None\n\n### Response\n\n- `object` : "list".\n- `url` : `string` The endpoint URL.\n- `has_more` : `boolean` true / false\n- `data` : `array` An array of objects containing the details for each webhook:\n  - `id` : `number` ID of the newly created webhook endpoint.\n  - `event_types` : `string` Event type you have passed in the request parameter.\n  - `target_url` : `string` The target URL to send the webhook to.\n  - `enabled` : `boolean` true / false\n  - `object` : "webhook_endpoint".\n  - `created` : `string` Timestamp when the webhook endpoint was created.',
       request: {
         method: "GET",
         header: [],
@@ -633,7 +633,7 @@ t=1666214090,v1=f790a584722ff6c0ebf4e9b59835ba5b93ee824ae0a7164feba30953d6b52cee
     {
       name: "Update Webhook Endpoint",
       content:
-        "Update details for an existing webhook endpoint.\n\n### Parameters\n\n- `webhook_endpoint` - `object`\n - `target_url` - `string` The target URL to send the webhook to.\n - `event_types` - `string` Can be a specific event type, or use an asterisk as a catchall: `['*']`\n - `enabled` - `boolean` true / false\n\n### Response\n\n- `id` - `number` Id of the newly created webhook endpoint.\n- `event_types` - `string` Event type you have passed in the request parameter.\n- `target_url` - `string` The target URL to send the webhook to.\n- `enabled` - `boolean` true / false\n- `object` - `string` webhook_endpoint\n- `created` - `string` Timestamp when webhook endpoint was created.",
+        "Update details for an existing webhook endpoint.\n\n### Parameters\n\n- `webhook_endpoint` : `object`\n  - `target_url` : `string` The target URL to send the webhook to.\n  - `event_types` : `string` Can be a specific event type, or use an asterisk as a catchall: `['*']`\n  - `enabled` : `boolean` true / false\n\n### Response\n\n- `id` : `number` ID of the newly created webhook endpoint.\n- `event_types` : `string` Event type you have passed in the request parameter.\n- `target_url` : `string` The target URL to send the webhook to.\n- `enabled` : `boolean` true / false\n- `object` : \"webhook_endpoint\"\n- `created` : `string` Timestamp when webhook endpoint was created.",
       request: {
         method: "PUT",
         header: [],
@@ -668,7 +668,7 @@ t=1666214090,v1=f790a584722ff6c0ebf4e9b59835ba5b93ee824ae0a7164feba30953d6b52cee
     {
       name: "Delete an Existing Endpoint",
       content:
-        "Delete a webhook endpoint\n\n### Parameters\n\nInclude the webhook ID number in the request URL, to delete webhook endpoint.\n\n### Response\n\nNone - `204 - No Content`",
+        "Delete a webhook endpoint.\n\n### Parameters\n\nInclude the webhook ID number in the request URL, to delete a webhook endpoint.\n\n### Response\n\nNone.\n - The response code for a successful deletion will be `204 - No Content`",
       request: {
         method: "DELETE",
         header: [],
