@@ -16939,7 +16939,7 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "json",
+							"_postman_previewlanguage": "Text",
 							"header": [
 								{
 									"key": "Date",
@@ -17008,7 +17008,7 @@
 							],
 							"cookie": [],
 							"responseTime": null,
-							"body": "[\n    {\n        \"date\": \"2022-11-08\",\n        \"value\": \"5.726611\",\n        \"staking\": \"3.410072\",\n        \"tips\": \"2.316538\"\n    },\n    {\n        \"date\": \"2022-11-07\",\n        \"value\": \"5.361810\",\n        \"staking\": \"4.198922\",\n        \"tips\": \"1.162887\"\n    },\n    {\n        \"date\": \"2022-11-06\",\n        \"value\": \"5.172277\",\n        \"staking\": \"4.202448\",\n        \"tips\": \"0.969829\"\n    },\n    {\n        \"date\": \"2022-11-05\",\n        \"value\": \"5.071560\",\n        \"staking\": \"4.184485\",\n        \"tips\": \"0.887075\"\n    }\n]"
+							"body": "[\n  {\n    \"date\": \"2023-05-01\",\n    \"value\": \"6.73\",\n    \"staking\": \"3.81\",\n    \"tips\": \"2.92\"\n  },\n  {\n    \"date\": \"2023-04-30\",\n    \"value\": \"5.57\",\n    \"staking\": \"3.82\",\n    \"tips\": \"1.76\"\n  },\n  {\n    \"date\": \"2023-04-29\",\n    \"value\": \"5.05\",\n    \"staking\": \"3.81\",\n    \"tips\": \"1.24\"\n  },\n  {\n    \"date\": \"2023-04-28\",\n    \"value\": \"5.38\",\n    \"staking\": \"3.81\",\n    \"tips\": \"1.58\"\n  },\n  {\n    \"date\": \"2023-04-27\",\n    \"value\": \"5.47\",\n    \"staking\": \"3.81\",\n    \"tips\": \"1.66\"\n  },\n  {\n    \"date\": \"2023-04-26\",\n    \"value\": \"5.58\",\n    \"staking\": \"3.80\",\n    \"tips\": \"1.77\"\n  },\n  {\n    \"date\": \"2023-04-25\",\n    \"value\": \"5.36\",\n    \"staking\": \"3.81\",\n    \"tips\": \"1.55\"\n  },\n  {\n    \"date\": \"2023-04-24\",\n    \"value\": \"5.55\",\n    \"staking\": \"3.81\",\n    \"tips\": \"1.74\"\n  },\n  {\n    \"date\": \"2023-04-23\",\n    \"value\": \"5.38\",\n    \"staking\": \"3.81\",\n    \"tips\": \"1.58\"\n  },\n  {\n    \"date\": \"2023-04-22\",\n    \"value\": \"5.30\",\n    \"staking\": \"3.81\",\n    \"tips\": \"1.49\"\n  }\n]"
 						}
 					]
 				}
@@ -26720,7 +26720,7 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "json",
+							"_postman_previewlanguage": "Text",
 							"header": [
 								{
 									"key": "Date",
@@ -26789,7 +26789,7 @@
 							],
 							"cookie": [],
 							"responseTime": null,
-							"body": "[\n    {\n        \"date\": \"2022-10-02\",\n        \"value\": \"5.303821\"\n    },\n    {\n        \"date\": \"2022-10-01\",\n        \"value\": \"5.239139\"\n    },\n    {\n        \"date\": \"2022-09-30\",\n        \"value\": \"5.587652\"\n    }\n]"
+							"body": "[\n  {\n    \"date\": \"2023-04-29\",\n    \"value\": \"7.36\"\n  },\n  {\n    \"date\": \"2023-04-28\",\n    \"value\": \"7.36\"\n  },\n  {\n    \"date\": \"2023-04-27\",\n    \"value\": \"7.35\"\n  },\n  {\n    \"date\": \"2023-04-26\",\n    \"value\": \"7.34\"\n  },\n  {\n    \"date\": \"2023-04-25\",\n    \"value\": \"7.30\"\n  },\n  {\n    \"date\": \"2023-04-24\",\n    \"value\": \"7.30\"\n  },\n  {\n    \"date\": \"2023-04-23\",\n    \"value\": \"7.28\"\n  },\n  {\n    \"date\": \"2023-04-22\",\n    \"value\": \"7.27\"\n  },\n  {\n    \"date\": \"2023-04-21\",\n    \"value\": \"7.19\"\n  },\n  {\n    \"date\": \"2023-04-20\",\n    \"value\": \"7.08\"\n  },\n  {\n    \"date\": \"2023-04-19\",\n    \"value\": \"7.08\"\n  },\n  {\n    \"date\": \"2023-04-18\",\n    \"value\": \"7.36\"\n  }\n]"
 						}
 					]
 				}
@@ -26821,17 +26821,17 @@
 	],
 	"variable": [
 		{
-			"id": "6bdda047-4978-4bd1-b0cc-129900202a97",
+			"id": "e06d88bf-aba1-4fd7-9b35-28bdbd100e64",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "75973e88-0e8e-4256-b795-78b3dadd3420",
+			"id": "abfc0e2d-d7bb-467d-b92e-68fb944873f6",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "10bab58b-bb18-4cb6-8319-c7675ad8d0f1",
+			"id": "705acdcc-4e39-4fb6-b9c2-3938ad55586b",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
