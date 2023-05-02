@@ -171,18 +171,18 @@ const FLOWS = {
       "Get Staking Flow Status": "",
     },
     unstaking: {
-      "Create New Undelegation Flow": "",
+      "Create New Unstaking Flow": "",
       "Submit Unbonding Data": "",
       "Submit Signed Unbonding Transaction for Broadcast": "",
       "Submit Claim Transaction Data": "",
       "Submit Signed Claim Transaction for Broadcast": "",
-      "Get Flow Status": "",
+      "Get Unstaking Flow Status": "",
     },
     "claim-rewards": {
       "Create New Claim Rewards Flow": "",
       "Submit Claim Rewards Data": "",
       "Submit Signed Claim Rewards Transaction for Broadcast": "",
-      "Get Flow Status": "",
+      "Get Claim Rewards Flow Status": "",
     },
   },
   solana: {
