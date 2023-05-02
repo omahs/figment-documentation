@@ -34,7 +34,7 @@ const FLOWS = {
       "Add Blockfrost Project": "",
       "Get Blockfrost Project": "",
       "Delete Blockfrost Project": "",
-      "Create a New Transfer Flow": "",
+      "Create New Transfer Flow": "",
       "Submit Transfer Data": "",
       "Submit Signed Transfer Transaction for Broadcast": "",
       "Get Transfer Flow Status": "",
