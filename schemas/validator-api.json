@@ -553,7 +553,7 @@
 								}
 							]
 						},
-						"description": "Request creation of new Polkadot account with passed attributes.\n\n### Request\n\n- `stash_account_address`\\* : `string` — A valid Polkadot address. \n- `controller_account_address`\\* : `string` — A valid Polkadot address. \n- `proxy_account_address`\\* : `string` — A valid Polkadot address. \n- `qtx_dot_bonded`\\* : `string` — An amount in DOT.\n- `polkadot_network_name`\\* : `string` — Allowed value(s): `polkadot`, `westend`.\n    \n\n### Response\n\n- `success` : `boolean` Returns `true` if the action was successful."
+						"description": "Request creation of new Polkadot account with passed attributes.\n\n### Request\n\n- `stash_account_address`\\* : `string` A valid Polkadot address. \n- `controller_account_address`\\* : `string` A valid Polkadot address. \n- `proxy_account_address`\\* : `string` A valid Polkadot address. \n- `qtx_dot_bonded`\\* : `string` An amount in DOT.\n- `polkadot_network_name`\\* : `string` Allowed value(s): `polkadot`, `westend`.\n    \n\n### Response\n\n- `success` : `boolean` Returns `true` if the action was successful."
 					},
 					"response": [
 						{
@@ -678,19 +678,19 @@
 	],
 	"variable": [
 		{
-			"id": "9d88ce56-61c6-4933-85b4-d8c4956b6abe",
+			"id": "df708ee2-1ec5-454d-96a5-e114bca6b692",
 			"key": "ETH_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "92a89c8d-0e1c-4bb5-96f6-16941c2a517b",
+			"id": "95637397-593c-44b7-8458-5f8d3b1a27f2",
 			"key": "DOT_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "b1e6321d-197c-431f-adb9-c4fe0148ecfe",
+			"id": "3422b4fa-81ed-4990-b370-3b26b635c6bc",
 			"key": "INTERACTIVE",
 			"value": "false",
 			"type": "string"
