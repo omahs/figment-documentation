@@ -2,6 +2,15 @@
 const lightCodeTheme = require("prism-react-renderer/themes/dracula");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
+const titleConfig =
+  process.env.NODE_ENV === "development"
+    ? {
+        title: "LOCALHOST",
+      }
+    : {
+        title: "Figment Docs",
+      };
+
 const githubConfig =
   process.env.NODE_ENV === "development"
     ? {
@@ -16,7 +25,7 @@ const githubConfig =
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Figment Docs",
+  ...titleConfig,
   tagline: "Everything you need to start building with Figment.",
   url: "https://docs.figment.io",
   onBrokenLinks: "ignore",
