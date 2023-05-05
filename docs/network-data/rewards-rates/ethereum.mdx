@@ -1,0 +1,144 @@
+---
+title: Rewards Rates - Ethereum
+sidebar_position: 2
+pagination_prev: null
+pagination_next: null
+collapsed: true
+collapsible: true
+description: Rewards Rates API - Ethereum
+image: img/logo.svg
+keywords: [Rewards Rates API, Ethereum]
+
+hide_table_of_contents: true
+sidebar_label: Ethereum
+---
+
+<!--- This file was generated at build time, any modifications will be lost on next build --->
+
+import { APIMethods } from "@site/src/components";
+
+import { APIReferenceNav } from "@site/src/components/APIReferenceNav";
+
+<APIReferenceNav
+  service="rewards-rates-api"
+  network="ethereum"
+  networks={[
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  methods={[
+    {
+      name: "ETH Reward Rates",
+    },
+  ]}
+/>
+
+<APIMethods
+  methods={[
+    {
+      name: "ETH Reward Rates",
+      content:
+        'This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe first compute daily rates by aggregating all rewards (on both consensus and execution layers) received by all validators within a 24h period (from midnight UTC to midnight UTC) and divide this by the aggregated balances of all validators at the beginning of this 24h period. We then annualize this rate without compounding.\n\n### Request\n\n- `figment` : If `true` is passed, we will return the reward rate for Figment validators only. If omitted or any other value is passed, we will return the reward rate of the network as a whole.\n    \n\n### Response\n\nAn array of the following objects:\n\n- `date` : timestamp for the day in format "YYYY-MM-DD"\n- `value` : The total annualized reward rate for that day - in %\n- `staking` : The piece due to consensus layer rewards (inflation) - in %\n- `tips` : The piece due to execution layer rewards (transaction fees) - in %',
+      request: {
+        method: "GET",
+        header: [
+          {
+            key: "figment",
+            value: "",
+            type: "text",
+          },
+        ],
+        url: "https://eth-rewards.datahub.figment.io",
+        query: "rates?figment=false",
+      },
+      interactive: false,
+      response: {
+        name: "Reward Rates",
+        status: "OK",
+        code: 200,
+        body: [
+          {
+            date: "2023-05-01",
+            value: "6.73",
+            staking: "3.81",
+            tips: "2.92",
+          },
+          {
+            date: "2023-04-30",
+            value: "5.57",
+            staking: "3.82",
+            tips: "1.76",
+          },
+          {
+            date: "2023-04-29",
+            value: "5.05",
+            staking: "3.81",
+            tips: "1.24",
+          },
+          {
+            date: "2023-04-28",
+            value: "5.38",
+            staking: "3.81",
+            tips: "1.58",
+          },
+          {
+            date: "2023-04-27",
+            value: "5.47",
+            staking: "3.81",
+            tips: "1.66",
+          },
+          {
+            date: "2023-04-26",
+            value: "5.58",
+            staking: "3.80",
+            tips: "1.77",
+          },
+          {
+            date: "2023-04-25",
+            value: "5.36",
+            staking: "3.81",
+            tips: "1.55",
+          },
+          {
+            date: "2023-04-24",
+            value: "5.55",
+            staking: "3.81",
+            tips: "1.74",
+          },
+          {
+            date: "2023-04-23",
+            value: "5.38",
+            staking: "3.81",
+            tips: "1.58",
+          },
+          {
+            date: "2023-04-22",
+            value: "5.30",
+            staking: "3.81",
+            tips: "1.49",
+          },
+        ],
+      },
+    },
+  ]}
+  service="rewards-rates-api"
+  networks={[
+    {
+      label: "Ethereum",
+      value: "ethereum",
+    },
+    {
+      label: "Solana",
+      value: "solana",
+    },
+  ]}
+  network="ethereum"
+  proxy="https://api-service-proxy-development.figment-secops.workers.dev/"
+  host="eth-rewards.datahub.figment.io/rates"
+/>

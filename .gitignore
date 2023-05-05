@@ -21,7 +21,6 @@ cors_failed.txt
 
 # Generated pages
 docs/network-data/index.mdx
-docs/network-data/rewards-rates/**
 docs/staking/index.mdx
 docs/staking/02_Networks/**
 docs/rewards/**
