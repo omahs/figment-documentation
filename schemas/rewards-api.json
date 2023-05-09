@@ -1456,6 +1456,35 @@
 				}
 			],
 			"id": "c8594856-7151-4247-b205-e696c9ad12c8"
+		},
+		{
+			"name": "Polygon",
+			"item": [
+				{
+					"name": "Rewards by checkpoint",
+					"id": "1f9ae2bf-3361-4c16-b2c4-2efd74ad4481",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accounts\": [\n        \"0xA722e1F10Bc95c102251A13c2bbCB61A67257003\",\n        \"0x4c5b652e35f34c9d3cD4BFe0Ffcd661FB1cB4410\"\n    ], \n    \"start\": 45500,\n    \"end\": 45550\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{POLYGON_REWARDS_HOST}}/apikey/{{API_KEY}}/v2/rewards",
+						"description": "Returns delegator rewards by checkpoint\n\n### Request\n\n- `accounts`\\* : Takes an array of addresses.\n- `start`\\* and `end`\\* : Checkpoint numbers (as integers) or timestamps (as strings \"YYYY-MM-DD\").\n    \n\n### Response\n\nThe response is broken down between `meta` and `data`:\n\n- `data` : An array of objects, one for each period and accounts, containing:\n    - `accounts`: The account that received the reward. This is a checksummed ethereum address including lower case and capital letters.\n    - `validator`: The \"owner address\" of the validator which distributed the rewards\n    - `period`: The checkpoint number\n    - `timestamp`: The timestamp of the end of the period\n    - `rewards` : An array of objects.\n        - The formula to compute the final rewards in the `currency` unit is `numeric x 10^(-exp)` (`text` being the string version of this)..\n    - `balances` : An array of objects containing `numeric`, `exp`, `currency`, and `text`. It returns the account’s current balance.\n- `meta`\n    - `network`: `polygon`\n    - `period_unit`: `checkpoint`"
+					},
+					"response": []
+				}
+			],
+			"id": "c64d641b-e384-453a-ab79-27e49430295b"
 		}
 	],
 	"event": [
@@ -1482,49 +1511,54 @@
 	],
 	"variable": [
 		{
-			"id": "b92bc75e-4a07-49e4-ae29-08da7b30551f",
+			"id": "9656342d-a509-47a0-934e-67dabdd24be1",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "ea8dab8a-524a-4353-b35b-9db9234471b4",
+			"id": "8503cf62-fda6-430c-bf2e-f54d4eec4b37",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "821d3d64-b514-4e6f-b434-b39a6d174b78",
+			"id": "a8641eee-c9ed-4a01-8a7d-c02c2e36f768",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io"
 		},
 		{
-			"id": "8f5c6db4-2cd5-429e-82d0-a0745455e7bd",
+			"id": "9c638648-4b22-4d14-9a03-051bd163402e",
 			"key": "NEAR_REWARDS_HOST",
 			"value": "near-rewards.datahub.figment.io"
 		},
 		{
-			"id": "87be1314-57d3-4bc7-8ee8-3a4a2faef98a",
+			"id": "0441b264-714d-41d7-bf32-c2439d2174f6",
 			"key": "AVAX_REWARDS_HOST",
 			"value": "avalanche-rewards.datahub.figment.io"
 		},
 		{
-			"id": "51bf5d5e-6677-4349-9986-4a3801f83d90",
+			"id": "78cae0e4-3522-4928-a8bd-0127a350a7c3",
 			"key": "sol-start-epoch",
 			"value": ""
 		},
 		{
-			"id": "df468162-8b86-4073-9523-20eadedc28d7",
+			"id": "15aa36ab-cb83-459c-bdbb-1a9c2ac48198",
 			"key": "sol-end-epoch",
 			"value": ""
 		},
 		{
-			"id": "740203c4-0cd3-4e7e-ba5b-8aa313f4eaff",
+			"id": "2004a35e-76e7-44c9-bad4-2b11b9d9603c",
 			"key": "verified-epoch",
 			"value": ""
 		},
 		{
-			"id": "5ffc2e07-371e-4d0f-b020-12237f0f0081",
+			"id": "f47bb0ec-c9e5-44be-854f-8987b27cbdc1",
 			"key": "epoch-start-date",
 			"value": ""
+		},
+		{
+			"id": "549d7303-7bff-4bbb-afeb-6500c34403b9",
+			"key": "POLYGON_REWARDS_HOST",
+			"value": "matic-rewards.datahub.figment.io"
 		}
 	]
 }
