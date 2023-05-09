@@ -139,7 +139,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://{{ETH_HOST}}/apikey/{{API_KEY}}/api/v1/prime/eth2_staking/positions/{{position_id}}/validators?page[size]=10&page[number]=1&include=position&status_history=true&status=provisioned&position_id=123456&presigned_exit_transaction=true",
+							"raw": "https://{{ETH_HOST}}/apikey/{{API_KEY}}/api/v1/prime/eth2_staking/positions/13/validators?page[size]=10&page[number]=1&include=position&status_history=true&status=provisioned&presigned_exit_transaction=true",
 							"protocol": "https",
 							"host": [
 								"{{ETH_HOST}}"
@@ -152,7 +152,7 @@
 								"prime",
 								"eth2_staking",
 								"positions",
-								"{{position_id}}",
+								"13",
 								"validators"
 							],
 							"query": [
@@ -178,7 +178,8 @@
 								},
 								{
 									"key": "position_id",
-									"value": "123456"
+									"value": "123456",
+									"disabled": true
 								},
 								{
 									"key": "presigned_exit_transaction",
@@ -678,19 +679,19 @@
 	],
 	"variable": [
 		{
-			"id": "d042b9ce-f5bb-4c55-b8fc-1b0de237ad91",
+			"id": "4535afa5-6078-4661-95c9-5a89c350c29f",
 			"key": "ETH_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "1a3e852c-757d-425e-8ace-a002947053f7",
+			"id": "79cfb05c-acfe-4f92-b984-2d716385defa",
 			"key": "DOT_HOST",
 			"value": "hubble.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "d705b273-b0c5-414f-a212-253d1bb89bd2",
+			"id": "9f93977a-7f0d-4e8b-9dba-66e5c6331896",
 			"key": "INTERACTIVE",
 			"value": "false",
 			"type": "string"
