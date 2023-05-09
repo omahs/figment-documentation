@@ -26801,7 +26801,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "cb52f320-54cf-44bb-9d02-8e69b0781991",
+				"id": "95ca9c54-f092-4592-b889-cf924e73ebc7",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -26811,7 +26811,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "d5f54547-8ff4-4ab5-b11b-87e0022dbbe0",
+				"id": "08d27cbe-4ab8-45b2-90b1-a502c6e57fef",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -26821,19 +26821,25 @@
 	],
 	"variable": [
 		{
-			"id": "e06d88bf-aba1-4fd7-9b35-28bdbd100e64",
+			"id": "dd83879b-9671-4ed9-a5cb-950ca5b38f69",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "abfc0e2d-d7bb-467d-b92e-68fb944873f6",
+			"id": "a8c37931-75be-405b-bc65-a45071e2c7dd",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "705acdcc-4e39-4fb6-b9c2-3938ad55586b",
+			"id": "471a38af-5710-48dc-be3f-46811cee0b5c",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
+			"type": "string"
+		},
+		{
+			"id": "d3f39c8c-60d1-4c55-a98b-e727bb50a842",
+			"key": "INTERACTIVE",
+			"value": "false",
 			"type": "string"
 		}
 	]
