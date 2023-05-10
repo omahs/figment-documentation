@@ -1,7 +1,13 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import BackToTopButton from "@theme/BackToTopButton";
-import { days, polkadot, near, solana } from "../../utilities/reward-ranges";
+import {
+  days,
+  polygon,
+  polkadot,
+  near,
+  solana,
+} from "../../utilities/reward-ranges";
 
 import { RequestObject, ResponseObject } from "@site/types/src";
 import { CodeExample } from "./components";
@@ -251,6 +257,7 @@ function APIMethod({
   const isByEpoch =
     ["by epoch", "by era"].find((n) => name.includes(n)) ||
     name.startsWith("SOL");
+  const isByCheckpoint = ["by checkpoint"].find((n) => name.includes(n));
 
   /* 
   
@@ -293,6 +300,15 @@ function APIMethod({
 
   if (isRewards && isByEpoch && network === "polkadot") {
     const { start, end } = polkadot();
+    request.body = {
+      ...(request.body as object),
+      start,
+      end,
+    };
+  }
+
+  if (isRewards && isByCheckpoint && network === "polygon") {
+    const { start, end } = polygon();
     request.body = {
       ...(request.body as object),
       start,

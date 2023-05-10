@@ -36,7 +36,7 @@ API_KEY=<An approved API key>
 PROXY_HOST=<API Proxy URL>
 ```
 
-Contact Figment DevRel for a valid `API_KEY` and `PROXY_HOST` for testing purposes.
+Contact Figment DevRel for a valid `API_KEY` and `PROXY_HOST` for testing purposes. NOTE: These ENV variables are only needed if you’re planning to use or develop the interactive requests. Otherwise, the development server runs normally without them.
 
 ### Running the Development Server
 

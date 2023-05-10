@@ -654,6 +654,7 @@ function createMarkdown(services, variables, schemas) {
     "authentication",
     "errors",
     "rewards",
+    "signatures",
     "staking",
     "validators",
   ];
@@ -680,26 +681,27 @@ function createMarkdown(services, variables, schemas) {
       link at the top of the sidebar. 
       - The third argument of writeIndexFile or writeIndexFileRedirect
       sets the sidebar position of that category.
-      - The spacers added to the sidebar in docusaurus.config.js do not impact the position numbers.
+      - The spacers added to the sidebar in docusaurus.config.js are included in the position numbers.
 
       1 Overview
       2 Authentication
       3 Errors
-       => topspacer
-      4 Staking
-      5 Rewards
-      6 Validators
-      7 Network Data 
-       => bottomspacer
+      4 Signatures
+       => 5 topspacer
+      6 Staking
+      7 Rewards
+      8 Validators
+      9 Network Data 
+       => 10 bottomspacer
     */
 
-    /* Sidebar index 4 - Staking */
+    /* Sidebar index 6 - Staking */
     if (service === "staking-api") {
       /* The Staking link in the sidebar immediately redirects to the Overview page */
       writeIndexFileRedirect(
         `docs/staking/index.mdx`,
         "Staking Overview",
-        4,
+        6,
         "Staking",
         "staking",
         service,
@@ -709,12 +711,12 @@ function createMarkdown(services, variables, schemas) {
       );
     }
 
-    /* Sidebar index 5 - Rewards */
+    /* Sidebar index 7 - Rewards */
     if (service === "rewards-api") {
       writeIndexFile(
         "docs/rewards/index.mdx",
         "Rewards Overview",
-        5,
+        7,
         "Rewards",
         "rewards",
         service,
@@ -724,12 +726,12 @@ function createMarkdown(services, variables, schemas) {
       );
     }
 
-    /* Sidebar index 6 - Validators */
+    /* Sidebar index 8 - Validators */
     if (service === "validator-api") {
       writeIndexFile(
         "docs/validators/index.mdx",
         "Validators Overview",
-        6,
+        8,
         "Validators",
         "validators",
         service,
@@ -739,12 +741,12 @@ function createMarkdown(services, variables, schemas) {
       );
     }
 
-    /* Sidebar index 7 - Network Data */
+    /* Sidebar index 9 - Network Data */
     if (service === "rewards-rates-api") {
       writeIndexFile(
         "docs/network-data/index.mdx",
         "Network Data Overview",
-        7,
+        9,
         "Network Data",
         "network-data",
         service,

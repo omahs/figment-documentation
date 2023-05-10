@@ -1,0 +1,93 @@
+---
+title: Signatures
+sidebar_label: Signatures
+sidebar_position: 5
+hide_table_of_contents: true
+pagination_prev: null
+pagination_next: null
+---
+
+import Link from "@docusaurus/Link";
+import CodeBlock from "@theme/CodeBlock";
+
+When sending responses which provide validator metadata,
+Figment includes a cryptographic signature allowing you to confirm that
+the validator pub key originates from Figment’s secure provisioning infrastructure.
+
+To verify the `figment_signature`:
+
+1. Acquire the public key from Figment and save as a plain text file named `public-key.pem`.
+
+This can be acquired either:
+
+- Directly from a Figment Customer Success rep, or
+
+- (Coming Soon) From within the Developers section of the Figment web app
+
+2. Save the contents of the field `pubkey` (found in the `attributes` object) as a plain text file named `message.txt`:
+
+```json
+{
+  "data": [
+    {
+      "id": "31",
+      "type": "validator",
+      "attributes": {
+        "id": 31,
+        // highlight-next-line
+        "pubkey": "d1ef8d468ef53d82368d2026e321ab2c6d44f44c33b7b9f22369bf6dcf37fb0208f82dd6b485325ce1bbf5aec7ad45bb",
+        "name": null,
+        "withdrawal_credentials": "010000000000000000000000fc438e6cc4b230eb5bfaae1337c3f5da2b9140f1",
+        "amount": 32000000000,
+        ...
+      },
+      ...
+    }
+  ]
+  ...
+```
+
+3. Save the base64 encoded contents of the field `figment_signature` (found in the `attributes` object) as a plain text file named `sha256.hex`:
+
+```json
+{
+  "data": [
+    {
+      "id": "31",
+      "type": "validator",
+      "attributes": {
+        "id": 31,
+        "pubkey": "d1ef8d468ef53d82368d2026e321ab2c6d44f44c33b7b9f22369bf6dcf37fb0208f82dd6b485325ce1bbf5aec7ad45bb",
+        "name": null,
+        "withdrawal_credentials": "010000000000000000000000fc438e6cc4b230eb5bfaae1337c3f5da2b9140f1",
+        "amount": 32000000000,
+        "signature": "aab7e3b41689fced6c3437a6bc5caf471ed319b94ad2642c47c5f641d5e3a046432171d47d48cd7a3e8a323939d4976c1315ad4dae134c421214673ddff9105ef1bb7f79c1babc6cd9c31428d5e44472164e9c9fccfd10fb9768c0855b194f49",
+        "deposit_data_root": "b2f5083221d6b61f2237af155c07c746f6a75c7d24dfe418106efdf87e9b9422",
+        "deposit_message_root": "026cbefa013e03a3d81592b7a5f6205773c12a6f7674529e497e9a4eb2df2d44",
+        "deposit_cli_version": "1.2.0",
+        "fork_version": "00000000",
+        "eth2_network_name": "goerli",
+        "status": "funding_requested",
+        "status_synced_at": "2023-01-14T16:00:14.459Z",
+        // highlight-next-line
+        "figment_signature": "ZDFlZjhkNDY4ZWY1M2Q4MjM2OGQyMDI2ZTMyMWFiMmM2ZDQ0ZjQ0YzMzYjdiOWYyMjM2OWJmNmRjZjM3ZmIwMjA4ZjgyZGQ2YjQ4NTMyNWNlMWJiZjVhZWM3YWQ0NWJi",
+        "fee_recipient_address": "0x781462762B706AA7c1DA71FBA1a545724928b81f",
+        "presigned_exit_transaction": "..."
+      }
+      ...
+    }
+  ]
+  ...
+```
+
+4. Decrypt the file:
+
+```text
+xxd -r -p < sha256.hex > sha256.sig
+```
+
+5. Verify that the decrypted signature matches the message:
+
+```text
+openssl dgst -sha256 -verify public-key.pem -signature sha256.sig message.txt
+```

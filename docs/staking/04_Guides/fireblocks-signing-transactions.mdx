@@ -162,6 +162,52 @@ As shown, the value of `v` comes from the Fireblocks API `signature`:
 
 :::
 
+## Cardano Specifics
+
+The `fullSig` value from Fireblocks is a plain Ed25519 signature. You must use that along with the `publicKey` value (also from the Fireblocks response) to create a VkeyWitness for the transaction. This can be done using the `@figmentio/slate` npm package as follows:
+
+```js
+const slate = require("@figmentio/slate");
+
+const witness = await slate.cardanoWitness("<fullSig>", "<publicKey>");
+```
+
+The value of `fullSig` and `publicKey` come from the Fireblocks API:
+
+```js
+'signedMessages': [
+  {
+    'publicKey': '9c9f6d340fab44895406405d5c50fa480b59dafda5f38649f7a2d53ebbb5a7d1',
+    'signature': {
+      'fullSig': 'f77f92d7f137011d5f0571d48ada31be3026f6b1dd0db013987c02a89898597aa7bbed3cfe6b35f8e42c4e782a51f1602a7fb75c78c4c30a76811f4da2cd590b'
+    }
+  }
+]
+```
+
+When submitting the resulting Witness to the Figment API, use the same `inputs[signatures]` format as described [above](#sending-signatures-to-the-staking-api). `account_address` is the actual address of the signer, for example `addr_test1qqxhqy4p7nmv7cuxdjajs4p3wnmwdc96h6ef25jrxk57fs6nrycgsj9xfcputqjdsa2vmkwjdrue3lqhckhmpfalurfq4jlgkk`
+
+For the Cardano Staking flow `delegate transaction`, an additional message with the param `bip44change: 2` must be passed to the Fireblocks API when creating the raw signing request, and two signatures will be generated. These both must be converted to VkeyWitnesses as described above before being submitted to the Figment API. Use the same account_address for both entries in the `signatures` array (the `delegator_address`). Here is an example payload for the Fireblocks request:
+
+```ruby
+{
+  assetId: 'ADA_TEST',
+  operation: 'RAW',
+  extraParameters: {
+    rawMessageData: {
+      messages: [
+        { content: <signing_payload> },
+        { content: <signing_payload>, bip44change: 2 } # Note: the signing_payload is the same for both messages
+      ]
+    }
+  },
+  source: {
+    type: 'VAULT_ACCOUNT',
+    id: {{ vault id }}
+  }
+}
+```
+
 ## Other Networks
 
 Other networks only require the `signedMessages[].signature.fullSig` value.

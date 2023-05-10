@@ -7,6 +7,24 @@ function days() {
   return { start, end };
 }
 
+function polygon() {
+  const REFERENCE_CHECKPOINT = 45500;
+  const CHECKPOINTS_IN_DAY = 8;
+  const CHECKPOINTS_IN_MONTH = CHECKPOINTS_IN_DAY * 30;
+  const REFRENCE_DATE = moment("2023-05-09", "YYYY-MM-DD");
+
+  const now = moment();
+  const daysPast = now.diff(REFRENCE_DATE, "days") + 1;
+
+  const latestCheckpointEst =
+    REFERENCE_CHECKPOINT + Math.ceil(daysPast * CHECKPOINTS_IN_DAY);
+
+  return {
+    start: latestCheckpointEst - 8,
+    end: latestCheckpointEst,
+  };
+}
+
 function polkadot() {
   const REFRENCE_ERA = 876;
   const ERAS_IN_DAY = 1;
@@ -67,4 +85,4 @@ function near() {
   };
 }
 
-export { days, polkadot, solana, near };
+export { days, polygon, polkadot, solana, near };
