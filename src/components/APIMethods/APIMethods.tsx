@@ -115,8 +115,8 @@ const FLOWS = {
       "Create New Unstaking Flow": "",
       "Submit Undelegate Data": "",
       "Submit Signed Undelegate Transaction for Broadcast": "",
-      "Submit Withdrawal Data": "",
-      "Submit Signed Withdrawal Transaction for Broadcast": "",
+      "Submit Withdraw Data": "",
+      "Submit Signed Withdraw Transaction for Broadcast": "",
       "Get Unstaking Flow Status": "",
     },
     transfer: {
