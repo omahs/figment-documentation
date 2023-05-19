@@ -5177,6 +5177,53 @@
 					]
 				},
 				{
+					"name": "Submit Staking Account Data",
+					"id": "1927d8a4-2177-4c17-b997-e9675c2096ed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"assign_stake_account\",\n    \"inputs\": {\n        \"stake_account_pubkey\": \"5vAhXNBuuDZzfZq8AeX6fRtGdkBPLYXExUwP3aZXeVW2\",\n        \"funding_account_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{SOL_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{solanaStakingFlowId}}/next",
+						"description": "To use an existing stake account, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.  \n\n### Request\n\n- `name`\\* : `create_new_stake_account`\n- `inputs`\\* : `object`\n  - `stake_account_pubkey`\\* : The public key of your existing Stake Account on Solana.\n  - `funding_account_pubkey`\\* : The main wallet your SOL will be originating from.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_delegate_tx` : Submit a validator address for delegation.\n    - `assign_stake_account` : Submit a different stake account to use.\n- `data` : `object` Flow & transaction data."
+					},
+					"response": [
+						{
+							"id": "05ed435e-6895-4e2d-8fcc-a4db389d9581",
+							"name": "Submit Staking Account Data",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"assign_stake_account\",\n    \"inputs\": {\n        \"stake_account_pubkey\": \"5vAhXNBuuDZzfZq8AeX6fRtGdkBPLYXExUwP3aZXeVW2\",\n        \"funding_account_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{SOLANA_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{solanaStakingFlowId}}/next"
+							},
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"id\": \"144b0e45-d70c-4ffd-af21-405ef0c92dda\",\n  \"operation\": \"staking\",\n  \"state\": \"stake_account\",\n  \"actions\": [\n    {\n      \"name\": \"create_delegate_tx\",\n      \"inputs\": [\n        {\n          \"name\": \"validator_address\",\n          \"display\": \"Vote Account Public Key\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": null\n        }\n      ]\n    },\n    {\n      \"name\": \"assign_stake_account\",\n      \"inputs\": [\n        {\n          \"name\": \"stake_account_pubkey\",\n          \"display\": \"Stake Account Pubkey\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": \"5vAhXNBuuDZzfZq8AeX6fRtGdkBPLYXExUwP3aZXeVW2\"\n        },\n        {\n          \"name\": \"funding_account_pubkey\",\n          \"display\": \"Funding Account Pubkey\",\n          \"description\": \"\",\n          \"type\": \"string\",\n          \"validations\": [\n            {\n              \"type\": \"presence\",\n              \"options\": {}\n            }\n          ],\n          \"array\": false,\n          \"default_value\": \"dyJx8mF476Jhr7xkLymYNKicE6NWUEypmRpFVYxH4m1\"\n        }\n      ]\n    }\n  ],\n  \"data\": {\n    \"stake_account_pubkey\": \"5vAhXNBuuDZzfZq8AeX6fRtGdkBPLYXExUwP3aZXeVW2\",\n    \"create_stake_account_transaction\": null,\n    \"funding_account_pubkey\": \"dyJx8mF476Jhr7xkLymYNKicE6NWUEypmRpFVYxH4m1\",\n    \"stake_authority_pubkey\": \"HSt3fnTxgE4dZM3NhJk3FxEi1Bxky22kjdUHAEDuQpEH\",\n    \"withdraw_authority_pubkey\": \"HSt3fnTxgE4dZM3NhJk3FxEi1Bxky22kjdUHAEDuQpEH\",\n    \"amount\": \"1.0\",\n    \"validator_address\": null,\n    \"delegate_transaction\": null,\n    \"delegation_active_amount\": null,\n    \"delegation_inactive_amount\": null,\n    \"delegation_status\": null,\n    \"delegation_status_error\": null,\n    \"estimated_active_at\": null\n  },\n  \"network_code\": \"solana\",\n  \"chain_code\": \"devnet\",\n  \"created_at\": \"2023-05-19T20:47:06.251Z\",\n  \"updated_at\": \"2023-05-19T20:49:27.062Z\"\n}"
+						}
+					]
+				},
+				{
 					"name": "Submit Signed Stake Account Transaction for Broadcast",
 					"id": "099caa8a-027a-49ad-911a-73e70fd11278",
 					"protocolProfileBehavior": {
@@ -6166,48 +6213,48 @@
 	],
 	"variable": [
 		{
-			"id": "20b8bd4c-84b8-453d-b76a-49ca6ac4369b",
+			"id": "f13b0a55-f710-4c6f-a65e-4913347bcae6",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "2a915b86-773f-4c1a-b168-d502d3fdc607",
+			"id": "916f42b2-5ac0-4690-9949-2b0ab2f8514e",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "af1d0bff-dc4b-4c25-b217-4f7cd3d5a7e9",
+			"id": "2c3658d7-4746-45aa-a302-65325dcb6b09",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "e82141d9-0a81-4fb7-9d80-49bca39e35b0",
+			"id": "68973ec9-1ec7-4dac-bcfa-229b07c46da4",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "4af72a2e-a10d-4660-bbed-2f594ac428cf",
+			"id": "78b25a35-de99-4c51-9ea7-9c97c12e1c9e",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "d85fec75-eddd-4bd3-a6fe-1ba7f3e844aa",
+			"id": "12011efb-0bac-4108-969b-6490a138602f",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "784a73ec-ee42-4366-a24a-ca66c56e74c4",
+			"id": "eef49ebb-5933-4afa-80eb-2e8c7cc97253",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "a4efda61-6fe1-43fc-a092-9a7ea047f745",
+			"id": "f18310ba-555a-44cb-89a5-aa9570c52611",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "2879fc71-df60-4d2c-897f-bf0a32dba740",
+			"id": "b255a004-a552-47c2-b459-96625bb01d03",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
