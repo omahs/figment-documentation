@@ -16926,7 +16926,7 @@
 								}
 							]
 						},
-						"description": "This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe first compute daily rates by aggregating all rewards (on both consensus and execution layers) received by all validators within a 24h period (from midnight UTC to midnight UTC) and divide this by the aggregated balances of all validators at the beginning of this 24h period. We then annualize this rate without compounding.\n\n### Request\n\n- `figment` : If `true` is passed, we will return the reward rate for Figment validators only. If omitted or any other value is passed, we will return the reward rate of the network as a whole.\n    \n\n### Response\n\nAn array of the following objects:\n\n- `date` : timestamp for the day in format \"YYYY-MM-DD\"\n- `value` : The total annualized reward rate for that day - in %\n- `staking` : The piece due to consensus layer rewards (inflation) - in %\n- `tips` : The piece due to execution layer rewards (transaction fees) - in %"
+						"description": "This API returns a time series of daily network-wide annualized staking reward rates, in %.\n\n### Methodology\n\nWe first compute daily rates by aggregating all rewards (on both consensus and execution layers) received by all validators within a 24h period (from 00:00 UTC to 23:59 UTC) and divide this by the aggregated balances of all validators at the beginning of this 24h period. We then annualize this rate without compounding. Data is not published for a date until all balance and rewards data has been captured for that day, thus it can be expected to see rates for a day in the response a couple of hours after the day (relative to UTC) has completed.\n\n### Request\n\n- `figment` : If `true` is passed, we will return the reward rate for Figment validators only. If omitted or any other value is passed, we will return the reward rate of the network as a whole.\n    \n\n### Response\n\nAn array of the following objects:\n\n- `date` : timestamp for the day in format \"YYYY-MM-DD\"\n- `value` : The total annualized reward rate for that day - in %\n- `staking` : The piece due to consensus layer rewards (inflation) - in %\n- `tips` : The piece due to execution layer rewards (transaction fees) - in %"
 					},
 					"response": [
 						{
@@ -26821,23 +26821,23 @@
 	],
 	"variable": [
 		{
-			"id": "dd83879b-9671-4ed9-a5cb-950ca5b38f69",
+			"id": "a9134914-136e-4899-9441-857c72e7084a",
 			"key": "ETH_REWARDS_HOST",
 			"value": "eth-rewards.datahub.figment.io"
 		},
 		{
-			"id": "a8c37931-75be-405b-bc65-a45071e2c7dd",
+			"id": "a193c89f-0568-4dde-91f9-3fc016220d25",
 			"key": "SOL_REWARDS_HOST",
 			"value": "solana-rewards.datahub.figment.io"
 		},
 		{
-			"id": "471a38af-5710-48dc-be3f-46811cee0b5c",
+			"id": "429bcefe-a47c-4c14-9079-15863abbe645",
 			"key": "DOT_REWARDS_HOST",
 			"value": "polkadot-rewards.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "d3f39c8c-60d1-4c55-a98b-e727bb50a842",
+			"id": "e4d7ff40-c38d-4e8e-aed0-724443e692e2",
 			"key": "INTERACTIVE",
 			"value": "false",
 			"type": "string"
