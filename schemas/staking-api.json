@@ -32,7 +32,7 @@
 					"response": [
 						{
 							"id": "0cba2b97-eb44-4d69-8ca5-f070e71876bc",
-							"name": "Create New Delegation Flow",
+							"name": "Create New Staking Flow",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -164,7 +164,7 @@
 					"response": [
 						{
 							"id": "1aca892b-581c-4ce6-b20b-1cd1f3a27055",
-							"name": "Get Flow Status",
+							"name": "Get Staking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -208,7 +208,7 @@
 					"response": [
 						{
 							"id": "cf5891b5-c437-45df-ad08-26d5b99026c8",
-							"name": "POST /api/v1/blockfrost_projects",
+							"name": "Add Blockfrost Project",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -255,7 +255,7 @@
 					"response": [
 						{
 							"id": "fe35d2d2-b8dd-4ce4-8b16-cf2dd6330f59",
-							"name": "GET /api/v1/blockfrost_projects",
+							"name": "Get Blockfrost Project",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -316,7 +316,7 @@
 					"response": [
 						{
 							"id": "a8725db9-361b-45a1-806f-5265316f9a74",
-							"name": "Create New Delegation Flow",
+							"name": "Create New Staking Flow",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -410,7 +410,7 @@
 					"response": [
 						{
 							"id": "3d9b400b-b984-4f7c-a854-88101fb1c5fb",
-							"name": "Submit Delegation Data",
+							"name": "Submit Delegate Data",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -542,15 +542,13 @@
 					"response": [
 						{
 							"id": "f95811c8-da9d-41f3-b30c-6810e74487a8",
-							"name": "Get Flow Status",
+							"name": "Get Staking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
 									{
 										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									}
 								],
 								"body": {
@@ -734,7 +732,7 @@
 					"response": [
 						{
 							"id": "6b65befe-d87c-418b-8abb-f158aecf0496",
-							"name": "Get Flow Status",
+							"name": "Get Transfer Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -793,7 +791,7 @@
 					"response": [
 						{
 							"id": "ad445a85-e203-4ad4-a1ef-c6d5c061fe0e",
-							"name": "Create a New Staking Flow",
+							"name": "Create New Staking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -840,7 +838,7 @@
 					"response": [
 						{
 							"id": "5c717dfa-29fc-4ff0-8821-54f1cecf0bb6",
-							"name": "Submit Delegation Data",
+							"name": "Submit Delegate Data",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -925,7 +923,7 @@
 					"response": [
 						{
 							"id": "4e42c1e8-c42a-4b6c-bf8e-ca3cd0f8bfaf",
-							"name": "Get Flow Status",
+							"name": "Get Staking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -963,7 +961,7 @@
 					"response": [
 						{
 							"id": "448cbff3-49c1-4575-bda6-761127396068",
-							"name": "Create a New Redelegate Flow",
+							"name": "Create New Redelegate Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -1113,7 +1111,7 @@
 					"response": [
 						{
 							"id": "ed96d653-7b5f-4106-897a-4c96cd043272",
-							"name": "Get Flow Status",
+							"name": "Get Redelegate Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1151,7 +1149,7 @@
 					"response": [
 						{
 							"id": "08a6e063-58c4-452f-932c-a13293790aa0",
-							"name": "Create a New Undelegate Flow",
+							"name": "Create New Unstaking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -1283,7 +1281,7 @@
 					"response": [
 						{
 							"id": "4be0825b-4b6e-4316-8867-e43ffc8a00a7",
-							"name": "Get Flow Status",
+							"name": "Get Unstaking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1321,7 +1319,7 @@
 					"response": [
 						{
 							"id": "56abb84e-86ff-4229-8a64-4742b137b8fc",
-							"name": "Create a New Claim Rewards Flow",
+							"name": "Create New Claim Rewards Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -1453,7 +1451,7 @@
 					"response": [
 						{
 							"id": "fb8ae8bf-0638-40c6-9c3a-8e1d160c5b82",
-							"name": "Get Flow Status",
+							"name": "Get Claim Rewards Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1491,7 +1489,7 @@
 					"response": [
 						{
 							"id": "405b10f4-9340-4511-b5fc-2a60a943bde3",
-							"name": "Create a New Transfer Flow",
+							"name": "Create New Transfer Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -1623,7 +1621,7 @@
 					"response": [
 						{
 							"id": "204e6304-2d31-4fd1-ae70-0ff241aa1c65",
-							"name": "Get Flow Status",
+							"name": "Get Transfer Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1773,7 +1771,7 @@
 					"response": [
 						{
 							"id": "c1bd1a49-5008-4a39-934b-c140d51e4acd",
-							"name": "Submit Signed Transaction for Broadcast",
+							"name": "Submit Signed Deposit Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -1811,7 +1809,7 @@
 					"response": [
 						{
 							"id": "ce4183a9-f767-4860-92f6-8329a5009a58",
-							"name": "Get Flow Status",
+							"name": "Get Staking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1934,7 +1932,7 @@
 					"response": [
 						{
 							"id": "58a2fc06-1835-4739-bf7d-8505f58be044",
-							"name": "Get Flow Status",
+							"name": "Get Unstaking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -2510,7 +2508,7 @@
 					"response": [
 						{
 							"id": "9e361bba-57c2-4ce3-85c1-04a8c6a59b9a",
-							"name": "Create New Delegation Flow",
+							"name": "Create New Staking Flow",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -2552,7 +2550,7 @@
 							}
 						},
 						"url": "https://{{NEAR_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{nearStakingFlowId}}/next",
-						"description": "After creating a new staking flow, submit the staking account data. Collect the required inputs. Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Request\n\n- `name`\\* : `create_delegate_tx`\n- `inputs`\\* : `object`\n    - `delegator_address`\\* : `string` The delegating address.\n    - `delegator_pubkey`\\* : `string` The public key of the signing account.\n    - `validator_address`\\* : `string` Address of the validator to which you want to delegate your tokens.\n    - `amount`\\* : `number` The amount of NEAR to be delegated.\n    - `max_gas` : `string` Adjust if you wish to limit the possible transaction fee.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_delegate_tx` : If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_delegate_tx` : Submit a signed transaction payload ready to be broadcast to the network.\n- `data` : `object` Flow & transaction data."
+						"description": "After creating a new staking flow, submit the staking account data. Collect the required inputs. Send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Request\n\n- `name`\\* : `create_delegate_tx`\n- `inputs`\\* : `object`\n    - `delegator_address`\\* : `string` The delegating address.\n    - `delegator_pubkey`\\* : `string` The public key of the signing account.\n    - `validator_address`\\* : `string` Address of the validator to which you want to delegate your tokens.\n    - `amount`\\* : `number` The amount of NEAR to be delegated.\n    - `max_gas` : `string` Adjust if you wish to limit the possible transaction fee.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_delegate_tx` : If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_delegate_tx` : Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_delegate_tx_by_hash` : Submit a previously completed transaction hash to continue the flow.\n- `data` : `object` Flow & transaction data."
 					},
 					"response": [
 						{
@@ -2642,7 +2640,7 @@
 					"response": [
 						{
 							"id": "4b1089da-f7ca-49ce-be97-a367938c20bf",
-							"name": "Get Flow Status",
+							"name": "Get Staking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -2680,7 +2678,7 @@
 					"response": [
 						{
 							"id": "cfd78bba-a789-4af9-95f2-7d9f7191ff4d",
-							"name": "Create New Undelegation Flow",
+							"name": "Create New Unstaking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -2722,7 +2720,7 @@
 							}
 						},
 						"url": "https://{{NEAR_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{nearUnstakingFlowId}}/next",
-						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Request\n\n- `name`\\* : `create_undelegate_tx`\n- `inputs`\\* : `object`\n    - `delegator_address`\\* : `string` The delegator address.\n    - `delegator_pubkey`\\* : `string` The pubkey of the signing account.\n    - `validator_address`\\* : `string` Validator address from which NEAR will be undelegated.\n    - `undelegate_amount`\\* : `number` The amount of NEAR to be undelegated.\n    - `undelegate_maximum` : `boolean` Set to `true` if you wish to unbond the full delegated balance without needing to know the exact delegated balance.\n    - `max_gas` : The maximum transaction fee.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_undelegate_tx` : If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_undelegate_tx` : Submit a signed transaction payload ready to be broadcast to the network.\n- `data` : `object` Flow & transaction data."
+						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.\n\n### Request\n\n- `name`\\* : `create_undelegate_tx`\n- `inputs`\\* : `object`\n    - `delegator_address`\\* : `string` The delegator address.\n    - `delegator_pubkey`\\* : `string` The pubkey of the signing account.\n    - `validator_address`\\* : `string` Validator address from which NEAR will be undelegated.\n    - `undelegate_amount`\\* : `number` The amount of NEAR to be undelegated.\n    - `undelegate_maximum` : `boolean` Set to `true` if you wish to unbond the full delegated balance without needing to know the exact delegated balance.\n    - `max_gas` : The maximum transaction fee.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_undelegate_tx` : If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_undelegate_tx` : Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_undelegate_tx_by_hash` : Submit a previously completed transaction hash to continue the flow.\n- `data` : `object` Flow & transaction data."
 					},
 					"response": [
 						{
@@ -2816,7 +2814,7 @@
 							}
 						},
 						"url": "https://{{NEAR_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{nearUnstakingFlowId}}/next",
-						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name`\\* : `create_withdraw_tx`\n- `inputs`\\* : `object`\n    - `delegator_address`\\* : `string` The delegator address.\n    - `delegator_pubkey`\\* : `string` The pubkey of the signing account.\n    - `validator_address`\\* : `string` Validator address from which NEAR will be undelegated.\n    - `withdraw_amount`\\* : `number` The amount of NEAR to be withdrawn.\n    - `withdraw_maximum` : `boolean` Set to `true` if you wish to withdraw the full available balance without needing to know the exact available balance.\n    - `max_gas` : The maximum transaction fee.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_withdraw_tx` : If you need to get a fresh version of the transaction payload (i.e., if the nonce needs to be updated)\n    - `sign_withdraw_tx` : Submit a signed transaction payload ready to be broadcast to the network.\n- `data` : `object` Flow & transaction data."
+						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name`\\* : `create_withdraw_tx`\n- `inputs`\\* : `object`\n    - `delegator_address`\\* : `string` The delegator address.\n    - `delegator_pubkey`\\* : `string` The pubkey of the signing account.\n    - `validator_address`\\* : `string` Validator address from which NEAR will be undelegated.\n    - `withdraw_amount`\\* : `number` The amount of NEAR to be withdrawn.\n    - `withdraw_maximum` : `boolean` Set to `true` if you wish to withdraw the full available balance without needing to know the exact available balance.\n    - `max_gas` : The maximum transaction fee.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_withdraw_tx` : If you need to get a fresh version of the transaction payload (i.e., if the nonce needs to be updated)\n    - `sign_withdraw_tx` : Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_withdraw_tx_by_hash` : Submit a previously completed transaction hash to continue the flow.\n- `data` : `object` Flow & transaction data."
 					},
 					"response": [
 						{
@@ -2906,17 +2904,17 @@
 					"response": [
 						{
 							"id": "942e831b-9220-49cb-9ad1-a332ee80803e",
-							"name": "Get Flow Status",
+							"name": "Get Unstaking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": "https://{{NEAR_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{nearStakingFlowId}}"
 							},
-							"_postman_previewlanguage": "json",
+							"_postman_previewlanguage": "Text",
 							"header": null,
 							"cookie": [],
 							"responseTime": null,
-							"body": "{\n    \"id\": \"549db585-874f-4b5d-b1a2-67b7d9a3df15\",\n    \"state\": \"delegated\",\n    \"actions\": [],\n    \"data\": {\n        \"delegator_address\": \"0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet\",\n        \"delegator_pubkey\": \"ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV\",\n        \"validator_address\": \"legends.pool.f863973.m0\",\n        \"amount\": \"10.0\",\n        \"max_gas\": null,\n        \"delegate_transaction\": {\n            \"raw\": \"380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000\",\n            \"signing_payload\": \"c9f587150ebf9aa0d8c20510a71574a094224c636a1d40e9c80e13f7d0ed04ea\",\n            \"signed\": \"380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000007a3f50c131f084dc733fc56e16c888fc7f42a0e49000e8948065e1663d1f57849788b40dfbabdc1e6734d78f6fe4e7803372a251fb9c9473ca443575102b1303\",\n            \"hash\": \"EbN6QPxd81V8CGViBFMtTjoqnoPV5bH34kyiV5vu9XvH\",\n            \"status\": \"confirmed\",\n            \"error\": null,\n            \"signatures\": []\n        }\n    },\n    \"network_code\": \"near\",\n    \"chain_code\": \"testnet\",\n    \"created_at\": \"2023-02-27T17:46:45.944Z\",\n    \"updated_at\": \"2023-02-27T17:48:05.958Z\"\n}"
+							"body": "{\n    \"id\": \"549db585-874f-4b5d-b1a2-67b7d9a3df15\",\n    \"state\": \"cool_down\",\n    \"actions\": [\n        {\n            \"name\": \"wait\",\n            \"estimated_state_change_at\": \"2022-09-28T16:24:34.472Z\",\n            \"inputs\": []\n        }\n    ],\n    \"data\": {\n        \"delegator_address\": \"0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet\",\n        \"delegator_pubkey\": \"ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV\",\n        \"validator_address\": \"legends.pool.f863973.m0\",\n        \"undelegate_amount\": \"10.0\",\n        \"undelegate_transaction\": {\n            \"raw\": \"380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000\",\n            \"signing_payload\": \"c9f587150ebf9aa0d8c20510a71574a094224c636a1d40e9c80e13f7d0ed04ea\",\n            \"signed\": \"380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000007a3f50c131f084dc733fc56e16c888fc7f42a0e49000e8948065e1663d1f57849788b40dfbabdc1e6734d78f6fe4e7803372a251fb9c9473ca443575102b1303\",\n            \"hash\": \"EbN6QPxd81V8CGViBFMtTjoqnoPV5bH34kyiV5vu9XvH\",\n            \"status\": \"confirmed\",\n            \"error\": null,\n            \"signatures\": []\n        },\n        \"estimated_inactive_at\": \"2022-09-28T16:24:34.472Z\",\n        \"withdraw_amount\": \"\",\n        \"withdraw_maximum\": null,\n        \"withdraw_transaction\": null\n    },\n    \"network_code\": \"near\",\n    \"chain_code\": \"testnet\",\n    \"created_at\": \"2023-02-27T17:46:45.944Z\",\n    \"updated_at\": \"2023-02-27T17:48:05.958Z\"\n}"
 						}
 					]
 				},
@@ -2986,7 +2984,7 @@
 							}
 						},
 						"url": "https://{{NEAR_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{nearTransferFlowId}}/next",
-						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name`\\* : `string` : `create_transfer_tx`.\n- `inputs`\\* : `object`\n    - `from_account_pubkey`\\* : `string` The account that will sign the transaction.\n    - `from_account_address`\\* : `string` the address from which NEAR will be transferred.\n    - `to_account_address`\\* : `string` The address to which NEAR will be transferred.\n    - `amount`\\* : `number` The amount of NEAR to be transferred.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_deposit_tx` : If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_deposit_tx` : Submit a signed transaction payload ready to be broadcast to the network.\n- `data` : `object` Flow & transaction data."
+						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name`\\* : `string` : `create_transfer_tx`.\n- `inputs`\\* : `object`\n    - `from_account_pubkey`\\* : `string` The account that will sign the transaction.\n    - `from_account_address`\\* : `string` the address from which NEAR will be transferred.\n    - `to_account_address`\\* : `string` The address to which NEAR will be transferred.\n    - `amount`\\* : `number` The amount of NEAR to be transferred.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_deposit_tx` : If you need to get a fresh version of the transaction payload (i.e., the nonce has increased).\n    - `sign_deposit_tx` : Submit a signed transaction payload ready to be broadcast to the network.\n    - `confirm_transfer_tx_by_hash` : Submit a previously completed transaction hash to continue the flow.\n- `data` : `object` Flow & transaction data."
 					},
 					"response": [
 						{
@@ -3076,17 +3074,17 @@
 					"response": [
 						{
 							"id": "089b76ee-bd24-415a-b772-da1f80940852",
-							"name": "Get Flow Status",
+							"name": "Get Transfer Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": "https://{{NEAR_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{nearStakingFlowId}}"
 							},
-							"_postman_previewlanguage": "json",
+							"_postman_previewlanguage": "Text",
 							"header": null,
 							"cookie": [],
 							"responseTime": null,
-							"body": "{\n    \"id\": \"549db585-874f-4b5d-b1a2-67b7d9a3df15\",\n    \"state\": \"delegated\",\n    \"actions\": [],\n    \"data\": {\n        \"delegator_address\": \"0b81cc09294fc074814ad0de50f31644e5669f856105399b.testnet\",\n        \"delegator_pubkey\": \"ed25519:NUbTcj78nHFFm1J8a1GFjenAnCKV32ZdBeeqem8oyLV\",\n        \"validator_address\": \"legends.pool.f863973.m0\",\n        \"amount\": \"10.0\",\n        \"max_gas\": null,\n        \"delegate_transaction\": {\n            \"raw\": \"380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000\",\n            \"signing_payload\": \"c9f587150ebf9aa0d8c20510a71574a094224c636a1d40e9c80e13f7d0ed04ea\",\n            \"signed\": \"380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000007a3f50c131f084dc733fc56e16c888fc7f42a0e49000e8948065e1663d1f57849788b40dfbabdc1e6734d78f6fe4e7803372a251fb9c9473ca443575102b1303\",\n            \"hash\": \"EbN6QPxd81V8CGViBFMtTjoqnoPV5bH34kyiV5vu9XvH\",\n            \"status\": \"confirmed\",\n            \"error\": null,\n            \"signatures\": []\n        }\n    },\n    \"network_code\": \"near\",\n    \"chain_code\": \"testnet\",\n    \"created_at\": \"2023-02-27T17:46:45.944Z\",\n    \"updated_at\": \"2023-02-27T17:48:05.958Z\"\n}"
+							"body": "{\n    \"id\": \"549db585-874f-4b5d-b1a2-67b7d9a3df15\",\n    \"state\": \"transferred\",\n    \"actions\": [],\n    \"data\": {\n        \"from_account_pubkey\": \"ed25519:5QA46X6NkNmsFdu9xWVBaLNowh9gGeF1c5r9u6NcxaLY\",\n        \"from_account_address\": \"slate-demo.testnet\",\n        \"to_account_address\": \"pizza.testnet\",\n        \"amount\": \"10.0\",\n        \"transfer_transaction\": {\n            \"raw\": \"380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000\",\n            \"signing_payload\": \"c9f587150ebf9aa0d8c20510a71574a094224c636a1d40e9c80e13f7d0ed04ea\",\n            \"signed\": \"380000003062383163633039323934666330373438313461643064653530663331363434653536363966383536313035333939622e746573746e657400058065d39e25bf5038afbacc1b7312c5dc3761770626288020d783f8685058aa412e4c11c36b0000170000006c6567656e64732e706f6f6c2e663836333937332e6d3060877de2656b98d64e2cecadb55050ee8aa435e81dc657911adc65bb569bf7fb0100000002110000006465706f7369745f616e645f7374616b65020000007b7d00e057eb481b00000000004a480114169545080000000000007a3f50c131f084dc733fc56e16c888fc7f42a0e49000e8948065e1663d1f57849788b40dfbabdc1e6734d78f6fe4e7803372a251fb9c9473ca443575102b1303\",\n            \"hash\": \"EbN6QPxd81V8CGViBFMtTjoqnoPV5bH34kyiV5vu9XvH\",\n            \"status\": \"confirmed\",\n            \"error\": null,\n            \"signatures\": []\n        }\n    },\n    \"network_code\": \"near\",\n    \"chain_code\": \"testnet\",\n    \"created_at\": \"2023-02-27T17:46:45.944Z\",\n    \"updated_at\": \"2023-02-27T17:48:05.958Z\"\n}"
 						}
 					]
 				}
@@ -3120,7 +3118,7 @@
 					"response": [
 						{
 							"id": "062245d6-8ac3-44e2-833b-d76f61b54b26",
-							"name": "Create New Delegation Flow",
+							"name": "Create New Staking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -3393,7 +3391,7 @@
 					"response": [
 						{
 							"id": "2be93d4d-afd7-41ce-bf74-651b5e5ac011",
-							"name": "Get Flow Status",
+							"name": "Get Staking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -3431,7 +3429,7 @@
 					"response": [
 						{
 							"id": "40a7029a-233e-47aa-a4a9-3590de3b32b3",
-							"name": "Create New Undelegation Flow",
+							"name": "Create New Unstaking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -3572,7 +3570,7 @@
 					"response": [
 						{
 							"id": "e23a9e9b-64bc-403d-85bb-d5e968b5601a",
-							"name": "Submit a Signed Chill Transaction for Broadcast",
+							"name": "Submit Signed Chill Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -3798,7 +3796,7 @@
 					"response": [
 						{
 							"id": "ba91cc68-6799-4bde-8356-27f96ab967d3",
-							"name": "Get Flow Status",
+							"name": "Get Unstaking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -3968,7 +3966,7 @@
 					"response": [
 						{
 							"id": "b9d31522-e3e4-47a8-9e34-6d92a28d1ebd",
-							"name": "Get Flow Status",
+							"name": "Get Add Staking Proxy Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -4006,7 +4004,7 @@
 					"response": [
 						{
 							"id": "9b3c39ae-926e-479e-9fc9-6b0bad19c20b",
-							"name": "Create New Flow To Remove Staking Proxy",
+							"name": "Create New Remove Staking Proxy Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -4100,7 +4098,7 @@
 					"response": [
 						{
 							"id": "e33ded5a-72e5-466f-9d83-e2178129392f",
-							"name": "Submit a Signed Remove Proxy Transaction for Broadcast",
+							"name": "Submit Signed Remove Proxy Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -4138,7 +4136,7 @@
 					"response": [
 						{
 							"id": "30b5be02-6f2e-4bb1-879a-9cf055730fc2",
-							"name": "Get Flow Status",
+							"name": "Get Remove Staking Proxy Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -4176,7 +4174,7 @@
 					"response": [
 						{
 							"id": "e5af6197-70ca-4026-a580-3b7cee75e5f4",
-							"name": "Create a New Transfer Flow",
+							"name": "Create New Transfer Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -4308,7 +4306,7 @@
 					"response": [
 						{
 							"id": "686cea54-c299-4390-a904-1042a3620e03",
-							"name": "Get Flow Status",
+							"name": "Get Transfer Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -4352,7 +4350,7 @@
 					"response": [
 						{
 							"id": "887bb02d-38ec-42e9-bf9d-b877200a4440",
-							"name": "Create New Delegation Flow",
+							"name": "Create New Staking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -4493,7 +4491,7 @@
 					"response": [
 						{
 							"id": "95f38834-bb6d-48ab-b7c7-c984b7bd61f9",
-							"name": "Submit a Signed Allowance Transaction for Broadcast",
+							"name": "Submit Signed Allowance Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -4587,7 +4585,7 @@
 					"response": [
 						{
 							"id": "014b4cd6-dfad-46a1-badd-4286cf71c918",
-							"name": "Submit a Signed Delegate Transaction for Broadcast",
+							"name": "Submit Signed Delegate Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -4625,7 +4623,7 @@
 					"response": [
 						{
 							"id": "c7ff22ab-6a07-47fa-b94f-88f3ca0e2a96",
-							"name": "Get Flow Status",
+							"name": "Get Staking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -4663,7 +4661,7 @@
 					"response": [
 						{
 							"id": "fada0b70-fb0b-4586-bd1f-415178cd0be1",
-							"name": "Create New Undelegation Flow",
+							"name": "Create New Unstaking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -4757,7 +4755,7 @@
 					"response": [
 						{
 							"id": "47e986e5-19a5-44b5-883f-982a7d7f8db1",
-							"name": "Submit a Signed Unbonding Transaction for Broadcast",
+							"name": "Submit Signed Unbonding Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -4894,7 +4892,7 @@
 					"response": [
 						{
 							"id": "b02506ac-b255-4dc1-878f-6baa7bc395a6",
-							"name": "Get Flow Status",
+							"name": "Get Unstaking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -5026,7 +5024,7 @@
 					"response": [
 						{
 							"id": "4e00777a-9e86-4caa-9823-6ea349eb9e9f",
-							"name": "Submit a Signed Claim Rewards Transaction for Broadcast",
+							"name": "Submit Signed Claim Rewards Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -5064,7 +5062,7 @@
 					"response": [
 						{
 							"id": "1e9039d0-02ae-4809-b33d-fb780feeb8af",
-							"name": "Get Flow Status",
+							"name": "Get Claim Rewards Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -5108,7 +5106,7 @@
 					"response": [
 						{
 							"id": "2eda3a71-169e-445d-87bf-46388bf1c66d",
-							"name": "Create New Delegation Flow",
+							"name": "Create New Staking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -5202,7 +5200,7 @@
 					"response": [
 						{
 							"id": "f00cc26a-562b-4111-97eb-8b954334bac7",
-							"name": "Submit a Signed Stake Account Transaction for Broadcast",
+							"name": "Submit Signed Stake Account Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -5296,7 +5294,7 @@
 					"response": [
 						{
 							"id": "b1879ee4-a162-4426-9064-2af944a24f12",
-							"name": "Submit a Signed Delegate Transaction for Broadcast",
+							"name": "Submit Signed Delegate Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -5334,7 +5332,7 @@
 					"response": [
 						{
 							"id": "1148f6af-bd45-44b4-8b80-033c61044a8c",
-							"name": "Get Flow Status",
+							"name": "Get Staking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -5372,7 +5370,7 @@
 					"response": [
 						{
 							"id": "ab9d1ea5-f5d9-4752-8890-44874135711c",
-							"name": "Create a New Undelegation Flow",
+							"name": "Create New Unstaking Flow",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -5466,7 +5464,7 @@
 					"response": [
 						{
 							"id": "478e60a2-7cfc-439b-b7dc-8ad735fa2e3a",
-							"name": "Submit a Signed Deactivate Transaction for Broadcast",
+							"name": "Submit Signed Deactivate Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -5560,7 +5558,7 @@
 					"response": [
 						{
 							"id": "df72a327-8aa5-44f3-803c-bdeca176ec27",
-							"name": "Submit a Signed Withdrawl Transaction for Broadcast",
+							"name": "Submit Signed Withdrawl Transaction for Broadcast",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -5598,7 +5596,7 @@
 					"response": [
 						{
 							"id": "d82578b6-56f4-4f13-af84-c3b706c1b990",
-							"name": "Get Flow Status",
+							"name": "Get Unstaking Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -5730,7 +5728,7 @@
 					"response": [
 						{
 							"id": "2d446ef1-e283-4112-bf2e-b0d4f7ab00b7",
-							"name": "Submit a Signed Transfer Transaction for Broadcast",
+							"name": "Submit Signed Transfer Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -5768,7 +5766,7 @@
 					"response": [
 						{
 							"id": "5348856f-f765-4b22-80c3-53e7da0c682b",
-							"name": "Get Flow Status",
+							"name": "Get Transfer Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -5900,7 +5898,7 @@
 					"response": [
 						{
 							"id": "9678faff-f468-4111-9626-3bac75505c6e",
-							"name": "Submit a Signed Split Stake Account Transaction for Broadcast",
+							"name": "Submit Signed Split Stake Account Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -5938,7 +5936,7 @@
 					"response": [
 						{
 							"id": "967622b2-7b99-4356-b854-b48ef3128c78",
-							"name": "Get Flow Status",
+							"name": "Get Split Stake Account Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -6082,7 +6080,7 @@
 					"response": [
 						{
 							"id": "0b2b7649-8d95-4db8-8e76-4a7d28d3918f",
-							"name": "Submit a Signed Merge Stake Account Transaction for Broadcast",
+							"name": "Submit Signed Merge Stake Account Transaction for Broadcast",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -6126,7 +6124,7 @@
 					"response": [
 						{
 							"id": "d3497da9-0e7a-4fee-935f-0ac8f33fb384",
-							"name": "Get Flow Status",
+							"name": "Get Merge Stake Account Flow Status",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -6168,48 +6166,48 @@
 	],
 	"variable": [
 		{
-			"id": "dd780838-db74-4554-8f8f-815358b7bd71",
+			"id": "20b8bd4c-84b8-453d-b76a-49ca6ac4369b",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "70730d5a-f76e-4057-ac90-b5130903b3ea",
+			"id": "2a915b86-773f-4c1a-b168-d502d3fdc607",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "c1a97a1c-dd80-4127-b245-ab1d6cb48819",
+			"id": "af1d0bff-dc4b-4c25-b217-4f7cd3d5a7e9",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "ca572efb-c30e-49e8-97b1-dc1e38477b8c",
+			"id": "e82141d9-0a81-4fb7-9d80-49bca39e35b0",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "2f44865a-5f41-4202-b154-aac380ca6e0d",
+			"id": "4af72a2e-a10d-4660-bbed-2f594ac428cf",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "f8ab2813-1c66-4941-9a58-44db0392d7ec",
+			"id": "d85fec75-eddd-4bd3-a6fe-1ba7f3e844aa",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "7f299615-d300-4e33-9300-187f4463eff2",
+			"id": "784a73ec-ee42-4366-a24a-ca66c56e74c4",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "ecf12280-f9b0-4a0e-8ea9-db84059672ef",
+			"id": "a4efda61-6fe1-43fc-a092-9a7ea047f745",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "c892a047-80b5-4bb7-a8f2-81725f27d7fe",
+			"id": "2879fc71-df60-4d2c-897f-bf0a32dba740",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
