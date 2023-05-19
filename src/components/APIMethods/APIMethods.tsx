@@ -195,7 +195,7 @@ const FLOWS = {
     staking: {
       "Create New Staking Flow": "",
       "Create New Staking Account": "",
-      "Assign Staking Account Data": "",
+      "Submit Staking Account Data": "",
       "Submit Signed Stake Account Transaction for Broadcast": "",
       "Submit Validator Address": "",
       "Submit Signed Delegate Transaction for Broadcast": "",
