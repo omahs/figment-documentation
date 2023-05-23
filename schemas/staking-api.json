@@ -5195,7 +5195,7 @@
 							}
 						},
 						"url": "https://{{SOL_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{solanaStakingFlowId}}/next",
-						"description": "To use an existing stake account, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.  \n\n### Request\n\n- `name`\\* : `create_new_stake_account`\n- `inputs`\\* : `object`\n  - `stake_account_pubkey`\\* : The public key of your existing Stake Account on Solana.\n  - `funding_account_pubkey`\\* : The main wallet your SOL will be originating from.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_delegate_tx` : Submit a validator address for delegation.\n    - `assign_stake_account` : Submit a different stake account to use.\n- `data` : `object` Flow & transaction data."
+						"description": "To use an existing stake account, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.  \n\n### Request\n\n- `name`\\* : `assign_stake_account`\n- `inputs`\\* : `object`\n  - `stake_account_pubkey`\\* : The public key of your existing Stake Account on Solana.\n  - `funding_account_pubkey`\\* : The main wallet your SOL will be originating from.\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_delegate_tx` : Submit a validator address for delegation.\n    - `assign_stake_account` : Submit a different stake account to use.\n- `data` : `object` Flow & transaction data."
 					},
 					"response": [
 						{
@@ -6213,48 +6213,48 @@
 	],
 	"variable": [
 		{
-			"id": "f13b0a55-f710-4c6f-a65e-4913347bcae6",
+			"id": "928d55f4-0edf-4aa4-857d-b06e823a5a6f",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "916f42b2-5ac0-4690-9949-2b0ab2f8514e",
+			"id": "83fa56ec-5dfa-4a0c-8da0-044a4dbcfa2a",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "2c3658d7-4746-45aa-a302-65325dcb6b09",
+			"id": "9f8ed6c6-f11b-4d56-9976-0db11d6204db",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "68973ec9-1ec7-4dac-bcfa-229b07c46da4",
+			"id": "0f302bad-563f-4026-975d-d8c933b39c55",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "78b25a35-de99-4c51-9ea7-9c97c12e1c9e",
+			"id": "923dd27b-6a3b-4b0d-9004-2a2bd0a9a2a7",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "12011efb-0bac-4108-969b-6490a138602f",
+			"id": "b8124916-b5e1-41ba-a893-e414df9c88fe",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "eef49ebb-5933-4afa-80eb-2e8c7cc97253",
+			"id": "c9e109b1-43a9-4dde-9418-cc46d2880ae4",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "f18310ba-555a-44cb-89a5-aa9570c52611",
+			"id": "9049b330-37f0-4a6c-9604-ac9f7b8bbadd",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "b255a004-a552-47c2-b459-96625bb01d03",
+			"id": "f212d23a-ecbf-4a32-ad09-bdbbc6cf799e",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
