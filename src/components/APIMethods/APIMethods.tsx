@@ -242,6 +242,10 @@ interface Props {
   host: string;
 }
 
+function toDashCase(str) {
+  return str?.toLowerCase().replace(/\s+/g, "-");
+}
+
 function APIMethod({
   name = "default_name",
   content = "",
@@ -393,14 +397,14 @@ function APIMethod({
 
   return (
     <>
-      <div className="row" style={{ marginTop: "40px" }}>
+      <div
+        className="row"
+        id={`${toDashCase(name)}`}
+        style={{ marginTop: "40px" }}
+      >
         <div className="col col--6">
-          <h2
-            id={name.toLowerCase()}
-            className={styles.heading}
-            data-method={request?.method}
-          >
-            <Link to={`#${name.toLowerCase()}`}>{name}</Link>
+          <h2 className={styles.heading} data-method={request?.method}>
+            <Link to={`#${toDashCase(name)}`}>{name}</Link>
           </h2>
 
           <ReactMarkdown>{description}</ReactMarkdown>

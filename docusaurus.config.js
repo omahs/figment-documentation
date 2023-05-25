@@ -114,7 +114,7 @@ const config = {
                   return {
                     type: "html",
                     value:
-                      "<div class='bottom_nav_spacer'>Questions or Feedback? <a class='email_link' href='mailto:technical-support@figment.io'>Email us</a></div>",
+                      "<div class='bottom_nav_spacer'>Questions or Feedback? <a class='email_link' href='mailto:docs@figment.io'>Email us</a></div>",
                     defaultStyle: true,
                   };
                 }

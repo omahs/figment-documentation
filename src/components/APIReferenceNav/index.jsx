@@ -1,6 +1,10 @@
 import React from "react";
 import Link from "@docusaurus/Link";
 
+function toDashCase(str) {
+  return str?.toLowerCase().replace(/\s+/g, "-");
+}
+
 export default function APIReferenceNav({
   service,
   network,
@@ -24,7 +28,7 @@ export default function APIReferenceNav({
                         >
                           <Link
                             key={`${m?.name}-${m?.method}--m-hash`}
-                            href={`#${m?.name.toLowerCase()}`}
+                            href={`#${toDashCase(m?.name)}`}
                           >
                             {m?.name}
                           </Link>
