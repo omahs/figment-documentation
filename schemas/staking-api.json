@@ -5545,7 +5545,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"create_withdraw_tx\",\n    \"inputs\": {\n        \"funding_account_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\",\n        \"recipient_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\",\n        \"amount\": 5.9\n    }\n}",
+							"raw": "{\n    \"name\": \"create_withdraw_tx\",\n    \"inputs\": {\n        \"stake_account_pubkey\": \"9UPYJp5pApSEaeCizrvqe6vx7hSj3ZPzVDLZHG4hxk3x\",\n        \"amount\": 5.9,\n        \"funding_account_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\",\n        \"recipient_pubkey\": \"Hk5voGB7wh9HtXTeszbW7AFm3A4B94xWkXeeaqTYspqy\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -5553,7 +5553,7 @@
 							}
 						},
 						"url": "https://{{SOL_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{solanaUnstakingFlowId}}/next",
-						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name`\\* : `create_withdraw_tx`\n- `inputs`\\* : `object`\n    - `amount`\\* : `string` The number of SOL to be withdrawn. Partial withdrawal is possible.\n    - `funding_account_pubkey`\\* : `string` The address of the account paying the transaction fee.\n    - `recipient_pubkey`\\* : `string` The address of the account which will receive the withdrawal.\n\nNote that the recipient of the withdrawal is _not_ the originating address by default!\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_withdraw_tx` : If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired)\n    - `sign_withdraw_tx` : Submit a signed transaction payload or an array of signatures to continue the flow. Refer to the guides [Signing Transactions with Figment's npm Package](/staking/guides/figment-signing-transactions/) and [Signing Transactions with the Fireblocks API](/staking/guides/fireblocks-signing-transactions/) for details.\n    - `confirm_withdraw_tx_by_hash` : Submit a previously completed transaction hash to continue the flow. Refer to the guide [Advance Flows Using a Transaction Hash](/staking/guides/advance-flows-using-transaction-hash).\n- `data` : `object` Flow & transaction data."
+						"description": "After collecting the required inputs, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to move on to the next step.\n\n### Request\n\n- `name`\\* : `create_withdraw_tx`\n- `inputs`\\* : `object`\n    - `amount`\\* : `string` The number of SOL to be withdrawn. Partial withdrawal is possible.\n    - `funding_account_pubkey`\\* : `string` The address of the account paying the transaction fee.\n    - `recipient_pubkey`\\* : `string` The address of the account which will receive the withdrawal.\n    - `stake_account_pubkey` : The public key of the stake account from which to withdraw.\n\nNote that the recipient of the withdrawal is _not_ the originating address by default!\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_withdraw_tx` : If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired)\n    - `sign_withdraw_tx` : Submit a signed transaction payload or an array of signatures to continue the flow. Refer to the guides [Signing Transactions with Figment's npm Package](/staking/guides/figment-signing-transactions/) and [Signing Transactions with the Fireblocks API](/staking/guides/fireblocks-signing-transactions/) for details.\n    - `confirm_withdraw_tx_by_hash` : Submit a previously completed transaction hash to continue the flow. Refer to the guide [Advance Flows Using a Transaction Hash](/staking/guides/advance-flows-using-transaction-hash).\n- `data` : `object` Flow & transaction data."
 					},
 					"response": [
 						{
@@ -6213,48 +6213,48 @@
 	],
 	"variable": [
 		{
-			"id": "0b3c8641-bec5-4d8d-b759-c4d7b9bf42d1",
+			"id": "a43ac87e-c9de-4ab9-840d-950f44877231",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "8a34fad4-b92c-44c1-b141-104761f94289",
+			"id": "4f1f9cd3-6f73-4b0c-9bd3-e4ad6b32b7d1",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "70680124-789d-4430-8c74-526223c85e0a",
+			"id": "f2779942-b45a-4a06-8ce1-41b1c06fb92c",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "88e01f8e-24a6-41d7-b4dc-ca92690b9ec8",
+			"id": "979d8fb7-da6f-499e-a570-3ab6d2f08a52",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "07350c88-52a0-4e90-9188-6b4f382b6689",
+			"id": "4d685602-3437-4aca-b2c3-b1f3135348a1",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "bdf50906-e338-40d8-916f-85c8760de0c8",
+			"id": "154601ad-ccc3-483e-afa3-57e9c98a6d55",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "9073fc52-d550-45c2-96db-f138b4fed1e3",
+			"id": "5a1b2c62-1c01-453e-865e-9903bd523200",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "972d16f7-e3eb-4e8e-8d3c-5c4eb84b97f9",
+			"id": "0250ee04-73b9-4798-8d9c-b36c11261ef5",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "0706297c-eb96-414f-af15-6dcd8d994c52",
+			"id": "f0d53d5c-971f-4849-a455-872b9748069f",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
