@@ -5148,7 +5148,7 @@
 							}
 						},
 						"url": "https://{{SOL_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows/{{solanaStakingFlowId}}/next",
-						"description": "After collecting the required inputs as mentioned below, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.  \nIf you already have a staking account, proceed to the step \"Submit Staking Account Data\"\n\n### Request\n\n- `name`\\* : `create_new_stake_account`\n- `inputs`\\* : `object`\n  - `funding_account_pubkey`\\* : The main wallet your SOL will be originating from.\n  - `amount`\\* : The amount of SOL to be sent to the Stake Account. This field should be in full SOL, not in lamports (i.e. if you want to stake 5 SOL, return `\"amount\": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor.\n  - `stake_authority_pubkey` : Grants authority to sign certain staking relation transactions to the provided address. Defaults to `funding_account_pubkey`.\n  - `withdraw_authority_pubkey` : Grants authority to sign certain withdrawal related transactions to the provided address. Defaults to `funding_account_pubkey`.\n    \n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_stake_account_tx` : If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired).\n    - `sign_stake_account_tx` : Submit a signed transaction payload or an array of signatures to continue the flow. Refer to the guides [Signing Transactions with Figment's npm Package](/staking/guides/figment-signing-transactions/) and [Signing Transactions with the Fireblocks API](/staking/guides/fireblocks-signing-transactions/) for details.\n    - `confirm_stake_account_tx_by_hash` : Submit a previously completed transaction hash to continue the flow. Refer to the guide [Advance Flows Using a Transaction Hash](/staking/guides/advance-flows-using-transaction-hash).\n- `data` : `object` Flow & transaction data."
+						"description": "After collecting the required inputs as mentioned below, send a `PUT` request to `/api/v1/flows/[:flow_id]/next` to proceed to the next step.  \nIf you already have a staking account, proceed to the step \"Submit Staking Account Data\"\n\n### Request\n\n- `name`\\* : `create_new_stake_account`\n- `inputs`\\* : `object`\n  - `funding_account_pubkey`\\* : The main wallet your SOL will be originating from.\n  - `amount`\\* : The amount of SOL to be sent to the Stake Account. This field should be in full SOL, not in lamports (i.e. if you want to stake 5 SOL, return `\"amount\": 5.0`). The Staking API will translate the amount to lamports so you do not have to worry about the conversion factor.\n  - `stake_authority_pubkey` : Grants authority to sign certain staking relation transactions to the provided address. Defaults to `funding_account_pubkey`.\n  - `withdraw_authority_pubkey` : Grants authority to sign certain withdrawal related transactions to the provided address. Defaults to `funding_account_pubkey`.\n    \n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `refresh_stake_account_tx` : If you need to get a fresh version of the transaction payload (i.e., the recent blockhash has expired). **Note**: This action generates a new stake account public key each time it is used. Only the public key submitted and confirmed on-chain with the action `sign_stake_account_tx` will be used as the stake account public key.\n    - `sign_stake_account_tx` : Submit a signed transaction payload or an array of signatures to continue the flow. Refer to the guides [Signing Transactions with Figment's npm Package](/staking/guides/figment-signing-transactions/) and [Signing Transactions with the Fireblocks API](/staking/guides/fireblocks-signing-transactions/) for details.\n    - `confirm_stake_account_tx_by_hash` : Submit a previously completed transaction hash to continue the flow. Refer to the guide [Advance Flows Using a Transaction Hash](/staking/guides/advance-flows-using-transaction-hash).\n- `data` : `object` Flow & transaction data."
 					},
 					"response": [
 						{
@@ -5412,7 +5412,7 @@
 							}
 						},
 						"url": "https://{{SOL_STAKING_HOST}}/apikey/{{API_KEY}}/api/v1/flows",
-						"description": "To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Request\n\n- `flow` : `object`\n    - `network_code`\\* : `string` Network on which this flow operates (ex. `solana`).\n    - `chain_code`\\* : `string` Chain on which this flow operates (ex. `mainnet`, `testnet`).\n    - `operation`\\* : `string` The operation to perform (ex. `unstaking`).\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_deactivate_tx` : Collect the data needed to build a stake deactivation transaction and submit back to the Staking API.\n        - `stake_account_pubkey` : The address of the stake account to be deactivated.\n        - `funding_account_pubkey` : The address of the wallet with signing rights to deactivate the stake account.\n- `data` : `object` Flow & transaction data."
+						"description": "To initiate the undelegation process, create a new flow with a `POST` request to `/api/v1/flows`.\n\n### Request\n\n- `flow` : `object`\n    - `network_code`\\* : `string` Network on which this flow operates (ex. `solana`).\n    - `chain_code`\\* : `string` Chain on which this flow operates (ex. `mainnet`, `testnet`).\n    - `operation`\\* : `string` The operation to perform (ex. `unstaking`).\n\n### Response\n\n- `id` : `string` ID of the flow.\n- `operation` : `string` The Staking API operation being performed by this flow.\n- `state` : `string` The current state of the flow.\n- `actions` : `array` It includes the `name` & `inputs` of all next possible actions.\n    - `create_deactivate_tx` : Use this action to generate a stake deactivation transaction.     \n    - `create_withdraw_tx` : Use this action to generate a withdrawal transaction. This can be used to withdraw any deactivated stake or any balance in excess of the desired staking amount.\n- `data` : `object` Flow & transaction data."
 					},
 					"response": [
 						{
@@ -6213,48 +6213,48 @@
 	],
 	"variable": [
 		{
-			"id": "a43ac87e-c9de-4ab9-840d-950f44877231",
+			"id": "5c9e844c-0d0e-46c1-b600-cde1ccd3dc48",
 			"key": "AVAX_STAKING_HOST",
 			"value": "avalanche-slate.datahub.figment.io"
 		},
 		{
-			"id": "4f1f9cd3-6f73-4b0c-9bd3-e4ad6b32b7d1",
+			"id": "e9f4ad6c-aaf3-4d9d-9581-8d044dadcd5b",
 			"key": "CARDANO_STAKING_HOST",
 			"value": "cardano-slate.datahub.figment.io",
 			"type": "string"
 		},
 		{
-			"id": "f2779942-b45a-4a06-8ce1-41b1c06fb92c",
+			"id": "f39d4fdf-fc90-4144-9a95-297b01dd6b37",
 			"key": "COSMOS_STAKING_HOST",
 			"value": "cosmos-slate.datahub.figment.io"
 		},
 		{
-			"id": "979d8fb7-da6f-499e-a570-3ab6d2f08a52",
+			"id": "dee2ff70-fc35-472d-9089-3c199395a605",
 			"key": "ETH_STAKING_HOST",
 			"value": "eth-slate.datahub.figment.io"
 		},
 		{
-			"id": "4d685602-3437-4aca-b2c3-b1f3135348a1",
+			"id": "61dcc918-649a-4da2-8135-2586d4e3a665",
 			"key": "NEAR_STAKING_HOST",
 			"value": "near-slate.datahub.figment.io"
 		},
 		{
-			"id": "154601ad-ccc3-483e-afa3-57e9c98a6d55",
+			"id": "89c8f462-0962-4cba-b04c-91307afeefe9",
 			"key": "DOT_STAKING_HOST",
 			"value": "polkadot-slate.datahub.figment.io"
 		},
 		{
-			"id": "5a1b2c62-1c01-453e-865e-9903bd523200",
+			"id": "37569d1a-119d-45a8-843e-5d0dee67335e",
 			"key": "SOL_STAKING_HOST",
 			"value": "solana-slate.datahub.figment.io"
 		},
 		{
-			"id": "0250ee04-73b9-4798-8d9c-b36c11261ef5",
+			"id": "d191325c-6aae-4ece-80b1-b440bcec95ff",
 			"key": "POLYGON_STAKING_HOST",
 			"value": "matic-slate.datahub.figment.io"
 		},
 		{
-			"id": "f0d53d5c-971f-4849-a455-872b9748069f",
+			"id": "dcb1eba0-01c9-437c-a1a6-976a4f92c5f6",
 			"key": "INTERACTIVE",
 			"value": "false"
 		}
