@@ -889,7 +889,7 @@
 					"response": [
 						{
 							"id": "186a29a0-2fa5-4f95-88c5-ef6578b51273",
-							"name": "by day",
+							"name": "Rewards by day",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
