@@ -766,7 +766,7 @@
 					"response": [
 						{
 							"id": "8ae20a25-0da0-4770-ae0a-cedd96b179fd",
-							"name": "by era",
+							"name": "Rewards by era",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
