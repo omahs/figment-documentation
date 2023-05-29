@@ -560,7 +560,7 @@
 					"response": [
 						{
 							"id": "76c8a855-b24b-449f-b24e-af2485d8ae48",
-							"name": "by epoch",
+							"name": "Rewards by epoch",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
