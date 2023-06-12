@@ -653,8 +653,8 @@ function createMarkdown(services, variables, schemas) {
   const TOP_DIRS = [
     "authentication",
     "errors",
+    "guides",
     "rewards",
-    "signatures",
     "staking",
     "validators",
   ];
@@ -686,7 +686,7 @@ function createMarkdown(services, variables, schemas) {
       1 Overview
       2 Authentication
       3 Errors
-      4 Signatures
+      4 Guides
        => 5 topspacer
       6 Staking
       7 Rewards

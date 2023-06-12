@@ -1,0 +1,507 @@
+---
+title: Advance Flows using a Transaction Hash
+slug: /guides/advance-flows-using-transaction-hash
+sidebar_position: 4
+pagination_prev: null
+pagination_next: null
+---
+
+import Link from "@docusaurus/Link";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Motivation
+
+The Staking API provides the option for clients to use an existing solution to sign and broadcast transactions themselves,
+and to use a transaction hash from a completed transaction to advance the state of a flow and confirm the transaction on-chain &mdash; in lieu of providing a signed transaction payload.
+
+The following example uses a Polkadot bonding flow on the Westend testnet to illustrate the process.
+
+## Action
+
+Polkadot delegation flows use the `create_bonding_tx` action to generate a transaction payload.
+It is still possible to bond from a Stash account, outside the scope of the Staking API.
+In this case, we want to perform the bond transaction (including the signature) from the Polkadot.js Apps UI,
+then complete the bonding flow with the Staking API by providing the transaction hash of the completed transaction.
+
+The general form of this action is **`confirm_<action>_tx_by_hash`**.
+Since we are performing a `bonding` transaction, the action name to use is `confirm_bonding_tx_by_hash`.
+
+Using this action in a flow lets you supply a transaction hash to the Staking API while the flow is in the `<action>_tx_signature` state.
+In the case of Polkadot, the block number of the block which includes the transaction hash must also be specified.
+
+This action is also available for other networks and flows.
+
+<Tabs><TabItem value="avax" label="Avalanche">
+
+<details>
+  <summary>Click to view Staking API response for Avalanche</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "9eb608e0-4453-46ca-aa81-795e2100bf59",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "avalanche",
+  "chain_code": "testnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="ada" label="Cardano">
+
+<details>
+  <summary>Click to view Staking API response for Cardano</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "a766231b-c29a-4749-ade5-97ce22b8c3e6",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "cardano",
+  "chain_code": "preprod",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="atom" label="Cosmos">
+
+<details>
+  <summary>Click to view Staking API response for Cosmos</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "a766231b-c29a-4749-ade5-97ce22b8c3e6",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "cosmos",
+  "chain_code": "testnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="eth" label="Ethereum">
+
+<details>
+  <summary>Click to view Staking API response for Ethereum</summary>
+
+```json {3,7,10} title="Partial response for create_deposit_tx (... indicates where response was trimmed)"
+{
+  "id": "ab4c3708-18a0-4594-ba11-a980be1b1968",
+  "state": "deposit_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_deposit_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "ethereum",
+  "chain_code": "goerli",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="near" label="NEAR">
+
+  <details>
+  <summary>Click to view Staking API response for NEAR</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "1028b6e5-235a-4545-a0c0-49ee65b744d8",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "near",
+  "chain_code": "testnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="dot" label="Polkadot" default>
+
+<details>
+  <summary>Click to view Staking API response for Polkadot</summary>
+
+```json {3,7,10,24} title="Partial response for create_bonding_tx (... indicates where response was trimmed)"
+{
+  "id": "3ace9f6b-7298-4fc7-b780-f2c3ea521784",
+  "state": "bonding_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_bonding_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        },
+        {
+          "name": "block_number",
+          "display": "Block Number",
+          "description": "",
+          "type": "integer",
+          "validations": [],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "polkadot",
+  "chain_code": "westend",
+  "created_at": "2023-01-20T22:10:26.800Z",
+  "updated_at": "2023-01-20T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="matic" label="Polygon">
+
+<details>
+  <summary>Click to view Staking API response for Polygon</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "d2aa7d3a-21f9-4e88-a774-c3f5ba878c6d",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "polygon",
+  "chain_code": "testnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem><TabItem value="sol" label="Solana">
+
+<details>
+  <summary>Click to view Staking API response for Solana</summary>
+
+```json {3,7,10} title="Partial response for create_delegate_tx (... indicates where response was trimmed)"
+{
+  "id": "2702363a-0b90-4aea-9e70-af8e30e442a8",
+  "state": "delegate_tx_signature",
+  "actions": [
+    ...
+    {
+      "name": "confirm_delegate_tx_by_hash",
+      "inputs": [
+        {
+          "name": "hash",
+          "display": "Hash",
+          "description": "",
+          "type": "string",
+          "validations": [
+            {
+              "type": "presence",
+              "options": {}
+            }
+          ],
+          "array": false,
+          "default_value": null
+        }
+      ]
+    }
+  ],
+  ...
+  "network_code": "solana",
+  "chain_code": "devnet",
+  "created_at": "2023-01-10T22:10:26.800Z",
+  "updated_at": "2023-01-10T22:28:19.348Z"
+}
+```
+
+</details>
+
+</TabItem></Tabs>
+
+### Usage
+
+On Polkadot, the input for `hash` should be the Extrinsic Hash of the transaction, and the input for `block`
+should be the block number in which that extrinsic occurred. For other networks, supply the `hash` of a confirmed transaction.
+
+Check out an <Link to="https://westend.subscan.io/extrinsic/0x53b66da426dca5386408f0a3cdc5300477dd7151c7459701e9dcbbf0fa0b07c8">example bonding transaction</Link>
+on the Subscan block explorer for an example of where to find this information.
+
+### Code Examples
+
+<Tabs><TabItem value="curl_wh" label="curl">
+
+:::caution important
+
+Code examples provided as samples only and should not be used in production out of the box. Use at your own risk.
+
+:::
+
+```bash title="Example PUT /api/v1/flows/<flow_id>/next"
+curl -X PUT 'https://polkadot-slate.figment.io/api/v1/flows/<flow_id>/next' \
+-H 'Authorization: API-KEY' \
+-H 'Content-Type: application/json' \
+-d '{
+    "name": "confirm_bonding_tx_by_hash",
+    "inputs": {
+        "hash": "0x53b66da426dca5386408f0a3cdc5300477dd7151c7459701e9dcbbf0fa0b07c8",
+        "block_number": "14295923"
+    }
+}'
+```
+
+:::info note
+
+The parameter `block_number` only applies to Polkadot.
+
+:::
+
+</TabItem><TabItem value="js_wh" label="JavaScript">
+
+:::caution important
+
+Code examples provided as samples only and should not be used in production out of the box. Use at your own risk.
+
+:::
+
+```js title="Example PUT /api/v1/flows/<flow_id>/next"
+fetch(`https://polkadot-slate.figment.io/api/v1/flows/${FLOW_ID}/next`, {
+  method: 'PUT',
+  headers: {
+    "Authorization" : "<API_KEY>",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "name": "confirm_bonding_tx_by_hash",
+    "inputs": {
+        "hash": "0x53b66da426dca5386408f0a3cdc5300477dd7151c7459701e9dcbbf0fa0b07c8",
+        "block_number": "14295923"
+    }
+  });
+});
+```
+
+:::info note
+
+The parameter `block_number` only applies to Polkadot.
+
+:::
+
+</TabItem></Tabs>
+
+### Flow State
+
+The action `confirm_<action>_tx_by_hash` updates the flow state, depending on whether the confirmed transaction hash can be found by the Staking API.
+
+- When `confirm_<action>_tx_by_hash` succeeds, the flow state will reflect the successful action, the same as if a transaction payload had been signed
+  and sent to the Staking API. Check the network tabs below for a summary of flow states after `confirm_<action>_tx_by_hash`.
+
+- In case `confirm_<action>_tx_by_hash` fails, the flow state will remain `<action>_tx_signature`, allowing for retries &mdash; the flow state **does not** become `<action>_tx_broadcasting`.
+
+In the case of the example Polkadot bonding transaction, the state would be `bonding_complete` after a successful `confirm_bonding_tx_by_hash` action.
+
+For comparison, an Ethereum staking flow state would be `deposited` after a successful `confirm_deposit_tx_by_hash` action.
+
+<Tabs><TabItem value="avax" label="Avalanche">
+
+- Avalanche [delegation flow](/staking/avalanche/staking/) final state is `completed`
+
+</TabItem><TabItem value="ada" label="Cardano">
+
+- Cardano [staking](/staking/cardano/staking/) and [transfer](/staking/cardano/transfer/) flows&apos; final state is `completed`
+
+</TabItem><TabItem value="atom" label="Cosmos">
+
+- Cosmos [staking](/staking/cosmos/staking/),
+  [redelegation](/staking/cosmos/redelegate/),
+  [transfer](/staking/cosmos/transfer/) &
+  [claim rewards](/staking/cosmos/claim-rewards/) flows&apos; final state is `completed`
+- Cosmos [unstaking](/staking/cosmos/unstaking/) state is `unbonding` during the unbonding period, moving to `completed` when successful
+
+</TabItem><TabItem value="eth" label="Ethereum">
+
+- Ethereum [staking](/staking/ethereum/staking/) flow final state is `deposited`
+- Ethereum [unstaking](/staking/ethereum/unstaking/) flow final state is `unstaked`
+- Ethereum [aggregated staking](/staking/ethereum/aggregated-staking/) flow state is `activating` during the activation period, moving to `active` when successful
+- Ethereum [aggregated unstaking](/staking/ethereum/aggregated-unstaking/) flow state is `broadcasting` if awaiting manual Figment approval, or `exiting` while the validator(s) are in the exit queue, moving to `unstaked` when successful
+
+</TabItem><TabItem value="near" label="NEAR">
+
+- NEAR [staking](/staking/near/staking/) flow final state is `delegated`
+- NEAR [unstaking](/staking/near/unstaking/) flow state is `cool_down` during the unbonding period, moving to `withdrawn` after a successful withdrawal transaction
+- NEAR [transfer](/staking/near/transfer/) flow final state is `transferred`
+
+</TabItem><TabItem value="dot" label="Polkadot" default>
+
+- Polkadot [staking](/staking/polkadot/staking/) flow state is `bonding_complete` after a successful bonding transaction and `delegated` after a successful nomination transaction
+- Polkadot [unstaking](/staking/polkadot/unstaking/) flow final state is `done` or `ready_to_withdraw`, moving to `done` after a successful withdrawal transaction
+- Polkadot [add staking proxy](/staking/polkadot/add-staking-proxy/) flow final state is `registered`
+- Polkadot [remove staking proxy](/staking/polkadot/remove-staking-proxy/) flow final state is `removed`
+- Polkadot [transfer](/staking/polkadot/transfer/) flow final state is `transferred`
+
+</TabItem><TabItem value="matic" label="Polygon">
+
+- Polygon [staking](/staking/polygon/staking/) flow state is `create_delegate_tx` after a successful allowance transaction and `completed` after a successful delegate transaction
+- Polygon [unstaking](/staking/polygon/unstaking/) flow state is `unbonding` during the unbonding period, moving to `done` after a successful claim transaction
+- Polygon [claim rewards](/staking/polygon/claim-rewards/) flow final state is `done` after a successful claim rewards transaction
+
+</TabItem><TabItem value="sol" label="Solana">
+
+- Solana [staking](/staking/solana/staking/) flow state is `stake_account` after a stake account is created or assigned, moving to `delegation_activating` during the bonding period to a final state of `delegation_active` after a successful delegation
+- Solana [unstaking](/staking/solana/unstaking/) flow state is `cool_down` during the deactivation period, moving to a final state of `withdrawn` after a successful withdrawal transaction
+- Solana [transfer](/staking/solana/transfer/) flow final state is `transferred`
+- Solana [merge stake account](/staking/solana/merge-stake-account/) and [split stake account](/staking/solana/split-stake-account/) account flow final states are both `completed`
+
+</TabItem></Tabs>

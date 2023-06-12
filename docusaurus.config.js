@@ -79,12 +79,6 @@ const config = {
                   };
                 }
 
-                if (link.label === "Guides") {
-                  return {
-                    className: "hidden",
-                  };
-                }
-
                 if (link.label === "API Reference") {
                   return {
                     className: "hidden",
